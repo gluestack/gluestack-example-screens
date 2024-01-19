@@ -1,5 +1,6 @@
 import { addParameters } from '@storybook/client-api';
 import { DocsContainer } from '@storybook/addon-docs/blocks';
+import { useDarkMode } from 'storybook-dark-mode';
 import { config } from '@gluestack-ui-new/config';
 import { Center, GluestackUIProvider } from '@gluestack-ui-new/themed';
 import gstheme from './gstheme';
@@ -31,7 +32,8 @@ export const parameters = {
           'Shadows',
         ],
         'components',
-        ['PRIMITIVES', 'COMPOSITES', 'CUSTOM'],
+        'example-screens',
+        [('PRIMITIVES', 'COMPOSITES', 'CUSTOM')],
       ],
     },
   },
@@ -39,8 +41,9 @@ export const parameters = {
 
 export const decorators = [
   (Story) => {
+    const theme = useDarkMode() ? 'dark' : 'light';
     return (
-      <GluestackUIProvider config={config}>
+      <GluestackUIProvider config={config} colorMode={theme}>
         <Center>
           <Story />
         </Center>
