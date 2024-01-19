@@ -1,4 +1,4 @@
-import { Box, Center } from '@custom-ui/themed';
+import { Box, Center } from '@gluestack-ui-new/themed';
 import React from 'react';
 
 import {
@@ -18,7 +18,7 @@ import {
   ThreeDotsIcon,
   Input,
   InputField,
-} from '@custom-ui/themed';
+} from '@gluestack-ui-new/themed';
 
 import { EditIcon, ArrowLeftIcon } from 'lucide-react-native';
 

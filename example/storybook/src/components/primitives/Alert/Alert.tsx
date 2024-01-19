@@ -10,7 +10,7 @@ import {
   AlertCircleIcon,
   VStack,
   Icon,
-} from '@custom-ui/themed';
+} from '@gluestack-ui-new/themed';
 
 const AlertBasic = ({ ...props }: any) => {
   return (

@@ -1,7 +1,7 @@
 import { Text, Box } from '@gluestack-ui-new/themed';
 import React from 'react';
 
-const BoxBasic: any = ({
+const Dashboard: any = ({
   bg = 'red500',
   w = '100',
   h = '100',
@@ -17,14 +17,12 @@ const BoxBasic: any = ({
       alignItems="center"
     >
       <Text color="white" fontWeight="$bold">
-        BOX
+        Dashboard
       </Text>
     </Box>
   );
 };
 
-BoxBasic.description = 'This is a basic Box component example.';
-
-export default BoxBasic;
+export default Dashboard;
 
 export { Text, Box };

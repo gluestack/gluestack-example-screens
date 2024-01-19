@@ -1,7 +1,7 @@
 import React from 'react';
 
-import { HStack } from '@custom-ui/themed';
-import { Button, ButtonSpinner, ButtonText } from '@custom-ui/themed';
+import { HStack } from '@gluestack-ui-new/themed';
+import { Button, ButtonSpinner, ButtonText } from '@gluestack-ui-new/themed';
 
 const ButtonIsLoading = ({}) => {
   const [isLoading] = React.useState(true);

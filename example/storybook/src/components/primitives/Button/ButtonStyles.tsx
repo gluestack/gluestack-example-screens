@@ -1,5 +1,5 @@
-import { Button, ButtonText } from '@custom-ui/themed';
-import { VStack } from '@custom-ui/themed';
+import { Button, ButtonText } from '@gluestack-ui-new/themed';
+import { VStack } from '@gluestack-ui-new/themed';
 
 import React from 'react';
 

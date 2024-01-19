@@ -6,8 +6,8 @@ import {
   Pressable,
   Text,
   Box,
-} from '@custom-ui/themed';
-import { config } from '@custom-ui/config';
+} from '@gluestack-ui-new/themed';
+import { config } from '@gluestack-ui-new/config';
 
 const ProviderStory = () => {
   const [colorMode, setColorMode] = React.useState<

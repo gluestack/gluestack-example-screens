@@ -60,7 +60,7 @@ import {
   ThreeDotsIcon,
   PlayIcon,
   createIcon,
-} from '@custom-ui/themed';
+} from '@gluestack-ui-new/themed';
 
 import { Path, Rect, Defs, Stop, LinearGradient } from 'react-native-svg';
 

@@ -11,7 +11,7 @@ import {
   Icon,
   Heading,
   Text,
-} from '@custom-ui/themed';
+} from '@gluestack-ui-new/themed';
 import { User } from 'lucide-react-native';
 
 const AvatarBasic = ({

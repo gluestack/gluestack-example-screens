@@ -8,8 +8,8 @@ import {
   GluestackUIProvider,
   Heading,
   Divider,
-} from '@custom-ui/themed';
-import { config } from '@custom-ui/config';
+} from '@gluestack-ui-new/themed';
+import { config } from '@gluestack-ui-new/config';
 import { Table, TR, TBody, TD, THead, TH } from '@expo/html-elements';
 const colors: any = config.tokens.colors;
 

@@ -1,7 +1,7 @@
 import { addParameters } from '@storybook/client-api';
 import { DocsContainer } from '@storybook/addon-docs/blocks';
-import { config } from '@custom-ui/config';
-import { Center, GluestackUIProvider } from '@custom-ui/themed';
+import { config } from '@gluestack-ui-new/config';
+import { Center, GluestackUIProvider } from '@gluestack-ui-new/themed';
 import gstheme from './gstheme';
 import { themes } from '@storybook/theming';
 

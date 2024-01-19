@@ -5,7 +5,7 @@ import {
   Toast,
   ToastTitle,
   useToast,
-} from '@custom-ui/themed';
+} from '@gluestack-ui-new/themed';
 
 const ToastPlacement = ({ placement = 'top', ...props }: any) => {
   const toast = useToast();

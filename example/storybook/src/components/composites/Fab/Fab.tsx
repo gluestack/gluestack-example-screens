@@ -21,7 +21,7 @@ import {
   Divider,
   Image,
   CheckboxIcon,
-} from '@custom-ui/themed';
+} from '@gluestack-ui-new/themed';
 
 import { CheckIcon, EditIcon, ShoppingCartIcon } from 'lucide-react-native';
 

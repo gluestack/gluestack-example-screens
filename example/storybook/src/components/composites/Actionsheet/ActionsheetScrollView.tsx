@@ -10,7 +10,7 @@ import {
   ActionsheetItemText,
   ActionsheetScrollView,
   Button,
-} from '@custom-ui/themed';
+} from '@gluestack-ui-new/themed';
 import { useEffect } from 'react';
 
 const ActionsheetWithScrollView = ({

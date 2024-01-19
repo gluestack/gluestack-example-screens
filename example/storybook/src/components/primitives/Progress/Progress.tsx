@@ -8,7 +8,7 @@ import {
   Box,
   Heading,
   Center,
-} from '@custom-ui/themed';
+} from '@gluestack-ui-new/themed';
 
 const ProgressBasic = ({ value = 50, ...props }: any) => {
   return (

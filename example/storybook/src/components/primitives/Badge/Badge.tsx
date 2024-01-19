@@ -25,7 +25,7 @@ import {
   MenuItem,
   MenuItemLabel,
   GlobeIcon,
-} from '@custom-ui/themed';
+} from '@gluestack-ui-new/themed';
 import {
   PaintBucket,
   PuzzleIcon,

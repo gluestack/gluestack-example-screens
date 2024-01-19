@@ -14,7 +14,7 @@ import {
   SelectDragIndicator,
   SelectItem,
   Icon,
-} from '@custom-ui/themed';
+} from '@gluestack-ui-new/themed';
 
 const SelectBasic = ({ size = 'md', variant = 'outline', ...props }: any) => {
   return (

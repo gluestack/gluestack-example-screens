@@ -8,7 +8,7 @@ import {
   FormControlError,
   FormControlLabel,
   FormControlLabelText,
-} from '@custom-ui/themed';
+} from '@gluestack-ui-new/themed';
 
 const TextareaBasic = ({ ...props }: any) => {
   return (

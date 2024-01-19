@@ -1,4 +1,4 @@
-import { Button, ButtonGroup, ButtonText } from '@custom-ui/themed';
+import { Button, ButtonGroup, ButtonText } from '@gluestack-ui-new/themed';
 import React from 'react';
 
 const ButtonGroupBasic = ({ ...props }) => {

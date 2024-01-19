@@ -8,7 +8,7 @@ import {
   InputIcon,
   InputSlot,
   InputField,
-} from '@custom-ui/themed';
+} from '@gluestack-ui-new/themed';
 import { EyeIcon, EyeOffIcon } from 'lucide-react-native';
 
 const InputWithIcon = ({ ...props }: any) => {

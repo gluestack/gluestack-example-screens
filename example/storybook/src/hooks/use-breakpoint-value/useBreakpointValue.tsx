@@ -1,5 +1,5 @@
 import { View, Text } from 'react-native';
-import { useBreakpointValue } from '@custom-ui/themed';
+import { useBreakpointValue } from '@gluestack-ui-new/themed';
 import React from 'react';
 
 export default function Example({}: any) {

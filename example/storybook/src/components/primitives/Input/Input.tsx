@@ -14,7 +14,7 @@ import {
   Icon,
   SearchIcon,
   FormControl,
-} from '@custom-ui/themed';
+} from '@gluestack-ui-new/themed';
 import { EyeIcon, EyeOffIcon } from 'lucide-react-native';
 import { useState } from 'react';
 

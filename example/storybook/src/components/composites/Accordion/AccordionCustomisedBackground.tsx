@@ -7,7 +7,7 @@ import {
   AccordionContentText,
   AccordionTitleText,
   AccordionIcon,
-} from '@custom-ui/themed';
+} from '@gluestack-ui-new/themed';
 import { MinusIcon, PlusIcon } from 'lucide-react-native';
 import React from 'react';
 
