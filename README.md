@@ -1,4 +1,4 @@
-# gluestack-ui-design-system
+# gluestack-ui Example Screens
 
 <h3 align="center">
   <br>
