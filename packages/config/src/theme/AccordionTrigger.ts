@@ -1,7 +1,7 @@
 import { createStyle } from '@gluestack-style/react';
 
 export const AccordionTrigger = createStyle({
-  'width': '100%',
+  'width': '$full',
   'py': '$5',
   'px': '$5',
   'flexDirection': 'row',
@@ -17,11 +17,6 @@ export const AccordionTrigger = createStyle({
     },
   },
   ':focusVisible': {
-    _light: {
-      bg: '$backgroundLight50',
-    },
-    _dark: {
-      bg: '$backgroundDark900',
-    },
+    bg: '$background50',
   },
 });
