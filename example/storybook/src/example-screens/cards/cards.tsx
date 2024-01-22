@@ -10,8 +10,26 @@ import {
   HStack,
   Button,
   ButtonText,
+  FormControl,
+  FormControlLabel,
+  FormControlLabelText,
+  Input,
+  InputField,
+  Progress,
+  ProgressFilledTrack,
+  BadgeText,
+  Badge,
+  Icon,
+  CloseIcon,
+  Switch,
 } from '@gluestack-ui-new/themed';
-import { TextIcon, MailIcon, CircleCrossIcon } from './Icons';
+import {
+  TextIcon,
+  MailIcon,
+  CircleCrossIcon,
+  FileIcon,
+  CloudIcon,
+} from './Icons';
 
 const settingOptions = [
   {
@@ -24,7 +42,7 @@ const settingOptions = [
     title: 'Text Messages',
     description: 'Receive updates by SMS',
     Icon: TextIcon,
-    isCheck: false,
+    isCheck: true,
   },
   {
     title: 'Automatically Delete items',
@@ -43,19 +61,19 @@ const Cards: any = ({
   return (
     <Box {...props} h={h} w={w}>
       <Box
-        padding="$6"
+        $md-padding="$6"
         width="$full"
-        $base-flexDirection="coloumn"
+        $base-flexDirection="column"
         $lg-flexDirection="row"
         justifyContent="space-between"
       >
         <VStack $base-width="$full" $lg-width="$3/4" space="2xl">
           <Box
-            $base-flexDirection="coloumn"
-            $lg-flexDirection="row"
+            $base-flexDirection="column"
+            $sm-flexDirection="row"
             justifyContent="space-between"
           >
-            <VStack width="$2/5">
+            <VStack $base-width="$full" $md-width="$2/5" space="2xl">
               <Box
                 padding="$5"
                 borderRadius="$xl"
@@ -99,8 +117,45 @@ const Cards: any = ({
                   </HStack>
                 </VStack>
               </Box>
+              <VStack
+                padding="$5"
+                borderRadius="$lg"
+                borderColor="$border200"
+                borderWidth="$1"
+                space="2xl"
+              >
+                <VStack>
+                  <Text fontSize="$lg" fontWeight="bold" color="$text900">
+                    Share gluestack UI with friends
+                  </Text>
+                  <Text mt="$2.5" fontSize="$sm" color="$text700">
+                    Email friends who have never tried glueStack UI
+                  </Text>
+                </VStack>
+                <HStack justifyContent="space-between" space="sm">
+                  <FormControl size="md" width="$3/4">
+                    <FormControlLabel mb="$2">
+                      <FormControlLabelText fontSize="$sm">
+                        Send an invite
+                      </FormControlLabelText>
+                    </FormControlLabel>
+                    <Input>
+                      <InputField type="text" placeholder="abc@example.com" />
+                    </Input>
+                  </FormControl>
+                  <Button size="md" alignSelf="flex-end">
+                    <ButtonText>Send</ButtonText>
+                  </Button>
+                </HStack>
+              </VStack>
             </VStack>
-            <VStack width="58%">
+            <VStack
+              $base-width="$full"
+              $md-width="58%"
+              space="2xl"
+              $base-mt="$6"
+              $md-mt="$0"
+            >
               <Box
                 padding="$6"
                 borderRadius="$xl"
@@ -111,30 +166,32 @@ const Cards: any = ({
                 <Text fontSize="$lg" fontWeight="$bold" color="$text900">
                   Notification Settings
                 </Text>
-                <Text
-                  mt="$1.5"
-                  fontSize="$sm"
-                  fontWeight="$light"
-                  color="$text700"
-                >
+                <Text mt="$1.5" fontSize="$sm" color="$text700">
                   Receive notifications about Gluestack UI updates.
                 </Text>
-                <VStack space="lg">
+                <VStack mt="$6" space="lg">
                   {settingOptions.map((option: any, index: number) => (
                     <HStack key={index} space="xl">
                       <Box
                         padding="$3"
                         borderRadius="$xl"
                         backgroundColor="$background50"
+                        alignSelf="center"
                       >
                         {option.Icon && <option.Icon />}
                       </Box>
                       <HStack
-                        alignItems="center"
                         justifyContent="space-between"
-                        w="$full"
+                        $base-width="$3/4"
+                        $md-width="$5/6"
+                        borderColor="$border200"
+                        borderBottomWidth={
+                          settingOptions.length - 1 === index ? '$0' : '$1'
+                        }
+                        mb="$0.5"
+                        pb="$2"
                       >
-                        <VStack w="80%">
+                        <VStack maxWidth="$5/6">
                           <Text
                             fontSize="$sm"
                             fontWeight="$bold"
@@ -147,19 +204,95 @@ const Cards: any = ({
                             fontSize="$sm"
                             fontWeight="$light"
                             color="$text700"
+                            pb="$1.5"
                           >
                             {option.description}
                           </Text>
                         </VStack>
-                        {/* <Switch isChecked={option.isCheck} /> */}
+                        <Switch
+                          alignSelf="center"
+                          defaultValue={option.isCheck}
+                        />
                       </HStack>
                     </HStack>
                   ))}
                 </VStack>
               </Box>
+              <VStack
+                padding="$6"
+                borderRadius="$xl"
+                borderColor="$border200"
+                borderWidth="$1"
+              >
+                <VStack>
+                  <Text fontSize="$lg" fontWeight="$bold" color="$text900">
+                    Upload Your Files
+                  </Text>
+                  <Text mt="$1.5" fontSize="$sm" color="$text700">
+                    JPG, PNG, PDF, MP4, GIFs supported
+                  </Text>
+                </VStack>
+                <VStack
+                  mt="$5"
+                  px="$20"
+                  py="$6"
+                  alignItems="center"
+                  borderRadius="$xl"
+                  borderStyle="dashed"
+                  borderWidth="$1"
+                  borderColor="$border300"
+                  space="sm"
+                >
+                  <Box alignItems="center">
+                    <CloudIcon />
+                    <Text fontSize="$sm" lineHeight="$md" color="$text700">
+                      Drag & drop your file here
+                    </Text>
+                  </Box>
+                  <Text>or</Text>
+                  <Badge
+                    size="md"
+                    variant="solid"
+                    borderRadius="$xs"
+                    action="muted"
+                    px="$3"
+                    py="$0.5"
+                  >
+                    <BadgeText>Browse Files</BadgeText>
+                  </Badge>
+                </VStack>
+                <VStack mt="$6">
+                  <Text fontSize="$sm" fontWeight="$bold" color="$text900">
+                    Uploading 1 file
+                  </Text>
+                  <HStack
+                    mt="$3.5"
+                    justifyContent="space-between"
+                    alignItems="center"
+                  >
+                    <Box padding="$3">
+                      <FileIcon />
+                    </Box>
+                    <VStack w="$4/5">
+                      <HStack justifyContent="space-between">
+                        <Text fontSize="$sm" color="$text900">
+                          Document_1.gif (200mb)
+                        </Text>
+                        <Text fontSize="$xs" color="$text500">
+                          25s left
+                        </Text>
+                      </HStack>
+                      <Progress value={55} h="$1" mt="$1">
+                        <ProgressFilledTrack h="$1" />
+                      </Progress>
+                    </VStack>
+                    <Icon as={CloseIcon} w="$5" h="$5" color="$background600" />
+                  </HStack>
+                </VStack>
+              </VStack>
             </VStack>
           </Box>
-          <HStack
+          <Box
             w="$full"
             p="$5"
             borderRadius="$lg"
@@ -167,6 +300,8 @@ const Cards: any = ({
             borderColor="$border200"
             justifyContent="space-between"
             alignItems="center"
+            $base-flexDirection="column"
+            $sm-flexDirection="row"
           >
             <Box>
               <Text fontSize="$lg" color="$text900" fontWeight="$bold">
@@ -177,7 +312,15 @@ const Cards: any = ({
                 experience.
               </Text>
             </Box>
-            <HStack space="md">
+            <HStack
+              space="md"
+              $base-flexDirection="column"
+              $sm-flexDirection="row"
+              $base-width="$full"
+              $sm-width="auto"
+              $base-mt="$3"
+              $sm-mt="$0"
+            >
               <Button size="sm" variant="outline">
                 <ButtonText>Skip</ButtonText>
               </Button>
@@ -185,7 +328,7 @@ const Cards: any = ({
                 <ButtonText>Download</ButtonText>
               </Button>
             </HStack>
-          </HStack>
+          </Box>
         </VStack>
         <VStack
           $base-width="$full"
