@@ -11,49 +11,38 @@ import {
   Input,
   InputField,
   Center,
+  ScrollView,
+  MessageCircleIcon,
 } from '@gluestack-ui-new/themed';
 import React from 'react';
+import {
+  ArrowRightSVG,
+  BellIconSVG,
+  CalenderIconSVG,
+  CatergoriesIconSVG,
+  CurrencyIconSVG,
+  ExitIconSVG,
+  FacebookIconSVG,
+  HelpIconSVG,
+  InstagramIconSVG,
+  NotificationsIconSVG,
+  OptionsIconSVG,
+  PeopleIconSVG,
+  ProfileIconSVG,
+  SearchIconSVG,
+  SettingsIconSVG,
+  TwitterIconSVG,
+  ViewIconSVG,
+  YoutubeIconSVG,
+} from './icons';
+import { analytics, comments } from './constants';
 
 interface CommentCardProps {
-  avatarSrc: string;
   userName: string;
   comment: string;
 }
 
-const comments = [
-  {
-    userName: 'John Smith',
-    comment: 'Loved the animation! Can you link the tutorial? 👀',
-    profileImage: '/assets/avatar-icon.png',
-  },
-  {
-    userName: 'Mila Dann',
-    comment: 'This looks great! Have been following you from a long time 🤩',
-    profileImage: '/assets/avatar-icon.png',
-  },
-  {
-    userName: 'Mila Dann',
-    comment: 'Woah! loved the transition 💯',
-    profileImage: '/assets/avatar-icon.png',
-  },
-  {
-    userName: 'Ruth Joseph',
-    comment: 'Woah! Would love to try this out 🤯',
-    profileImage: '/assets/avatar-icon.png',
-  },
-  {
-    userName: 'Mila Dann',
-    comment: 'Woah! loved the transition 💯',
-    profileImage: '/assets/avatar-icon.png',
-  },
-  {
-    userName: 'Ruth Joseph',
-    comment: 'Woah! Would love to try this out 🤯',
-    profileImage: '/assets/avatar-icon.png',
-  },
-];
-
-const CommentCard = ({ avatarSrc, userName, comment }: CommentCardProps) => {
+const CommentCard = ({ userName, comment }: CommentCardProps) => {
   return (
     <VStack
       justifyContent="flex-start"
@@ -65,7 +54,7 @@ const CommentCard = ({ avatarSrc, userName, comment }: CommentCardProps) => {
         <Box borderRadius="$full">
           <Avatar bgColor="$black" size="sm">
             <AvatarFallbackText>{userName}</AvatarFallbackText>
-            <AvatarImage source={avatarSrc} />
+            <AvatarImage source={require('/assets/avatar-icon.png')} />
           </Avatar>
         </Box>
         <VStack>
@@ -84,86 +73,426 @@ const CommentCard = ({ avatarSrc, userName, comment }: CommentCardProps) => {
   );
 };
 
-const ArrowRightSVG = () => {
+const AnalyticsCard = ({
+  title,
+  totalValue,
+  subtitleValue,
+}: {
+  title: string;
+  totalValue: number;
+  subtitleValue: string;
+}) => {
   return (
-    <svg
-      width="12"
-      height="12"
-      viewBox="0 0 12 12"
-      fill="none"
-      xmlns="http://www.w3.org/2000/svg"
+    <VStack
+      p="$6"
+      space="xs"
+      borderColor="$border200"
+      borderRadius="$md"
+      borderWidth="$1"
+      hardShadow="5"
     >
-      <path
-        fill-rule="evenodd"
-        clip-rule="evenodd"
-        d="M2 6C2 5.72386 2.22386 5.5 2.5 5.5H9.5C9.77614 5.5 10 5.72386 10 6C10 6.27614 9.77614 6.5 9.5 6.5H2.5C2.22386 6.5 2 6.27614 2 6Z"
-        fill="#414040"
-      />
-      <path
-        fill-rule="evenodd"
-        clip-rule="evenodd"
-        d="M5.64645 2.14645C5.84171 1.95118 6.15829 1.95118 6.35355 2.14645L9.85355 5.64645C10.0488 5.84171 10.0488 6.15829 9.85355 6.35355L6.35355 9.85355C6.15829 10.0488 5.84171 10.0488 5.64645 9.85355C5.45118 9.65829 5.45118 9.34171 5.64645 9.14645L8.79289 6L5.64645 2.85355C5.45118 2.65829 5.45118 2.34171 5.64645 2.14645Z"
-        fill="#414040"
-      />
-    </svg>
+      <HStack justifyContent="space-between" alignItems="flex-start">
+        <Text fontSize="$sm" fontWeight="$medium" color="$text900">
+          Weekly {title}
+        </Text>
+        <Box p="$2" ml="$20" bg="$background50" borderRadius="$lg">
+          {title === 'Views' ? (
+            <ViewIconSVG />
+          ) : title === 'Followers' ? (
+            <PeopleIconSVG />
+          ) : (
+            <MessageCircleIcon />
+          )}
+        </Box>
+      </HStack>
+      <Text fontSize="$2xl" fontWeight="$bold" color="$text900">
+        {totalValue}
+      </Text>
+      <Text fontSize="$xs" fontWeight="$normal" color="$text700">
+        {subtitleValue} from last week
+      </Text>
+    </VStack>
   );
 };
-const SearchIconSVG = () => {
+const HomeView = () => {
+  const [tab, setTab] = React.useState<
+    'instagram' | 'youtube' | 'twitter' | 'facebook'
+  >('instagram');
   return (
-    <svg
-      width="20"
-      height="20"
-      viewBox="0 0 14 15"
-      fill="none"
-      xmlns="http://www.w3.org/2000/svg"
-    >
-      <path
-        fill-rule="evenodd"
-        clip-rule="evenodd"
-        d="M1.1665 6.91699C1.1665 4.0175 3.51701 1.66699 6.4165 1.66699C9.31601 1.66699 11.6665 4.0175 11.6665 6.91699C11.6665 9.8165 9.31601 12.167 6.4165 12.167C3.51701 12.167 1.1665 9.8165 1.1665 6.91699ZM6.4165 2.83366C4.16134 2.83366 2.33317 4.66183 2.33317 6.91699C2.33317 9.17217 4.16134 11.0003 6.4165 11.0003C8.67168 11.0003 10.4998 9.17217 10.4998 6.91699C10.4998 4.66183 8.67168 2.83366 6.4165 2.83366Z"
-        fill="#8E8E8E"
-      />
-      <path
-        fill-rule="evenodd"
-        clip-rule="evenodd"
-        d="M9.29976 9.80074C9.52757 9.57293 9.89691 9.57293 10.1247 9.80074L12.6622 12.3382C12.89 12.566 12.89 12.9354 12.6622 13.1632C12.4344 13.391 12.0651 13.391 11.8373 13.1632L9.29976 10.6257C9.07195 10.3979 9.07195 10.0285 9.29976 9.80074Z"
-        fill="#8E8E8E"
-      />
-    </svg>
+    <Box>
+      <HStack px="$4" space="4xl" ml="$11" mt="$4" overflow="scroll">
+        <Pressable
+          p="$1"
+          borderBottomWidth="$2"
+          borderBottomColor={tab === 'instagram' ? '$primary400' : '$white'}
+          opacity={tab === 'instagram' ? '$100' : '$60'}
+          onPress={() => setTab('instagram')}
+        >
+          <HStack space="xs" alignItems="center">
+            <InstagramIconSVG />
+            <Text fontSize="$md" color="$primary500">
+              Instagram
+            </Text>
+          </HStack>
+        </Pressable>
+        <Pressable
+          p="$1"
+          borderBottomWidth="$2"
+          borderBottomColor={tab === 'youtube' ? '$primary400' : '$white'}
+          opacity={tab === 'youtube' ? '$100' : '$60'}
+          onPress={() => setTab('youtube')}
+        >
+          <HStack space="xs" alignItems="center">
+            <YoutubeIconSVG />
+            <Text fontSize="$md" color="$primary500">
+              Youtube
+            </Text>
+          </HStack>
+        </Pressable>
+        <Pressable
+          p="$1"
+          borderBottomWidth="$2"
+          borderBottomColor={tab === 'twitter' ? '$primary400' : '$white'}
+          opacity={tab === 'twitter' ? '$100' : '$60'}
+          onPress={() => setTab('twitter')}
+        >
+          <HStack space="xs" alignItems="center">
+            <TwitterIconSVG />
+            <Text fontSize="$md" color="$primary500">
+              Twitter
+            </Text>
+          </HStack>
+        </Pressable>
+        <Pressable
+          p="$1"
+          borderBottomWidth="$2"
+          borderBottomColor={tab === 'facebook' ? '$primary400' : '$white'}
+          opacity={tab === 'facebook' ? '$100' : '$60'}
+          onPress={() => setTab('facebook')}
+        >
+          <HStack space="xs" alignItems="center">
+            <FacebookIconSVG />
+            <Text fontSize="$md" color="$primary500">
+              Facebook
+            </Text>
+          </HStack>
+        </Pressable>
+      </HStack>
+      <HStack m="$4" space="2xl" overflow="scroll">
+        <AnalyticsCard
+          title="Views"
+          totalValue={analytics[tab].weeklyViews.views}
+          subtitleValue={
+            analytics[tab].weeklyViews.loss
+              ? `-${analytics[tab].weeklyViews.loss}%`
+              : `+${analytics[tab].weeklyViews.growth}%`
+          }
+        />
+        <AnalyticsCard
+          title="Followers"
+          totalValue={analytics[tab].weeklyFollowers.views}
+          subtitleValue={
+            analytics[tab].weeklyFollowers.loss
+              ? `-${analytics[tab].weeklyFollowers.loss}%`
+              : `+${analytics[tab].weeklyFollowers.growth}%`
+          }
+        />
+        <AnalyticsCard
+          title="Comments"
+          totalValue={analytics[tab].weeklyComments.views}
+          subtitleValue={
+            analytics[tab].weeklyComments.loss
+              ? `-${analytics[tab].weeklyComments.loss}%`
+              : `+${analytics[tab].weeklyComments.growth}%`
+          }
+        />
+      </HStack>
+      <HStack space="2xl" m="$4" overflow="scroll">
+        <VStack
+          alignItems="flex-start"
+          borderColor="$border200"
+          borderRadius="$md"
+          borderWidth="$1"
+          hardShadow="5"
+          p="$4"
+          space="sm"
+        >
+          <HStack justifyContent="space-between" mx="$2">
+            <Text color="$text900" fontWeight="$bold" fontSize="$lg">
+              Latest Posts
+            </Text>
+            <Box ml="$72">
+              <OptionsIconSVG />
+            </Box>
+          </HStack>
+          <Text color="$text700" fontWeight="$normal" fontSize="$sm" mx="$2">
+            Receive notifications about gluestack ui updates.
+          </Text>
+          <Box bg="$black" minWidth="$96" h="$56" borderRadius="$2xl"></Box>
+        </VStack>
+        <VStack
+          alignItems="flex-start"
+          borderColor="$border200"
+          borderRadius="$md"
+          borderWidth="$1"
+          hardShadow="5"
+          p="$4"
+          space="sm"
+        >
+          <Box bg="$black" minWidth="$64" h="$64" borderRadius="$3xl"></Box>
+          <VStack alignItems="center" w="$full">
+            <Text color="$text900" fontWeight="$medium" fontSize="$5xl">
+              {analytics[tab].engagedUsers.users}
+            </Text>
+            <Text color="$text700" fontWeight="$normal" fontSize="$xs">
+              {analytics[tab].engagedUsers.loss
+                ? `-${analytics[tab].engagedUsers.loss}%`
+                : `+${analytics[tab].engagedUsers.growth}%`}{' '}
+              from last week
+            </Text>
+          </VStack>
+        </VStack>
+      </HStack>
+      <HStack space="2xl" m="$4" overflow="scroll">
+        <VStack
+          alignItems="flex-start"
+          borderColor="$border200"
+          borderRadius="$md"
+          borderWidth="$1"
+          hardShadow="5"
+          p="$4"
+          space="sm"
+        >
+          <HStack justifyContent="space-between">
+            <Text color="$text900" fontWeight="$bold" fontSize="$lg">
+              Audience Age Split
+            </Text>
+            <Box ml="$24">
+              <OptionsIconSVG />
+            </Box>
+          </HStack>
+          <Box bg="$black" minWidth="$72" h="$48" borderRadius="$3xl"></Box>
+        </VStack>
+        <VStack space="3xl">
+          <HStack
+            borderColor="$border200"
+            borderRadius="$md"
+            borderWidth="$1"
+            hardShadow="5"
+            p="$4"
+            space="sm"
+            alignItems="center"
+            bg="$background100"
+            maxWidth="$40"
+          >
+            <Text color="$text900" fontWeight="$bold" fontSize="$2xl">
+              {analytics[tab].totalVisits}
+            </Text>
+            <Text color="$text900" fontWeight="$normal" fontSize="$2xs">
+              Visits
+            </Text>
+          </HStack>
+          <VStack
+            alignItems="flex-start"
+            borderColor="$border200"
+            borderRadius="$md"
+            borderWidth="$1"
+            hardShadow="5"
+            p="$4"
+            space="md"
+          >
+            <Text color="$text900" fontWeight="$bold" fontSize="$lg">
+              Top Locations
+            </Text>
+            <Text color="$text700" fontWeight="$normal" fontSize="$sm">
+              Learn the top geographic locations of your new audience
+            </Text>
+            <HStack space="2xl" alignItems="center" px="$4" my="$4">
+              {[...Array(3)].map((_, index) => (
+                <HStack key={index}>
+                  <VStack space="xs">
+                    <Text color="$text900" fontWeight="$bold" fontSize="$lg">
+                      {analytics[tab].topLocations[index].name}
+                    </Text>
+                    <Text color="$text700" fontWeight="$normal" fontSize="$xs">
+                      {analytics[tab].topLocations[index].growth
+                        ? `-${analytics[tab].topLocations[index].growth}%`
+                        : `+${analytics[tab].topLocations[index].growth}%`}
+                    </Text>
+                  </VStack>
+                  {index < 2 && (
+                    <Divider
+                      orientation="vertical"
+                      w="$0.5"
+                      h="$10"
+                      mx="$8"
+                      bgColor="$background200"
+                    />
+                  )}
+                </HStack>
+              ))}
+            </HStack>
+          </VStack>
+        </VStack>
+      </HStack>
+    </Box>
   );
 };
-const BellIconSVG = () => {
+const NotificationsView = () => {
   return (
-    <svg
-      width="24"
-      height="25"
-      viewBox="0 0 24 25"
-      fill="none"
-      xmlns="http://www.w3.org/2000/svg"
+    <Box
+      bg="red"
+      minWidth="$96"
+      minHeight="$72"
+      borderRadius="$3xl"
+      maxWidth="$1/2"
+      alignSelf="center"
     >
-      <path
-        d="M18 8.5C18 6.9087 17.3679 5.38258 16.2426 4.25736C15.1174 3.13214 13.5913 2.5 12 2.5C10.4087 2.5 8.88258 3.13214 7.75736 4.25736C6.63214 5.38258 6 6.9087 6 8.5C6 15.5 3 17.5 3 17.5H21C21 17.5 18 15.5 18 8.5Z"
-        stroke="#747474"
-        stroke-width="2"
-        stroke-linecap="round"
-        stroke-linejoin="round"
-      />
-      <path
-        d="M13.73 21.5C13.5542 21.8031 13.3018 22.0547 12.9982 22.2295C12.6946 22.4044 12.3504 22.4965 12 22.4965C11.6496 22.4965 11.3054 22.4044 11.0018 22.2295C10.6982 22.0547 10.4458 21.8031 10.27 21.5"
-        stroke="#747474"
-        stroke-width="2"
-        stroke-linecap="round"
-        stroke-linejoin="round"
-      />
-    </svg>
+      <Text textAlign="center" fontSize="$lg" color="$white" my="auto">
+        Notifications
+      </Text>
+    </Box>
   );
 };
+const CalendarView = () => {
+  return (
+    <Box
+      bg="blue"
+      minWidth="$96"
+      minHeight="$72"
+      borderRadius="$3xl"
+      maxWidth="$1/2"
+      alignSelf="center"
+    >
+      <Text textAlign="center" fontSize="$lg" color="$white" my="auto">
+        Calendar
+      </Text>
+    </Box>
+  );
+};
+const CurrencyView = () => {
+  return (
+    <Box
+      bg="black"
+      minWidth="$96"
+      minHeight="$72"
+      borderRadius="$3xl"
+      maxWidth="$1/2"
+      alignSelf="center"
+    >
+      <Text textAlign="center" fontSize="$lg" color="$white" my="auto">
+        Currency
+      </Text>
+    </Box>
+  );
+};
+const ProfileView = () => {
+  return (
+    <Box
+      bg="$amber600"
+      minWidth="$96"
+      minHeight="$72"
+      borderRadius="$3xl"
+      maxWidth="$1/2"
+      alignSelf="center"
+    >
+      <Text textAlign="center" fontSize="$lg" color="$white" my="auto">
+        Profile
+      </Text>
+    </Box>
+  );
+};
+const SettingsView = () => {
+  return (
+    <Box
+      bg="$violet400"
+      minWidth="$96"
+      minHeight="$72"
+      borderRadius="$3xl"
+      maxWidth="$1/2"
+      alignSelf="center"
+    >
+      <Text textAlign="center" fontSize="$lg" color="$white" my="auto">
+        Settings
+      </Text>
+    </Box>
+  );
+};
+const HelpView = () => {
+  return (
+    <Box
+      bg="$green400"
+      minWidth="$96"
+      minHeight="$72"
+      borderRadius="$3xl"
+      maxWidth="$1/2"
+      alignSelf="center"
+    >
+      <Text textAlign="center" fontSize="$lg" color="$white" my="auto">
+        Help
+      </Text>
+    </Box>
+  );
+};
+const ExitView = () => {
+  return (
+    <Box
+      bg="$tertiary600"
+      minWidth="$96"
+      minHeight="$72"
+      borderRadius="$3xl"
+      maxWidth="$1/2"
+      alignSelf="center"
+    >
+      <Text textAlign="center" fontSize="$lg" color="$white" my="auto">
+        Exit
+      </Text>
+    </Box>
+  );
+};
+
+const viewRenderer = (view: string) => {
+  switch (view) {
+    case 'home':
+      return <HomeView />;
+    case 'notifications':
+      return <NotificationsView />;
+    case 'calendar':
+      return <CalendarView />;
+    case 'currency':
+      return <CurrencyView />;
+    case 'profile':
+      return <ProfileView />;
+    case 'settings':
+      return <SettingsView />;
+    case 'help':
+      return <HelpView />;
+    case 'exit':
+      return <ExitView />;
+    default:
+      return <HomeView />;
+  }
+};
+
 const Dashboard: any = ({
   // bg = 'red500',
   w = '100%',
   h = '100%',
   ...props
 }: any) => {
+  const [view, setView] = React.useState<
+    | 'home'
+    | 'notifications'
+    | 'calendar'
+    | 'currency'
+    | 'profile'
+    | 'settings'
+    | 'help'
+    | 'exit'
+  >('home');
+  const handleViewChange = (viewInput: typeof view) => {
+    setView(viewInput);
+  };
   return (
     <Box
       {...props}
@@ -232,7 +561,6 @@ const Dashboard: any = ({
                   $base-borderWidth="$0"
                 >
                   <SearchIconSVG />
-                  {/* !bug need to use boxShadow : none for web input to remove the outline around input  */}
                   <Input
                     borderWidth="$0"
                     sx={{
@@ -258,6 +586,126 @@ const Dashboard: any = ({
                 </Center>
               </HStack>
             </HStack>
+            <HStack>
+              <VStack
+                alignItems="center"
+                justifyContent="space-between"
+                space="3xl"
+                maxHeight="$4/5"
+              >
+                <VStack
+                  alignItems="center"
+                  p="$4"
+                  bg="$background950"
+                  space="lg"
+                  borderRadius="$3xl"
+                >
+                  <Pressable
+                    p="$2"
+                    $focus-bg="$background800"
+                    borderRadius="$xl"
+                    bg={view === 'home' ? '$background800' : '$background950'}
+                    onPress={() => handleViewChange('home')}
+                  >
+                    <CatergoriesIconSVG />
+                  </Pressable>
+                  <Pressable
+                    p="$2"
+                    $focus-bg="$background800"
+                    borderRadius="$xl"
+                    bg={
+                      view === 'notifications'
+                        ? '$background800'
+                        : '$background950'
+                    }
+                    onPress={() => handleViewChange('notifications')}
+                  >
+                    <NotificationsIconSVG />
+                  </Pressable>
+                  <Pressable
+                    p="$2"
+                    $focus-bg="$background800"
+                    borderRadius="$xl"
+                    bg={
+                      view === 'calendar' ? '$background800' : '$background950'
+                    }
+                    onPress={() => handleViewChange('calendar')}
+                  >
+                    <CalenderIconSVG />
+                  </Pressable>
+                  <Pressable
+                    p="$2"
+                    $focus-bg="$background800"
+                    borderRadius="$xl"
+                    bg={
+                      view === 'currency' ? '$background800' : '$background950'
+                    }
+                    onPress={() => handleViewChange('currency')}
+                  >
+                    <CurrencyIconSVG />
+                  </Pressable>
+                  <Divider
+                    bg="$background600"
+                    h="$0.5"
+                    orientation="horizontal"
+                    w="$full"
+                    my="$10"
+                  />
+                  <Pressable
+                    p="$2"
+                    $focus-bg="$background800"
+                    borderRadius="$xl"
+                    bg={
+                      view === 'profile' ? '$background800' : '$background950'
+                    }
+                    onPress={() => handleViewChange('profile')}
+                  >
+                    <ProfileIconSVG />
+                  </Pressable>
+                  <Pressable
+                    p="$2"
+                    $focus-bg="$background800"
+                    borderRadius="$xl"
+                    bg={
+                      view === 'settings' ? '$background800' : '$background950'
+                    }
+                    onPress={() => handleViewChange('settings')}
+                  >
+                    <SettingsIconSVG />
+                  </Pressable>
+                  <Pressable
+                    p="$2"
+                    $focus-bg="$background800"
+                    borderRadius="$xl"
+                    bg={view === 'help' ? '$background800' : '$background950'}
+                    onPress={() => handleViewChange('help')}
+                  >
+                    <HelpIconSVG />
+                  </Pressable>
+                </VStack>
+                <VStack
+                  alignItems="center"
+                  p="$4"
+                  bg="$background950"
+                  space="lg"
+                  borderRadius="$3xl"
+                  mb="$4"
+                >
+                  <Pressable
+                    p="$2"
+                    $focus-bg="$background800"
+                    borderRadius="$xl"
+                    bg={view === 'exit' ? '$background800' : '$background950'}
+                    onPress={() => handleViewChange('exit')}
+                  >
+                    <ExitIconSVG />
+                  </Pressable>
+                </VStack>
+              </VStack>
+              <ScrollView maxHeight="$5/6">
+                <Box maxHeight="$full">{viewRenderer(view)}</Box>
+              </ScrollView>
+            </HStack>
           </Box>
         </Box>
         <Box $xl-width="$2/6" $lg-width="$2/5" $base-width="$full" p="$2">
@@ -274,7 +722,7 @@ const Dashboard: any = ({
               <Box borderRadius="$full">
                 <Avatar bgColor="$black" size="lg">
                   <AvatarFallbackText>John Smith</AvatarFallbackText>
-                  <AvatarImage source={'/assets/avatar-icon.png'} />
+                  <AvatarImage source={require('/assets/avatar-icon.png')} />
                 </Avatar>
               </Box>
               <VStack alignItems="center" space="xs" width="$full">
@@ -384,33 +832,26 @@ const Dashboard: any = ({
               </HStack>
             </VStack>
             <Box p="$3">
-              <VStack
-                justifyContent="center"
-                maxHeight="$96"
-                minWidth="$72"
-                maxWidth="$96"
-                overflow="scroll"
-              >
-                {/* ! bug : when added overflow to scroll first element of list is omitted because of space issue, cause used box with min height  */}
-                <Box minHeight="$48"></Box>
-                {comments.map((comment) => (
-                  <VStack justifyContent="center">
-                    <CommentCard
-                      avatarSrc={comment.profileImage}
-                      comment={comment.comment}
-                      userName={comment.userName}
-                      key={comment.userName}
-                    />
-                    <Divider
-                      orientation="horizontal"
-                      my="$2"
-                      bg="$background200"
-                      h="$0.5"
-                      w="$72"
-                    />
-                  </VStack>
-                ))}
-              </VStack>
+              <ScrollView>
+                <VStack maxHeight="$96" minWidth="$72" maxWidth="$96">
+                  {comments.map((comment) => (
+                    <VStack justifyContent="center">
+                      <CommentCard
+                        comment={comment.comment}
+                        userName={comment.userName}
+                        key={comment.userName}
+                      />
+                      <Divider
+                        orientation="horizontal"
+                        my="$2"
+                        bg="$background200"
+                        h="$0.5"
+                        w="$72"
+                      />
+                    </VStack>
+                  ))}
+                </VStack>
+              </ScrollView>
             </Box>
             <HStack justifyContent="flex-end" w="$80" mt="$16" mb="$10">
               <Pressable>
