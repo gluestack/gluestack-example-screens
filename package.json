@@ -44,5 +44,9 @@
     "react-native": "0.72.4",
     "react-native-web": "0.19.9"
   },
-  "packageManager": "yarn@1.22.17"
+  "packageManager": "yarn@1.22.17",
+  "dependencies": {
+    "chart.js": "^4.4.1",
+    "react-chartjs-2": "^5.2.0"
+  }
 }
