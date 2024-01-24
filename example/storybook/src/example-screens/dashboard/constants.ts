@@ -24,11 +24,6 @@ export const comments = [
     comment: 'Woah! loved the transition 💯',
     profileImage: '/assets/avatar-icon.png',
   },
-  {
-    userName: 'Ruth Joseph',
-    comment: 'Woah! Would love to try this out 🤯',
-    profileImage: '/assets/avatar-icon.png',
-  },
 ];
 
 export const analytics = {
