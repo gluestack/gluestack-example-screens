@@ -166,7 +166,7 @@ const BarChart = () => {
 const AreaChart = () => {
   const borderColor = useToken('colors', 'black');
   const backgroundColor = useToken('colors', 'black');
-  const aboveFillColor = useToken('colors', 'trueGray200');
+  const aboveFillColor = useToken('colors', 'background300');
   const belowFillColor = useToken('colors', 'white');
 
   const options = {
@@ -251,7 +251,7 @@ const HomeView = () => {
     'instagram' | 'youtube' | 'twitter' | 'facebook'
   >('instagram');
   return (
-    <Box my="$2">
+    <Box my="$2" w="$full">
       <HStack
         px="$4"
         space="4xl"
@@ -353,6 +353,9 @@ const HomeView = () => {
         gap="$6"
         $base-justifyContent="center"
         $lg-justifyContent="flex-start"
+        $base-maxWidth="$full"
+        $base-alignSelf="center"
+        $lg-w="auto"
       >
         <VStack
           alignItems="flex-start"
@@ -363,6 +366,8 @@ const HomeView = () => {
           p="$4"
           space="sm"
           maxHeight="$80"
+          $base-w="$full"
+          $lg-w="auto"
         >
           <HStack justifyContent="space-between" mx="$2" w="$full">
             <Text color="$text900" fontWeight="$bold" fontSize="$lg">
@@ -385,13 +390,23 @@ const HomeView = () => {
           borderRadius="$md"
           borderWidth="$1"
           hardShadow="5"
-          p="$4"
           space="sm"
+          $base-minWidth="$full"
+          $md-minWidth="$1/3"
+          py="$4"
+          $base-w="$full"
+          $lg-w="auto"
         >
-          <Text color="$text900" fontWeight="$bold" fontSize="$lg" m="$2">
+          <Text
+            color="$text900"
+            fontWeight="$bold"
+            fontSize="$lg"
+            my="$2"
+            mx="$4"
+          >
             Engaged Users
           </Text>
-          <Box minWidth="$64" borderRadius="$3xl" mx="auto">
+          <Box mx="auto" maxWidth="$72">
             <AreaChart />
           </Box>
           <VStack alignItems="center" w="$full">
@@ -419,6 +434,8 @@ const HomeView = () => {
           hardShadow="5"
           p="$4"
           space="sm"
+          $base-w="$full"
+          $lg-w="auto"
         >
           <HStack justifyContent="space-between" mx="$2" w="$full">
             <Text color="$text900" fontWeight="$bold" fontSize="$lg">
@@ -467,7 +484,12 @@ const HomeView = () => {
             </VStack>
           </HStack>
         </VStack>
-        <VStack space="3xl" alignContent="flex-start">
+        <VStack
+          space="3xl"
+          alignContent="flex-start"
+          $base-w="$full"
+          $lg-w="auto"
+        >
           <VStack
             alignItems="flex-start"
             borderColor="$border200"
@@ -526,7 +548,7 @@ const HomeView = () => {
                       w="$0.5"
                       h="$10"
                       $xl-mx="$8"
-                      $base-mx="$2"
+                      $base-mx="$4"
                       bgColor="$background200"
                     />
                   )}
@@ -563,7 +585,13 @@ const HomeView = () => {
                 Learn the top geographic locations of your new audience
               </Text>
             </VStack>
-            <HStack space="2xl" alignItems="center" $base-px="$2" mb="$4">
+            <HStack
+              space="2xl"
+              alignItems="center"
+              $md-px="$4"
+              $base-px="$2"
+              mb="$4"
+            >
               {[...Array(3)].map((_, index) => (
                 <HStack key={index}>
                   <VStack space="xs">
@@ -584,8 +612,8 @@ const HomeView = () => {
                       orientation="vertical"
                       w="$0.5"
                       h="$10"
-                      $md-mx="$8"
-                      $base-mx="$2"
+                      $xl-mx="$8"
+                      $base-mx="$4"
                       bgColor="$background200"
                     />
                   )}
