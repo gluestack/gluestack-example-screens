@@ -1,9 +1,5 @@
 # gluestack-ui Example Screens
 
-<h3 align="center">
-  <br>
-</h3>
-
 ## Introduction
 
 **gluestack-ui-design-system** is a comprehensive design system built on top of the universal `gluestack-ui` library. It provides a collection of UI components , a Storybook for interactive development and testing, and a flexible configuration setup for seamless customization. It is a starter kit template to create your own Design System.
