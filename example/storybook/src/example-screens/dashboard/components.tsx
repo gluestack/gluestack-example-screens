@@ -96,23 +96,24 @@ const AnalyticsCard = ({
     <VStack
       p="$6"
       m="$1"
-      space="xs"
       borderColor="$border200"
       borderRadius="$md"
       borderWidth="$1"
       hardShadow="5"
     >
-      <HStack justifyContent="space-between" alignItems="flex-start">
-        <Text fontSize="$sm" fontWeight="$medium" color="$text900">
-          Weekly {title}
-        </Text>
-        <Box
-          p="$2"
-          bg="$background50"
-          borderRadius="$lg"
-          $base-ml="$10"
-          $lg-ml="$32"
-        >
+      <HStack alignItems="flex-start" justifyContent="space-between">
+        <VStack space="xs" mr="$8">
+          <Text fontSize="$sm" fontWeight="$medium" color="$text900">
+            Weekly {title}
+          </Text>
+          <Text fontSize="$2xl" fontWeight="$bold" color="$text900">
+            {totalValue}
+          </Text>
+          <Text fontSize="$xs" fontWeight="$normal" color="$text700">
+            {subtitleValue} from last week
+          </Text>
+        </VStack>
+        <Box p="$2" bg="$background50" borderRadius="$lg">
           {title === 'Views' ? (
             <ViewIconSVG />
           ) : title === 'Followers' ? (
@@ -122,12 +123,6 @@ const AnalyticsCard = ({
           )}
         </Box>
       </HStack>
-      <Text fontSize="$2xl" fontWeight="$bold" color="$text900">
-        {totalValue}
-      </Text>
-      <Text fontSize="$xs" fontWeight="$normal" color="$text700">
-        {subtitleValue} from last week
-      </Text>
     </VStack>
   );
 };
@@ -171,7 +166,7 @@ const BarChart = () => {
 const AreaChart = () => {
   const borderColor = useToken('colors', 'black');
   const backgroundColor = useToken('colors', 'black');
-  const aboveFillColor = useToken('colors', 'trueGray200');
+  const aboveFillColor = useToken('colors', 'background300');
   const belowFillColor = useToken('colors', 'white');
 
   const options = {
@@ -209,11 +204,10 @@ const AreaChart = () => {
           target: 'origin',
           above: aboveFillColor,
           below: belowFillColor,
-          tension: 0.3,
         },
         elements: {
           line: {
-            tension: 0.5,
+            tension: 0.6,
           },
         },
       },
@@ -228,6 +222,7 @@ const PieChart = () => {
   const color4 = useToken('colors', 'primary0');
 
   const data = {
+    responsive: true,
     labels: [],
     datasets: [
       {
@@ -256,13 +251,13 @@ const HomeView = () => {
     'instagram' | 'youtube' | 'twitter' | 'facebook'
   >('instagram');
   return (
-    <Box>
+    <Box my="$2" w="$full">
       <HStack
         px="$4"
         space="4xl"
         $base-ml="$0"
         $xl-ml="$11"
-        mt="$4"
+        my="$3"
         flexWrap="wrap"
       >
         <Pressable
@@ -322,7 +317,7 @@ const HomeView = () => {
           </HStack>
         </Pressable>
       </HStack>
-      <HStack mx="$4" mt="$3" justifyContent="space-between" flexWrap="wrap">
+      <HStack mx="$4" my="$3" justifyContent="space-between" flexWrap="wrap">
         <AnalyticsCard
           title="Views"
           totalValue={analytics[tab].weeklyViews.views}
@@ -351,7 +346,17 @@ const HomeView = () => {
           }
         />
       </HStack>
-      <HStack mx="$4" my="$2" flexWrap="wrap" space="md" alignContent="center">
+      <HStack
+        mx="$4"
+        space="md"
+        flexWrap="wrap"
+        gap="$6"
+        $base-justifyContent="center"
+        $lg-justifyContent="flex-start"
+        $base-maxWidth="$full"
+        $base-alignSelf="center"
+        $lg-w="auto"
+      >
         <VStack
           alignItems="flex-start"
           borderColor="$border200"
@@ -361,6 +366,8 @@ const HomeView = () => {
           p="$4"
           space="sm"
           maxHeight="$80"
+          $base-w="$full"
+          $lg-w="auto"
         >
           <HStack justifyContent="space-between" mx="$2" w="$full">
             <Text color="$text900" fontWeight="$bold" fontSize="$lg">
@@ -373,15 +380,7 @@ const HomeView = () => {
           <Text color="$text700" fontWeight="$normal" fontSize="$sm" mx="$2">
             Receive notifications about gluestack ui updates.
           </Text>
-          <Box
-            minWidth="$96"
-            borderRadius="$2xl"
-            $base-mx="$0"
-            $md-mx="$2"
-            $md-lg="$6"
-            $xl-mx="$24"
-            my="$2"
-          >
+          <Box minWidth="$80" borderRadius="$2xl" mx="auto">
             <BarChart />
           </Box>
         </VStack>
@@ -391,17 +390,32 @@ const HomeView = () => {
           borderRadius="$md"
           borderWidth="$1"
           hardShadow="5"
-          p="$4"
           space="sm"
+          $base-minWidth="$full"
+          $md-minWidth="$1/3"
+          py="$4"
+          $base-w="$full"
+          $lg-w="auto"
         >
-          <Text color="$text900" fontWeight="$bold" fontSize="$lg" m="$2">
+          <Text
+            color="$text900"
+            fontWeight="$bold"
+            fontSize="$lg"
+            my="$2"
+            mx="$4"
+          >
             Engaged Users
           </Text>
-          <Box minWidth="$64" borderRadius="$3xl">
+          <Box mx="auto" maxWidth="$72">
             <AreaChart />
           </Box>
           <VStack alignItems="center" w="$full">
-            <Text color="$text900" fontWeight="$medium" fontSize="$5xl">
+            <Text
+              color="$text900"
+              fontWeight="$medium"
+              $lg-fontSize="$5xl"
+              $md-fontSize="$4xl"
+            >
               {analytics[tab].engagedUsers.users}
             </Text>
             <Text color="$text700" fontWeight="$normal" fontSize="$xs">
@@ -420,6 +434,8 @@ const HomeView = () => {
           hardShadow="5"
           p="$4"
           space="sm"
+          $base-w="$full"
+          $lg-w="auto"
         >
           <HStack justifyContent="space-between" mx="$2" w="$full">
             <Text color="$text900" fontWeight="$bold" fontSize="$lg">
@@ -430,7 +446,7 @@ const HomeView = () => {
             </Pressable>
           </HStack>
           <HStack alignItems="center" space="md">
-            <Box w="$56" h="$56" borderRadius="$3xl">
+            <Box w="$48" h="$56" borderRadius="$3xl">
               <PieChart />
             </Box>
             <VStack
@@ -468,67 +484,143 @@ const HomeView = () => {
             </VStack>
           </HStack>
         </VStack>
-        {/* <HStack
-          borderColor="$border200"
-          borderRadius="$md"
-          borderWidth="$1"
-          hardShadow="5"
-          p="$4"
-          space="sm"
-          alignItems="center"
-          bg="$background100"
-          maxWidth="$48"
-          maxHeight="$24"
-        >
-          <Text color="$text900" fontWeight="$bold" fontSize="$2xl">
-            {analytics[tab].totalVisits}
-          </Text>
-          <Text color="$text900" fontWeight="$normal" fontSize="$2xs">
-            Visits
-          </Text>
-        </HStack> */}
         <VStack
-          alignItems="flex-start"
-          borderColor="$border200"
-          borderRadius="$md"
-          borderWidth="$1"
-          hardShadow="5"
-          p="$4"
-          space="md"
-          maxHeight="$48"
-          justifyContent="space-between"
+          space="3xl"
+          alignContent="flex-start"
+          $base-w="$full"
+          $lg-w="auto"
         >
-          <VStack space="md">
-            <Text color="$text900" fontWeight="$bold" fontSize="$lg">
-              Top Locations
-            </Text>
-            <Text color="$text700" fontWeight="$normal" fontSize="$sm">
-              Learn the top geographic locations of your new audience
-            </Text>
+          <VStack
+            alignItems="flex-start"
+            borderColor="$border200"
+            borderRadius="$md"
+            borderWidth="$1"
+            hardShadow="5"
+            $md-p="$4"
+            $base-p="$2"
+            space="md"
+            justifyContent="space-between"
+          >
+            <VStack space="md">
+              <Text
+                color="$text900"
+                fontWeight="$bold"
+                $base-fontSize="$md"
+                $md-fontSize="$lg"
+              >
+                Top Locations
+              </Text>
+              <Text
+                color="$text700"
+                fontWeight="$normal"
+                $base-fontSize="$xs"
+                $md-fontSize="$sm"
+              >
+                Learn the top geographic locations of your new audience
+              </Text>
+            </VStack>
+            <HStack
+              space="2xl"
+              alignItems="center"
+              $md-px="$4"
+              $base-px="$2"
+              mb="$4"
+              justifyContent="center"
+            >
+              {[...Array(3)].map((_, index) => (
+                <HStack key={index}>
+                  <VStack space="xs">
+                    <Text
+                      color="$text900"
+                      fontWeight="$bold"
+                      $base-fontSize="$sm"
+                      $md-fontSize="$lg"
+                    >
+                      {analytics[tab].topLocations[index].name}
+                    </Text>
+                    <Text color="$text700" fontWeight="$normal" fontSize="$xs">
+                      {`+${analytics[tab].topLocations[index].growth}%`}
+                    </Text>
+                  </VStack>
+                  {index < 2 && (
+                    <Divider
+                      orientation="vertical"
+                      w="$0.5"
+                      h="$10"
+                      $xl-mx="$8"
+                      $base-mx="$4"
+                      bgColor="$background200"
+                    />
+                  )}
+                </HStack>
+              ))}
+            </HStack>
           </VStack>
-          <HStack space="2xl" alignItems="center" px="$4" mb="$4">
-            {[...Array(3)].map((_, index) => (
-              <HStack key={index}>
-                <VStack space="xs">
-                  <Text color="$text900" fontWeight="$bold" fontSize="$lg">
-                    {analytics[tab].topLocations[index].name}
-                  </Text>
-                  <Text color="$text700" fontWeight="$normal" fontSize="$xs">
-                    {`+${analytics[tab].topLocations[index].growth}%`}
-                  </Text>
-                </VStack>
-                {index < 2 && (
-                  <Divider
-                    orientation="vertical"
-                    w="$0.5"
-                    h="$10"
-                    mx="$8"
-                    bgColor="$background200"
-                  />
-                )}
-              </HStack>
-            ))}
-          </HStack>
+          <VStack
+            alignItems="flex-start"
+            borderColor="$border200"
+            borderRadius="$md"
+            borderWidth="$1"
+            hardShadow="5"
+            $md-p="$4"
+            $base-p="$2"
+            space="md"
+            justifyContent="space-between"
+          >
+            <VStack space="md">
+              <Text
+                color="$text900"
+                fontWeight="$bold"
+                $base-fontSize="$md"
+                $md-fontSize="$lg"
+              >
+                View Engagements
+              </Text>
+              <Text
+                color="$text700"
+                fontWeight="$normal"
+                $base-fontSize="$xs"
+                $md-fontSize="$sm"
+              >
+                Learn the top geographic locations of your new audience
+              </Text>
+            </VStack>
+            <HStack
+              space="2xl"
+              alignItems="center"
+              $md-px="$4"
+              $base-px="$2"
+              mb="$4"
+            >
+              {[...Array(3)].map((_, index) => (
+                <HStack key={index}>
+                  <VStack space="xs">
+                    <Text
+                      color="$text900"
+                      fontWeight="$bold"
+                      $base-fontSize="$sm"
+                      $md-fontSize="$lg"
+                    >
+                      {analytics[tab].topEngagements[index].name}
+                    </Text>
+                    <Text color="$text700" fontWeight="$normal" fontSize="$xs">
+                      {`${analytics[tab].topEngagements[index].growth} views`}
+                    </Text>
+                  </VStack>
+                  {index < 2 && (
+                    <Divider
+                      orientation="vertical"
+                      w="$0.5"
+                      h="$10"
+                      $xl-mx="$8"
+                      $base-mx="$4"
+                      bgColor="$background200"
+                    />
+                  )}
+                </HStack>
+              ))}
+            </HStack>
+          </VStack>
         </VStack>
       </HStack>
     </Box>

@@ -63,6 +63,20 @@ export const analytics = {
         growth: '6.5',
       },
     ],
+    topEngagements: [
+      {
+        name: 'Videos',
+        growth: '8889988',
+      },
+      {
+        name: 'Corousel',
+        growth: '481122',
+      },
+      {
+        name: 'Pictures',
+        growth: '6779923',
+      },
+    ],
   },
   youtube: {
     weeklyViews: {
@@ -98,6 +112,20 @@ export const analytics = {
       {
         name: 'Canada',
         growth: '1.5',
+      },
+    ],
+    topEngagements: [
+      {
+        name: 'Videos',
+        growth: '8889988',
+      },
+      {
+        name: 'Corousel',
+        growth: '481122',
+      },
+      {
+        name: 'Pictures',
+        growth: '6779923',
       },
     ],
   },
@@ -137,6 +165,20 @@ export const analytics = {
         growth: '3.5',
       },
     ],
+    topEngagements: [
+      {
+        name: 'Videos',
+        growth: '8889988',
+      },
+      {
+        name: 'Corousel',
+        growth: '481122',
+      },
+      {
+        name: 'Pictures',
+        growth: '6779923',
+      },
+    ],
   },
   facebook: {
     weeklyViews: {
@@ -172,6 +214,20 @@ export const analytics = {
       {
         name: 'Germany',
         growth: '3.5',
+      },
+    ],
+    topEngagements: [
+      {
+        name: 'Videos',
+        growth: '8889988',
+      },
+      {
+        name: 'Corousel',
+        growth: '481122',
+      },
+      {
+        name: 'Pictures',
+        growth: '6779923',
       },
     ],
   },
