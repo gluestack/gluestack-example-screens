@@ -29,6 +29,7 @@ import {
   CheckboxLabel,
   CheckIcon,
   Pressable,
+  Heading,
 } from '@gluestack-ui-new/themed';
 import {
   FileIcon,
@@ -51,12 +52,12 @@ const BlogCard = () => {
     >
       <Box w="auto" h={256} backgroundColor="$background100"></Box>
       <VStack mt="$4" width="$full">
-        <Text fontSize="$sm" color="$text700">
+        <Heading size="xs" fontWeight="$normal" color="$text700">
           May 15, 2023
-        </Text>
-        <Text mt="$2" fontWeight="$bold" color="$text900">
+        </Heading>
+        <Heading size="sm" mt="$2" fontWeight="$bold" color="$text900">
           The Power of Positive Thinking
-        </Text>
+        </Heading>
         <Text mt="$2.5" fontSize="$sm" color="$text700" lineHeight="$md">
           Discover how the power of positive thinking can transform your life,
           boost your confidence, and help you overcome challenges. Explore
@@ -119,20 +120,14 @@ const ProfileCard = () => {
         Pushing the boundaries of reality with XR design wizardry ✨🚀
         #XRDesigner
       </Text>
-      <HStack
-        mt="$7"
-        space="md"
-        alignItems="center"
-        width="$full"
-        justifyContent="center"
-      >
-        <VStack alignItems="center" space="xs">
+      <HStack mt="$7" alignItems="center" width="$full" justifyContent="center">
+        <VStack flex={1} alignItems="center" space="xs">
           <Text fontSize="$sm" color="$text900" fontWeight="$bold">
             32
           </Text>
           <Text
             fontFamily="$body"
-            fontSize="$sm"
+            fontSize="$xs"
             color="$text900"
             fontWeight="$normal"
           >
@@ -146,11 +141,11 @@ const ProfileCard = () => {
           w="$px"
           orientation="vertical"
         />
-        <VStack alignItems="center" space="xs">
+        <VStack flex={1} alignItems="center" space="xs">
           <Text fontSize="$sm" color="$text900" fontWeight="$bold">
             8,396
           </Text>
-          <Text fontSize="$sm" color="$text900" fontWeight="$normal">
+          <Text fontSize="$xs" color="$text900" fontWeight="$normal">
             followers
           </Text>
         </VStack>
@@ -161,11 +156,11 @@ const ProfileCard = () => {
           w="$px"
           orientation="vertical"
         />
-        <VStack alignItems="center" space="xs">
+        <VStack flex={1} alignItems="center" space="xs">
           <Text fontSize="$sm" color="$text900" fontWeight="$bold">
             720
           </Text>
-          <Text fontSize="$sm" color="$text900" fontWeight="$normal">
+          <Text fontSize="$xs" color="$text900" fontWeight="$normal">
             following
           </Text>
         </VStack>
@@ -185,12 +180,12 @@ const FormInputcard = () => {
       hardShadow="5"
     >
       <VStack>
-        <Text fontSize="$lg" fontWeight="bold" color="$text900">
+        <Heading size="md" fontWeight="bold" color="$text900">
           Share gluestack UI with friends
-        </Text>
-        <Text mt="$2.5" fontSize="$sm" color="$text700">
+        </Heading>
+        <Heading mt="$2.5" size="xs" fontWeight="$normal" color="$text700">
           Email friends who have never tried glueStack UI
-        </Text>
+        </Heading>
       </VStack>
       <HStack justifyContent="space-between" space="sm">
         <FormControl size="md" flex={1}>
@@ -221,12 +216,12 @@ const SettingsCard = () => {
       w="$full"
       hardShadow="5"
     >
-      <Text fontSize="$lg" fontWeight="$bold" color="$text900">
+      <Heading size="md" fontWeight="$bold" color="$text900">
         Notification Settings
-      </Text>
-      <Text mt="$1.5" fontSize="$sm" color="$text700">
+      </Heading>
+      <Heading mt="$1.5" size="xs" fontWeight="$normal" color="$text700">
         Receive notifications about Gluestack UI updates.
-      </Text>
+      </Heading>
       <VStack mt="$6" space="xl">
         {settingOptions.map((option: any, index: number) => (
           <HStack key={index} space="xl">
@@ -285,12 +280,12 @@ const FileUploadCard = () => {
       hardShadow="5"
     >
       <VStack>
-        <Text fontSize="$lg" fontWeight="$bold" color="$text900">
+        <Heading size="md" fontWeight="$bold" color="$text900">
           Upload Your Files
-        </Text>
-        <Text mt="$1.5" fontSize="$sm" color="$text700">
+        </Heading>
+        <Heading mt="$1.5" size="xs" fontWeight="$normal" color="$text700">
           JPG, PNG, PDF, MP4, GIFs supported
-        </Text>
+        </Heading>
       </VStack>
       <VStack
         mt="$5"
@@ -327,9 +322,9 @@ const FileUploadCard = () => {
         </Pressable>
       </VStack>
       <VStack mt="$6">
-        <Text fontSize="$sm" fontWeight="$bold" color="$text900">
+        <Heading size="xs" fontWeight="$bold" color="$text900">
           Uploading 1 file
-        </Text>
+        </Heading>
         <HStack mt="$3.5" justifyContent="space-between" alignItems="center">
           <Box padding="$3">
             <FileIcon />
@@ -370,25 +365,30 @@ const LoginCard = () => {
       borderWidth="$1"
       hardShadow="5"
       space="4xl"
-      $md-width="$2/5"
+      $md-width="45%"
       $lg-width="$full"
     >
       <VStack space="xs">
-        <Text fontSize="$2xl" fontWeight="$bold" color="$text900">
+        <Heading
+          size="xl"
+          fontWeight="$bold"
+          color="$text900"
+          fontFamily="$heading"
+        >
           Login to your account
-        </Text>
+        </Heading>
         <HStack alignItems="center">
-          <Text
-            fontSize="$sm"
+          <Heading
+            size="xs"
             fontWeight="$light"
             lineHeight="$md"
             color="$text700"
           >
             Don’t have an account?
-          </Text>
-          <Text fontSize="$sm" ml="$1.5">
+          </Heading>
+          <Heading size="xs" color="$text700" fontWeight="$medium" ml="$1.5">
             {''}Sign up
-          </Text>
+          </Heading>
         </HStack>
       </VStack>
       <VStack space="xl">
@@ -415,9 +415,11 @@ const LoginCard = () => {
             </CheckboxIndicator>
             <CheckboxLabel>Remember me</CheckboxLabel>
           </Checkbox>
-          <Text fontSize="$xs" fontWeight="$medium" color="$text700">
-            Forgot Password?
-          </Text>
+          <Pressable>
+            <Text fontSize="$xs" fontWeight="$medium" color="$text700">
+              Forgot Password?
+            </Text>
+          </Pressable>
         </HStack>
       </VStack>
       <HStack
@@ -442,7 +444,7 @@ const LoginCard = () => {
           orientation="horizontal"
         ></Divider>
       </HStack>
-      <Button size="sm">
+      <Button size="sm" borderRadius="$md">
         <ButtonText>Login</ButtonText>
       </Button>
       <HStack space="md">
@@ -494,27 +496,35 @@ const Cards: any = ({ w = '100%', h = '100%', ...props }: any) => {
             hardShadow="5"
           >
             <Box>
-              <Text fontSize="$lg" color="$text900" fontWeight="$bold">
+              <Heading size="md" color="$text900" fontWeight="$bold">
                 Updates Available
-              </Text>
-              <Text mt="$1.5" color="$text700">
+              </Heading>
+              <Heading
+                size="xs"
+                mt="$1.5"
+                color="$text700"
+                fontWeight="$normal"
+              >
                 A new version is available. Please upgrade for the best
                 experience.
-              </Text>
+              </Heading>
             </Box>
             <HStack
-              space="sm"
-              $base-flexDirection="column"
-              $sm-flexDirection="row"
+              space="md"
+              m="$4"
               $base-width="$full"
               $sm-width="auto"
-              $base-mt="$3"
-              $sm-mt="$0"
+              justifyContent="flex-end"
             >
-              <Button size="sm" variant="outline">
+              <Button
+                size="sm"
+                variant="outline"
+                action="secondary"
+                borderRadius="$md"
+              >
                 <ButtonText>Skip</ButtonText>
               </Button>
-              <Button size="sm">
+              <Button size="sm" borderRadius="$md">
                 <ButtonText>Download</ButtonText>
               </Button>
             </HStack>
