@@ -241,6 +241,7 @@ const Dashboard: any = ({ w = '100%', ...props }: any) => {
                   $base-fontSize="$lg"
                   color="$text900"
                   fontWeight="$bold"
+                  fontFamily="$heading"
                 >
                   Good morning, John
                 </Text>
@@ -249,6 +250,7 @@ const Dashboard: any = ({ w = '100%', ...props }: any) => {
                   $base-fontSize="$xs"
                   color="$text700"
                   fontWeight="$normal"
+                  fontFamily="$body"
                 >
                   Let’s take a look at your social presence
                 </Text>
@@ -454,6 +456,7 @@ const Dashboard: any = ({ w = '100%', ...props }: any) => {
                     fontWeight="$semibold"
                     fontSize="$xs"
                     color="$secondary600"
+                    fontFamily="$body"
                   >
                     See All Activity
                   </Text>
