@@ -95,7 +95,6 @@ const ProfileCard = () => {
       hardShadow="5"
       $md-width="$3/5"
       $lg-width="$full"
-      $xl-width={360}
       maxHeight={320}
     >
       <Avatar bgColor="$black" size="lg">
