@@ -7,7 +7,7 @@ import {
   Text,
   Box,
 } from '@gluestack-ui-new/themed';
-import { config } from '@gluestack-ui-new/config';
+import { config } from '@gluestack-ui/config-v2';
 
 const ProviderStory = () => {
   const [colorMode, setColorMode] = React.useState<

@@ -1,10 +1,11 @@
 import { addParameters } from '@storybook/client-api';
 import { DocsContainer } from '@storybook/addon-docs/blocks';
 import { useDarkMode } from 'storybook-dark-mode';
-import { config } from '@gluestack-ui-new/config';
+import { config } from '@gluestack-ui/config-v2';
 import { Center, GluestackUIProvider } from '@gluestack-ui-new/themed';
 import gstheme from './gstheme';
 import { themes } from '@storybook/theming';
+import { Theme } from '@gluestack-style/react';
 
 export const parameters = {
   actions: { argTypesRegex: '^on[A-Z].*' },
@@ -43,10 +44,12 @@ export const decorators = [
   (Story) => {
     const theme = useDarkMode() ? 'dark' : 'light';
     return (
-      <GluestackUIProvider config={config} colorMode={theme}>
-        <Center>
-          <Story />
-        </Center>
+      <GluestackUIProvider config={config}>
+        <Theme name={`${theme}_theme`}>
+          <Center>
+            <Story />
+          </Center>
+        </Theme>
       </GluestackUIProvider>
     );
   },

@@ -4,8 +4,8 @@
     "baseUrl": ".",
     "paths": {
       "@gluestack-ui-new/themed": ["../../packages/themed/src"],
-      "@gluestack-ui-new/config": [
-        "../../packages/config/src/gluestack-ui.config"
+      "@gluestack-ui/config-v2": [
+        "../../packages/config-v2/src/gluestack-ui.config"
       ],
       "react-native": ["./node_modules/react-native-web"]
     },
