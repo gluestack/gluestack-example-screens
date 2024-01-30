@@ -79,6 +79,7 @@ const Dashboard: any = ({ w = '100%', ...props }: any) => {
   return (
     <Box
       {...props}
+      bg="$background0"
       w={w}
       borderWidth="$1"
       borderColor="$border200"

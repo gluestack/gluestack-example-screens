@@ -1,7 +1,7 @@
 import { withBackgrounds } from '@storybook/addon-ondevice-backgrounds';
 import { addParameters } from '@storybook/client-api';
 import { GluestackUIProvider, Box, VStack } from '@gluestack-ui-new/themed';
-import { config } from '@gluestack-ui-new/config';
+import { config } from '@gluestack-ui/config-v2';
 
 import { useState } from 'react';
 

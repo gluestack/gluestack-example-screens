@@ -274,132 +274,127 @@ const ChatList = () => {
 };
 
 const Chats = () => (
-  <>
-    <HStack
+  <HStack
+    bg="$background0"
+    w="$full"
+    borderWidth={1}
+    flex={1}
+    borderRadius="$lg"
+    borderColor="$border200"
+  >
+    <VStack>
+      <Box
+        ml="$4"
+        mr="$2"
+        mt="$3"
+        mb="$3"
+        p="$4"
+        borderColor="$border200"
+        borderRadius="$lg"
+        borderWidth="$1"
+        alignItems="center"
+      >
+        <Image
+          w="$5"
+          h="$4.5"
+          source={require('../../../assets/gluestack-logo.svg')}
+        />
+      </Box>
+
+      <Sidebar />
+    </VStack>
+
+    <Divider
+      orientation="horizontal"
+      bg="$background200"
       w="$full"
-      borderWidth={1}
-      flex={1}
-      borderRadius="$lg"
-      borderColor="$border200"
+      transform="translateY(-50%)"
+      top="10%"
+      position="absolute" // Make sure the divider is positioned relative
+    />
+    <Divider
+      orientation="vertical"
+      bg="$background200"
+      h="auto"
+      $dark-bg="$emerald400"
+      position="relative" // Make sure the divider is positioned relative
     >
-      <VStack>
-        <Box
-          ml="$4"
-          mr="$2"
-          mt="$3"
-          mb="$3"
-          p="$4"
-          borderColor="$border200"
-          borderRadius="$lg"
-          borderWidth="$1"
-          alignItems="center"
-        >
-          <Image
-            w="$5"
-            h="$4.5"
-            source={require('../../../assets/gluestack-logo.svg')}
-          />
-        </Box>
-
-        <Sidebar />
-      </VStack>
-
-      <Divider
-        orientation="horizontal"
-        bg="$background200"
-        w="$full"
-        transform="translateY(-50%)"
-        top="10%"
-        position="absolute" // Make sure the divider is positioned relative
+      <Icon
+        bg="$background100"
+        pt="$1.5"
+        pb="$1.5"
+        pl="$0.5"
+        pr="$0.5"
+        as={GripVertical}
+        size="md"
+        borderRadius="$sm"
+        position="absolute"
+        top="50%" // Center the icon vertically
+        transform="translateY(-50%)" // Adjust for vertical centering
+        // right="-$1"
+        zIndex={2} // Set a higher zIndex for the icon
       />
-      <Divider
-        orientation="vertical"
-        bg="$background200"
-        h="auto"
-        $dark-bg="$emerald400"
-        position="relative" // Make sure the divider is positioned relative
-      >
-        <Icon
-          bg="$background100"
-          pt="$1.5"
-          pb="$1.5"
-          pl="$0.5"
-          pr="$0.5"
-          as={GripVertical}
-          size="md"
-          borderRadius="$sm"
-          position="absolute"
-          top="50%" // Center the icon vertically
-          transform="translateY(-50%)" // Adjust for vertical centering
-          // right="-$1"
-          zIndex={2} // Set a higher zIndex for the icon
-        />
-      </Divider>
+    </Divider>
 
-      <VStack>
-        <HStack p="$6" justifyContent="space-between">
-          <Text fontWeight="$medium" fontSize="$xl">
-            Inbox
-          </Text>
-          <Icon as={MoreVertical} />
-        </HStack>
-        <Inbox />
-      </VStack>
+    <VStack>
+      <HStack p="$6" justifyContent="space-between">
+        <Text fontWeight="$medium" fontSize="$xl">
+          Inbox
+        </Text>
+        <Icon as={MoreVertical} />
+      </HStack>
+      <Inbox />
+    </VStack>
 
-      <Divider
-        orientation="vertical"
-        bg="$background200"
-        h="auto"
-        $dark-bg="$emerald400"
+    <Divider
+      orientation="vertical"
+      bg="$background200"
+      h="auto"
+      $dark-bg="$emerald400"
+    />
+    <VStack w="$1/2" gap="$4.5">
+      <HStack paddingHorizontal="$6" paddingVertical="$4" gap="$4">
+        <Avatar>
+          <AvatarFallbackText>SS</AvatarFallbackText>
+          <AvatarImage source={require('../../../assets/Avatar3.png')} />
+        </Avatar>
+        <VStack>
+          <Heading fontSize="$lg" fontWeight="$bold">
+            Richard Lyod
+          </Heading>
+          <HStack alignItems="center" space="xs">
+            <Image source={require('../../../assets/Dot.svg')} w="$2" h="$2" />
+            <Text size="sm">Online</Text>
+          </HStack>
+        </VStack>
+      </HStack>
+      <ChatList />
+    </VStack>
+
+    <Divider
+      orientation="vertical"
+      bg="$background200"
+      h="auto"
+      $dark-bg="$emerald400"
+      position="relative" // Make sure the divider is positioned relative
+    >
+      <Icon
+        bg="$background100"
+        pt="$1.5"
+        pb="$1.5"
+        pl="$0.5"
+        pr="$0.5"
+        as={GripVertical}
+        size="md"
+        borderRadius="$sm"
+        position="absolute"
+        top="50%" // Center the icon vertically
+        transform="translateY(-50%)" // Adjust for vertical centering
+        right="-$1"
+        zIndex={2} // Set a higher zIndex for the icon
       />
-      <VStack w="$1/2" gap="$4.5">
-        <HStack paddingHorizontal="$6" paddingVertical="$4" gap="$4">
-          <Avatar>
-            <AvatarFallbackText>SS</AvatarFallbackText>
-            <AvatarImage source={require('../../../assets/Avatar3.png')} />
-          </Avatar>
-          <VStack>
-            <Heading fontSize="$lg" fontWeight="$bold">
-              Richard Lyod
-            </Heading>
-            <HStack alignItems="center" space="xs">
-              <Image
-                source={require('../../../assets/Dot.svg')}
-                w="$2"
-                h="$2"
-              />
-              <Text size="sm">Online</Text>
-            </HStack>
-          </VStack>
-        </HStack>
-        <ChatList />
-      </VStack>
-
-      <Divider
-        orientation="vertical"
-        bg="$background200"
-        h="auto"
-        $dark-bg="$emerald400"
-        position="relative" // Make sure the divider is positioned relative
-      >
-        <Icon
-          bg="$background100"
-          pt="$1.5"
-          pb="$1.5"
-          pl="$0.5"
-          pr="$0.5"
-          as={GripVertical}
-          size="md"
-          borderRadius="$sm"
-          position="absolute"
-          top="50%" // Center the icon vertically
-          transform="translateY(-50%)" // Adjust for vertical centering
-          right="-$1"
-          zIndex={2} // Set a higher zIndex for the icon
-        />
-      </Divider>
-    </HStack>
-  </>
+    </Divider>
+  </HStack>
 );
 
 export default Chats;
