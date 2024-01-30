@@ -20,10 +20,15 @@ import {
   ScrollView,
   Box,
   Switch,
+  Menu,
+  MenuItem,
+  MenuItemLabel,
 } from '@gluestack-ui-new/themed';
 import {
+  AlertCircle,
   ArrowLeft,
   BadgeHelp,
+  Ban,
   BellOff,
   CalendarDays,
   Camera,
@@ -43,6 +48,7 @@ import {
   SmilePlus,
   Star,
   User,
+  UserCircle,
   Video,
 } from 'lucide-react-native';
 import { TouchableOpacity } from 'react-native';
@@ -502,13 +508,38 @@ const Chats = () => {
             h="$4.5"
             as={Video}
           />
-          <Icon
+
+          <Menu
+            placement={'bottom right'}
+            disabledKeys={['Theme']}
+            trigger={({ ...triggerProps }) => {
+              return (
+                <TouchableOpacity bg="transparent" {...triggerProps}>
+                  <Icon color="$background800" as={MoreVertical} />
+                </TouchableOpacity>
+              );
+            }}
+          >
+            <MenuItem key="Community" textValue="Community">
+              <Icon as={UserCircle} size="sm" mr="$2" />
+              <MenuItemLabel size="sm">Show Profile</MenuItemLabel>
+            </MenuItem>
+            <MenuItem key="Plugins" textValue="Plugins">
+              <Icon as={Ban} size="sm" mr="$2" />
+              <MenuItemLabel size="sm">Block</MenuItemLabel>
+            </MenuItem>
+            <MenuItem key="Plugins" textValue="Plugins">
+              <Icon as={AlertCircle} size="sm" mr="$2" />
+              <MenuItemLabel size="sm">Report</MenuItemLabel>
+            </MenuItem>
+          </Menu>
+          {/* <Icon
             sx={{ _dark: { color: '$background800' } }}
             color="$background800"
             w="$4.5"
             h="$4.5"
             as={MoreVertical}
-          />
+          /> */}
         </HStack>
       </HStack>
     );
@@ -596,7 +627,7 @@ const Chats = () => {
               w="$6"
               h="$6"
               p="$2"
-              bg={activeIcon === label ? '$black' : '$white'}
+              bg={activeIcon === label ? '$primary400' : '$white'}
               color={activeIcon === label ? '$background200' : '$background800'}
               borderRadius="$lg"
             />
@@ -657,7 +688,7 @@ const Chats = () => {
             textAlign="center"
             fontWeight="$bold"
           >
-            Richard Lyod
+            {selectedChat.name}
           </Text>
           <Text
             sx={{ _dark: { color: '$text700' } }}
@@ -882,7 +913,9 @@ const Chats = () => {
         sx={{ _dark: { borderColor: '$border200' } }}
         borderColor="$border200"
       >
-        <VStack>
+        <VStack
+          sx={{ '@base': { display: 'none' }, '@md': { display: 'flex' } }}
+        >
           <Box
             w="$11"
             h="$11"
@@ -906,6 +939,7 @@ const Chats = () => {
         </VStack>
 
         <Divider
+          sx={{ '@base': { display: 'none' }, '@md': { display: 'flex' } }}
           orientation="horizontal"
           bg="$background200"
           w="$full"
@@ -914,6 +948,7 @@ const Chats = () => {
           position="absolute" // Make sure the divider is positioned relative
         />
         <Divider
+          sx={{ '@base': { display: 'none' }, '@md': { display: 'flex' } }}
           orientation="vertical"
           bg="$background200"
           h="auto"
@@ -921,6 +956,7 @@ const Chats = () => {
           position="relative" // Make sure the divider is positioned relative
         >
           <Icon
+            sx={{ '@base': { display: 'none' }, '@md': { display: 'flex' } }}
             bg="$background100"
             pt="$1.5"
             pb="$1.5"
@@ -958,7 +994,7 @@ const Chats = () => {
               flex: 'none',
               display: 'none',
             },
-            '@sm': {
+            '@base': {
               flex: 1,
               display: 'flex',
             },
@@ -974,9 +1010,12 @@ const Chats = () => {
               <Inbox chatData={chatData} onSelect={handleChatSelect} />
             </>
           )}
-          {showChatList && <ChatList selectedChat={selectedChat} />}
+          <ScrollView>
+            {showChatList && <ChatList selectedChat={selectedChat} />}
+          </ScrollView>
         </VStack>
         <Divider
+          sx={{ '@base': { display: 'none' }, '@md': { display: 'flex' } }}
           orientation="vertical"
           bg="$background200"
           h="auto"
@@ -1005,12 +1044,14 @@ const Chats = () => {
         </VStack>
 
         <Divider
+          sx={{ '@base': { display: 'none' }, '@md': { display: 'flex' } }}
           orientation="vertical"
           bg="$background200"
           h="auto"
           position="relative" // Make sure the divider is positioned relative
         >
           <Icon
+            sx={{ '@base': { display: 'none' }, '@md': { display: 'flex' } }}
             bg="$background100"
             pt="$1.5"
             pb="$1.5"
