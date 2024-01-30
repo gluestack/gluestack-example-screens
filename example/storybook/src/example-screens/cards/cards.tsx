@@ -50,7 +50,7 @@ const BlogCard = () => {
       width="$full"
       hardShadow="5"
     >
-      <Box w="auto" h={256} backgroundColor="$background100"></Box>
+      <Box w="auto" h="$64" backgroundColor="$background50"></Box>
       <VStack mt="$4" width="$full">
         <Heading size="xs" fontWeight="$normal" color="$text700">
           May 15, 2023
@@ -93,9 +93,8 @@ const ProfileCard = () => {
       borderWidth="$1"
       borderColor="$border200"
       hardShadow="5"
-      $md-width="$3/5"
-      $lg-width="$full"
-      maxHeight={320}
+      $xl-width="$full"
+      maxHeight="$80"
     >
       <Avatar bgColor="$black" size="lg">
         <AvatarFallbackText>John Smith</AvatarFallbackText>
@@ -115,6 +114,7 @@ const ProfileCard = () => {
         color="$text700"
         textAlign="center"
         lineHeight="$sm"
+        $base-maxWidth="$5/6"
       >
         Pushing the boundaries of reality with XR design wizardry ✨🚀
         #XRDesigner
@@ -179,10 +179,16 @@ const FormInputcard = () => {
       hardShadow="5"
     >
       <VStack>
-        <Heading size="md" fontWeight="bold" color="$text900">
+        <Heading size="md" fontWeight="bold" lineHeight="$md" color="$text900">
           Share gluestack UI with friends
         </Heading>
-        <Heading mt="$2.5" size="xs" fontWeight="$normal" color="$text700">
+        <Heading
+          mt="$2.5"
+          size="xs"
+          fontWeight="$normal"
+          lineHeight="$sm"
+          color="$text700"
+        >
           Email friends who have never tried glueStack UI
         </Heading>
       </VStack>
@@ -230,7 +236,7 @@ const SettingsCard = () => {
               backgroundColor="$background50"
               alignSelf="center"
             >
-              {option.Icon && <option.Icon />}
+              {option.Icon && <Icon as={option.Icon} size="xl" />}
             </Box>
             <HStack
               flex={1}
@@ -287,7 +293,9 @@ const FileUploadCard = () => {
         </Heading>
       </VStack>
       <VStack
-        mt="$5"
+        $base-mt="$5"
+        $md-mt="$12"
+        $lg-mt="$5"
         px="$20"
         py="$6"
         alignItems="center"
@@ -298,7 +306,7 @@ const FileUploadCard = () => {
       >
         <Pressable>
           <Box alignItems="center">
-            <CloudIcon />
+            <Icon as={CloudIcon} h="$16" w="$16" />
             <Text mt="$1.5" fontSize="$sm" lineHeight="$md" color="$text700">
               Drag & drop your file here
             </Text>
@@ -320,13 +328,13 @@ const FileUploadCard = () => {
           </Badge>
         </Pressable>
       </VStack>
-      <VStack mt="$6">
+      <VStack $base-mt="$6" $md-mt="$8" $lg-mt="$6" $md-mb="$8" $lg-mb="$0">
         <Heading size="xs" fontWeight="$bold" color="$text900">
           Uploading 1 file
         </Heading>
         <HStack mt="$3.5" justifyContent="space-between" alignItems="center">
           <Box padding="$3">
-            <FileIcon />
+            <Icon as={FileIcon} size="xl" />
           </Box>
           <VStack w="$4/5">
             <HStack justifyContent="space-between">
@@ -364,8 +372,8 @@ const LoginCard = () => {
       borderWidth="$1"
       hardShadow="5"
       space="4xl"
-      $md-width="45%"
-      $lg-width="$full"
+      $md-width="$1/2"
+      $xl-width="$full"
     >
       <VStack space="xs">
         <Heading
@@ -407,7 +415,7 @@ const LoginCard = () => {
             <InputField type="password" placeholder="Enter password" />
           </Input>
         </FormControl>
-        <HStack justifyContent="space-between">
+        <HStack justifyContent="space-between" alignItems="center">
           <Checkbox value="" size="sm">
             <CheckboxIndicator mr="$2">
               <CheckboxIcon as={CheckIcon} />
@@ -470,8 +478,8 @@ const LoginCard = () => {
 const Cards: any = ({ w = '100%', h = '100%', ...props }: any) => {
   return (
     <Box {...props} bg="$background0" p={'$6'} h={h} w={w}>
-      <VStack flex={1} $lg-flexDirection="row" space="2xl">
-        <VStack $base-width="$full" $lg-width="$2/3" space="2xl">
+      <VStack flex={1} $xl-flexDirection="row" space="2xl">
+        <VStack $base-width="$full" $xl-width="$2/3" space="2xl">
           <VStack $sm-flexDirection="row" space="2xl">
             <VStack $base-width="$full" $md-width="$2/5" space="2xl">
               <BlogCard />
@@ -532,9 +540,8 @@ const Cards: any = ({ w = '100%', h = '100%', ...props }: any) => {
         <VStack
           flex={1}
           $base-width="$full"
-          $lg-width="$1/4"
           $md-flexDirection="row"
-          $lg-flexDirection="column"
+          $xl-flexDirection="column"
           space="2xl"
         >
           <LoginCard />
