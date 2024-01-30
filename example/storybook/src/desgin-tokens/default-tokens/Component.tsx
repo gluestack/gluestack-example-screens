@@ -9,7 +9,7 @@ import {
   Heading,
   Divider,
 } from '@gluestack-ui-new/themed';
-import { config } from '@gluestack-ui-new/config';
+import { config } from '@gluestack-ui/config-v2';
 import { Table, TR, TBody, TD, THead, TH } from '@expo/html-elements';
 const colors: any = config.tokens.colors;
 

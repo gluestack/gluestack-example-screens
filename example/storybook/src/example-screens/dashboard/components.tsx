@@ -192,7 +192,7 @@ const CommentCard = ({ userName, comment }: CommentCardProps) => {
         <Box borderRadius="$full">
           <Avatar bgColor="$black" size="sm">
             <AvatarFallbackText>{userName}</AvatarFallbackText>
-            <AvatarImage source={require('/assets/avatar-icon.png')} />
+            <AvatarImage source={require('../assets/avatar-icon.png')} />
           </Avatar>
         </Box>
         <VStack>

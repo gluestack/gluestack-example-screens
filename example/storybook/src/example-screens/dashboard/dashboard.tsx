@@ -380,7 +380,7 @@ const Dashboard: any = ({ w = '100%', ...props }: any) => {
               <Box borderRadius="$full">
                 <Avatar bgColor="$black" size="lg">
                   <AvatarFallbackText>John Smith</AvatarFallbackText>
-                  <AvatarImage source={require('/assets/avatar-icon.png')} />
+                  <AvatarImage source={require('../assets/avatar-icon.png')} />
                 </Avatar>
               </Box>
               <VStack alignItems="center" space="xs" width="$full">

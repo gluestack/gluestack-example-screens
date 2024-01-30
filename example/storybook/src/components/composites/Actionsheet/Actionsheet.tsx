@@ -31,7 +31,7 @@ import {
   Text,
   Center,
 } from '@gluestack-ui-new/themed';
-import { config } from '@gluestack-ui-new/config';
+import { config } from '@gluestack-ui/config-v2';
 
 const ActionsheetBasic = ({ showActionsheetProp, ...props }: any) => {
   const [showActionsheet, setShowActionsheet] = React.useState(false);

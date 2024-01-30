@@ -2,27 +2,27 @@ export const comments = [
   {
     userName: 'John Smith',
     comment: 'Loved the animation! Can you link the tutorial? 👀',
-    profileImage: '/assets/avatar-icon.png',
+    profileImage: '../assets/avatar-icon.png',
   },
   {
     userName: 'Mila Dann',
     comment: 'This looks great! Have been following you from a long time 🤩',
-    profileImage: '/assets/avatar-icon.png',
+    profileImage: '../assets/avatar-icon.png',
   },
   {
     userName: 'Mila Dann',
     comment: 'Woah! loved the transition 💯',
-    profileImage: '/assets/avatar-icon.png',
+    profileImage: '../assets/avatar-icon.png',
   },
   {
     userName: 'Ruth Joseph',
     comment: 'Woah! Would love to try this out 🤯',
-    profileImage: '/assets/avatar-icon.png',
+    profileImage: '../assets/avatar-icon.png',
   },
   {
     userName: 'Mila Dann',
     comment: 'Woah! loved the transition 💯',
-    profileImage: '/assets/avatar-icon.png',
+    profileImage: '../assets/avatar-icon.png',
   },
 ];
 

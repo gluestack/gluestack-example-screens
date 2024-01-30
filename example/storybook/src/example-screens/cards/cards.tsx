@@ -29,6 +29,7 @@ import {
   CheckboxLabel,
   CheckIcon,
   Pressable,
+  Heading,
 } from '@gluestack-ui-new/themed';
 import {
   FileIcon,
@@ -49,14 +50,14 @@ const BlogCard = () => {
       width="$full"
       hardShadow="5"
     >
-      <Box w="auto" h={256} backgroundColor="$background100"></Box>
+      <Box w="auto" h="$64" backgroundColor="$background50"></Box>
       <VStack mt="$4" width="$full">
-        <Text fontSize="$sm" color="$text700">
+        <Heading size="xs" fontWeight="$normal" color="$text700">
           May 15, 2023
-        </Text>
-        <Text mt="$2" fontWeight="$bold" color="$text900">
+        </Heading>
+        <Heading size="sm" mt="$2" fontWeight="$bold" color="$text900">
           The Power of Positive Thinking
-        </Text>
+        </Heading>
         <Text mt="$2.5" fontSize="$sm" color="$text700" lineHeight="$md">
           Discover how the power of positive thinking can transform your life,
           boost your confidence, and help you overcome challenges. Explore
@@ -66,7 +67,7 @@ const BlogCard = () => {
         <HStack mt="$6" space="lg" alignItems="center">
           <Avatar size="md">
             <AvatarFallbackText>John Smith</AvatarFallbackText>
-            <AvatarImage source={require('./avatar-image.png')} />
+            <AvatarImage source={require('../assets/avatar-icon.png')} />
           </Avatar>
           <VStack>
             <Text fontWeight="$bold" color="$text900">
@@ -92,14 +93,12 @@ const ProfileCard = () => {
       borderWidth="$1"
       borderColor="$border200"
       hardShadow="5"
-      $md-width="$3/5"
-      $lg-width="$full"
-      $xl-width={360}
-      maxHeight={320}
+      $xl-width="$full"
+      maxHeight="$80"
     >
       <Avatar bgColor="$black" size="lg">
         <AvatarFallbackText>John Smith</AvatarFallbackText>
-        <AvatarImage source={require('./avatar-image.png')} />
+        <AvatarImage source={require('../assets/avatar-icon.png')} />
       </Avatar>
       <VStack alignItems="center" mt="$3" width="$full">
         <Text fontSize="$lg" color="$text900" fontWeight="$bold">
@@ -115,24 +114,19 @@ const ProfileCard = () => {
         color="$text700"
         textAlign="center"
         lineHeight="$sm"
+        $base-maxWidth="$5/6"
       >
         Pushing the boundaries of reality with XR design wizardry ✨🚀
         #XRDesigner
       </Text>
-      <HStack
-        mt="$7"
-        space="md"
-        alignItems="center"
-        width="$full"
-        justifyContent="center"
-      >
-        <VStack alignItems="center" space="xs">
+      <HStack mt="$7" alignItems="center" width="$full" justifyContent="center">
+        <VStack flex={1} alignItems="center" space="xs">
           <Text fontSize="$sm" color="$text900" fontWeight="$bold">
             32
           </Text>
           <Text
             fontFamily="$body"
-            fontSize="$sm"
+            fontSize="$xs"
             color="$text900"
             fontWeight="$normal"
           >
@@ -146,11 +140,11 @@ const ProfileCard = () => {
           w="$px"
           orientation="vertical"
         />
-        <VStack alignItems="center" space="xs">
+        <VStack flex={1} alignItems="center" space="xs">
           <Text fontSize="$sm" color="$text900" fontWeight="$bold">
             8,396
           </Text>
-          <Text fontSize="$sm" color="$text900" fontWeight="$normal">
+          <Text fontSize="$xs" color="$text900" fontWeight="$normal">
             followers
           </Text>
         </VStack>
@@ -161,11 +155,11 @@ const ProfileCard = () => {
           w="$px"
           orientation="vertical"
         />
-        <VStack alignItems="center" space="xs">
+        <VStack flex={1} alignItems="center" space="xs">
           <Text fontSize="$sm" color="$text900" fontWeight="$bold">
             720
           </Text>
-          <Text fontSize="$sm" color="$text900" fontWeight="$normal">
+          <Text fontSize="$xs" color="$text900" fontWeight="$normal">
             following
           </Text>
         </VStack>
@@ -185,12 +179,18 @@ const FormInputcard = () => {
       hardShadow="5"
     >
       <VStack>
-        <Text fontSize="$lg" fontWeight="bold" color="$text900">
+        <Heading size="md" fontWeight="bold" lineHeight="$md" color="$text900">
           Share gluestack UI with friends
-        </Text>
-        <Text mt="$2.5" fontSize="$sm" color="$text700">
+        </Heading>
+        <Heading
+          mt="$2.5"
+          size="xs"
+          fontWeight="$normal"
+          lineHeight="$sm"
+          color="$text700"
+        >
           Email friends who have never tried glueStack UI
-        </Text>
+        </Heading>
       </VStack>
       <HStack justifyContent="space-between" space="sm">
         <FormControl size="md" flex={1}>
@@ -221,12 +221,12 @@ const SettingsCard = () => {
       w="$full"
       hardShadow="5"
     >
-      <Text fontSize="$lg" fontWeight="$bold" color="$text900">
+      <Heading size="md" fontWeight="$bold" color="$text900">
         Notification Settings
-      </Text>
-      <Text mt="$1.5" fontSize="$sm" color="$text700">
+      </Heading>
+      <Heading mt="$1.5" size="xs" fontWeight="$normal" color="$text700">
         Receive notifications about Gluestack UI updates.
-      </Text>
+      </Heading>
       <VStack mt="$6" space="xl">
         {settingOptions.map((option: any, index: number) => (
           <HStack key={index} space="xl">
@@ -236,7 +236,7 @@ const SettingsCard = () => {
               backgroundColor="$background50"
               alignSelf="center"
             >
-              {option.Icon && <option.Icon />}
+              {option.Icon && <Icon as={option.Icon} size="xl" />}
             </Box>
             <HStack
               flex={1}
@@ -285,15 +285,17 @@ const FileUploadCard = () => {
       hardShadow="5"
     >
       <VStack>
-        <Text fontSize="$lg" fontWeight="$bold" color="$text900">
+        <Heading size="md" fontWeight="$bold" color="$text900">
           Upload Your Files
-        </Text>
-        <Text mt="$1.5" fontSize="$sm" color="$text700">
+        </Heading>
+        <Heading mt="$1.5" size="xs" fontWeight="$normal" color="$text700">
           JPG, PNG, PDF, MP4, GIFs supported
-        </Text>
+        </Heading>
       </VStack>
       <VStack
-        mt="$5"
+        $base-mt="$5"
+        $md-mt="$12"
+        $lg-mt="$5"
         px="$20"
         py="$6"
         alignItems="center"
@@ -304,7 +306,7 @@ const FileUploadCard = () => {
       >
         <Pressable>
           <Box alignItems="center">
-            <CloudIcon />
+            <Icon as={CloudIcon} h="$16" w="$16" />
             <Text mt="$1.5" fontSize="$sm" lineHeight="$md" color="$text700">
               Drag & drop your file here
             </Text>
@@ -326,13 +328,13 @@ const FileUploadCard = () => {
           </Badge>
         </Pressable>
       </VStack>
-      <VStack mt="$6">
-        <Text fontSize="$sm" fontWeight="$bold" color="$text900">
+      <VStack $base-mt="$6" $md-mt="$8" $lg-mt="$6" $md-mb="$8" $lg-mb="$0">
+        <Heading size="xs" fontWeight="$bold" color="$text900">
           Uploading 1 file
-        </Text>
+        </Heading>
         <HStack mt="$3.5" justifyContent="space-between" alignItems="center">
           <Box padding="$3">
-            <FileIcon />
+            <Icon as={FileIcon} size="xl" />
           </Box>
           <VStack w="$4/5">
             <HStack justifyContent="space-between">
@@ -370,25 +372,30 @@ const LoginCard = () => {
       borderWidth="$1"
       hardShadow="5"
       space="4xl"
-      $md-width="$2/5"
-      $lg-width="$full"
+      $md-width="$1/2"
+      $xl-width="$full"
     >
       <VStack space="xs">
-        <Text fontSize="$2xl" fontWeight="$bold" color="$text900">
+        <Heading
+          size="xl"
+          fontWeight="$bold"
+          color="$text900"
+          fontFamily="$heading"
+        >
           Login to your account
-        </Text>
+        </Heading>
         <HStack alignItems="center">
-          <Text
-            fontSize="$sm"
+          <Heading
+            size="xs"
             fontWeight="$light"
             lineHeight="$md"
             color="$text700"
           >
             Don’t have an account?
-          </Text>
-          <Text fontSize="$sm" ml="$1.5">
+          </Heading>
+          <Heading size="xs" color="$text700" fontWeight="$medium" ml="$1.5">
             {''}Sign up
-          </Text>
+          </Heading>
         </HStack>
       </VStack>
       <VStack space="xl">
@@ -408,16 +415,18 @@ const LoginCard = () => {
             <InputField type="password" placeholder="Enter password" />
           </Input>
         </FormControl>
-        <HStack justifyContent="space-between">
+        <HStack justifyContent="space-between" alignItems="center">
           <Checkbox value="" size="sm">
             <CheckboxIndicator mr="$2">
               <CheckboxIcon as={CheckIcon} />
             </CheckboxIndicator>
             <CheckboxLabel>Remember me</CheckboxLabel>
           </Checkbox>
-          <Text fontSize="$xs" fontWeight="$medium" color="$text700">
-            Forgot Password?
-          </Text>
+          <Pressable>
+            <Text fontSize="$xs" fontWeight="$medium" color="$text700">
+              Forgot Password?
+            </Text>
+          </Pressable>
         </HStack>
       </VStack>
       <HStack
@@ -442,7 +451,7 @@ const LoginCard = () => {
           orientation="horizontal"
         ></Divider>
       </HStack>
-      <Button size="sm">
+      <Button size="sm" borderRadius="$md">
         <ButtonText>Login</ButtonText>
       </Button>
       <HStack space="md">
@@ -468,9 +477,9 @@ const LoginCard = () => {
 
 const Cards: any = ({ w = '100%', h = '100%', ...props }: any) => {
   return (
-    <Box {...props} h={h} w={w}>
-      <VStack flex={1} $lg-flexDirection="row" space="2xl">
-        <VStack $base-width="$full" $lg-width="$2/3" space="2xl">
+    <Box {...props} bg="$background0" p={'$6'} h={h} w={w}>
+      <VStack flex={1} $xl-flexDirection="row" space="2xl">
+        <VStack $base-width="$full" $xl-width="$2/3" space="2xl">
           <VStack $sm-flexDirection="row" space="2xl">
             <VStack $base-width="$full" $md-width="$2/5" space="2xl">
               <BlogCard />
@@ -494,27 +503,35 @@ const Cards: any = ({ w = '100%', h = '100%', ...props }: any) => {
             hardShadow="5"
           >
             <Box>
-              <Text fontSize="$lg" color="$text900" fontWeight="$bold">
+              <Heading size="md" color="$text900" fontWeight="$bold">
                 Updates Available
-              </Text>
-              <Text mt="$1.5" color="$text700">
+              </Heading>
+              <Heading
+                size="xs"
+                mt="$1.5"
+                color="$text700"
+                fontWeight="$normal"
+              >
                 A new version is available. Please upgrade for the best
                 experience.
-              </Text>
+              </Heading>
             </Box>
             <HStack
-              space="sm"
-              $base-flexDirection="column"
-              $sm-flexDirection="row"
+              space="md"
+              m="$4"
               $base-width="$full"
               $sm-width="auto"
-              $base-mt="$3"
-              $sm-mt="$0"
+              justifyContent="flex-end"
             >
-              <Button size="sm" variant="outline">
+              <Button
+                size="sm"
+                variant="outline"
+                action="secondary"
+                borderRadius="$md"
+              >
                 <ButtonText>Skip</ButtonText>
               </Button>
-              <Button size="sm">
+              <Button size="sm" borderRadius="$md">
                 <ButtonText>Download</ButtonText>
               </Button>
             </HStack>
@@ -523,9 +540,8 @@ const Cards: any = ({ w = '100%', h = '100%', ...props }: any) => {
         <VStack
           flex={1}
           $base-width="$full"
-          $lg-width="$1/4"
           $md-flexDirection="row"
-          $lg-flexDirection="column"
+          $xl-flexDirection="column"
           space="2xl"
         >
           <LoginCard />
