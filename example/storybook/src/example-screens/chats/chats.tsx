@@ -165,15 +165,17 @@ const Chats = () => {
           <AvatarImage source={avatarSource} />
         </Avatar>
 
-        <VStack space="xs" flex={1} ml="$2">
-          <HStack justifyContent="space-between" flex={1}>
-            <Heading
+        <VStack gap="$0.5" flex={1} ml="$2">
+          <HStack gap="$1" justifyContent="space-between" flex={1}>
+            <Text
+              numberOfLines={1}
               sx={{ '.dark_theme': { color: '$text900' } }}
               color="$text900"
-              size="sm"
+              fontSize="$sm"
+              fontWeight="$bold"
             >
               {name}
-            </Heading>
+            </Text>
             <Text
               sx={{ '.dark_theme': { color: '$text500' } }}
               color="$text500"
@@ -184,24 +186,45 @@ const Chats = () => {
             </Text>
           </HStack>
 
-          <HStack justifyContent="space-between" flex={1}>
+          <HStack gap="$1" justifyContent="space-between" flex={1}>
             <TruncatedText numberOfLines={1}>{message}</TruncatedText>
             {index < 3 && (
-              <Text
-                sx={{
-                  '.dark_theme': { color: '$text0', bg: '$background950' },
-                }}
-                textAlign="center"
+              <Badge
+                h="$4"
+                w="$4"
                 bg="$background950"
-                fontSize="$2xs"
-                p="$0.5"
-                h="$3.5"
-                w="$3.5"
-                borderRadius="$3xl"
-                color="$text0"
+                borderRadius="$full"
+                //  position="absolute"
+                //  top={4}
+                //  right={4}
+                //  zIndex={1}
+                variant="solid"
+                alignItems="center" // Center the text
+                justifyContent="center" // Center the text
               >
-                {badgeCount}
-              </Text>
+                <BadgeText
+                  fontSize="$2xs"
+                  color="$text0"
+                  // color={activeIcon === label ? '$text950' : '$white'}
+                >
+                  {badgeCount}
+                </BadgeText>
+              </Badge>
+              // <BadgeText
+              //   sx={{
+              //     '.dark_theme': { color: '$text0', bg: '$background950' },
+              //   }}
+              //   textAlign="center"
+              //   bg="$background950"
+              //   fontSize="$2xs"
+              //   p="$0.5"
+              //   h="$3.5"
+              //   w="$3.5"
+              //   borderRadius="$3xl"
+              //   color="$text0"
+              // >
+              //   {badgeCount}
+              // </BadgeText>
             )}
           </HStack>
         </VStack>
