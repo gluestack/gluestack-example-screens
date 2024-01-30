@@ -141,14 +141,14 @@ export const MailIcon = createIcon({
         />
       </G>
       <Defs>
-        <clipPath id="clip0_2262_11902">
+        <ClipPath id="clip0_2262_11902">
           <Rect
             width="24"
             height="24"
             fill="white"
             transform="translate(0 0.5)"
           />
-        </clipPath>
+        </ClipPath>
       </Defs>
     </>
   ),

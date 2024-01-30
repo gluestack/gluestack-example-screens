@@ -179,10 +179,16 @@ const FormInputcard = () => {
       hardShadow="5"
     >
       <VStack>
-        <Heading size="md" fontWeight="bold" color="$text900">
+        <Heading size="md" fontWeight="bold" lineHeight="$md" color="$text900">
           Share gluestack UI with friends
         </Heading>
-        <Heading mt="$2.5" size="xs" fontWeight="$normal" color="$text700">
+        <Heading
+          mt="$2.5"
+          size="xs"
+          fontWeight="$normal"
+          lineHeight="$sm"
+          color="$text700"
+        >
           Email friends who have never tried glueStack UI
         </Heading>
       </VStack>
@@ -288,7 +294,7 @@ const FileUploadCard = () => {
       </VStack>
       <VStack
         $base-mt="$5"
-        $md-mt="$10"
+        $md-mt="$12"
         $lg-mt="$5"
         px="$20"
         py="$6"
