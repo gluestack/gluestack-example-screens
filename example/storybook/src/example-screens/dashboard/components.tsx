@@ -30,6 +30,8 @@ import {
   UserIcon,
   UsersIcon,
   YoutubeIcon,
+  CircleDollarSignIcon,
+  SettingsIcon,
 } from 'lucide-react-native';
 import {
   Chart as ChartJS,
@@ -61,9 +63,6 @@ ChartJS.register(
   ArcElement
 );
 import { analytics } from './constants';
-import { CircleDollarSignIcon } from 'lucide-react-native';
-import { SettingsIcon } from 'lucide-react-native';
-
 interface CommentCardProps {
   userName: string;
   comment: string;
