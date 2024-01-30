@@ -66,15 +66,15 @@ export const analytics = {
     topEngagements: [
       {
         name: 'Videos',
-        growth: '8889988',
+        growth: '7688',
       },
       {
         name: 'Corousel',
-        growth: '481122',
+        growth: '122',
       },
       {
         name: 'Pictures',
-        growth: '6779923',
+        growth: '6923',
       },
     ],
   },
@@ -117,15 +117,15 @@ export const analytics = {
     topEngagements: [
       {
         name: 'Videos',
-        growth: '8889988',
+        growth: '8888',
       },
       {
         name: 'Corousel',
-        growth: '481122',
+        growth: '4122',
       },
       {
         name: 'Pictures',
-        growth: '6779923',
+        growth: '6723',
       },
     ],
   },
@@ -168,15 +168,15 @@ export const analytics = {
     topEngagements: [
       {
         name: 'Videos',
-        growth: '8889988',
+        growth: '9988',
       },
       {
         name: 'Corousel',
-        growth: '481122',
+        growth: '4822',
       },
       {
         name: 'Pictures',
-        growth: '6779923',
+        growth: '6723',
       },
     ],
   },
@@ -219,15 +219,15 @@ export const analytics = {
     topEngagements: [
       {
         name: 'Videos',
-        growth: '8889988',
+        growth: '8898',
       },
       {
         name: 'Corousel',
-        growth: '481122',
+        growth: '4822',
       },
       {
         name: 'Pictures',
-        growth: '6779923',
+        growth: '6923',
       },
     ],
   },

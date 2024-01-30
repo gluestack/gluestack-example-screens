@@ -95,21 +95,38 @@ const AnalyticsCard = ({
   return (
     <VStack
       p="$6"
-      m="$1"
       borderColor="$border200"
       borderRadius="$md"
       borderWidth="$1"
       hardShadow="5"
+      $md-minWidth="$1/4"
+      $base-minWidth="$full"
+      flexGrow={1}
     >
       <HStack alignItems="flex-start" justifyContent="space-between">
         <VStack space="xs" mr="$8">
-          <Text fontSize="$sm" fontWeight="$medium" color="$text900">
+          <Text
+            fontSize="$sm"
+            fontWeight="$medium"
+            color="$text900"
+            fontFamily="$heading"
+          >
             Weekly {title}
           </Text>
-          <Text fontSize="$2xl" fontWeight="$bold" color="$text900">
+          <Text
+            fontSize="$2xl"
+            fontWeight="$bold"
+            color="$text900"
+            fontFamily="$heading"
+          >
             {totalValue}
           </Text>
-          <Text fontSize="$xs" fontWeight="$normal" color="$text700">
+          <Text
+            fontSize="$xs"
+            fontWeight="$normal"
+            color="$text700"
+            fontFamily="$body"
+          >
             {subtitleValue} from last week
           </Text>
         </VStack>
@@ -269,7 +286,7 @@ const HomeView = () => {
         >
           <HStack space="xs" alignItems="center">
             <InstagramIconSVG />
-            <Text fontSize="$md" color="$primary500">
+            <Text fontSize="$md" color="$primary500" fontFamily="$heading">
               Instagram
             </Text>
           </HStack>
@@ -283,7 +300,7 @@ const HomeView = () => {
         >
           <HStack space="xs" alignItems="center">
             <YoutubeIconSVG />
-            <Text fontSize="$md" color="$primary500">
+            <Text fontSize="$md" color="$primary500" fontFamily="$heading">
               Youtube
             </Text>
           </HStack>
@@ -297,7 +314,7 @@ const HomeView = () => {
         >
           <HStack space="xs" alignItems="center">
             <TwitterIconSVG />
-            <Text fontSize="$md" color="$primary500">
+            <Text fontSize="$md" color="$primary500" fontFamily="$heading">
               Twitter
             </Text>
           </HStack>
@@ -311,318 +328,430 @@ const HomeView = () => {
         >
           <HStack space="xs" alignItems="center">
             <FacebookIconSVG />
-            <Text fontSize="$md" color="$primary500">
+            <Text fontSize="$md" color="$primary500" fontFamily="$heading">
               Facebook
             </Text>
           </HStack>
         </Pressable>
       </HStack>
-      <HStack mx="$4" my="$3" justifyContent="space-between" flexWrap="wrap">
-        <AnalyticsCard
-          title="Views"
-          totalValue={analytics[tab].weeklyViews.views}
-          subtitleValue={
-            analytics[tab].weeklyViews.loss
-              ? `-${analytics[tab].weeklyViews.loss}%`
-              : `+${analytics[tab].weeklyViews.growth}%`
-          }
-        />
-        <AnalyticsCard
-          title="Followers"
-          totalValue={analytics[tab].weeklyFollowers.views}
-          subtitleValue={
-            analytics[tab].weeklyFollowers.loss
-              ? `-${analytics[tab].weeklyFollowers.loss}%`
-              : `+${analytics[tab].weeklyFollowers.growth}%`
-          }
-        />
-        <AnalyticsCard
-          title="Comments"
-          totalValue={analytics[tab].weeklyComments.views}
-          subtitleValue={
-            analytics[tab].weeklyComments.loss
-              ? `-${analytics[tab].weeklyComments.loss}%`
-              : `+${analytics[tab].weeklyComments.growth}%`
-          }
-        />
-      </HStack>
-      <HStack
-        mx="$4"
-        space="md"
-        flexWrap="wrap"
-        gap="$6"
-        $base-justifyContent="center"
-        $lg-justifyContent="flex-start"
-        $base-maxWidth="$full"
-        $base-alignSelf="center"
-        $lg-w="auto"
-      >
-        <VStack
-          alignItems="flex-start"
-          borderColor="$border200"
-          borderRadius="$md"
-          borderWidth="$1"
-          hardShadow="5"
-          p="$4"
-          space="sm"
-          maxHeight="$80"
-          $base-w="$full"
-          $lg-w="auto"
+      <VStack $base-mx="$2" $sm-mx="$4" alignItems="center">
+        <HStack my="$3" space="lg" flexWrap="wrap" w="$full" rowGap="$4">
+          <AnalyticsCard
+            title="Views"
+            totalValue={analytics[tab].weeklyViews.views}
+            subtitleValue={
+              analytics[tab].weeklyViews.loss
+                ? `-${analytics[tab].weeklyViews.loss}%`
+                : `+${analytics[tab].weeklyViews.growth}%`
+            }
+          />
+          <AnalyticsCard
+            title="Followers"
+            totalValue={analytics[tab].weeklyFollowers.views}
+            subtitleValue={
+              analytics[tab].weeklyFollowers.loss
+                ? `-${analytics[tab].weeklyFollowers.loss}%`
+                : `+${analytics[tab].weeklyFollowers.growth}%`
+            }
+          />
+          <AnalyticsCard
+            title="Comments"
+            totalValue={analytics[tab].weeklyComments.views}
+            subtitleValue={
+              analytics[tab].weeklyComments.loss
+                ? `-${analytics[tab].weeklyComments.loss}%`
+                : `+${analytics[tab].weeklyComments.growth}%`
+            }
+          />
+        </HStack>
+        <HStack
+          mx="$4"
+          my="$3"
+          space="lg"
+          flexWrap="wrap"
+          $base-justifyContent="center"
+          $lg-justifyContent="flex-start"
+          $base-maxWidth="$full"
+          $base-alignSelf="center"
+          w="$full"
         >
-          <HStack justifyContent="space-between" mx="$2" w="$full">
-            <Text color="$text900" fontWeight="$bold" fontSize="$lg">
-              Latest Posts
-            </Text>
-            <Pressable>
-              <OptionsIconSVG />
-            </Pressable>
-          </HStack>
-          <Text color="$text700" fontWeight="$normal" fontSize="$sm" mx="$2">
-            Receive notifications about gluestack ui updates.
-          </Text>
-          <Box minWidth="$80" borderRadius="$2xl" mx="auto">
-            <BarChart />
-          </Box>
-        </VStack>
-        <VStack
-          alignItems="flex-start"
-          borderColor="$border200"
-          borderRadius="$md"
-          borderWidth="$1"
-          hardShadow="5"
-          space="sm"
-          $base-minWidth="$full"
-          $md-minWidth="$1/3"
-          py="$4"
-          $base-w="$full"
-          $lg-w="auto"
-        >
-          <Text
-            color="$text900"
-            fontWeight="$bold"
-            fontSize="$lg"
-            my="$2"
-            mx="$4"
+          <VStack
+            alignItems="flex-start"
+            borderColor="$border200"
+            borderRadius="$md"
+            borderWidth="$1"
+            hardShadow="5"
+            p="$4"
+            space="sm"
+            maxHeight="$80"
+            $md-flexGrow={1}
+            $base-minWidth="$full"
+            $md-minWidth="$1/3"
           >
-            Engaged Users
-          </Text>
-          <Box mx="auto" maxWidth="$72">
-            <AreaChart />
-          </Box>
-          <VStack alignItems="center" w="$full">
+            <HStack justifyContent="space-between" mx="$2" w="$full">
+              <Text
+                color="$text900"
+                fontWeight="$bold"
+                $md-fontSize="$lg"
+                $base-fontSize="$md"
+                fontFamily="$heading"
+              >
+                Latest Posts
+              </Text>
+              <Pressable>
+                <OptionsIconSVG />
+              </Pressable>
+            </HStack>
+            <Text
+              color="$text700"
+              fontWeight="$normal"
+              fontSize="$sm"
+              mx="$2"
+              fontFamily="$body"
+              numberOfLines={2}
+              $base-maxWidth="$56"
+              $sm-maxWidth="$80"
+            >
+              Receive notifications about gluestack ui updates.
+            </Text>
+            <Box
+              $md-minWidth="$80"
+              $base-minWidth="$40"
+              $base-maxWidth="$56"
+              $sm-maxWidth="$full"
+              borderRadius="$2xl"
+              mx="auto"
+            >
+              <BarChart />
+            </Box>
+          </VStack>
+          <VStack
+            alignItems="flex-start"
+            borderColor="$border200"
+            borderRadius="$md"
+            borderWidth="$1"
+            hardShadow="5"
+            space="sm"
+            py="$4"
+            $md-flexGrow={1}
+            $base-minWidth="$full"
+            $md-minWidth="$1/3"
+          >
             <Text
               color="$text900"
-              fontWeight="$medium"
-              $lg-fontSize="$5xl"
-              $md-fontSize="$4xl"
+              fontWeight="$bold"
+              fontSize="$lg"
+              my="$2"
+              mx="$4"
+              fontFamily="$heading"
             >
-              {analytics[tab].engagedUsers.users}
+              Engaged Users
             </Text>
-            <Text color="$text700" fontWeight="$normal" fontSize="$xs">
-              {analytics[tab].engagedUsers.loss
-                ? `-${analytics[tab].engagedUsers.loss}%`
-                : `+${analytics[tab].engagedUsers.growth}%`}{' '}
-              from last week
-            </Text>
-          </VStack>
-        </VStack>
-        <VStack
-          alignItems="flex-start"
-          borderColor="$border200"
-          borderRadius="$md"
-          borderWidth="$1"
-          hardShadow="5"
-          p="$4"
-          space="sm"
-          $base-w="$full"
-          $lg-w="auto"
-        >
-          <HStack justifyContent="space-between" mx="$2" w="$full">
-            <Text color="$text900" fontWeight="$bold" fontSize="$lg">
-              Audience Age Split
-            </Text>
-            <Pressable>
-              <OptionsIconSVG />
-            </Pressable>
-          </HStack>
-          <HStack alignItems="center" space="md">
-            <Box w="$48" h="$56" borderRadius="$3xl">
-              <PieChart />
+            <Box
+              $md-minWidth="$80"
+              $base-minWidth="$40"
+              $base-maxWidth="$64"
+              $sm-maxWidth="$72"
+              borderRadius="$2xl"
+              mx="auto"
+            >
+              <AreaChart />
             </Box>
+            <VStack alignItems="center" w="$full">
+              <Text
+                color="$text900"
+                fontWeight="$medium"
+                $lg-fontSize="$5xl"
+                $md-fontSize="$4xl"
+                fontFamily="$heading"
+              >
+                {analytics[tab].engagedUsers.users}
+              </Text>
+              <Text
+                color="$text700"
+                fontWeight="$normal"
+                fontSize="$xs"
+                fontFamily="$body"
+              >
+                {analytics[tab].engagedUsers.loss
+                  ? `-${analytics[tab].engagedUsers.loss}%`
+                  : `+${analytics[tab].engagedUsers.growth}%`}{' '}
+                from last week
+              </Text>
+            </VStack>
+          </VStack>
+        </HStack>
+        <HStack
+          mx="$4"
+          my="$3"
+          space="lg"
+          flexWrap="wrap"
+          $base-justifyContent="center"
+          $lg-justifyContent="flex-start"
+          $base-maxWidth="$full"
+          $base-alignSelf="center"
+          w="$full"
+        >
+          <VStack
+            alignItems="flex-start"
+            borderColor="$border200"
+            borderRadius="$md"
+            borderWidth="$1"
+            hardShadow="5"
+            p="$4"
+            space="sm"
+            $md-flexGrow={1}
+            $base-minWidth="$full"
+            $md-minWidth="$1/3"
+          >
+            <HStack justifyContent="space-between" mx="$2" w="$full">
+              <Text
+                color="$text900"
+                fontWeight="$bold"
+                fontSize="$lg"
+                fontFamily="$heading"
+              >
+                Audience Age Split
+              </Text>
+              <Pressable>
+                <OptionsIconSVG />
+              </Pressable>
+            </HStack>
+            <HStack alignItems="center" space="md" alignSelf="center">
+              <Box
+                h="$56"
+                $sm-minWidth="$48"
+                $base-maxWidth="$24"
+                $sm-maxWidth="$40"
+                $lg-maxWidth="$56"
+                borderRadius="$3xl"
+              >
+                <PieChart />
+              </Box>
+              <VStack
+                borderColor="$border200"
+                borderRadius="$md"
+                borderWidth="$1"
+                hardShadow="5"
+                p="$4"
+                space="md"
+              >
+                <HStack space="sm">
+                  <Box w="$5" h="$5" borderRadius="$full" bg="$primary0" />
+                  <Text
+                    color="$text900"
+                    $sm-fontSize="$sm"
+                    $base-fontSize="$xs"
+                    fontWeight="$normal"
+                    fontFamily="$body"
+                  >
+                    40-45 yrs
+                  </Text>
+                </HStack>
+                <HStack space="sm">
+                  <Box w="$5" h="$5" borderRadius="$full" bg="$primary50" />
+                  <Text
+                    color="$text900"
+                    $sm-fontSize="$sm"
+                    $base-fontSize="$xs"
+                    fontWeight="$normal"
+                    fontFamily="$body"
+                  >
+                    35-40 yrs
+                  </Text>
+                </HStack>
+                <HStack space="sm">
+                  <Box w="$5" h="$5" borderRadius="$full" bg="$primary100" />
+                  <Text
+                    color="$text900"
+                    $sm-fontSize="$sm"
+                    $base-fontSize="$xs"
+                    fontWeight="$normal"
+                    fontFamily="$body"
+                  >
+                    30-35 yrs
+                  </Text>
+                </HStack>
+                <HStack space="sm">
+                  <Box w="$5" h="$5" borderRadius="$full" bg="$primary400" />
+                  <Text
+                    color="$text900"
+                    $sm-fontSize="$sm"
+                    $base-fontSize="$xs"
+                    fontWeight="$normal"
+                    fontFamily="$body"
+                  >
+                    25-30 yrs
+                  </Text>
+                </HStack>
+              </VStack>
+            </HStack>
+          </VStack>
+          <VStack
+            space="3xl"
+            alignContent="flex-start"
+            $md-flexGrow={1}
+            $base-minWidth="$full"
+            $md-minWidth="$1/3"
+          >
             <VStack
+              alignItems="center"
               borderColor="$border200"
               borderRadius="$md"
               borderWidth="$1"
               hardShadow="5"
-              p="$4"
+              $md-p="$4"
+              $base-p="$2"
+              space="md"
+              justifyContent="space-between"
+            >
+              <VStack space="md" alignSelf="flex-start">
+                <Text
+                  color="$text900"
+                  fontWeight="$bold"
+                  $base-fontSize="$md"
+                  $md-fontSize="$lg"
+                  fontFamily="$heading"
+                >
+                  Top Locations
+                </Text>
+                <Text
+                  color="$text700"
+                  fontWeight="$normal"
+                  $base-fontSize="$xs"
+                  $md-fontSize="$sm"
+                  fontFamily="$body"
+                  numberOfLines={2}
+                  $base-maxWidth="$56"
+                  $sm-maxWidth="$96"
+                >
+                  Learn the top geographic locations of your new audience
+                </Text>
+              </VStack>
+              <HStack
+                $sm-space="2xl"
+                $base-space="sm"
+                alignItems="center"
+                $md-px="$4"
+                $base-px="$2"
+                mb="$4"
+              >
+                {[...Array(3)].map((_, index) => (
+                  <HStack key={index}>
+                    <VStack space="xs">
+                      <Text
+                        color="$text900"
+                        fontWeight="$bold"
+                        $base-fontSize="$sm"
+                        $md-fontSize="$lg"
+                        fontFamily="$heading"
+                      >
+                        {analytics[tab].topLocations[index].name}
+                      </Text>
+                      <Text
+                        color="$text700"
+                        fontWeight="$normal"
+                        fontSize="$xs"
+                        fontFamily="$body"
+                      >
+                        {`+${analytics[tab].topLocations[index].growth}%`}
+                      </Text>
+                    </VStack>
+                    {index < 2 && (
+                      <Divider
+                        orientation="vertical"
+                        w="$0.5"
+                        h="$10"
+                        $md-mx="$8"
+                        $base-mx="$2"
+                        bgColor="$background200"
+                      />
+                    )}
+                  </HStack>
+                ))}
+              </HStack>
+            </VStack>
+            <VStack
+              alignItems="center"
+              borderColor="$border200"
+              borderRadius="$md"
+              borderWidth="$1"
+              hardShadow="5"
+              $md-p="$4"
+              $base-p="$2"
               space="md"
             >
-              <HStack space="sm">
-                <Box w="$5" h="$5" borderRadius="$full" bg="$primary0" />
-                <Text color="$text900" fontSize="$sm" fontWeight="$normal">
-                  40-45 yrs
+              <VStack space="md" alignSelf="flex-start">
+                <Text
+                  color="$text900"
+                  fontWeight="$bold"
+                  $base-fontSize="$md"
+                  $md-fontSize="$lg"
+                  fontFamily="$heading"
+                >
+                  View Engagements
                 </Text>
-              </HStack>
-              <HStack space="sm">
-                <Box w="$5" h="$5" borderRadius="$full" bg="$primary50" />
-                <Text color="$text900" fontSize="$sm" fontWeight="$normal">
-                  35-40 yrs
+                <Text
+                  color="$text700"
+                  fontWeight="$normal"
+                  $base-fontSize="$xs"
+                  $md-fontSize="$sm"
+                  fontFamily="$body"
+                  numberOfLines={2}
+                  $base-maxWidth="$56"
+                  $sm-maxWidth="$96"
+                >
+                  Learn the top geographic locations of your new audience
                 </Text>
-              </HStack>
-              <HStack space="sm">
-                <Box w="$5" h="$5" borderRadius="$full" bg="$primary100" />
-                <Text color="$text900" fontSize="$sm" fontWeight="$normal">
-                  30-35 yrs
-                </Text>
-              </HStack>
-              <HStack space="sm">
-                <Box w="$5" h="$5" borderRadius="$full" bg="$primary400" />
-                <Text color="$text900" fontSize="$sm" fontWeight="$normal">
-                  25-30 yrs
-                </Text>
+              </VStack>
+              <HStack
+                $sm-space="2xl"
+                $base-space="sm"
+                alignItems="center"
+                $md-px="$4"
+                $base-px="$2"
+                mb="$4"
+                justifyContent="space-between"
+              >
+                {[...Array(3)].map((_, index) => (
+                  <HStack key={index}>
+                    <VStack space="xs">
+                      <Text
+                        color="$text900"
+                        fontWeight="$bold"
+                        $base-fontSize="$sm"
+                        $md-fontSize="$lg"
+                        fontFamily="$heading"
+                      >
+                        {analytics[tab].topEngagements[index].name}
+                      </Text>
+                      <Text
+                        color="$text700"
+                        fontWeight="$normal"
+                        fontSize="$xs"
+                        fontFamily="$body"
+                        numberOfLines={2}
+                      >
+                        {`${analytics[tab].topEngagements[index].growth} views`}
+                      </Text>
+                    </VStack>
+                    {index < 2 && (
+                      <Divider
+                        orientation="vertical"
+                        w="$0.5"
+                        h="$10"
+                        $md-mx="$8"
+                        $base-mx="$2"
+                        bgColor="$background200"
+                      />
+                    )}
+                  </HStack>
+                ))}
               </HStack>
             </VStack>
-          </HStack>
-        </VStack>
-        <VStack
-          space="3xl"
-          alignContent="flex-start"
-          $base-w="$full"
-          $lg-w="auto"
-        >
-          <VStack
-            alignItems="flex-start"
-            borderColor="$border200"
-            borderRadius="$md"
-            borderWidth="$1"
-            hardShadow="5"
-            $md-p="$4"
-            $base-p="$2"
-            space="md"
-            justifyContent="space-between"
-          >
-            <VStack space="md">
-              <Text
-                color="$text900"
-                fontWeight="$bold"
-                $base-fontSize="$md"
-                $md-fontSize="$lg"
-              >
-                Top Locations
-              </Text>
-              <Text
-                color="$text700"
-                fontWeight="$normal"
-                $base-fontSize="$xs"
-                $md-fontSize="$sm"
-              >
-                Learn the top geographic locations of your new audience
-              </Text>
-            </VStack>
-            <HStack
-              space="2xl"
-              alignItems="center"
-              $md-px="$4"
-              $base-px="$2"
-              mb="$4"
-              justifyContent="center"
-            >
-              {[...Array(3)].map((_, index) => (
-                <HStack key={index}>
-                  <VStack space="xs">
-                    <Text
-                      color="$text900"
-                      fontWeight="$bold"
-                      $base-fontSize="$sm"
-                      $md-fontSize="$lg"
-                    >
-                      {analytics[tab].topLocations[index].name}
-                    </Text>
-                    <Text color="$text700" fontWeight="$normal" fontSize="$xs">
-                      {`+${analytics[tab].topLocations[index].growth}%`}
-                    </Text>
-                  </VStack>
-                  {index < 2 && (
-                    <Divider
-                      orientation="vertical"
-                      w="$0.5"
-                      h="$10"
-                      $xl-mx="$8"
-                      $base-mx="$4"
-                      bgColor="$background200"
-                    />
-                  )}
-                </HStack>
-              ))}
-            </HStack>
           </VStack>
-          <VStack
-            alignItems="flex-start"
-            borderColor="$border200"
-            borderRadius="$md"
-            borderWidth="$1"
-            hardShadow="5"
-            $md-p="$4"
-            $base-p="$2"
-            space="md"
-            justifyContent="space-between"
-          >
-            <VStack space="md">
-              <Text
-                color="$text900"
-                fontWeight="$bold"
-                $base-fontSize="$md"
-                $md-fontSize="$lg"
-              >
-                View Engagements
-              </Text>
-              <Text
-                color="$text700"
-                fontWeight="$normal"
-                $base-fontSize="$xs"
-                $md-fontSize="$sm"
-              >
-                Learn the top geographic locations of your new audience
-              </Text>
-            </VStack>
-            <HStack
-              space="2xl"
-              alignItems="center"
-              $md-px="$4"
-              $base-px="$2"
-              mb="$4"
-            >
-              {[...Array(3)].map((_, index) => (
-                <HStack key={index}>
-                  <VStack space="xs">
-                    <Text
-                      color="$text900"
-                      fontWeight="$bold"
-                      $base-fontSize="$sm"
-                      $md-fontSize="$lg"
-                    >
-                      {analytics[tab].topEngagements[index].name}
-                    </Text>
-                    <Text color="$text700" fontWeight="$normal" fontSize="$xs">
-                      {`${analytics[tab].topEngagements[index].growth} views`}
-                    </Text>
-                  </VStack>
-                  {index < 2 && (
-                    <Divider
-                      orientation="vertical"
-                      w="$0.5"
-                      h="$10"
-                      $xl-mx="$8"
-                      $base-mx="$4"
-                      bgColor="$background200"
-                    />
-                  )}
-                </HStack>
-              ))}
-            </HStack>
-          </VStack>
-        </VStack>
-      </HStack>
+        </HStack>
+      </VStack>
     </Box>
   );
 };
@@ -652,7 +781,13 @@ const CalendarView = () => {
       maxWidth="$1/2"
       alignSelf="center"
     >
-      <Text textAlign="center" fontSize="$lg" color="$white" my="auto">
+      <Text
+        textAlign="center"
+        fontSize="$lg"
+        color="$white"
+        my="auto"
+        fontFamily="$heading"
+      >
         Calendar
       </Text>
     </Box>
@@ -668,7 +803,13 @@ const CurrencyView = () => {
       maxWidth="$1/2"
       alignSelf="center"
     >
-      <Text textAlign="center" fontSize="$lg" color="$white" my="auto">
+      <Text
+        textAlign="center"
+        fontSize="$lg"
+        color="$white"
+        my="auto"
+        fontFamily="$heading"
+      >
         Currency
       </Text>
     </Box>
@@ -684,7 +825,13 @@ const ProfileView = () => {
       maxWidth="$1/2"
       alignSelf="center"
     >
-      <Text textAlign="center" fontSize="$lg" color="$white" my="auto">
+      <Text
+        textAlign="center"
+        fontSize="$lg"
+        color="$white"
+        my="auto"
+        fontFamily="$heading"
+      >
         Profile
       </Text>
     </Box>
@@ -700,7 +847,13 @@ const SettingsView = () => {
       maxWidth="$1/2"
       alignSelf="center"
     >
-      <Text textAlign="center" fontSize="$lg" color="$white" my="auto">
+      <Text
+        textAlign="center"
+        fontSize="$lg"
+        color="$white"
+        my="auto"
+        fontFamily="$heading"
+      >
         Settings
       </Text>
     </Box>
@@ -716,7 +869,13 @@ const HelpView = () => {
       maxWidth="$1/2"
       alignSelf="center"
     >
-      <Text textAlign="center" fontSize="$lg" color="$white" my="auto">
+      <Text
+        textAlign="center"
+        fontSize="$lg"
+        color="$white"
+        my="auto"
+        fontFamily="$heading"
+      >
         Help
       </Text>
     </Box>
@@ -732,7 +891,13 @@ const ExitView = () => {
       maxWidth="$1/2"
       alignSelf="center"
     >
-      <Text textAlign="center" fontSize="$lg" color="$white" my="auto">
+      <Text
+        textAlign="center"
+        fontSize="$lg"
+        color="$white"
+        my="auto"
+        fontFamily="$heading"
+      >
         Exit
       </Text>
     </Box>

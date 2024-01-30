@@ -104,12 +104,12 @@ const Dashboard: any = ({ w = '100%', ...props }: any) => {
           },
         }}
       >
-        <Box bg="$background950" p="$2">
+        <Pressable bg="$background950" p="$2">
           <MenuIcon color="$white" />
-        </Box>
-        <Box p="$2">
+        </Pressable>
+        <Pressable p="$2">
           <SearchIcon color="$white" />
-        </Box>
+        </Pressable>
       </HStack>
       <VStack
         alignItems="center"
@@ -241,6 +241,7 @@ const Dashboard: any = ({ w = '100%', ...props }: any) => {
                   $base-fontSize="$lg"
                   color="$text900"
                   fontWeight="$bold"
+                  fontFamily="$heading"
                 >
                   Good morning, John
                 </Text>
@@ -249,6 +250,7 @@ const Dashboard: any = ({ w = '100%', ...props }: any) => {
                   $base-fontSize="$xs"
                   color="$text700"
                   fontWeight="$normal"
+                  fontFamily="$body"
                 >
                   Let’s take a look at your social presence
                 </Text>
@@ -313,7 +315,8 @@ const Dashboard: any = ({ w = '100%', ...props }: any) => {
             <VStack
               bg="$background50"
               alignItems="center"
-              minWidth="$72"
+              $sm-minWidth="$72"
+              $base-minWidth="$64"
               space="md"
               p="$3"
               borderRadius="$xl"
@@ -431,7 +434,7 @@ const Dashboard: any = ({ w = '100%', ...props }: any) => {
               </HStack>
             </VStack>
             <Box p="$3" display="flex" flexDirection="column">
-              <VStack minWidth="$72">
+              <VStack $sm-minWidth="$72" $base-minWidth="$64">
                 {comments.map((comment) => (
                   <VStack justifyContent="center">
                     <CommentCard
@@ -454,6 +457,7 @@ const Dashboard: any = ({ w = '100%', ...props }: any) => {
                     fontWeight="$semibold"
                     fontSize="$xs"
                     color="$secondary600"
+                    fontFamily="$body"
                   >
                     See All Activity
                   </Text>
