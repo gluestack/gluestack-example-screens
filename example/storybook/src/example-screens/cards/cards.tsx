@@ -62,7 +62,7 @@ const BlogCard = () => {
         <HStack mt="$6" space="lg" alignItems="center">
           <Avatar size="md">
             <AvatarFallbackText>John Smith</AvatarFallbackText>
-            <AvatarImage source={require('./avatar-image.png')} />
+            <AvatarImage source={require('../assets/avatar-icon.png')} />
           </Avatar>
           <VStack>
             <Text fontWeight="$bold" color="$text900">
@@ -93,7 +93,7 @@ const ProfileCard = () => {
     >
       <Avatar bgColor="$black" size="lg">
         <AvatarFallbackText>John Smith</AvatarFallbackText>
-        <AvatarImage source={require('./avatar-image.png')} />
+        <AvatarImage source={require('../assets/avatar-icon.png')} />
       </Avatar>
       <VStack alignItems="center" mt="$3" width="$full">
         <Text fontSize="$lg" color="$text900" fontWeight="$bold">

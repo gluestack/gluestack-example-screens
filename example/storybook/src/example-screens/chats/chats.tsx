@@ -48,62 +48,63 @@ import {
 import { TouchableOpacity } from 'react-native';
 import { Lock } from 'lucide-react-native';
 
+const chatData = [
+  {
+    avatarSource: require('../assets/Avatar1.png'),
+    name: 'Mila Dann',
+    message: 'These are really cool 💯',
+    badgeCount: 1,
+  },
+  {
+    avatarSource: require('../assets/Avatar2.png'),
+    name: 'Jared Dunn',
+    message: 'Typing...',
+    badgeCount: 1,
+  },
+  {
+    avatarSource: require('../assets/Avatar3.png'),
+    name: 'Richard Lyod',
+    message: 'Great 💯 Will be there soon!',
+    badgeCount: 4,
+  },
+  {
+    avatarSource: require('../assets/Avatar4.png'),
+    name: 'Mike',
+    message: 'wohoooooo 🔥',
+  },
+  {
+    avatarSource: require('../assets/Avatar5.png'),
+    name: 'Ben',
+    message: 'I’ll be there in 2 mins',
+  },
+  {
+    avatarSource: require('../assets/Avatar1.png'),
+    name: 'John',
+    message: 'Done ✅',
+  },
+  {
+    avatarSource: require('../assets/Avatar6.png'),
+    name: 'Taylor',
+    message: 'Okay',
+  },
+  {
+    avatarSource: require('../assets/Avatar7.png'),
+    name: 'Batch 2024',
+    message: 'Steve typing...',
+  },
+  {
+    avatarSource: require('../assets/Avatar8.png'),
+    name: 'Michele',
+    message: 'I can’t wait to hear about...',
+  },
+];
+
 const Chats = () => {
   const [selectedChat, setSelectedChat] = useState({
     name: 'Richard Lyod',
   });
   const [showChatList, setShowChatList] = useState(false);
 
-  const chatData = [
-    {
-      avatarSource: require('../../../assets/Avatar1.png'),
-      name: 'Mila Dann',
-      message: 'These are really cool 💯',
-      badgeCount: 1,
-    },
-    {
-      avatarSource: require('../../../assets/Avatar2.png'),
-      name: 'Jared Dunn',
-      message: 'Typing...',
-      badgeCount: 1,
-    },
-    {
-      avatarSource: require('../../../assets/Avatar3.png'),
-      name: 'Richard Lyod',
-      message: 'Great 💯 Will be there soon!',
-      badgeCount: 4,
-    },
-    {
-      avatarSource: require('../../../assets/Avatar4.png'),
-      name: 'Mike',
-      message: 'wohoooooo 🔥',
-    },
-    {
-      avatarSource: require('../../../assets/Avatar5.png'),
-      name: 'Ben',
-      message: 'I’ll be there in 2 mins',
-    },
-    {
-      avatarSource: require('../../../assets/Avatar1.png'),
-      name: 'John',
-      message: 'Done ✅',
-    },
-    {
-      avatarSource: require('../../../assets/Avatar6.png'),
-      name: 'Taylor',
-      message: 'Okay',
-    },
-    {
-      avatarSource: require('../../../assets/Avatar7.png'),
-      name: 'Batch 2024',
-      message: 'Steve typing...',
-    },
-    {
-      avatarSource: require('../../../assets/Avatar8.png'),
-      name: 'Michele',
-      message: 'I can’t wait to hear about...',
-    },
-  ];
   const [_isSmallScreen, setIsSmallScreen] = useState(false);
 
   useEffect(() => {
@@ -478,11 +479,7 @@ const Chats = () => {
               {selectedChat ? selectedChat.name : ''}
             </Heading>
             <HStack alignItems="center" space="xs">
-              <Image
-                source={require('../../../assets/Dot.svg')}
-                w="$2"
-                h="$2"
-              />
+              <Image source={require('../assets/Dot.svg')} w="$2" h="$2" />
               <Text size="sm">Online</Text>
             </HStack>
           </VStack>
@@ -647,7 +644,7 @@ const Chats = () => {
           bg="$background50"
         >
           <Avatar w="$16" h="$16" mb="$2">
-            <AvatarImage source={require('../../../assets/Avatar9.svg')} />
+            <AvatarImage source={require('../assets/Avatar9.svg')} />
           </Avatar>
 
           <Text
@@ -734,25 +731,25 @@ const Chats = () => {
           <HStack gap="$0.5">
             <Image
               size="md"
-              source={require('../../../assets/Image.png')}
+              source={require('../assets/Image.png')}
               resizeMode="contain"
               style={{ flex: 1 }}
             />
             <Image
               size="md"
-              source={require('../../../assets/Image.png')}
+              source={require('../assets/Image.png')}
               resizeMode="contain"
               style={{ flex: 1 }}
             />
             <Image
               size="md"
-              source={require('../../../assets/Image.png')}
+              source={require('../assets/Image.png')}
               resizeMode="contain"
               style={{ flex: 1 }}
             />
             <Image
               size="md"
-              source={require('../../../assets/Image.png')}
+              source={require('../assets/Image.png')}
               resizeMode="contain"
               style={{ flex: 1 }}
             />
@@ -898,7 +895,7 @@ const Chats = () => {
           <Image
             w="$5"
             h="$5"
-            source={require('../../../assets/gluestack-logo.svg')}
+            source={require('../assets/gluestack-logo.svg')}
           />
         </Box>
 
