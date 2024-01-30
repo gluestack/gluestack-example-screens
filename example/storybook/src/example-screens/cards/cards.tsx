@@ -477,7 +477,7 @@ const LoginCard = () => {
 
 const Cards: any = ({ w = '100%', h = '100%', ...props }: any) => {
   return (
-    <Box {...props} h={h} w={w}>
+    <Box {...props} bg="$background0" p={'$6'} h={h} w={w}>
       <VStack flex={1} $xl-flexDirection="row" space="2xl">
         <VStack $base-width="$full" $xl-width="$2/3" space="2xl">
           <VStack $sm-flexDirection="row" space="2xl">

@@ -46,17 +46,17 @@ module.exports = {
         __dirname,
         '../../../packages/themed/src'
       ),
-      '@gluestack-ui-new/config': path.join(
+      '@gluestack-ui/config-v2': path.join(
         __dirname,
-        '../../../packages/config/src/gluestack-ui.config'
+        '../../../packages/config-v2/src/gluestack-ui.config'
       ),
     };
 
     config.resolve.alias = {
       ...config.resolve.alias,
-      '@gluestack-ui-new/config': path.join(
+      '@gluestack-ui/config-v2': path.join(
         __dirname,
-        '../../../packages/config/src/gluestack-ui.config'
+        '../../../packages/config-v2/src/gluestack-ui.config'
       ),
     };
     config.module.rules.push({

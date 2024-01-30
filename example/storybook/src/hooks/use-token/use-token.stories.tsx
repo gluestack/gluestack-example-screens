@@ -1,5 +1,5 @@
 import type { ComponentMeta } from '@storybook/react-native';
-import { config } from '@gluestack-ui-new/config';
+import { config } from '@gluestack-ui/config-v2';
 import useToken from './useToken';
 const UseTokenMeta: ComponentMeta<typeof useToken> = {
   title: 'hooks/useToken',

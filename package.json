@@ -2,7 +2,7 @@
   "private": true,
   "workspaces": [
     "packages/themed",
-    "packages/config",
+    "packages/config-v2",
     "example/storybook"
   ],
   "scripts": {

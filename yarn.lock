@@ -2530,7 +2530,12 @@
     "@react-native-aria/utils" "^0.2.10"
     "@react-stately/checkbox" "^3.4.2"
 
-"@gluestack-ui/config@^1.0.11", "@gluestack-ui/config@^1.0.7":
+"@gluestack-ui/config-v2@*":
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/@gluestack-ui/config-v2/-/config-v2-1.0.0.tgz#2f06734bf3cb637b5235ac7ac8f45e0d264b3a27"
+  integrity sha512-IYjIaewNPMyOp5kaeeqA7CvNNBStpiGdF2J/cBU+NSdVzUvkxkZtIuZxfWAD3DVnWsZI2+dfdpozGIRtIQ1D0A==
+
+"@gluestack-ui/config@^1.0.7":
   version "1.0.13"
   resolved "https://registry.yarnpkg.com/@gluestack-ui/config/-/config-1.0.13.tgz#e78b107d1acc3cb311998b380829da795e65c909"
   integrity sha512-7ASOJLtXdKHNwFKW4uQXV2QpMtDTVF6d31wOp5RWH7SUlX9308l/WkeXXIS4VwIUKD6LIbkFIQZXGSamr8y9dA==
