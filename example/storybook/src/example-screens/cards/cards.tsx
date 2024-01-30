@@ -31,14 +31,9 @@ import {
   Pressable,
   Heading,
 } from '@gluestack-ui-new/themed';
-import {
-  FileIcon,
-  CloudIcon,
-  GoogleIcon,
-  Twittericon,
-  GithubIcon,
-} from './Icons';
+import { FileIcon, GoogleIcon, Twittericon, GithubIcon } from './Icons';
 import { settingOptions } from './constants';
+import { UploadCloud } from 'lucide-react-native';
 
 const BlogCard = () => {
   return (
@@ -296,7 +291,6 @@ const FileUploadCard = () => {
         $base-mt="$5"
         $md-mt="$12"
         $lg-mt="$5"
-        px="$20"
         py="$6"
         alignItems="center"
         borderRadius="$xl"
@@ -306,7 +300,7 @@ const FileUploadCard = () => {
       >
         <Pressable>
           <Box alignItems="center">
-            <Icon as={CloudIcon} h="$16" w="$16" />
+            <Icon as={UploadCloud} h="$16" w="$16" />
             <Text mt="$1.5" fontSize="$sm" lineHeight="$md" color="$text700">
               Drag & drop your file here
             </Text>

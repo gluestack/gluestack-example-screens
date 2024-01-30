@@ -1,22 +1,22 @@
-import { CircleCrossIcon, MailIcon, TextIcon } from './Icons';
+import { Mail, Type, XCircle } from 'lucide-react-native';
 
 export const settingOptions = [
   {
     title: 'Email',
     description: 'Receive email updates on comments you followed',
-    Icon: MailIcon,
+    Icon: Mail,
     isCheck: true,
   },
   {
     title: 'Text Messages',
     description: 'Receive updates by SMS',
-    Icon: TextIcon,
+    Icon: Type,
     isCheck: true,
   },
   {
     title: 'Automatically Delete items',
     description: 'Delete activities older than 3 months ',
-    Icon: CircleCrossIcon,
+    Icon: XCircle,
     isCheck: false,
   },
 ];
