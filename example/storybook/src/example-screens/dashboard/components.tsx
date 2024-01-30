@@ -8,19 +8,29 @@ import {
   Avatar,
   AvatarFallbackText,
   Pressable,
-  MessageCircleIcon,
   useToken,
+  Menu,
+  MenuItem,
+  MenuItemLabel,
 } from '@gluestack-ui-new/themed';
 import React from 'react';
 import {
-  FacebookIconSVG,
-  InstagramIconSVG,
-  OptionsIconSVG,
-  PeopleIconSVG,
-  TwitterIconSVG,
-  ViewIconSVG,
-  YoutubeIconSVG,
-} from './icons';
+  BadgeHelpIcon,
+  CalendarDaysIcon,
+  EyeIcon,
+  FacebookIcon,
+  InstagramIcon,
+  LayoutDashboardIcon,
+  LogOutIcon,
+  LucideMessageCircle,
+  MegaphoneIcon,
+  MenuIcon,
+  MoreVerticalIcon,
+  TwitterIcon,
+  UserIcon,
+  UsersIcon,
+  YoutubeIcon,
+} from 'lucide-react-native';
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -51,11 +61,129 @@ ChartJS.register(
   ArcElement
 );
 import { analytics } from './constants';
+import { CircleDollarSignIcon } from 'lucide-react-native';
+import { SettingsIcon } from 'lucide-react-native';
 
 interface CommentCardProps {
   userName: string;
   comment: string;
 }
+
+const MiniNavbarMenu = ({
+  onViewChange,
+}: {
+  onViewChange: (view: string) => void;
+}) => {
+  const [selected, setSelected] = React.useState(new Set([]));
+  const [isOpen, setIsOpen] = React.useState<boolean>(false);
+  const miniNavbarIconColor = useToken('colors', 'white');
+  const iconSize = useToken('space', '6');
+  const iconColor = useToken('colors', 'background600');
+
+  return (
+    <Menu
+      placement="bottom"
+      selectionMode="single"
+      selectedKeys={selected}
+      closeOnSelect={true}
+      isOpen={isOpen}
+      onOpen={() => setIsOpen(true)}
+      onSelectionChange={(keys) => {
+        setSelected(keys);
+        if (keys?.currentKey === 'Dashboard') {
+          onViewChange('home');
+        } else if (keys?.currentKey === 'Announcements') {
+          onViewChange('notifications');
+        } else if (keys?.currentKey === 'Calendar') {
+          onViewChange('calendar');
+        } else if (keys?.currentKey === 'Revenue') {
+          onViewChange('currency');
+        } else if (keys?.currentKey === 'Profile') {
+          onViewChange('profile');
+        } else if (keys?.currentKey === 'Help') {
+          onViewChange('help');
+        } else if (keys?.currentKey === 'Settings') {
+          onViewChange('settings');
+        } else if (keys?.currentKey === 'Logout') {
+          onViewChange('exit');
+        }
+        setIsOpen(false);
+      }}
+      trigger={({ ...triggerProps }) => {
+        return (
+          <Pressable p="$2" {...triggerProps}>
+            <MenuIcon
+              color={miniNavbarIconColor}
+              width={iconSize}
+              height={iconSize}
+            />
+          </Pressable>
+        );
+      }}
+    >
+      <MenuItem key="Dashboard" textValue="Dashboard">
+        <LayoutDashboardIcon
+          color={iconColor}
+          width={iconSize}
+          height={iconSize}
+        />
+        <MenuItemLabel size="sm" ml="$2">
+          Dashboard
+        </MenuItemLabel>
+      </MenuItem>
+      <MenuItem key="Announcements" textValue="Announcements">
+        <MegaphoneIcon color={iconColor} width={iconSize} height={iconSize} />
+        <MenuItemLabel size="sm" ml="$2">
+          Announcements
+        </MenuItemLabel>
+      </MenuItem>
+      <MenuItem key="Calendar" textValue="Calendar">
+        <CalendarDaysIcon
+          color={iconColor}
+          width={iconSize}
+          height={iconSize}
+        />
+        <MenuItemLabel size="sm" ml="$2">
+          Calendar
+        </MenuItemLabel>
+      </MenuItem>
+      <MenuItem key="Revenue" textValue="Revenue">
+        <CircleDollarSignIcon
+          color={iconColor}
+          width={iconSize}
+          height={iconSize}
+        />
+        <MenuItemLabel size="sm" ml="$2">
+          Revenue
+        </MenuItemLabel>
+      </MenuItem>
+      <MenuItem key="Profile" textValue="Profile">
+        <UserIcon color={iconColor} width={iconSize} height={iconSize} />
+        <MenuItemLabel size="sm" ml="$2">
+          Profile
+        </MenuItemLabel>
+      </MenuItem>
+      <MenuItem key="Settings" textValue="Settings">
+        <SettingsIcon color={iconColor} width={iconSize} height={iconSize} />
+        <MenuItemLabel size="sm" ml="$2">
+          Settings
+        </MenuItemLabel>
+      </MenuItem>
+      <MenuItem key="Help" textValue="Help">
+        <BadgeHelpIcon color={iconColor} width={iconSize} height={iconSize} />
+        <MenuItemLabel size="sm" ml="$2">
+          Help
+        </MenuItemLabel>
+      </MenuItem>
+      <MenuItem key="Logout" textValue="Logout">
+        <LogOutIcon color={iconColor} width={iconSize} height={iconSize} />
+        <MenuItemLabel size="sm" ml="$2">
+          Logout
+        </MenuItemLabel>
+      </MenuItem>
+    </Menu>
+  );
+};
 
 const CommentCard = ({ userName, comment }: CommentCardProps) => {
   return (
@@ -92,6 +220,8 @@ const AnalyticsCard = ({
   totalValue: number;
   subtitleValue: string;
 }) => {
+  const iconColor = useToken('colors', 'primary500');
+  const iconSize = useToken('space', '4.5');
   return (
     <VStack
       p="$6"
@@ -132,11 +262,15 @@ const AnalyticsCard = ({
         </VStack>
         <Box p="$2" bg="$background50" borderRadius="$lg">
           {title === 'Views' ? (
-            <ViewIconSVG />
+            <EyeIcon color={iconColor} width={iconSize} height={iconSize} />
           ) : title === 'Followers' ? (
-            <PeopleIconSVG />
+            <UsersIcon color={iconColor} width={iconSize} height={iconSize} />
           ) : (
-            <MessageCircleIcon />
+            <LucideMessageCircle
+              color={iconColor}
+              width={iconSize}
+              height={iconSize}
+            />
           )}
         </Box>
       </HStack>
@@ -267,6 +401,8 @@ const HomeView = () => {
   const [tab, setTab] = React.useState<
     'instagram' | 'youtube' | 'twitter' | 'facebook'
   >('instagram');
+  const iconColor = useToken('colors', 'primary500');
+  const iconSize = useToken('space', '4.5');
   return (
     <Box my="$2" w="$full">
       <HStack
@@ -278,56 +414,97 @@ const HomeView = () => {
         flexWrap="wrap"
       >
         <Pressable
-          p="$1"
-          borderBottomWidth="$2"
-          borderBottomColor={tab === 'instagram' ? '$primary400' : '$white'}
           opacity={tab === 'instagram' ? '$100' : '$60'}
           onPress={() => setTab('instagram')}
+          $base-flexGrow={1}
+          $sm-flexGrow={0}
         >
-          <HStack space="xs" alignItems="center">
-            <InstagramIconSVG />
+          <HStack
+            space="xs"
+            alignItems="center"
+            alignSelf="center"
+            p="$1"
+            borderBottomWidth="$2"
+            borderBottomColor={
+              tab === 'instagram' ? '$primary400' : '$background0'
+            }
+          >
+            <InstagramIcon
+              color={iconColor}
+              height={iconSize}
+              width={iconSize}
+            />
+
             <Text fontSize="$md" color="$primary500" fontFamily="$heading">
               Instagram
             </Text>
           </HStack>
         </Pressable>
         <Pressable
-          p="$1"
-          borderBottomWidth="$2"
-          borderBottomColor={tab === 'youtube' ? '$primary400' : '$white'}
           opacity={tab === 'youtube' ? '$100' : '$60'}
           onPress={() => setTab('youtube')}
+          $base-flexGrow={1}
+          $sm-flexGrow={0}
         >
-          <HStack space="xs" alignItems="center">
-            <YoutubeIconSVG />
+          <HStack
+            space="xs"
+            alignItems="center"
+            alignSelf="center"
+            p="$1"
+            borderBottomWidth="$2"
+            borderBottomColor={
+              tab === 'youtube' ? '$primary400' : '$background0'
+            }
+          >
+            <YoutubeIcon color={iconColor} height={iconSize} width={iconSize} />
             <Text fontSize="$md" color="$primary500" fontFamily="$heading">
               Youtube
             </Text>
           </HStack>
         </Pressable>
         <Pressable
-          p="$1"
-          borderBottomWidth="$2"
-          borderBottomColor={tab === 'twitter' ? '$primary400' : '$white'}
           opacity={tab === 'twitter' ? '$100' : '$60'}
           onPress={() => setTab('twitter')}
+          $base-flexGrow={1}
+          $sm-flexGrow={0}
         >
-          <HStack space="xs" alignItems="center">
-            <TwitterIconSVG />
+          <HStack
+            space="xs"
+            alignItems="center"
+            alignSelf="center"
+            borderBottomWidth="$2"
+            borderBottomColor={
+              tab === 'twitter' ? '$primary400' : '$background0'
+            }
+            p="$1"
+          >
+            <TwitterIcon color={iconColor} height={iconSize} width={iconSize} />
             <Text fontSize="$md" color="$primary500" fontFamily="$heading">
               Twitter
             </Text>
           </HStack>
         </Pressable>
         <Pressable
-          p="$1"
-          borderBottomWidth="$2"
-          borderBottomColor={tab === 'facebook' ? '$primary400' : '$white'}
           opacity={tab === 'facebook' ? '$100' : '$60'}
           onPress={() => setTab('facebook')}
+          $base-flexGrow={1}
+          $sm-flexGrow={0}
         >
-          <HStack space="xs" alignItems="center">
-            <FacebookIconSVG />
+          <HStack
+            space="xs"
+            alignItems="center"
+            alignSelf="center"
+            p="$1"
+            borderBottomWidth="$2"
+            borderBottomColor={
+              tab === 'facebook' ? '$primary400' : '$background0'
+            }
+          >
+            <FacebookIcon
+              color={iconColor}
+              height={iconSize}
+              width={iconSize}
+            />
             <Text fontSize="$md" color="$primary500" fontFamily="$heading">
               Facebook
             </Text>
@@ -399,7 +576,11 @@ const HomeView = () => {
                 Latest Posts
               </Text>
               <Pressable>
-                <OptionsIconSVG />
+                <MoreVerticalIcon
+                  color={iconColor}
+                  width={iconSize}
+                  height={iconSize}
+                />
               </Pressable>
             </HStack>
             <Text
@@ -514,7 +695,11 @@ const HomeView = () => {
                 Audience Age Split
               </Text>
               <Pressable>
-                <OptionsIconSVG />
+                <MoreVerticalIcon
+                  color={iconColor}
+                  width={iconSize}
+                  height={iconSize}
+                />
               </Pressable>
             </HStack>
             <HStack alignItems="center" space="md" alignSelf="center">
@@ -759,11 +944,13 @@ const NotificationsView = () => {
   return (
     <Box
       bg="red"
-      minWidth="$96"
+      $md-minWidth="$96"
+      $base-minWidth="$64"
       minHeight="$72"
       borderRadius="$3xl"
       maxWidth="$1/2"
       alignSelf="center"
+      my="$6"
     >
       <Text textAlign="center" fontSize="$lg" color="$white" my="auto">
         Notifications
@@ -775,11 +962,13 @@ const CalendarView = () => {
   return (
     <Box
       bg="blue"
-      minWidth="$96"
+      $md-minWidth="$96"
+      $base-minWidth="$64"
       minHeight="$72"
       borderRadius="$3xl"
       maxWidth="$1/2"
       alignSelf="center"
+      my="$6"
     >
       <Text
         textAlign="center"
@@ -797,11 +986,13 @@ const CurrencyView = () => {
   return (
     <Box
       bg="black"
-      minWidth="$96"
+      $md-minWidth="$96"
+      $base-minWidth="$64"
       minHeight="$72"
       borderRadius="$3xl"
       maxWidth="$1/2"
       alignSelf="center"
+      my="$6"
     >
       <Text
         textAlign="center"
@@ -819,11 +1010,13 @@ const ProfileView = () => {
   return (
     <Box
       bg="$amber600"
-      minWidth="$96"
+      $md-minWidth="$96"
+      $base-minWidth="$64"
       minHeight="$72"
       borderRadius="$3xl"
       maxWidth="$1/2"
       alignSelf="center"
+      my="$6"
     >
       <Text
         textAlign="center"
@@ -841,11 +1034,13 @@ const SettingsView = () => {
   return (
     <Box
       bg="$violet400"
-      minWidth="$96"
+      $md-minWidth="$96"
+      $base-minWidth="$64"
       minHeight="$72"
       borderRadius="$3xl"
       maxWidth="$1/2"
       alignSelf="center"
+      my="$6"
     >
       <Text
         textAlign="center"
@@ -863,11 +1058,13 @@ const HelpView = () => {
   return (
     <Box
       bg="$green400"
-      minWidth="$96"
+      $md-minWidth="$96"
+      $base-minWidth="$64"
       minHeight="$72"
       borderRadius="$3xl"
       maxWidth="$1/2"
       alignSelf="center"
+      my="$6"
     >
       <Text
         textAlign="center"
@@ -885,11 +1082,13 @@ const ExitView = () => {
   return (
     <Box
       bg="$tertiary600"
-      minWidth="$96"
+      $md-minWidth="$96"
+      $base-minWidth="$64"
       minHeight="$72"
       borderRadius="$3xl"
       maxWidth="$1/2"
       alignSelf="center"
+      my="$6"
     >
       <Text
         textAlign="center"
@@ -915,4 +1114,5 @@ export {
   HomeView,
   NotificationsView,
   CommentCard,
+  MiniNavbarMenu,
 };
