@@ -59,7 +59,7 @@ const BlogCard = () => {
           practical tips and techniques to cultivate a positive mindset for
           greater happiness and success.
         </Text>
-        <HStack mt="$6" space="lg" alignItems="center">
+        <HStack mt="$6" space="md" alignItems="center">
           <Avatar size="md">
             <AvatarFallbackText>John Smith</AvatarFallbackText>
             <AvatarImage source={require('../assets/avatar-icon.png')} />
@@ -82,7 +82,8 @@ const ProfileCard = () => {
   return (
     <VStack
       flex={1}
-      p="$6"
+      $base-p="$5"
+      $xs-p="$6"
       alignItems="center"
       borderRadius="$xl"
       borderWidth="$1"
@@ -209,7 +210,8 @@ const FormInputcard = () => {
 const SettingsCard = () => {
   return (
     <Box
-      padding="$6"
+      $base-p="$5"
+      $xs-p="$6"
       borderRadius="$xl"
       borderColor="$border200"
       borderWidth="$1"
@@ -224,7 +226,7 @@ const SettingsCard = () => {
       </Heading>
       <VStack mt="$6" space="xl">
         {settingOptions.map((option: any, index: number) => (
-          <HStack key={index} space="xl">
+          <HStack key={index}>
             <Box
               padding="$3"
               borderRadius="$xl"
@@ -242,6 +244,8 @@ const SettingsCard = () => {
               }
               mb="$0.5"
               pb="$2"
+              $base-ml="$3"
+              $xs-ml="$5"
             >
               <VStack maxWidth="$5/6">
                 <Text
@@ -273,7 +277,8 @@ const SettingsCard = () => {
 const FileUploadCard = () => {
   return (
     <VStack
-      padding="$6"
+      $base-p="$5"
+      $xs-p="$6"
       borderRadius="$xl"
       borderColor="$border200"
       borderWidth="$1"
@@ -327,20 +332,20 @@ const FileUploadCard = () => {
           Uploading 1 file
         </Heading>
         <HStack mt="$3.5" justifyContent="space-between" alignItems="center">
-          <Box padding="$3">
+          <Box $base-padding="$1" $xs-padding="$3">
             <Icon as={FileIcon} size="xl" />
           </Box>
           <VStack w="$4/5">
             <HStack justifyContent="space-between">
               <HStack>
-                <Text fontSize="$sm" color="$text900">
+                <Text $base-fontSize="$xs" $xs-fontSize="$sm" color="$text900">
                   Document_1.gif
                 </Text>
-                <Text fontSize="$sm" color="$text500">
+                <Text $base-fontSize="$xs" $xs-fontSize="$sm" color="$text500">
                   {''} (200mb)
                 </Text>
               </HStack>
-              <Text fontSize="$xs" color="$text500">
+              <Text alignSelf="center" fontSize="$xs" color="$text500">
                 25s left
               </Text>
             </HStack>
@@ -348,7 +353,7 @@ const FileUploadCard = () => {
               <ProgressFilledTrack h="$1" />
             </Progress>
           </VStack>
-          <Pressable>
+          <Pressable ml="$1">
             <Icon as={CloseIcon} w="$5" h="$5" color="$background600" />
           </Pressable>
         </HStack>
@@ -360,7 +365,8 @@ const FileUploadCard = () => {
 const LoginCard = () => {
   return (
     <VStack
-      padding="$9"
+      $xs-padding="$9"
+      $base-padding="$6"
       borderRadius="$xl"
       borderColor="$border200"
       borderWidth="$1"

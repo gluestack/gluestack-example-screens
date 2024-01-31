@@ -50,7 +50,7 @@ export const Twittericon = createIcon({
 });
 
 export const GithubIcon = createIcon({
-  viewBox: '0 0 16 16',
+  viewBox: '0 0 20 20',
   path: (
     <>
       <G clip-path="url(#clip0_2317_572)">
