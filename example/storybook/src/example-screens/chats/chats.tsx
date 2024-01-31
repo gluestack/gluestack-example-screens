@@ -105,7 +105,6 @@ const Chats = () => {
   const [selectedChat, setSelectedChat] = useState({
     name: 'Richard Lyod',
   });
-  // const [selectedProfile, setSelectedProfile] = useState('');
   const [showChatList, setShowChatList] = useState(false);
   const [showProfile, setShowProfile] = useState(false);
 
@@ -113,21 +112,15 @@ const Chats = () => {
     setSelectedChat({ name, message });
     setShowChatList(true);
   };
-  // const handleProfileSelect = ({ name }) => {
-  //   setSelectedProfile({ name });
-  //   setShowProfile(true);
-  // };
 
   const handleBackToInbox = () => {
     setShowChatList(false);
-    // setSelectedProfile(false);
   };
   const handleMenuClick = (key: string | Set<Key>) => {
     if (key === 'Profile') {
       setShowChatList(false);
       setShowProfile(true);
     }
-    // Handle other menu items if needed
   };
   const TruncatedText = ({ children, numberOfLines }) => (
     <Text
@@ -184,37 +177,14 @@ const Chats = () => {
                 w="$4"
                 bg="$background950"
                 borderRadius="$full"
-                //  position="absolute"
-                //  top={4}
-                //  right={4}
-                //  zIndex={1}
                 variant="solid"
-                alignItems="center" // Center the text
-                justifyContent="center" // Center the text
+                alignItems="center"
+                justifyContent="center"
               >
-                <BadgeText
-                  fontSize="$2xs"
-                  color="$text0"
-                  // color={activeIcon === label ? '$text950' : '$white'}
-                >
+                <BadgeText fontSize="$2xs" color="$text0">
                   {badgeCount}
                 </BadgeText>
               </Badge>
-              // <BadgeText
-              //   sx={{
-              //     '.dark_theme': { color: '$text0', bg: '$background950' },
-              //   }}
-              //   textAlign="center"
-              //   bg="$background950"
-              //   fontSize="$2xs"
-              //   p="$0.5"
-              //   h="$3.5"
-              //   w="$3.5"
-              //   borderRadius="$3xl"
-              //   color="$text0"
-              // >
-              //   {badgeCount}
-              // </BadgeText>
             )}
           </HStack>
         </VStack>
@@ -243,7 +213,7 @@ const Chats = () => {
       maxWidth={isRight ? '$2/3' : 'auto'}
       bg={isRight ? '$primary300' : '$background50'}
       marginBottom="$2.5"
-      alignSelf={isRight ? 'flex-end' : 'flex-start'} // Align to the right if isRight is true
+      alignSelf={isRight ? 'flex-end' : 'flex-start'}
       flexDirection={isRight ? 'column' : 'row'}
     >
       <Text
@@ -262,7 +232,6 @@ const Chats = () => {
             fontWeight="$normal"
             color="$text300"
             sx={{ '.dark_theme': { color: '$text300' } }}
-            // paddingHorizontal="$2"
             alignSelf="flex-end"
             alignItems="center"
           >
@@ -294,7 +263,6 @@ const Chats = () => {
   );
 
   const ChatList = ({ selectedChat }) => {
-    // Define different sets of messages for different chats
     const messages = {
       'Mila Dann': {
         messagesRight: ['These are really cool 💯'],
@@ -351,10 +319,8 @@ const Chats = () => {
         messagesRight: [],
         messagesLeft: ['I can’t wait to hear about...'],
       },
-      // Add more messages for other chats as needed
     };
 
-    // Define message times for each message set
     const messageTime = [
       '6:40pm',
       '6:40pm',
@@ -368,11 +334,9 @@ const Chats = () => {
       '7:05pm',
     ];
 
-    // Get the messages for the selected chat
     const selectedChatMessages = messages[selectedChat?.name] || {};
     const { messagesLeft, messagesRight } = selectedChatMessages;
 
-    // Create message order with time for the selected chat
     const messagesOrder = [
       ...messagesLeft.slice(0, 3),
       ...messagesRight.slice(0, 1),
@@ -439,11 +403,17 @@ const Chats = () => {
             borderWidth={0}
             paddingVertical="$2"
             w="$72"
+            h="$12"
+            borderColor="transparent"
+            borderRadius="$lg"
           >
             <InputField
-              w="$56"
+              borderColor="transparent"
+              w="$full"
               fontSize="$md"
               fontWeight="$normal"
+              type="text"
+              placeholderTextColor="$text400"
               placeholder="Type a message here..."
             />
           </Input>
@@ -579,9 +549,7 @@ const Chats = () => {
     return (
       <Input
         m="$4"
-        sx={{ '.dark_theme': { borderColor: '$border300' } }}
         borderRadius="$lg"
-        borderColor="$border300"
         style={{
           shadowColor: '#262626',
           shadowOffset: { width: 0, height: -2 },
@@ -589,7 +557,6 @@ const Chats = () => {
           shadowRadius: 10,
           elevation: 5,
         }}
-        mt="$5"
       >
         <InputSlot pl="$3">
           <InputIcon
@@ -598,7 +565,11 @@ const Chats = () => {
             as={SearchIcon}
           />
         </InputSlot>
-        <InputField placeholderTextColor="$text400" placeholder="Search..." />
+        <InputField
+          type="text"
+          placeholderTextColor="$text700"
+          placeholder="Search..."
+        />
       </Input>
     );
   };
@@ -616,11 +587,10 @@ const Chats = () => {
 
     const defaultActiveIcon = 'Messages';
     const [activeIcon, setActiveIcon] = useState(defaultActiveIcon);
-    const messagesBadgeCount = 3; // Set your badge count here
+    const messagesBadgeCount = 3;
 
     const handleIconPress = (label: React.SetStateAction<string>) => {
       setActiveIcon(label);
-      // Handle icon press logic if needed
     };
 
     return (
@@ -629,16 +599,6 @@ const Chats = () => {
         paddingHorizontal="$4"
         alignItems="flex-start"
         gap="$6"
-        // sx={{
-        //   '@md': {
-        //     display: 'flex',
-        //     paddingVertical: '$6',
-        //     paddingHorizontal: '$4',
-        //     alignItems: 'flex-start',
-        //     gap: '$6',
-        //   },
-        // }}
-        // display="none"
       >
         {icons.map(({ icon: IconComponent, label }) => (
           <Pressable
@@ -649,7 +609,7 @@ const Chats = () => {
                 activeIcon === label ? '$primary500' : 'transparent',
               borderRadius: 6,
               padding: 2,
-              position: 'relative', // Make the position relative
+              position: 'relative',
             }}
           >
             <Icon
@@ -672,14 +632,10 @@ const Chats = () => {
                 right={4}
                 zIndex={1}
                 variant="solid"
-                alignItems="center" // Center the text
-                justifyContent="center" // Center the text
+                alignItems="center"
+                justifyContent="center"
               >
-                <BadgeText
-                  fontSize="$2xs"
-                  color="$text950"
-                  // color={activeIcon === label ? '$text950' : '$white'}
-                >
+                <BadgeText fontSize="$2xs" color="$text950">
                   {messagesBadgeCount}
                 </BadgeText>
               </Badge>
@@ -695,7 +651,6 @@ const Chats = () => {
         sx={{
           '@lg': {
             display: 'flex',
-            // flex: 1,
             gap: '$5',
           },
         }}
@@ -961,7 +916,6 @@ const Chats = () => {
           w="$11"
           h="$11"
           m="$4"
-          // p="$4"
           sx={{ '.dark_theme': { borderColor: '$border200', bg: '$white' } }}
           borderColor="$border200"
           borderRadius="$lg"
@@ -987,14 +941,14 @@ const Chats = () => {
         w="$full"
         transform="translateY(-50%)"
         top="10%"
-        position="absolute" // Make sure the divider is positioned relative
+        position="absolute"
       />
       <Divider
         sx={{ '@base': { display: 'none' }, '@md': { display: 'flex' } }}
         orientation="vertical"
         bg="$background200"
         h="auto"
-        position="relative" // Make sure the divider is positioned relative
+        position="relative"
       >
         {/* <Icon
             sx={{ '@base': { display: 'none' }, '@md': { display: 'flex' } }}
@@ -1097,7 +1051,7 @@ const Chats = () => {
         orientation="vertical"
         bg="$background200"
         h="auto"
-        position="relative" // Make sure the divider is positioned relative
+        position="relative"
       >
         {/* <Icon
             sx={{ '@base': { display: 'none' }, '@md': { display: 'flex' } }}
