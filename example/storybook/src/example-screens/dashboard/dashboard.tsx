@@ -10,24 +10,9 @@ import {
   Pressable,
   Input,
   InputField,
-  Center,
-  MenuIcon,
-  SearchIcon,
+  useToken,
 } from '@gluestack-ui-new/themed';
 import React from 'react';
-import {
-  ArrowRightSVG,
-  BellIconSVG,
-  CalenderIconSVG,
-  CatergoriesIconSVG,
-  CurrencyIconSVG,
-  ExitIconSVG,
-  HelpIconSVG,
-  NotificationsIconSVG,
-  ProfileIconSVG,
-  SearchIconSVG,
-  SettingsIconSVG,
-} from './icons';
 import { comments } from './constants';
 import {
   HomeView,
@@ -39,7 +24,21 @@ import {
   ExitView,
   HelpView,
   SettingsView,
+  MiniNavbarMenu,
 } from './components';
+import {
+  ArrowRight,
+  BadgeHelpIcon,
+  BellIcon,
+  CalendarDaysIcon,
+  CircleDollarSignIcon,
+  LayoutDashboardIcon,
+  LogOutIcon,
+  MegaphoneIcon,
+  Search,
+  SettingsIcon,
+  UserIcon,
+} from 'lucide-react-native';
 
 const viewRenderer = (view: string) => {
   switch (view) {
@@ -75,13 +74,22 @@ const Dashboard: any = ({ w = '100%', ...props }: any) => {
     | 'help'
     | 'exit'
   >('home');
+  const iconColor = useToken('colors', 'background200');
+  const searchIconColor = useToken('colors', 'background500');
+  const bellIconColor = useToken('colors', 'background600');
+  const arrowIconColor = useToken('colors', 'background800');
+  const miniNavbarIconColor = useToken('colors', 'white');
+  const iconSize = useToken('space', '6');
+  const arrowIconSize = useToken('space', '3');
+  const searchIconSize = useToken('space', '3.5');
+
   const handleViewChange = (viewInput: typeof view) => {
     setView(viewInput);
   };
+
   return (
     <Box
       {...props}
-      bg="$background0"
       w={w}
       borderWidth="$1"
       borderColor="$border200"
@@ -89,6 +97,7 @@ const Dashboard: any = ({ w = '100%', ...props }: any) => {
       display="flex"
       $base-flexDirection="column"
       $md-flexDirection="row"
+      bg="$background0"
     >
       <HStack
         bg="$background950"
@@ -105,11 +114,17 @@ const Dashboard: any = ({ w = '100%', ...props }: any) => {
           },
         }}
       >
-        <Pressable bg="$background950" p="$2">
-          <MenuIcon color="$white" />
+        <Pressable p="$2">
+          <MiniNavbarMenu
+            onViewChange={(view: string) => handleViewChange(view)}
+          />
         </Pressable>
         <Pressable p="$2">
-          <SearchIcon color="$white" />
+          <Search
+            color={miniNavbarIconColor}
+            width={iconSize}
+            height={iconSize}
+          />
         </Pressable>
       </HStack>
       <VStack
@@ -135,7 +150,11 @@ const Dashboard: any = ({ w = '100%', ...props }: any) => {
             bg={view === 'home' ? '$background800' : '$background950'}
             onPress={() => handleViewChange('home')}
           >
-            <CatergoriesIconSVG />
+            <LayoutDashboardIcon
+              color={iconColor}
+              width={iconSize}
+              height={iconSize}
+            />
           </Pressable>
           <Pressable
             p="$2"
@@ -144,7 +163,11 @@ const Dashboard: any = ({ w = '100%', ...props }: any) => {
             bg={view === 'notifications' ? '$background800' : '$background950'}
             onPress={() => handleViewChange('notifications')}
           >
-            <NotificationsIconSVG />
+            <MegaphoneIcon
+              color={iconColor}
+              width={iconSize}
+              height={iconSize}
+            />
           </Pressable>
           <Pressable
             p="$2"
@@ -153,7 +176,11 @@ const Dashboard: any = ({ w = '100%', ...props }: any) => {
             bg={view === 'calendar' ? '$background800' : '$background950'}
             onPress={() => handleViewChange('calendar')}
           >
-            <CalenderIconSVG />
+            <CalendarDaysIcon
+              color={iconColor}
+              width={iconSize}
+              height={iconSize}
+            />
           </Pressable>
           <Pressable
             p="$2"
@@ -162,7 +189,11 @@ const Dashboard: any = ({ w = '100%', ...props }: any) => {
             bg={view === 'currency' ? '$background800' : '$background950'}
             onPress={() => handleViewChange('currency')}
           >
-            <CurrencyIconSVG />
+            <CircleDollarSignIcon
+              color={iconColor}
+              width={iconSize}
+              height={iconSize}
+            />
           </Pressable>
           <Divider
             bg="$background600"
@@ -178,7 +209,7 @@ const Dashboard: any = ({ w = '100%', ...props }: any) => {
             bg={view === 'profile' ? '$background800' : '$background950'}
             onPress={() => handleViewChange('profile')}
           >
-            <ProfileIconSVG />
+            <UserIcon color={iconColor} width={iconSize} height={iconSize} />
           </Pressable>
           <Pressable
             p="$2"
@@ -187,7 +218,11 @@ const Dashboard: any = ({ w = '100%', ...props }: any) => {
             bg={view === 'settings' ? '$background800' : '$background950'}
             onPress={() => handleViewChange('settings')}
           >
-            <SettingsIconSVG />
+            <SettingsIcon
+              color={iconColor}
+              width={iconSize}
+              height={iconSize}
+            />
           </Pressable>
           <Pressable
             p="$2"
@@ -196,7 +231,11 @@ const Dashboard: any = ({ w = '100%', ...props }: any) => {
             bg={view === 'help' ? '$background800' : '$background950'}
             onPress={() => handleViewChange('help')}
           >
-            <HelpIconSVG />
+            <BadgeHelpIcon
+              color={iconColor}
+              width={iconSize}
+              height={iconSize}
+            />
           </Pressable>
         </VStack>
         <VStack
@@ -214,7 +253,7 @@ const Dashboard: any = ({ w = '100%', ...props }: any) => {
             bg={view === 'exit' ? '$background800' : '$background950'}
             onPress={() => handleViewChange('exit')}
           >
-            <ExitIconSVG />
+            <LogOutIcon color={iconColor} width={iconSize} height={iconSize} />
           </Pressable>
         </VStack>
       </VStack>
@@ -279,7 +318,11 @@ const Dashboard: any = ({ w = '100%', ...props }: any) => {
                   $base-display="none"
                   $md-display="flex"
                 >
-                  <SearchIconSVG />
+                  <Search
+                    color={searchIconColor}
+                    width={searchIconSize}
+                    height={searchIconSize}
+                  />
                   <Input
                     borderWidth="$0"
                     sx={{
@@ -298,21 +341,31 @@ const Dashboard: any = ({ w = '100%', ...props }: any) => {
                     />
                   </Input>
                 </HStack>
-                <Center
+                <Pressable
                   bg="$background100"
                   borderRadius="$lg"
                   $base-p="$0.5"
                   $sm-p="$2"
                 >
-                  <BellIconSVG />
-                </Center>
+                  <BellIcon
+                    color={bellIconColor}
+                    width={iconSize}
+                    height={iconSize}
+                  />
+                </Pressable>
               </HStack>
             </HStack>
             <Box>{viewRenderer(view)}</Box>
           </VStack>
         </Box>
-        <Box $xl-width="$2/6" $lg-width="$2/5" $base-width="$full" p="$2">
-          <VStack space="2xl" alignItems="center">
+        <Box $xl-width="$2/6" $lg-width="$2/5" $base-width="$full" $lg-p="$2">
+          <VStack
+            space="2xl"
+            $lg-alignItems="center"
+            $base-mx="$2"
+            $sm-mx="$4"
+            $lg-mx="$0"
+          >
             <VStack
               bg="$background50"
               alignItems="center"
@@ -321,6 +374,8 @@ const Dashboard: any = ({ w = '100%', ...props }: any) => {
               space="md"
               p="$3"
               borderRadius="$xl"
+              $base-flexGrow={1}
+              $lg-flexGrow={0}
             >
               <Box borderRadius="$full">
                 <Avatar bgColor="$black" size="lg">
@@ -453,7 +508,11 @@ const Dashboard: any = ({ w = '100%', ...props }: any) => {
                 ))}
               </VStack>
               <Pressable mt="$20">
-                <HStack space="sm" justifyContent="flex-end">
+                <HStack
+                  space="sm"
+                  justifyContent="flex-end"
+                  alignItems="center"
+                >
                   <Text
                     fontWeight="$semibold"
                     fontSize="$xs"
@@ -462,7 +521,11 @@ const Dashboard: any = ({ w = '100%', ...props }: any) => {
                   >
                     See All Activity
                   </Text>
-                  <ArrowRightSVG />
+                  <ArrowRight
+                    color={arrowIconColor}
+                    width={arrowIconSize}
+                    height={arrowIconSize}
+                  />
                 </HStack>
               </Pressable>
             </Box>
