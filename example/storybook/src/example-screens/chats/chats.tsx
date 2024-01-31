@@ -53,7 +53,7 @@ import {
 } from 'lucide-react-native';
 import { Lock } from 'lucide-react-native';
 import { Key } from 'react-stately';
-
+import { DotIcon } from './Icons';
 const chatData = [
   {
     avatarSource: require('../assets/Avatar1.png'),
@@ -519,26 +519,7 @@ const Chats = () => {
                 {selectedChat ? selectedChat.name : ''}
               </Heading>
               <HStack alignItems="center" space="xs">
-                <Image
-                  sx={{
-                    '.dark_theme': { display: 'none' },
-                    '.light_theme': { display: 'flex' },
-                  }}
-                  source={require('../assets/Dot_light.png')}
-                  w="$2"
-                  h="$2"
-                  alt=""
-                />
-                <Image
-                  sx={{
-                    '.dark_theme': { display: 'flex' },
-                    '.light_theme': { display: 'none' },
-                  }}
-                  source={require('../assets/Dot_dark.png')}
-                  w="$2"
-                  h="$2"
-                  alt=""
-                />
+                <Icon as={DotIcon} w="$1.5" h="$1.5" />
                 <Text size="sm">Online</Text>
               </HStack>
             </VStack>
@@ -1013,7 +994,6 @@ const Chats = () => {
         orientation="vertical"
         bg="$background200"
         h="auto"
-        $dark-bg="$emerald400"
         position="relative" // Make sure the divider is positioned relative
       >
         {/* <Icon
@@ -1089,7 +1069,6 @@ const Chats = () => {
         orientation="vertical"
         bg="$background200"
         h="auto"
-        $dark-bg="$emerald400"
       />
       <VStack
         sx={{
