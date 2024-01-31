@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import {
   VStack,
   Icon,
@@ -83,11 +83,7 @@ const chatData = [
     name: 'Ben',
     message: 'I’ll be there in 2 mins',
   },
-  {
-    avatarSource: require('../assets/Avatar1.png'),
-    name: 'John',
-    message: 'Done ✅',
-  },
+
   {
     avatarSource: require('../assets/Avatar6.png'),
     name: 'Taylor',
@@ -109,28 +105,22 @@ const Chats = () => {
   const [selectedChat, setSelectedChat] = useState({
     name: 'Richard Lyod',
   });
+  // const [selectedProfile, setSelectedProfile] = useState('');
   const [showChatList, setShowChatList] = useState(false);
   const [showProfile, setShowProfile] = useState(false);
-
-  const [_isSmallScreen, setIsSmallScreen] = useState(false);
-
-  useEffect(() => {
-    const mediaQuery = window.matchMedia('(max-width: 768px)');
-    setIsSmallScreen(mediaQuery.matches);
-    const handleResize = () => {
-      setIsSmallScreen(mediaQuery.matches);
-    };
-    mediaQuery.addListener(handleResize);
-    return () => mediaQuery.removeListener(handleResize);
-  }, []);
 
   const handleChatSelect = ({ name, message }) => {
     setSelectedChat({ name, message });
     setShowChatList(true);
   };
+  // const handleProfileSelect = ({ name }) => {
+  //   setSelectedProfile({ name });
+  //   setShowProfile(true);
+  // };
 
   const handleBackToInbox = () => {
     setShowChatList(false);
+    // setSelectedProfile(false);
   };
   const handleMenuClick = (key: string | Set<Key>) => {
     if (key === 'Profile') {
@@ -504,99 +494,103 @@ const Chats = () => {
 
   const ChatTopBar = () => {
     return (
-      <HStack
-        paddingHorizontal="$4"
-        paddingVertical="$4"
-        gap="$4"
-        justifyContent="space-between"
-      >
-        <HStack>
-          <Box sx={{ '@sm': { display: 'flex' }, '@md': { display: 'none' } }}>
-            <Pressable onPress={handleBackToInbox}>
-              <Icon as={ArrowLeft} />
-            </Pressable>
-          </Box>
-          <VStack>
-            <Heading
-              sx={{ '.dark_theme': { color: '$text900' } }}
-              color="$text900"
-              fontSize="$lg"
-              fontWeight="$bold"
+      <Pressable>
+        <HStack
+          paddingHorizontal="$4"
+          paddingVertical="$4"
+          gap="$4"
+          justifyContent="space-between"
+        >
+          <HStack alignItems="center" gap="$4">
+            <Box
+              sx={{ '@sm': { display: 'flex' }, '@md': { display: 'none' } }}
             >
-              {selectedChat ? selectedChat.name : ''}
-            </Heading>
-            <HStack alignItems="center" space="xs">
-              <Image
-                sx={{
-                  '.dark_theme': { display: 'none' },
-                  '.light_theme': { display: 'flex' },
-                }}
-                source={require('../assets/Dot_light.png')}
-                w="$2"
-                h="$2"
-                alt=""
+              <Pressable onPress={handleBackToInbox}>
+                <Icon as={ArrowLeft} />
+              </Pressable>
+            </Box>
+            <VStack>
+              <Heading
+                sx={{ '.dark_theme': { color: '$text900' } }}
+                color="$text900"
+                fontSize="$lg"
+                fontWeight="$bold"
+              >
+                {selectedChat ? selectedChat.name : ''}
+              </Heading>
+              <HStack alignItems="center" space="xs">
+                <Image
+                  sx={{
+                    '.dark_theme': { display: 'none' },
+                    '.light_theme': { display: 'flex' },
+                  }}
+                  source={require('../assets/Dot_light.png')}
+                  w="$2"
+                  h="$2"
+                  alt=""
+                />
+                <Image
+                  sx={{
+                    '.dark_theme': { display: 'flex' },
+                    '.light_theme': { display: 'none' },
+                  }}
+                  source={require('../assets/Dot_dark.png')}
+                  w="$2"
+                  h="$2"
+                  alt=""
+                />
+                <Text size="sm">Online</Text>
+              </HStack>
+            </VStack>
+          </HStack>
+          <HStack alignItems="center" gap="$4">
+            <Pressable>
+              <Icon
+                sx={{ '.dark_theme': { color: '$background800' } }}
+                color="$background800"
+                w="$4.5"
+                h="$4.5"
+                as={Phone}
               />
-              <Image
-                sx={{
-                  '.dark_theme': { display: 'flex' },
-                  '.light_theme': { display: 'none' },
-                }}
-                source={require('../assets/Dot_dark.png')}
-                w="$2"
-                h="$2"
-                alt=""
+            </Pressable>
+            <Pressable>
+              <Icon
+                sx={{ '.dark_theme': { color: '$background800' } }}
+                color="$background800"
+                w="$4.5"
+                h="$4.5"
+                as={Video}
               />
-              <Text size="sm">Online</Text>
-            </HStack>
-          </VStack>
-        </HStack>
-        <HStack alignItems="center" gap="$4">
-          <Pressable>
-            <Icon
-              sx={{ '.dark_theme': { color: '$background800' } }}
-              color="$background800"
-              w="$4.5"
-              h="$4.5"
-              as={Phone}
-            />
-          </Pressable>
-          <Pressable>
-            <Icon
-              sx={{ '.dark_theme': { color: '$background800' } }}
-              color="$background800"
-              w="$4.5"
-              h="$4.5"
-              as={Video}
-            />
-          </Pressable>
+            </Pressable>
 
-          <Menu
-            placement={'bottom right'}
-            disabledKeys={['Theme']}
-            trigger={({ ...triggerProps }) => {
-              return (
-                <Pressable bg="transparent" {...triggerProps}>
-                  <Icon color="$background800" as={MoreVertical} />
-                </Pressable>
-              );
-            }}
-            onSelectionChange={(key) => handleMenuClick(key)}
-          >
-            <MenuItem key="Profile" textValue="Profile">
-              <Icon as={UserCircle} size="sm" mr="$2" />
-              <MenuItemLabel size="sm">Show Profile</MenuItemLabel>
-            </MenuItem>
-            <MenuItem key="Block" textValue="Block">
-              <Icon as={Ban} size="sm" mr="$2" />
-              <MenuItemLabel size="sm">Block</MenuItemLabel>
-            </MenuItem>
-            <MenuItem key="Report" textValue="Report">
-              <Icon as={AlertCircle} size="sm" mr="$2" />
-              <MenuItemLabel size="sm">Report</MenuItemLabel>
-            </MenuItem>
-          </Menu>
+            <Menu
+              placement={'bottom right'}
+              disabledKeys={['Theme']}
+              trigger={({ ...triggerProps }) => {
+                return (
+                  <Pressable bg="transparent" {...triggerProps}>
+                    <Icon color="$background800" as={MoreVertical} />
+                  </Pressable>
+                );
+              }}
+              onSelectionChange={(key) => handleMenuClick(key)}
+            >
+              <MenuItem key="Profile" textValue="Profile">
+                <Icon as={UserCircle} size="sm" mr="$2" />
+                <MenuItemLabel size="sm">Show Profile</MenuItemLabel>
+              </MenuItem>
+              <MenuItem key="Block" textValue="Block">
+                <Icon as={Ban} size="sm" mr="$2" />
+                <MenuItemLabel size="sm">Block</MenuItemLabel>
+              </MenuItem>
+              <MenuItem key="Report" textValue="Report">
+                <Icon as={AlertCircle} size="sm" mr="$2" />
+                <MenuItemLabel size="sm">Report</MenuItemLabel>
+              </MenuItem>
+            </Menu>
+          </HStack>
         </HStack>
-      </HStack>
+      </Pressable>
     );
   };
 
@@ -978,7 +972,10 @@ const Chats = () => {
         borderWidth={1}
         flex={1}
         borderRadius="$lg"
-        sx={{ '.dark_theme': { borderColor: '$border200' } }}
+        sx={{
+          '.dark_theme': { borderColor: '$border200' },
+          '@base': { maxHeight: '$full' },
+        }}
         borderColor="$border200"
       >
         <VStack
