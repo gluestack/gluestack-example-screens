@@ -965,63 +965,58 @@ const Chats = () => {
   };
 
   return (
-    <>
-      <HStack
-        maxHeight={720}
+    <HStack
+      bg="$background0"
+      maxHeight={720}
+      w="$full"
+      borderWidth={1}
+      flex={1}
+      borderRadius="$lg"
+      sx={{ '.dark_theme': { borderColor: '$border200' } }}
+      borderColor="$border200"
+    >
+      <VStack sx={{ '@base': { display: 'none' }, '@md': { display: 'flex' } }}>
+        <Box
+          w="$11"
+          h="$11"
+          m="$4"
+          // p="$4"
+          sx={{ '.dark_theme': { borderColor: '$border200', bg: '$white' } }}
+          borderColor="$border200"
+          borderRadius="$lg"
+          borderWidth="$1"
+          alignItems="center"
+          justifyContent="center"
+        >
+          <Image
+            w="$5"
+            h="$5"
+            source={require('../assets/gluestack-logo.png')}
+            alt=""
+          />
+        </Box>
+
+        <Sidebar />
+      </VStack>
+
+      <Divider
+        sx={{ '@base': { display: 'none' }, '@md': { display: 'flex' } }}
+        orientation="horizontal"
+        bg="$background200"
         w="$full"
-        borderWidth={1}
-        flex={1}
-        borderRadius="$lg"
-        sx={{
-          '.dark_theme': { borderColor: '$border200' },
-          '@base': { maxHeight: '$full' },
-        }}
-        borderColor="$border200"
+        transform="translateY(-50%)"
+        top="10%"
+        position="absolute" // Make sure the divider is positioned relative
+      />
+      <Divider
+        sx={{ '@base': { display: 'none' }, '@md': { display: 'flex' } }}
+        orientation="vertical"
+        bg="$background200"
+        h="auto"
+        $dark-bg="$emerald400"
+        position="relative" // Make sure the divider is positioned relative
       >
-        <VStack
-          sx={{ '@base': { display: 'none' }, '@md': { display: 'flex' } }}
-        >
-          <Box
-            w="$11"
-            h="$11"
-            m="$4"
-            // p="$4"
-            sx={{ '.dark_theme': { borderColor: '$border200', bg: '$white' } }}
-            borderColor="$border200"
-            borderRadius="$lg"
-            borderWidth="$1"
-            alignItems="center"
-            justifyContent="center"
-          >
-            <Image
-              w="$5"
-              h="$5"
-              source={require('../assets/gluestack-logo.png')}
-              alt=""
-            />
-          </Box>
-
-          <Sidebar />
-        </VStack>
-
-        <Divider
-          sx={{ '@base': { display: 'none' }, '@md': { display: 'flex' } }}
-          orientation="horizontal"
-          bg="$background200"
-          w="$full"
-          transform="translateY(-50%)"
-          top="10%"
-          position="absolute" // Make sure the divider is positioned relative
-        />
-        <Divider
-          sx={{ '@base': { display: 'none' }, '@md': { display: 'flex' } }}
-          orientation="vertical"
-          bg="$background200"
-          h="auto"
-          $dark-bg="$emerald400"
-          position="relative" // Make sure the divider is positioned relative
-        >
-          {/* <Icon
+        {/* <Icon
             sx={{ '@base': { display: 'none' }, '@md': { display: 'flex' } }}
             bg="$background200"
             color="$background800"
@@ -1038,94 +1033,94 @@ const Chats = () => {
             // right="-$1"
             zIndex={2} // Set a higher zIndex for the icon
           /> */}
-        </Divider>
-        <VStack
-          sx={{
-            '@md': {
-              w: '$1/4',
-              flex: 'none',
-              display: 'flex',
-            },
-          }}
-          flex={1}
-          display="none"
-        >
-          <SearchBar />
-          <ScrollView>
-            <Inbox chatData={chatData} onSelect={handleChatSelect} />
-          </ScrollView>
-        </VStack>
+      </Divider>
+      <VStack
+        sx={{
+          '@md': {
+            w: '$1/4',
+            flex: 'none',
+            display: 'flex',
+          },
+        }}
+        flex={1}
+        display="none"
+      >
+        <SearchBar />
+        <ScrollView>
+          <Inbox chatData={chatData} onSelect={handleChatSelect} />
+        </ScrollView>
+      </VStack>
 
-        <VStack
-          sx={{
-            '@md': {
-              w: '$1/4',
-              flex: 'none',
-              display: 'none',
-            },
-            '@base': {
-              flex: 1,
-              display: 'flex',
-            },
-          }}
+      <VStack
+        sx={{
+          '@md': {
+            w: '$1/4',
+            flex: 'none',
+            display: 'none',
+          },
+          '@base': {
+            flex: 1,
+            display: 'flex',
+          },
+        }}
+      >
+        {showChatList ? (
+          <>
+            <ChatTopBar />
+          </>
+        ) : (
+          <>
+            {showProfile ? (
+              <Profile />
+            ) : (
+              <>
+                <SearchBar />
+                <Inbox chatData={chatData} onSelect={handleChatSelect} />
+              </>
+            )}
+          </>
+        )}
+        <ScrollView>
+          {showChatList && <ChatList selectedChat={selectedChat} />}
+        </ScrollView>
+      </VStack>
+      <Divider
+        sx={{ '@base': { display: 'none' }, '@md': { display: 'flex' } }}
+        orientation="vertical"
+        bg="$background200"
+        h="auto"
+        $dark-bg="$emerald400"
+      />
+      <VStack
+        sx={{
+          '@md': {
+            display: 'flex',
+            flex: 1,
+          },
+        }}
+        display="none"
+        w="$2/5"
+      >
+        <ChatTopBar />
+        <ScrollView
+          showsVerticalScrollIndicator={true}
+          bounces={false}
+          style={{ flex: 1, flexGrow: 1 }}
         >
-          {showChatList ? (
-            <>
-              <ChatTopBar />
-            </>
-          ) : (
-            <>
-              {showProfile ? (
-                <Profile />
-              ) : (
-                <>
-                  <SearchBar />
-                  <Inbox chatData={chatData} onSelect={handleChatSelect} />
-                </>
-              )}
-            </>
-          )}
-          <ScrollView>
-            {showChatList && <ChatList selectedChat={selectedChat} />}
-          </ScrollView>
-        </VStack>
-        <Divider
-          sx={{ '@base': { display: 'none' }, '@md': { display: 'flex' } }}
-          orientation="vertical"
-          bg="$background200"
-          h="auto"
-          $dark-bg="$emerald400"
-        />
-        <VStack
-          sx={{
-            '@md': {
-              display: 'flex',
-              flex: 1,
-            },
-          }}
-          display="none"
-          w="$2/5"
-        >
-          <ChatTopBar />
-          <ScrollView
-            showsVerticalScrollIndicator={true}
-            bounces={false}
-            style={{ flex: 1, flexGrow: 1 }}
-          >
-            <ChatList selectedChat={selectedChat} />
-          </ScrollView>
+          <ChatList selectedChat={selectedChat} />
+        </ScrollView>
 
-          <TypeMessage />
-        </VStack>
+        <TypeMessage />
+      </VStack>
 
-        <Divider
-          sx={{ '@base': { display: 'none' }, '@md': { display: 'flex' } }}
-          orientation="vertical"
-          bg="$background200"
-          h="auto"
-          position="relative" // Make sure the divider is positioned relative
-        >
-          {/* <Icon
+      <Divider
+        sx={{ '@base': { display: 'none' }, '@md': { display: 'flex' } }}
+        orientation="vertical"
+        bg="$background200"
+        h="auto"
+        position="relative" // Make sure the divider is positioned relative
+      >
+        {/* <Icon
             sx={{ '@base': { display: 'none' }, '@md': { display: 'flex' } }}
             bg="$background200"
             color="$background800"
@@ -1142,10 +1137,9 @@ const Chats = () => {
             right="-$1"
             zIndex={2} // Set a higher zIndex for the icon
           /> */}
-        </Divider>
-        <Profile />
-      </HStack>
-    </>
+      </Divider>
+      <Profile />
+    </HStack>
   );
 };
 
