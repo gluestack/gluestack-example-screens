@@ -1,7 +1,7 @@
 import React from 'react';
 import { VStack } from '@gluestack-ui-new/themed';
 
-const CardWrapper = ({ children, ...props }: any) => {
+const Card = ({ children, ...props }: any) => {
   return (
     <VStack
       p="$6"
@@ -16,4 +16,4 @@ const CardWrapper = ({ children, ...props }: any) => {
   );
 };
 
-export default CardWrapper;
+export default Card;

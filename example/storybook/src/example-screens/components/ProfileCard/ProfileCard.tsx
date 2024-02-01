@@ -1,6 +1,6 @@
 import React from 'react';
 import { Text } from '@gluestack-ui-new/themed';
-import CardWrapper from '../CardWrapper';
+import Card from '../Card';
 import InfoStack from '../InfoStack';
 import UserCard from '../UserCard';
 import UserCardAvatar from '../UserCardAvatar';
@@ -23,7 +23,7 @@ const profileInfo = [
 
 const ProfileCard = () => {
   return (
-    <CardWrapper>
+    <Card>
       <UserCard direction="column">
         <UserCardAvatar
           name="John Smith"
@@ -41,7 +41,7 @@ const ProfileCard = () => {
         </UserCardStack>
         <InfoStack mt="$7" stackData={profileInfo} />
       </UserCard>
-    </CardWrapper>
+    </Card>
   );
 };
 
