@@ -1,7 +1,7 @@
 import React from 'react';
 import { HStack, VStack } from '@gluestack-ui-new/themed';
 
-const UserCardHStack = ({ children, direction = 'row', ...props }: any) => {
+const UserCard = ({ children, direction = 'row', ...props }: any) => {
   return direction === 'row' ? (
     <HStack
       w="$full"
@@ -19,4 +19,4 @@ const UserCardHStack = ({ children, direction = 'row', ...props }: any) => {
   );
 };
 
-export default UserCardHStack;
+export default UserCard;

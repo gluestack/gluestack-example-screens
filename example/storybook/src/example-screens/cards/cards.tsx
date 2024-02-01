@@ -30,6 +30,9 @@ import {
   CheckIcon,
   Pressable,
   Heading,
+  Tooltip,
+  TooltipContent,
+  TooltipText,
 } from '@gluestack-ui-new/themed';
 import { FileIcon, GoogleIcon, Twittericon, GithubIcon } from './Icons';
 import { settingOptions } from './constants';
@@ -226,7 +229,7 @@ const SettingsCard = () => {
       </Heading>
       <VStack mt="$6" space="xl">
         {settingOptions.map((option: any, index: number) => (
-          <HStack key={index}>
+          <HStack space="xl" key={index}>
             <Box
               padding="$3"
               borderRadius="$xl"
@@ -244,8 +247,6 @@ const SettingsCard = () => {
               }
               mb="$0.5"
               pb="$2"
-              $base-ml="$3"
-              $xs-ml="$5"
             >
               <VStack maxWidth="$5/6">
                 <Text
@@ -265,7 +266,24 @@ const SettingsCard = () => {
                   {option.description}
                 </Text>
               </VStack>
-              <Switch alignSelf="center" defaultValue={option.isCheck} />
+              <Tooltip
+                placement="bottom"
+                trigger={(triggerProps) => {
+                  return (
+                    <Switch
+                      {...triggerProps}
+                      alignSelf="center"
+                      defaultValue={option.isCheck}
+                    />
+                  );
+                }}
+              >
+                <TooltipContent>
+                  <TooltipText textAlign="center" fontSize="$xs" maxWidth="$48">
+                    Click to switch your notification preferences.
+                  </TooltipText>
+                </TooltipContent>
+              </Tooltip>
             </HStack>
           </HStack>
         ))}
@@ -353,9 +371,22 @@ const FileUploadCard = () => {
               <ProgressFilledTrack h="$1" />
             </Progress>
           </VStack>
-          <Pressable ml="$1">
-            <Icon as={CloseIcon} w="$5" h="$5" color="$background600" />
-          </Pressable>
+          <Tooltip
+            placement="bottom"
+            trigger={(triggerProps) => {
+              return (
+                <Pressable {...triggerProps} ml="$1">
+                  <Icon as={CloseIcon} w="$5" h="$5" color="$background600" />
+                </Pressable>
+              );
+            }}
+          >
+            <TooltipContent>
+              <TooltipText textAlign="center" fontSize="$xs" maxWidth="$48">
+                Click to cancel upload
+              </TooltipText>
+            </TooltipContent>
+          </Tooltip>
         </HStack>
       </VStack>
     </VStack>
@@ -365,8 +396,8 @@ const FileUploadCard = () => {
 const LoginCard = () => {
   return (
     <VStack
-      $xs-padding="$9"
-      $base-padding="$6"
+      $base-padding="$5"
+      $xs-padding="$6"
       borderRadius="$xl"
       borderColor="$border200"
       borderWidth="$1"
@@ -393,9 +424,11 @@ const LoginCard = () => {
           >
             Don’t have an account?
           </Heading>
-          <Heading size="xs" color="$text700" fontWeight="$medium" ml="$1.5">
-            {''}Sign up
-          </Heading>
+          <Pressable>
+            <Heading size="xs" color="$text700" fontWeight="$medium" ml="$1.5">
+              {''}Sign up
+            </Heading>
+          </Pressable>
         </HStack>
       </VStack>
       <VStack space="xl">
@@ -422,11 +455,24 @@ const LoginCard = () => {
             </CheckboxIndicator>
             <CheckboxLabel>Remember me</CheckboxLabel>
           </Checkbox>
-          <Pressable>
-            <Text fontSize="$xs" fontWeight="$medium" color="$text700">
-              Forgot Password?
-            </Text>
-          </Pressable>
+          <Tooltip
+            placement="bottom"
+            trigger={(triggerProps) => {
+              return (
+                <Pressable {...triggerProps}>
+                  <Text fontSize="$xs" fontWeight="$medium" color="$text700">
+                    Forgot Password?
+                  </Text>
+                </Pressable>
+              );
+            }}
+          >
+            <TooltipContent>
+              <TooltipText textAlign="center" fontSize="$xs" maxWidth="$48">
+                Trouble logging in? Use this link to reset your password.
+              </TooltipText>
+            </TooltipContent>
+          </Tooltip>
         </HStack>
       </VStack>
       <HStack
@@ -477,8 +523,14 @@ const LoginCard = () => {
 
 const Cards: any = ({ w = '100%', h = '100%', ...props }: any) => {
   return (
-    <Box {...props} bg="$background0" p={'$6'} h={h} w={w}>
-      <VStack flex={1} $xl-flexDirection="row" space="2xl">
+    <Box {...props} bg="$background0" p="$1" h={h} w={w}>
+      <VStack
+        flex={1}
+        $xl-flexDirection="row"
+        space="2xl"
+        maxWidth={1440}
+        mx="auto"
+      >
         <VStack $base-width="$full" $xl-width="$2/3" space="2xl">
           <VStack $sm-flexDirection="row" space="2xl">
             <VStack $base-width="$full" $md-width="$2/5" space="2xl">
@@ -518,8 +570,10 @@ const Cards: any = ({ w = '100%', h = '100%', ...props }: any) => {
             </Box>
             <HStack
               space="md"
-              m="$4"
               $base-width="$full"
+              $base-mt="$3"
+              $md-mt="$0"
+              ml="$3"
               $sm-width="auto"
               justifyContent="flex-end"
             >
