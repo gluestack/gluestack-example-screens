@@ -102,6 +102,7 @@ const Dashboard: any = ({ w = '100%', ...props }: any) => {
       <HStack
         bg="$background950"
         justifyContent="space-between"
+        alignItems="center"
         $base-display="flex"
         $md-display="none"
         p="$2"
@@ -129,11 +130,19 @@ const Dashboard: any = ({ w = '100%', ...props }: any) => {
       </HStack>
       <VStack
         alignItems="center"
-        my="$24"
-        px="$2"
+        mb="$10"
+        ml="$6"
         justifyContent="space-between"
         $base-display="none"
         $md-display="flex"
+        h="$full"
+        $sm-top={45}
+        $lg-top={100}
+        sx={{
+          _web: {
+            position: 'sticky',
+          },
+        }}
       >
         <VStack
           alignItems="center"
@@ -243,7 +252,7 @@ const Dashboard: any = ({ w = '100%', ...props }: any) => {
           $md-p="$4"
           $base-p="$2"
           bg="$background950"
-          space="lg"
+          mt="$32"
           borderRadius="$3xl"
         >
           <Pressable
@@ -273,7 +282,16 @@ const Dashboard: any = ({ w = '100%', ...props }: any) => {
           borderColor="$border200"
         >
           <VStack>
-            <HStack p="$4" justifyContent="space-between" alignItems="center">
+            <HStack
+              $md-pt="$6"
+              $lg-px="$2"
+              $sm-px="$4"
+              $sm-pt="$4"
+              $base-pt="$2"
+              $base-px="$2"
+              justifyContent="space-between"
+              alignItems="center"
+            >
               <VStack space="xs">
                 <Text
                   $xl-fontSize="$3xl"
@@ -355,16 +373,18 @@ const Dashboard: any = ({ w = '100%', ...props }: any) => {
                 </Pressable>
               </HStack>
             </HStack>
-            <Box>{viewRenderer(view)}</Box>
+            <Box mt="$10">{viewRenderer(view)}</Box>
           </VStack>
         </Box>
-        <Box $xl-width="$2/6" $lg-width="$2/5" $base-width="$full" $lg-p="$2">
+        <Box $xl-width="$2/6" $lg-width="$2/5" $base-width="$full" $lg-p="$3">
           <VStack
             space="2xl"
             $lg-alignItems="center"
             $base-mx="$2"
+            mb="$2"
             $sm-mx="$4"
             $lg-mx="$0"
+            flexGrow={1}
           >
             <VStack
               bg="$background50"
@@ -489,8 +509,8 @@ const Dashboard: any = ({ w = '100%', ...props }: any) => {
                 </VStack>
               </HStack>
             </VStack>
-            <Box p="$3" display="flex" flexDirection="column">
-              <VStack $sm-minWidth="$72" $base-minWidth="$64">
+            <Box $lg-p="$3" $base-p="$1" display="flex" flexDirection="column">
+              <VStack $sm-minWidth="$72" $base-minWidth="$56">
                 {comments.map((comment) => (
                   <VStack justifyContent="center">
                     <CommentCard
