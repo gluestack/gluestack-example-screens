@@ -30,15 +30,13 @@ import {
   CheckIcon,
   Pressable,
   Heading,
+  Tooltip,
+  TooltipContent,
+  TooltipText,
 } from '@gluestack-ui-new/themed';
-import {
-  FileIcon,
-  CloudIcon,
-  GoogleIcon,
-  Twittericon,
-  GithubIcon,
-} from './Icons';
+import { FileIcon, GoogleIcon, Twittericon, GithubIcon } from './Icons';
 import { settingOptions } from './constants';
+import { UploadCloud } from 'lucide-react-native';
 
 const BlogCard = () => {
   return (
@@ -64,7 +62,7 @@ const BlogCard = () => {
           practical tips and techniques to cultivate a positive mindset for
           greater happiness and success.
         </Text>
-        <HStack mt="$6" space="lg" alignItems="center">
+        <HStack mt="$6" space="md" alignItems="center">
           <Avatar size="md">
             <AvatarFallbackText>John Smith</AvatarFallbackText>
             <AvatarImage source={require('../assets/avatar-icon.png')} />
@@ -87,7 +85,8 @@ const ProfileCard = () => {
   return (
     <VStack
       flex={1}
-      p="$6"
+      $base-p="$5"
+      $xs-p="$6"
       alignItems="center"
       borderRadius="$xl"
       borderWidth="$1"
@@ -214,7 +213,8 @@ const FormInputcard = () => {
 const SettingsCard = () => {
   return (
     <Box
-      padding="$6"
+      $base-p="$5"
+      $xs-p="$6"
       borderRadius="$xl"
       borderColor="$border200"
       borderWidth="$1"
@@ -229,7 +229,7 @@ const SettingsCard = () => {
       </Heading>
       <VStack mt="$6" space="xl">
         {settingOptions.map((option: any, index: number) => (
-          <HStack key={index} space="xl">
+          <HStack space="xl" key={index}>
             <Box
               padding="$3"
               borderRadius="$xl"
@@ -266,7 +266,24 @@ const SettingsCard = () => {
                   {option.description}
                 </Text>
               </VStack>
-              <Switch alignSelf="center" defaultValue={option.isCheck} />
+              <Tooltip
+                placement="bottom"
+                trigger={(triggerProps) => {
+                  return (
+                    <Switch
+                      {...triggerProps}
+                      alignSelf="center"
+                      defaultValue={option.isCheck}
+                    />
+                  );
+                }}
+              >
+                <TooltipContent>
+                  <TooltipText textAlign="center" fontSize="$xs" maxWidth="$48">
+                    Click to switch your notification preferences.
+                  </TooltipText>
+                </TooltipContent>
+              </Tooltip>
             </HStack>
           </HStack>
         ))}
@@ -278,7 +295,8 @@ const SettingsCard = () => {
 const FileUploadCard = () => {
   return (
     <VStack
-      padding="$6"
+      $base-p="$5"
+      $xs-p="$6"
       borderRadius="$xl"
       borderColor="$border200"
       borderWidth="$1"
@@ -296,7 +314,6 @@ const FileUploadCard = () => {
         $base-mt="$5"
         $md-mt="$12"
         $lg-mt="$5"
-        px="$20"
         py="$6"
         alignItems="center"
         borderRadius="$xl"
@@ -306,7 +323,7 @@ const FileUploadCard = () => {
       >
         <Pressable>
           <Box alignItems="center">
-            <Icon as={CloudIcon} h="$16" w="$16" />
+            <Icon as={UploadCloud} h="$16" w="$16" />
             <Text mt="$1.5" fontSize="$sm" lineHeight="$md" color="$text700">
               Drag & drop your file here
             </Text>
@@ -333,20 +350,20 @@ const FileUploadCard = () => {
           Uploading 1 file
         </Heading>
         <HStack mt="$3.5" justifyContent="space-between" alignItems="center">
-          <Box padding="$3">
+          <Box $base-padding="$1" $xs-padding="$3">
             <Icon as={FileIcon} size="xl" />
           </Box>
           <VStack w="$4/5">
             <HStack justifyContent="space-between">
               <HStack>
-                <Text fontSize="$sm" color="$text900">
+                <Text $base-fontSize="$xs" $xs-fontSize="$sm" color="$text900">
                   Document_1.gif
                 </Text>
-                <Text fontSize="$sm" color="$text500">
+                <Text $base-fontSize="$xs" $xs-fontSize="$sm" color="$text500">
                   {''} (200mb)
                 </Text>
               </HStack>
-              <Text fontSize="$xs" color="$text500">
+              <Text alignSelf="center" fontSize="$xs" color="$text500">
                 25s left
               </Text>
             </HStack>
@@ -354,9 +371,22 @@ const FileUploadCard = () => {
               <ProgressFilledTrack h="$1" />
             </Progress>
           </VStack>
-          <Pressable>
-            <Icon as={CloseIcon} w="$5" h="$5" color="$background600" />
-          </Pressable>
+          <Tooltip
+            placement="bottom"
+            trigger={(triggerProps) => {
+              return (
+                <Pressable {...triggerProps} ml="$1">
+                  <Icon as={CloseIcon} w="$5" h="$5" color="$background600" />
+                </Pressable>
+              );
+            }}
+          >
+            <TooltipContent>
+              <TooltipText textAlign="center" fontSize="$xs" maxWidth="$48">
+                Click to cancel upload
+              </TooltipText>
+            </TooltipContent>
+          </Tooltip>
         </HStack>
       </VStack>
     </VStack>
@@ -366,7 +396,8 @@ const FileUploadCard = () => {
 const LoginCard = () => {
   return (
     <VStack
-      padding="$9"
+      $base-padding="$5"
+      $xs-padding="$6"
       borderRadius="$xl"
       borderColor="$border200"
       borderWidth="$1"
@@ -393,9 +424,11 @@ const LoginCard = () => {
           >
             Don’t have an account?
           </Heading>
-          <Heading size="xs" color="$text700" fontWeight="$medium" ml="$1.5">
-            {''}Sign up
-          </Heading>
+          <Pressable>
+            <Heading size="xs" color="$text700" fontWeight="$medium" ml="$1.5">
+              {''}Sign up
+            </Heading>
+          </Pressable>
         </HStack>
       </VStack>
       <VStack space="xl">
@@ -422,11 +455,24 @@ const LoginCard = () => {
             </CheckboxIndicator>
             <CheckboxLabel>Remember me</CheckboxLabel>
           </Checkbox>
-          <Pressable>
-            <Text fontSize="$xs" fontWeight="$medium" color="$text700">
-              Forgot Password?
-            </Text>
-          </Pressable>
+          <Tooltip
+            placement="bottom"
+            trigger={(triggerProps) => {
+              return (
+                <Pressable {...triggerProps}>
+                  <Text fontSize="$xs" fontWeight="$medium" color="$text700">
+                    Forgot Password?
+                  </Text>
+                </Pressable>
+              );
+            }}
+          >
+            <TooltipContent>
+              <TooltipText textAlign="center" fontSize="$xs" maxWidth="$48">
+                Trouble logging in? Use this link to reset your password.
+              </TooltipText>
+            </TooltipContent>
+          </Tooltip>
         </HStack>
       </VStack>
       <HStack
@@ -477,8 +523,14 @@ const LoginCard = () => {
 
 const Cards: any = ({ w = '100%', h = '100%', ...props }: any) => {
   return (
-    <Box {...props} bg="$background0" p={'$6'} h={h} w={w}>
-      <VStack flex={1} $xl-flexDirection="row" space="2xl">
+    <Box {...props} bg="$background0" p="$1" h={h} w={w}>
+      <VStack
+        flex={1}
+        $xl-flexDirection="row"
+        space="2xl"
+        maxWidth={1440}
+        mx="auto"
+      >
         <VStack $base-width="$full" $xl-width="$2/3" space="2xl">
           <VStack $sm-flexDirection="row" space="2xl">
             <VStack $base-width="$full" $md-width="$2/5" space="2xl">
@@ -518,8 +570,10 @@ const Cards: any = ({ w = '100%', h = '100%', ...props }: any) => {
             </Box>
             <HStack
               space="md"
-              m="$4"
               $base-width="$full"
+              $base-mt="$3"
+              $md-mt="$0"
+              ml="$3"
               $sm-width="auto"
               justifyContent="flex-end"
             >
