@@ -18,7 +18,6 @@ import {
   BadgeHelpIcon,
   CalendarDaysIcon,
   EyeIcon,
-  FacebookIcon,
   InstagramIcon,
   LayoutDashboardIcon,
   LogOutIcon,
@@ -403,20 +402,18 @@ const HomeView = () => {
   const iconColor = useToken('colors', 'primary500');
   const iconSize = useToken('space', '4.5');
   return (
-    <Box my="$2" w="$full">
+    <Box w="$full">
       <HStack
         px="$4"
         space="4xl"
         $base-ml="$0"
-        $xl-ml="$11"
-        my="$3"
-        flexWrap="wrap"
+        $xl-ml="$6"
+        $base-overflowX="scroll"
+        $md-overflowX="visible"
       >
         <Pressable
           opacity={tab === 'instagram' ? '$100' : '$60'}
           onPress={() => setTab('instagram')}
-          $base-flexGrow={1}
-          $sm-flexGrow={0}
         >
           <HStack
             space="xs"
@@ -427,6 +424,8 @@ const HomeView = () => {
             borderBottomColor={
               tab === 'instagram' ? '$primary400' : '$background0'
             }
+            $base-flexGrow={1}
+            $md-flexGrow={0}
           >
             <InstagramIcon
               color={iconColor}
@@ -442,8 +441,6 @@ const HomeView = () => {
         <Pressable
           opacity={tab === 'youtube' ? '$100' : '$60'}
           onPress={() => setTab('youtube')}
-          $base-flexGrow={1}
-          $sm-flexGrow={0}
         >
           <HStack
             space="xs"
@@ -454,6 +451,8 @@ const HomeView = () => {
             borderBottomColor={
               tab === 'youtube' ? '$primary400' : '$background0'
             }
+            $base-flexGrow={1}
+            $md-flexGrow={0}
           >
             <YoutubeIcon color={iconColor} height={iconSize} width={iconSize} />
             <Text fontSize="$md" color="$primary500" fontFamily="$heading">
@@ -464,8 +463,6 @@ const HomeView = () => {
         <Pressable
           opacity={tab === 'twitter' ? '$100' : '$60'}
           onPress={() => setTab('twitter')}
-          $base-flexGrow={1}
-          $sm-flexGrow={0}
         >
           <HStack
             space="xs"
@@ -476,6 +473,8 @@ const HomeView = () => {
               tab === 'twitter' ? '$primary400' : '$background0'
             }
             p="$1"
+            $base-flexGrow={1}
+            $md-flexGrow={0}
           >
             <TwitterIcon color={iconColor} height={iconSize} width={iconSize} />
             <Text fontSize="$md" color="$primary500" fontFamily="$heading">
@@ -483,35 +482,9 @@ const HomeView = () => {
             </Text>
           </HStack>
         </Pressable>
-        <Pressable
-          opacity={tab === 'facebook' ? '$100' : '$60'}
-          onPress={() => setTab('facebook')}
-          $base-flexGrow={1}
-          $sm-flexGrow={0}
-        >
-          <HStack
-            space="xs"
-            alignItems="center"
-            alignSelf="center"
-            p="$1"
-            borderBottomWidth="$2"
-            borderBottomColor={
-              tab === 'facebook' ? '$primary400' : '$background0'
-            }
-          >
-            <FacebookIcon
-              color={iconColor}
-              height={iconSize}
-              width={iconSize}
-            />
-            <Text fontSize="$md" color="$primary500" fontFamily="$heading">
-              Facebook
-            </Text>
-          </HStack>
-        </Pressable>
       </HStack>
-      <VStack $base-mx="$2" $sm-mx="$4" alignItems="center">
-        <HStack my="$3" space="lg" flexWrap="wrap" w="$full" rowGap="$4">
+      <VStack $base-mx="$2" $sm-mx="$4" alignItems="center" mt="$4" mb="$6">
+        <HStack space="lg" flexWrap="wrap" w="$full" rowGap="$4">
           <AnalyticsCard
             title="Views"
             totalValue={analytics[tab].weeklyViews.views}
@@ -542,7 +515,7 @@ const HomeView = () => {
         </HStack>
         <HStack
           mx="$4"
-          my="$3"
+          mt="$6"
           space="lg"
           flexWrap="wrap"
           $base-justifyContent="center"
@@ -589,7 +562,7 @@ const HomeView = () => {
               mx="$2"
               fontFamily="$body"
               numberOfLines={2}
-              $base-maxWidth="$56"
+              $base-maxWidth="$48"
               $sm-maxWidth="$80"
             >
               Receive notifications about gluestack ui updates.
@@ -663,7 +636,7 @@ const HomeView = () => {
         </HStack>
         <HStack
           mx="$4"
-          my="$3"
+          mt="$6"
           space="lg"
           flexWrap="wrap"
           $base-justifyContent="center"
