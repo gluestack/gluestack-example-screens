@@ -62,6 +62,8 @@ ChartJS.register(
   ArcElement
 );
 import { analytics } from './constants';
+import UserCard from '../components/UserCard';
+
 interface CommentCardProps {
   userName: string;
   comment: string;
@@ -186,7 +188,12 @@ const MiniNavbarMenu = ({
 const CommentCard = ({ userName, comment }: CommentCardProps) => {
   return (
     <VStack justifyContent="flex-start" minWidth="$64" space="sm" mx="$1">
-      <HStack space="md">
+      <UserCard
+        direction="row"
+        alignItems="center"
+        space="md"
+        justifyContent="flex-start"
+      >
         <Box borderRadius="$full">
           <Avatar bgColor="$black" size="sm">
             <AvatarFallbackText>{userName}</AvatarFallbackText>
@@ -201,7 +208,7 @@ const CommentCard = ({ userName, comment }: CommentCardProps) => {
             Follower
           </Text>
         </VStack>
-      </HStack>
+      </UserCard>
       <Text fontSize="$sm" fontWeight="$normal" color="$text700">
         {comment}
       </Text>
@@ -484,7 +491,7 @@ const HomeView = () => {
         </Pressable>
       </HStack>
       <VStack $base-mx="$2" $sm-mx="$4" alignItems="center" mt="$4" mb="$6">
-        <HStack space="lg" flexWrap="wrap" w="$full" rowGap="$4">
+        <HStack space="2xl" flexWrap="wrap" w="$full" rowGap="$4">
           <AnalyticsCard
             title="Views"
             totalValue={analytics[tab].weeklyViews.views}
@@ -530,14 +537,14 @@ const HomeView = () => {
             borderRadius="$md"
             borderWidth="$1"
             hardShadow="5"
-            p="$4"
+            $md-p="$6"
+            $base-p="$4"
             space="sm"
-            maxHeight="$80"
             $md-flexGrow={1}
             $base-minWidth="$full"
             $md-minWidth="$1/3"
           >
-            <HStack justifyContent="space-between" mx="$2" w="$full">
+            <HStack justifyContent="space-between" w="$full">
               <Text
                 color="$text900"
                 fontWeight="$bold"
@@ -558,8 +565,8 @@ const HomeView = () => {
             <Text
               color="$text700"
               fontWeight="$normal"
-              fontSize="$sm"
-              mx="$2"
+              $md-fontSize="$sm"
+              $base-fontSize="$xs"
               fontFamily="$body"
               numberOfLines={2}
               $base-maxWidth="$48"
@@ -574,6 +581,8 @@ const HomeView = () => {
               $sm-maxWidth="$full"
               borderRadius="$2xl"
               mx="auto"
+              mt="$6"
+              minHeight="$32"
             >
               <BarChart />
             </Box>
@@ -585,7 +594,8 @@ const HomeView = () => {
             borderWidth="$1"
             hardShadow="5"
             space="sm"
-            py="$4"
+            $md-p="$6"
+            $base-p="$4"
             $md-flexGrow={1}
             $base-minWidth="$full"
             $md-minWidth="$1/3"
@@ -593,24 +603,30 @@ const HomeView = () => {
             <Text
               color="$text900"
               fontWeight="$bold"
-              fontSize="$lg"
-              my="$2"
-              mx="$4"
+              $md-fontSize="$lg"
+              $base-fontSize="$md"
               fontFamily="$heading"
             >
               Engaged Users
             </Text>
             <Box
               $md-minWidth="$80"
-              $base-minWidth="$40"
-              $base-maxWidth="$64"
+              $base-minWidth="$32"
+              $base-maxWidth="$56"
+              $xl-maxWidth="$96"
               $sm-maxWidth="$72"
               borderRadius="$2xl"
               mx="auto"
+              mt="$6"
+              $lg-maxHeight="$24"
+              $xl-maxHeight="$40"
+              display="flex"
+              flexDirection="row"
+              justifyContent="center"
             >
               <AreaChart />
             </Box>
-            <VStack alignItems="center" w="$full">
+            <VStack alignItems="center" w="$full" mt="$3.5">
               <Text
                 color="$text900"
                 fontWeight="$medium"
@@ -651,21 +667,37 @@ const HomeView = () => {
             borderRadius="$md"
             borderWidth="$1"
             hardShadow="5"
-            p="$4"
+            $md-p="$6"
+            $base-p="$4"
             space="sm"
             $md-flexGrow={1}
             $base-minWidth="$full"
             $md-minWidth="$1/3"
           >
-            <HStack justifyContent="space-between" mx="$2" w="$full">
-              <Text
-                color="$text900"
-                fontWeight="$bold"
-                fontSize="$lg"
-                fontFamily="$heading"
-              >
-                Audience Age Split
-              </Text>
+            <HStack justifyContent="space-between" w="$full">
+              <VStack space="sm">
+                <Text
+                  color="$text900"
+                  fontWeight="$bold"
+                  $md-fontSize="$lg"
+                  $base-fontSize="$md"
+                  fontFamily="$heading"
+                >
+                  Audience Age Split
+                </Text>
+                <Text
+                  color="$text700"
+                  fontWeight="$normal"
+                  $md-fontSize="$sm"
+                  $base-fontSize="$xs"
+                  fontFamily="$body"
+                  numberOfLines={2}
+                  $base-maxWidth="$48"
+                  $sm-maxWidth="$80"
+                >
+                  Quick insights into the demographic composition.
+                </Text>
+              </VStack>
               <Pressable>
                 <MoreVerticalIcon
                   color={iconColor}
@@ -674,13 +706,13 @@ const HomeView = () => {
                 />
               </Pressable>
             </HStack>
-            <HStack alignItems="center" space="md" alignSelf="center">
+            <HStack alignItems="center" space="md" alignSelf="center" mt="$4">
               <Box
                 h="$56"
-                $sm-minWidth="$48"
+                $sm-minWidth="$36"
                 $base-maxWidth="$24"
                 $sm-maxWidth="$40"
-                $lg-maxWidth="$56"
+                $xl-maxWidth="$56"
                 borderRadius="$3xl"
               >
                 <PieChart />
@@ -757,12 +789,12 @@ const HomeView = () => {
               borderRadius="$md"
               borderWidth="$1"
               hardShadow="5"
-              $md-p="$4"
-              $base-p="$2"
+              $md-p="$6"
+              $base-p="$4"
               space="md"
               justifyContent="space-between"
             >
-              <VStack space="md" alignSelf="flex-start">
+              <VStack space="sm" alignSelf="flex-start">
                 <Text
                   color="$text900"
                   fontWeight="$bold"
@@ -786,46 +818,54 @@ const HomeView = () => {
                 </Text>
               </VStack>
               <HStack
-                $sm-space="2xl"
-                $base-space="sm"
                 alignItems="center"
+                $lg-px="$5"
                 $md-px="$4"
                 $base-px="$2"
-                mb="$4"
+                mt="$6"
+                w="$full"
               >
-                {[...Array(3)].map((_, index) => (
-                  <HStack key={index}>
-                    <VStack space="xs">
-                      <Text
-                        color="$text900"
-                        fontWeight="$bold"
-                        $base-fontSize="$sm"
-                        $md-fontSize="$lg"
-                        fontFamily="$heading"
-                      >
-                        {analytics[tab].topLocations[index].name}
-                      </Text>
-                      <Text
-                        color="$text700"
-                        fontWeight="$normal"
-                        fontSize="$xs"
-                        fontFamily="$body"
-                      >
-                        {`+${analytics[tab].topLocations[index].growth}%`}
-                      </Text>
-                    </VStack>
-                    {index < 2 && (
+                {[...Array(5)].map((_, index) => {
+                  if (index % 2 === 0) {
+                    return (
+                      <VStack space="xs" key={index} alignItems="center">
+                        <Text
+                          color="$text900"
+                          fontWeight="$bold"
+                          $base-fontSize="$sm"
+                          $md-fontSize="$lg"
+                          fontFamily="$heading"
+                        >
+                          {
+                            analytics[tab].topLocations[index ? index / 2 : 0]
+                              .name
+                          }
+                        </Text>
+                        <Text
+                          color="$text700"
+                          fontWeight="$normal"
+                          fontSize="$xs"
+                          fontFamily="$body"
+                        >
+                          {`+${
+                            analytics[tab].topLocations[index ? index / 2 : 0]
+                              .growth
+                          }%`}
+                        </Text>
+                      </VStack>
+                    );
+                  } else {
+                    return (
                       <Divider
                         orientation="vertical"
                         w="$0.5"
                         h="$10"
-                        $md-mx="$8"
-                        $base-mx="$2"
+                        mx="auto"
                         bgColor="$background200"
                       />
-                    )}
-                  </HStack>
-                ))}
+                    );
+                  }
+                })}
               </HStack>
             </VStack>
             <VStack
@@ -834,11 +874,11 @@ const HomeView = () => {
               borderRadius="$md"
               borderWidth="$1"
               hardShadow="5"
-              $md-p="$4"
-              $base-p="$2"
+              $md-p="$6"
+              $base-p="$4"
               space="md"
             >
-              <VStack space="md" alignSelf="flex-start">
+              <VStack space="sm" alignSelf="flex-start">
                 <Text
                   color="$text900"
                   fontWeight="$bold"
@@ -862,48 +902,57 @@ const HomeView = () => {
                 </Text>
               </VStack>
               <HStack
-                $sm-space="2xl"
-                $base-space="sm"
                 alignItems="center"
+                $lg-px="$5"
                 $md-px="$4"
                 $base-px="$2"
-                mb="$4"
-                justifyContent="space-between"
+                mt="$6"
+                w="$full"
               >
-                {[...Array(3)].map((_, index) => (
-                  <HStack key={index}>
-                    <VStack space="xs">
-                      <Text
-                        color="$text900"
-                        fontWeight="$bold"
-                        $base-fontSize="$sm"
-                        $md-fontSize="$lg"
-                        fontFamily="$heading"
-                      >
-                        {analytics[tab].topEngagements[index].name}
-                      </Text>
-                      <Text
-                        color="$text700"
-                        fontWeight="$normal"
-                        fontSize="$xs"
-                        fontFamily="$body"
-                        numberOfLines={2}
-                      >
-                        {`${analytics[tab].topEngagements[index].growth} views`}
-                      </Text>
-                    </VStack>
-                    {index < 2 && (
+                {[...Array(5)].map((_, index) => {
+                  if (index % 2 === 0) {
+                    return (
+                      <VStack space="xs" key={index} alignItems="center">
+                        <Text
+                          color="$text900"
+                          fontWeight="$bold"
+                          $base-fontSize="$sm"
+                          $md-fontSize="$lg"
+                          fontFamily="$heading"
+                        >
+                          {
+                            analytics[tab].topEngagements[
+                              index > 0 ? index / 2 : 0
+                            ].name
+                          }
+                        </Text>
+                        <Text
+                          color="$text700"
+                          fontWeight="$normal"
+                          fontSize="$xs"
+                          fontFamily="$body"
+                          numberOfLines={2}
+                        >
+                          {`${
+                            analytics[tab].topEngagements[
+                              index > 0 ? index / 2 : 0
+                            ].growth
+                          } views`}
+                        </Text>
+                      </VStack>
+                    );
+                  } else {
+                    return (
                       <Divider
                         orientation="vertical"
                         w="$0.5"
                         h="$10"
-                        $md-mx="$8"
-                        $base-mx="$2"
+                        mx="auto"
                         bgColor="$background200"
                       />
-                    )}
-                  </HStack>
-                ))}
+                    );
+                  }
+                })}
               </HStack>
             </VStack>
           </VStack>
