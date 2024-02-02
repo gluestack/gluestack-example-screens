@@ -4,7 +4,8 @@ import { VStack } from '@gluestack-ui-new/themed';
 const Card = ({ children, ...props }: any) => {
   return (
     <VStack
-      p="$6"
+      $base-p="$5"
+      $xs-p="$6"
       borderRadius="$xl"
       borderWidth="$1"
       borderColor="$border200"

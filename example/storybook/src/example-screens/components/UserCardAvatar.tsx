@@ -5,7 +5,7 @@ import {
   AvatarImage,
 } from '@gluestack-ui-new/themed';
 
-const ComponentAvatar = ({ name, src, ...props }: any) => {
+const UserCardAvatar = ({ name, src, ...props }: any) => {
   return (
     <Avatar {...props}>
       <AvatarFallbackText>{name.charAt(0)}</AvatarFallbackText>
@@ -14,4 +14,4 @@ const ComponentAvatar = ({ name, src, ...props }: any) => {
   );
 };
 
-export default ComponentAvatar;
+export default UserCardAvatar;
