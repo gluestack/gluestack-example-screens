@@ -544,6 +544,8 @@ const Chats = () => {
               )}
             >
               <MenuItem
+                sx={{ '@lg': { display: 'none' } }}
+                display="flex"
                 key="Profile"
                 textValue="Profile"
                 onPress={handleShowProfile}
@@ -725,7 +727,7 @@ const Chats = () => {
           <Box
             sx={{
               '@base': { display: 'flex', alignSelf: 'flex-start' },
-              '@md': { display: 'none' },
+              '@lg': { display: 'none' },
             }}
           >
             <Pressable onPress={handleBackToChatList}>
@@ -1062,7 +1064,21 @@ const Chats = () => {
         display="none"
         w="$2/5"
       >
-        <ChatTopBar />
+        {showProfile ? (
+          <>
+            <Profile />
+          </>
+        ) : (
+          <>
+            <ChatTopBar />
+            <ScrollView>
+              <ChatList selectedChat={selectedChat} />
+            </ScrollView>
+            <TypeMessage />
+          </>
+        )}
+
+        {/* <ChatTopBar />
         <ScrollView
           showsVerticalScrollIndicator={true}
           bounces={false}
@@ -1071,7 +1087,7 @@ const Chats = () => {
           <ChatList selectedChat={selectedChat} />
         </ScrollView>
 
-        <TypeMessage />
+        <TypeMessage /> */}
       </VStack>
 
       <Divider
