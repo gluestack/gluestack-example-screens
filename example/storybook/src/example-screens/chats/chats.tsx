@@ -24,6 +24,9 @@ import {
   MenuItem,
   MenuItemLabel,
   Pressable,
+  Tooltip,
+  TooltipContent,
+  TooltipText,
 } from '@gluestack-ui-new/themed';
 import {
   AlertCircle,
@@ -50,19 +53,19 @@ import {
   User,
   UserCircle,
   Video,
+  Send,
 } from 'lucide-react-native';
 import { Lock } from 'lucide-react-native';
-import { Key } from 'react-stately';
-import { DotIcon } from './Icons';
+import { DotIcon, GluestackIcon } from './Icons';
 const chatData = [
   {
-    avatarSource: require('../assets/Avatar1.png'),
+    avatarSource: require('../assets/Avatar1.svg'),
     name: 'Mila Dann',
     message: 'These are really cool 💯',
     badgeCount: 1,
   },
   {
-    avatarSource: require('../assets/Avatar2.png'),
+    avatarSource: require('../assets/Avatar2.svg'),
     name: 'Jared Dunn',
     message: 'Typing...',
     badgeCount: 1,
@@ -104,6 +107,7 @@ const chatData = [
 const Chats = () => {
   const [selectedChat, setSelectedChat] = useState({
     name: 'Richard Lyod',
+    message: '',
   });
   const [showChatList, setShowChatList] = useState(false);
   const [showProfile, setShowProfile] = useState(false);
@@ -111,17 +115,22 @@ const Chats = () => {
   const handleChatSelect = ({ name, message }) => {
     setSelectedChat({ name, message });
     setShowChatList(true);
+    setShowProfile(false);
   };
 
   const handleBackToInbox = () => {
     setShowChatList(false);
+    setShowProfile(false);
   };
-  const handleMenuClick = (key: string | Set<Key>) => {
-    if (key === 'Profile') {
-      setShowChatList(false);
-      setShowProfile(true);
-    }
+  const handleBackToChatList = () => {
+    setShowChatList(true);
+    setShowProfile(false);
   };
+  const handleShowProfile = () => {
+    setShowChatList(false);
+    setShowProfile(true);
+  };
+
   const TruncatedText = ({ children, numberOfLines }) => (
     <Text
       color="$text500"
@@ -207,8 +216,8 @@ const Chats = () => {
   const ChatMessage = ({ message, time, isRight }) => (
     <VStack
       borderRadius="$lg"
-      px="$1"
-      py="$0.5"
+      px="$2"
+      py="$2"
       gap="$2.5"
       maxWidth={isRight ? '$2/3' : 'auto'}
       bg={isRight ? '$primary300' : '$background50'}
@@ -384,13 +393,10 @@ const Chats = () => {
       >
         <HStack alignItems="center" flex={1}>
           <Pressable>
-            <Icon
-              sx={{ '.dark_theme': { color: '$background700' } }}
-              color="$background700"
-              w="$4"
-              h="$4"
-              as={SmilePlus}
-              mr="$2"
+            <IconWithTooltip
+              icon={SmilePlus}
+              tooltip="SmilePlus"
+              label={undefined}
             />
           </Pressable>
 
@@ -406,6 +412,7 @@ const Chats = () => {
             h="$12"
             borderColor="transparent"
             borderRadius="$lg"
+            alignItems="center"
           >
             <InputField
               borderColor="transparent"
@@ -416,35 +423,49 @@ const Chats = () => {
               placeholderTextColor="$text400"
               placeholder="Type a message here..."
             />
+            <Pressable>
+              <IconWithTooltip icon={Send} tooltip="Send" label={undefined} />
+            </Pressable>
           </Input>
         </HStack>
         <HStack alignItems="center" gap="$2">
           <Pressable>
-            <Icon
+            {/* <Icon
               sx={{ '.dark_theme': { color: '$background700' } }}
               color="$background700"
               w="$4"
               h="$4"
               as={ImagePlus}
+            /> */}
+            <IconWithTooltip
+              icon={ImagePlus}
+              tooltip="Photos & Videos"
+              label={undefined}
             />
           </Pressable>
           <Pressable>
-            <Icon
+            {/* <Icon
               sx={{ '.dark_theme': { color: '$background700' } }}
               color="$background700"
               w="$4"
               h="$4"
               as={Paperclip}
+            /> */}
+            <IconWithTooltip
+              icon={Paperclip}
+              tooltip="Document"
+              label={undefined}
             />
           </Pressable>
           <Pressable>
-            <Icon
+            {/* <Icon
               sx={{ '.dark_theme': { color: '$background700' } }}
               color="$background700"
               w="$4"
               h="$4"
               as={Camera}
-            />
+            /> */}
+            <IconWithTooltip icon={Camera} tooltip="Camera" label={undefined} />
           </Pressable>
           <Pressable>
             <Icon
@@ -465,12 +486,7 @@ const Chats = () => {
   const ChatTopBar = () => {
     return (
       <Pressable>
-        <HStack
-          paddingHorizontal="$4"
-          paddingVertical="$4"
-          gap="$4"
-          justifyContent="space-between"
-        >
+        <HStack p="$4" justifyContent="space-between">
           <HStack alignItems="center" gap="$4">
             <Box
               sx={{ '@sm': { display: 'flex' }, '@md': { display: 'none' } }}
@@ -479,7 +495,7 @@ const Chats = () => {
                 <Icon as={ArrowLeft} />
               </Pressable>
             </Box>
-            <VStack>
+            <VStack gap="$1">
               <Heading
                 sx={{ '.dark_theme': { color: '$text900' } }}
                 color="$text900"
@@ -494,39 +510,44 @@ const Chats = () => {
               </HStack>
             </VStack>
           </HStack>
-          <HStack alignItems="center" gap="$4">
-            <Pressable>
-              <Icon
-                sx={{ '.dark_theme': { color: '$background800' } }}
-                color="$background800"
-                w="$4.5"
-                h="$4.5"
-                as={Phone}
-              />
-            </Pressable>
-            <Pressable>
-              <Icon
-                sx={{ '.dark_theme': { color: '$background800' } }}
-                color="$background800"
-                w="$4.5"
-                h="$4.5"
-                as={Video}
-              />
-            </Pressable>
+          <HStack alignSelf="center" gap="$4">
+            <IconWithTooltip
+              icon={Phone}
+              tooltip="Voice Call"
+              label={undefined}
+            />
+
+            <IconWithTooltip
+              icon={Video}
+              tooltip="Video Call"
+              label={undefined}
+            />
 
             <Menu
-              placement={'bottom right'}
+              placement="bottom right"
               disabledKeys={['Theme']}
-              trigger={({ ...triggerProps }) => {
-                return (
-                  <Pressable bg="transparent" {...triggerProps}>
-                    <Icon color="$background800" as={MoreVertical} />
-                  </Pressable>
-                );
-              }}
-              onSelectionChange={(key) => handleMenuClick(key)}
+              trigger={({ ...triggerProps }) => (
+                <Tooltip
+                  placement="top"
+                  trigger={(tooltipTriggerProps) => (
+                    <Box {...tooltipTriggerProps}>
+                      <Pressable bg="transparent" {...triggerProps}>
+                        <Icon as={MoreVertical} />
+                      </Pressable>
+                    </Box>
+                  )}
+                >
+                  <TooltipContent>
+                    <TooltipText>Menu</TooltipText>
+                  </TooltipContent>
+                </Tooltip>
+              )}
             >
-              <MenuItem key="Profile" textValue="Profile">
+              <MenuItem
+                key="Profile"
+                textValue="Profile"
+                onPress={handleShowProfile}
+              >
                 <Icon as={UserCircle} size="sm" mr="$2" />
                 <MenuItemLabel size="sm">Show Profile</MenuItemLabel>
               </MenuItem>
@@ -575,14 +596,14 @@ const Chats = () => {
   };
   const Sidebar = () => {
     const icons = [
-      { icon: Home, label: 'Home' },
-      { icon: CircleDollarSign, label: 'Dollar' },
-      { icon: CalendarDays, label: 'Calendar' },
-      { icon: MessageCircle, label: 'Messages' },
-      { icon: User, label: 'User' },
-      { icon: Settings, label: 'Settings' },
-      { icon: BadgeHelp, label: 'Help' },
-      { icon: LogOut, label: 'Logout' },
+      { icon: Home, label: 'Home', tooltip: 'Home' },
+      { icon: CircleDollarSign, label: 'Dollar', tooltip: 'Dollar' },
+      { icon: CalendarDays, label: 'Calendar', tooltip: 'Calendar' },
+      { icon: MessageCircle, label: 'Messages', tooltip: 'Messages' },
+      { icon: User, label: 'User', tooltip: 'User' },
+      { icon: Settings, label: 'Settings', tooltip: 'Settings' },
+      { icon: BadgeHelp, label: 'Help', tooltip: 'Help' },
+      { icon: LogOut, label: 'Logout', tooltip: 'Logout' },
     ];
 
     const defaultActiveIcon = 'Messages';
@@ -600,62 +621,100 @@ const Chats = () => {
         alignItems="flex-start"
         gap="$6"
       >
-        {icons.map(({ icon: IconComponent, label }) => (
-          <Pressable
+        {icons.map(({ icon: IconComponent, label, tooltip }) => (
+          <Tooltip
             key={label}
-            onPress={() => handleIconPress(label)}
-            style={{
-              backgroundColor:
-                activeIcon === label ? '$primary500' : 'transparent',
-              borderRadius: 6,
-              padding: 2,
-              position: 'relative',
-            }}
-          >
-            <Icon
-              as={IconComponent}
-              w="$6"
-              h="$6"
-              p="$2"
-              bg={activeIcon === label ? '$primary400' : 'transparent'}
-              color={activeIcon === label ? '$background200' : '$background800'}
-              borderRadius="$lg"
-            />
-            {label === 'Messages' && (
-              <Badge
-                h="$4"
-                w="$4"
-                bg="$background0"
-                borderRadius="$full"
-                position="absolute"
-                top={4}
-                right={4}
-                zIndex={1}
-                variant="solid"
-                alignItems="center"
-                justifyContent="center"
+            placement="right"
+            trigger={(triggerProps) => (
+              <Pressable
+                onPress={() => handleIconPress(label)}
+                style={{
+                  backgroundColor:
+                    activeIcon === label ? '$primary500' : 'transparent',
+                  borderRadius: 6,
+                  padding: 2,
+                  position: 'relative',
+                }}
+                {...triggerProps}
               >
-                <BadgeText fontSize="$2xs" color="$text950">
-                  {messagesBadgeCount}
-                </BadgeText>
-              </Badge>
+                <Icon
+                  as={IconComponent}
+                  w="$6"
+                  h="$6"
+                  p="$2"
+                  bg={activeIcon === label ? '$primary400' : 'transparent'}
+                  color={
+                    activeIcon === label ? '$background200' : '$background800'
+                  }
+                  borderRadius="$lg"
+                />
+                {label === 'Messages' && (
+                  <Badge
+                    h="$4"
+                    w="$4"
+                    bg={activeIcon === label ? '$background0' : '$primary400'}
+                    borderRadius="$full"
+                    position="absolute"
+                    top={4}
+                    right={4}
+                    zIndex={1}
+                    variant="solid"
+                    alignItems="center"
+                    justifyContent="center"
+                  >
+                    <BadgeText
+                      fontSize="$2xs"
+                      color={activeIcon === label ? '$text950' : '$text0'}
+                    >
+                      {messagesBadgeCount}
+                    </BadgeText>
+                  </Badge>
+                )}
+              </Pressable>
             )}
-          </Pressable>
+          >
+            <TooltipContent>
+              <TooltipText>{tooltip}</TooltipText>
+            </TooltipContent>
+          </Tooltip>
         ))}
       </VStack>
     );
   };
+  const IconWithTooltip = ({ icon: IconComponent, label, tooltip }) => (
+    <Tooltip
+      key={label}
+      placement="bottom"
+      trigger={(triggerProps) => (
+        <Pressable {...triggerProps}>
+          <VStack space="sm" alignItems="center">
+            <Icon
+              as={IconComponent}
+              sx={{ '.dark_theme': { color: '$background800' } }}
+              color="$background800"
+              w="$4.5"
+              h="$4.5"
+            />
+            <Text
+              sx={{ '.dark_theme': { color: '$text700' } }}
+              color="$text700"
+              fontSize="$xs"
+              fontWeight="$normal"
+            >
+              {label}
+            </Text>
+          </VStack>
+        </Pressable>
+      )}
+    >
+      <TooltipContent>
+        <TooltipText>{tooltip}</TooltipText>
+      </TooltipContent>
+    </Tooltip>
+  );
   const Profile = () => {
     return (
-      <VStack
-        sx={{
-          '@lg': {
-            display: 'flex',
-            gap: '$5',
-          },
-        }}
-        display="none"
-      >
+      <>
         <VStack
           width="auto"
           p="$4"
@@ -663,6 +722,16 @@ const Chats = () => {
           borderTopRightRadius="$lg"
           bg="$background50"
         >
+          <Box
+            sx={{
+              '@base': { display: 'flex', alignSelf: 'flex-start' },
+              '@md': { display: 'none' },
+            }}
+          >
+            <Pressable onPress={handleBackToChatList}>
+              <Icon as={ArrowLeft} />
+            </Pressable>
+          </Box>
           <Avatar w="$16" h="$16" mb="$2">
             <AvatarImage source={require('../assets/Avatar9.png')} />
           </Avatar>
@@ -685,63 +754,21 @@ const Chats = () => {
             +91 1234567890
           </Text>
           <HStack alignSelf="center" space="3xl" mt="$2">
-            <VStack space="sm" alignItems="center">
-              <Pressable>
-                <Icon
-                  sx={{ '.dark_theme': { color: '$background800' } }}
-                  color="$background800"
-                  w="$4.5"
-                  h="$4.5"
-                  as={Phone}
-                />
-              </Pressable>
-              <Text
-                sx={{ '.dark_theme': { color: '$text700' } }}
-                color="$text700"
-                fontSize="$xs"
-                fontWeight="$normal"
-              >
-                Voice call
-              </Text>
-            </VStack>
-            <VStack space="sm" alignItems="center">
-              <Pressable>
-                <Icon
-                  sx={{ '.dark_theme': { color: '$background800' } }}
-                  color="$background800"
-                  w="$4.5"
-                  h="$4.5"
-                  as={Video}
-                />
-              </Pressable>
-              <Text
-                sx={{ '.dark_theme': { color: '$text700' } }}
-                color="$text700"
-                fontSize="$xs"
-                fontWeight="$normal"
-              >
-                Video call
-              </Text>
-            </VStack>
-            <VStack space="sm" alignItems="center">
-              <Pressable>
-                <Icon
-                  sx={{ '.dark_theme': { color: '$background800' } }}
-                  color="$background800"
-                  w="$4.5"
-                  h="$4.5"
-                  as={Phone}
-                />
-              </Pressable>
-              <Text
-                sx={{ '.dark_theme': { color: '$text700' } }}
-                color="$text700"
-                fontSize="$xs"
-                fontWeight="$normal"
-              >
-                Search
-              </Text>
-            </VStack>
+            <IconWithTooltip
+              icon={Phone}
+              label="Voice call"
+              tooltip="Voice Call"
+            />
+            <IconWithTooltip
+              icon={Video}
+              label="Video call"
+              tooltip="Video Call"
+            />
+            <IconWithTooltip
+              icon={SearchIcon}
+              label="Search"
+              tooltip="Search"
+            />
           </HStack>
         </VStack>
 
@@ -896,7 +923,7 @@ const Chats = () => {
             </HStack>
           </Pressable>
         </VStack>
-      </VStack>
+      </>
     );
   };
 
@@ -904,7 +931,9 @@ const Chats = () => {
     <HStack
       bg="$background0"
       maxHeight={720}
+      h="$full"
       w="$full"
+      overflow="hidden"
       borderWidth={1}
       flex={1}
       borderRadius="$lg"
@@ -916,19 +945,16 @@ const Chats = () => {
           w="$11"
           h="$11"
           m="$4"
-          sx={{ '.dark_theme': { borderColor: '$border200', bg: '$white' } }}
-          borderColor="$border200"
+          sx={{
+            '.dark_theme': { borderColor: '$white', bg: '$white' },
+            '.light_theme': { borderColor: '$border200', bg: '$white' },
+          }}
           borderRadius="$lg"
           borderWidth="$1"
           alignItems="center"
           justifyContent="center"
         >
-          <Image
-            w="$5"
-            h="$5"
-            source={require('../assets/gluestack-logo.png')}
-            alt=""
-          />
+          <Icon as={GluestackIcon} w="$5" h="$5" />
         </Box>
 
         <Sidebar />
@@ -962,10 +988,10 @@ const Chats = () => {
             size="md"
             borderRadius="$sm"
             position="absolute"
-            top="50%" // Center the icon vertically
-            transform="translateY(-50%)" // Adjust for vertical centering
+            top="50%" 
+            transform="translateY(-50%)" 
             // right="-$1"
-            zIndex={2} // Set a higher zIndex for the icon
+            zIndex={2} 
           /> */}
       </Divider>
       <VStack
@@ -998,14 +1024,19 @@ const Chats = () => {
           },
         }}
       >
-        {showChatList ? (
+        {showProfile ? (
           <>
-            <ChatTopBar />
+            <Profile />
           </>
         ) : (
           <>
-            {showProfile ? (
-              <Profile />
+            {showChatList ? (
+              <>
+                <ChatTopBar />
+                <ScrollView>
+                  <ChatList selectedChat={selectedChat} />
+                </ScrollView>
+              </>
             ) : (
               <>
                 <SearchBar />
@@ -1014,9 +1045,6 @@ const Chats = () => {
             )}
           </>
         )}
-        <ScrollView>
-          {showChatList && <ChatList selectedChat={selectedChat} />}
-        </ScrollView>
       </VStack>
       <Divider
         sx={{ '@base': { display: 'none' }, '@md': { display: 'flex' } }}
@@ -1071,7 +1099,17 @@ const Chats = () => {
             zIndex={2} // Set a higher zIndex for the icon
           /> */}
       </Divider>
-      <Profile />
+      <VStack
+        sx={{
+          '@lg': {
+            display: 'flex',
+            gap: '$5',
+          },
+        }}
+        display="none"
+      >
+        <Profile />
+      </VStack>
     </HStack>
   );
 };
