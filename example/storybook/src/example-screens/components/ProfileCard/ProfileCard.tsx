@@ -1,10 +1,12 @@
 import React from 'react';
 import { Text } from '@gluestack-ui-new/themed';
-import CardWrapper from '../CardWrapper';
-import InfoStack from '../InfoStack';
+import Card from '../Card';
+import Stats from '../Stats';
 import UserCard from '../UserCard';
 import UserCardAvatar from '../UserCardAvatar';
 import UserCardStack from '../UserCardStack';
+import StatsItems from '../StatsItems';
+import StatsDivider from '../StatsDivider';
 
 const profileInfo = [
   {
@@ -23,7 +25,7 @@ const profileInfo = [
 
 const ProfileCard = () => {
   return (
-    <CardWrapper>
+    <Card w="$72">
       <UserCard direction="column">
         <UserCardAvatar
           name="John Smith"
@@ -39,9 +41,28 @@ const ProfileCard = () => {
             Motivational Speaker
           </Text>
         </UserCardStack>
-        <InfoStack mt="$7" stackData={profileInfo} />
+        <Stats mt="$8">
+          {profileInfo?.map((item: any, index: number) => (
+            <>
+              <StatsItems key={index}>
+                <Text fontSize="$sm" color="$text900" fontWeight="$bold">
+                  {item?.value}
+                </Text>
+                <Text
+                  fontFamily="$body"
+                  fontSize="$xs"
+                  color="$text900"
+                  fontWeight="$normal"
+                >
+                  {item?.label}
+                </Text>
+              </StatsItems>
+              {index < profileInfo.length - 1 && <StatsDivider h="$10" />}
+            </>
+          ))}
+        </Stats>
       </UserCard>
-    </CardWrapper>
+    </Card>
   );
 };
 
