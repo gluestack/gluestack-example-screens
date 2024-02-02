@@ -53,7 +53,6 @@ import {
   User,
   UserCircle,
   Video,
-  Send,
 } from 'lucide-react-native';
 import { Lock } from 'lucide-react-native';
 import { DotIcon, GluestackIcon } from './Icons';
@@ -391,7 +390,7 @@ const Chats = () => {
           elevation: 5,
         }}
       >
-        <HStack alignItems="center" flex={1}>
+        <HStack gap="$2" alignItems="center" flex={1}>
           <Pressable>
             <IconWithTooltip
               icon={SmilePlus}
@@ -408,7 +407,7 @@ const Chats = () => {
             isReadOnly={false}
             borderWidth={0}
             paddingVertical="$2"
-            w="$72"
+            // w="$96"
             h="$12"
             borderColor="transparent"
             borderRadius="$lg"
@@ -423,61 +422,100 @@ const Chats = () => {
               placeholderTextColor="$text400"
               placeholder="Type a message here..."
             />
-            <Pressable>
-              <IconWithTooltip icon={Send} tooltip="Send" label={undefined} />
-            </Pressable>
           </Input>
         </HStack>
-        <HStack alignItems="center" gap="$2">
-          <Pressable>
-            {/* <Icon
-              sx={{ '.dark_theme': { color: '$background700' } }}
-              color="$background700"
-              w="$4"
-              h="$4"
-              as={ImagePlus}
-            /> */}
-            <IconWithTooltip
-              icon={ImagePlus}
-              tooltip="Photos & Videos"
-              label={undefined}
-            />
-          </Pressable>
-          <Pressable>
-            {/* <Icon
-              sx={{ '.dark_theme': { color: '$background700' } }}
-              color="$background700"
-              w="$4"
-              h="$4"
-              as={Paperclip}
-            /> */}
-            <IconWithTooltip
-              icon={Paperclip}
-              tooltip="Document"
-              label={undefined}
-            />
-          </Pressable>
-          <Pressable>
-            {/* <Icon
-              sx={{ '.dark_theme': { color: '$background700' } }}
-              color="$background700"
-              w="$4"
-              h="$4"
-              as={Camera}
-            /> */}
-            <IconWithTooltip icon={Camera} tooltip="Camera" label={undefined} />
-          </Pressable>
-          <Pressable>
-            <Icon
-              color="$background200"
-              w="$4"
-              h="$4"
-              bg="$primary400"
-              p="$2"
-              borderRadius="$lg"
-              as={Mic}
-            />
-          </Pressable>
+        <HStack alignItems="center" gap="$1.5">
+          <Tooltip
+            placement="bottom"
+            trigger={(triggerProps) => {
+              return (
+                <Pressable {...triggerProps}>
+                  <Icon
+                    color="$secondary700"
+                    w="$4"
+                    h="$4"
+                    bg="$transparent"
+                    p="$2"
+                    borderRadius="$lg"
+                    as={ImagePlus}
+                  />
+                </Pressable>
+              );
+            }}
+          >
+            <TooltipContent>
+              <TooltipText>Photos & Videos</TooltipText>
+            </TooltipContent>
+          </Tooltip>
+
+          <Tooltip
+            placement="bottom"
+            trigger={(triggerProps) => {
+              return (
+                <Pressable {...triggerProps}>
+                  <Icon
+                    color="$secondary700"
+                    w="$4"
+                    h="$4"
+                    bg="$transparent"
+                    p="$2"
+                    borderRadius="$lg"
+                    as={Paperclip}
+                  />
+                </Pressable>
+              );
+            }}
+          >
+            <TooltipContent>
+              <TooltipText>Document</TooltipText>
+            </TooltipContent>
+          </Tooltip>
+
+          <Tooltip
+            placement="bottom"
+            trigger={(triggerProps) => {
+              return (
+                <Pressable {...triggerProps}>
+                  <Icon
+                    color="$secondary700"
+                    w="$4"
+                    h="$4"
+                    bg="$transparent"
+                    p="$2"
+                    borderRadius="$lg"
+                    as={Camera}
+                  />
+                </Pressable>
+              );
+            }}
+          >
+            <TooltipContent>
+              <TooltipText>Camera</TooltipText>
+            </TooltipContent>
+          </Tooltip>
+
+          <Tooltip
+            placement="bottom"
+            trigger={(triggerProps) => {
+              return (
+                <Pressable {...triggerProps}>
+                  <Icon
+                    color="$background200"
+                    w="$4"
+                    h="$4"
+                    bg="$primary400"
+                    p="$2"
+                    borderRadius="$lg"
+                    as={Mic}
+                  />
+                </Pressable>
+              );
+            }}
+          >
+            <TooltipContent>
+              <TooltipText>Mic</TooltipText>
+            </TooltipContent>
+          </Tooltip>
         </HStack>
       </HStack>
     );
@@ -1038,6 +1076,7 @@ const Chats = () => {
                 <ScrollView>
                   <ChatList selectedChat={selectedChat} />
                 </ScrollView>
+                <TypeMessage />
               </>
             ) : (
               <>
@@ -1077,17 +1116,6 @@ const Chats = () => {
             <TypeMessage />
           </>
         )}
-
-        {/* <ChatTopBar />
-        <ScrollView
-          showsVerticalScrollIndicator={true}
-          bounces={false}
-          style={{ flex: 1, flexGrow: 1 }}
-        >
-          <ChatList selectedChat={selectedChat} />
-        </ScrollView>
-
-        <TypeMessage /> */}
       </VStack>
 
       <Divider
