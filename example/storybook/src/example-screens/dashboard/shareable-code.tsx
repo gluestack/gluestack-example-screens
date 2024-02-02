@@ -85,13 +85,7 @@ const UserCardAvatar = ({ name, src, ...props }: any) => {
 
 const UserCard = ({ children, direction = 'row', ...props }: any) => {
   return direction === 'row' ? (
-    <HStack
-      w="$full"
-      alignItems="center"
-      justifyContent="space-between"
-      space="md"
-      {...props}
-    >
+    <HStack w="$full" alignItems="center" space="md" {...props}>
       {children}
     </HStack>
   ) : (
@@ -101,10 +95,11 @@ const UserCard = ({ children, direction = 'row', ...props }: any) => {
   );
 };
 
-const CardWrapper = ({ children, ...props }: any) => {
+const Card = ({ children, ...props }: any) => {
   return (
     <VStack
-      p="$6"
+      $base-p="$5"
+      $xs-p="$6"
       borderRadius="$xl"
       borderWidth="$1"
       borderColor="$border200"
@@ -1723,7 +1718,7 @@ const Dashboard: any = ({ w = '100%', ...props }: any) => {
             $lg-mx="$0"
             flexGrow={1}
           >
-            <CardWrapper bg="$background50" $base-flexGrow={1} $lg-flexGrow={0}>
+            <Card bg="$background50" $base-flexGrow={1} $lg-flexGrow={0}>
               <UserCard direction="column">
                 <UserCardAvatar
                   name="John Smith"
@@ -1844,7 +1839,7 @@ const Dashboard: any = ({ w = '100%', ...props }: any) => {
                   </VStack>
                 </HStack>
               </UserCard>
-            </CardWrapper>
+            </Card>
             <Box $lg-p="$3" $base-p="$1" display="flex" flexDirection="column">
               <VStack $sm-minWidth="$72" $base-minWidth="$56">
                 {comments.map((comment) => (

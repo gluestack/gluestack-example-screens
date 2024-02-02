@@ -36,7 +36,7 @@ import {
   SettingsIcon,
   UserIcon,
 } from 'lucide-react-native';
-import CardWrapper from '../components/CardWrapper';
+import Card from '../components/Card';
 import UserCard from '../components/UserCard';
 import UserCardAvatar from '../components/UserCardAvatar';
 import UserCardStack from '../components/UserCardStack';
@@ -388,7 +388,7 @@ const Dashboard: any = ({ w = '100%', ...props }: any) => {
             $lg-mx="$0"
             flexGrow={1}
           >
-            <CardWrapper bg="$background50" $base-flexGrow={1} $lg-flexGrow={0}>
+            <Card bg="$background50" $base-flexGrow={1} $lg-flexGrow={0}>
               <UserCard direction="column">
                 <UserCardAvatar
                   name="John Smith"
@@ -506,7 +506,7 @@ const Dashboard: any = ({ w = '100%', ...props }: any) => {
                   </VStack>
                 </HStack>
               </UserCard>
-            </CardWrapper>
+            </Card>
             <Box $lg-p="$3" $base-p="$1" display="flex" flexDirection="column">
               <VStack $sm-minWidth="$72" $base-minWidth="$56">
                 {comments.map((comment) => (
