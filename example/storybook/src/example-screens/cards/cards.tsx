@@ -241,7 +241,7 @@ const SettingsCard = () => {
                   );
                 }}
               >
-                <TooltipContent>
+                <TooltipContent backgroundColor="$background600">
                   <TooltipText textAlign="center" fontSize="$xs" maxWidth="$48">
                     Click to switch your notification preferences.
                   </TooltipText>
@@ -469,7 +469,15 @@ const LoginCard = () => {
 
 const Cards: any = ({ w = '100%', h = '100%', ...props }: any) => {
   return (
-    <Box {...props} bg="$background0" p="$1" h={h} w={w}>
+    <Box
+      {...props}
+      bg="$background0"
+      $base-p="$4"
+      $md-p="$5"
+      $lg-p="$6"
+      h={h}
+      w={w}
+    >
       <VStack
         flex={1}
         $xl-flexDirection="row"
