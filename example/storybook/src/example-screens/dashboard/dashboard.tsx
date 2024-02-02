@@ -4,9 +4,6 @@ import {
   VStack,
   HStack,
   Divider,
-  AvatarImage,
-  Avatar,
-  AvatarFallbackText,
   Pressable,
   Input,
   InputField,
@@ -39,6 +36,10 @@ import {
   SettingsIcon,
   UserIcon,
 } from 'lucide-react-native';
+import Card from '../components/Card';
+import UserCard from '../components/UserCard';
+import UserCardAvatar from '../components/UserCardAvatar';
+import UserCardStack from '../components/UserCardStack';
 
 const viewRenderer = (view: string) => {
   switch (view) {
@@ -137,7 +138,7 @@ const Dashboard: any = ({ w = '100%', ...props }: any) => {
         $md-display="flex"
         h="$full"
         $sm-top={45}
-        $lg-top={100}
+        $lg-top={141}
         sx={{
           _web: {
             position: 'sticky',
@@ -285,6 +286,7 @@ const Dashboard: any = ({ w = '100%', ...props }: any) => {
             <HStack
               $md-pt="$6"
               $lg-px="$2"
+              $xl-px="$6"
               $sm-px="$4"
               $sm-pt="$4"
               $base-pt="$2"
@@ -373,7 +375,7 @@ const Dashboard: any = ({ w = '100%', ...props }: any) => {
                 </Pressable>
               </HStack>
             </HStack>
-            <Box mt="$10">{viewRenderer(view)}</Box>
+            <Box mt="$11">{viewRenderer(view)}</Box>
           </VStack>
         </Box>
         <Box $xl-width="$2/6" $lg-width="$2/5" $base-width="$full" $lg-p="$3">
@@ -386,129 +388,125 @@ const Dashboard: any = ({ w = '100%', ...props }: any) => {
             $lg-mx="$0"
             flexGrow={1}
           >
-            <VStack
-              bg="$background50"
-              alignItems="center"
-              $sm-minWidth="$72"
-              $base-minWidth="$64"
-              space="md"
-              p="$3"
-              borderRadius="$xl"
-              $base-flexGrow={1}
-              $lg-flexGrow={0}
-            >
-              <Box borderRadius="$full">
-                <Avatar bgColor="$black" size="lg">
-                  <AvatarFallbackText>John Smith</AvatarFallbackText>
-                  <AvatarImage source={require('../assets/avatar-icon.png')} />
-                </Avatar>
-              </Box>
-              <VStack alignItems="center" space="xs" width="$full">
-                <Text
-                  fontFamily="$heading"
-                  fontSize="$lg"
-                  color="$text900"
-                  fontWeight="$bold"
-                >
-                  John Smith
-                </Text>
-                <Text
-                  fontFamily="$body"
-                  fontSize="$sm"
-                  color="$text700"
-                  fontWeight="$normal"
-                >
-                  john@example.com
-                </Text>
-              </VStack>
-              <Text
-                fontFamily="$body"
-                fontSize="$sm"
-                color="$text700"
-                fontWeight="$normal"
-                textAlign="center"
-                width="$full"
-              >
-                Pushing the boundaries of reality with XR design wizardry ✨🚀
-                #XRDesigner
-              </Text>
-              <HStack
-                space="md"
-                alignItems="center"
-                my="$2"
-                width="$full"
-                justifyContent="center"
-              >
-                <VStack alignItems="center" space="sm">
-                  <Text
-                    fontFamily="$heading"
-                    fontSize="$sm"
-                    color="$text900"
-                    fontWeight="$bold"
-                  >
-                    232
-                  </Text>
-                  <Text
-                    fontFamily="$body"
-                    fontSize="$sm"
-                    color="$text900"
-                    fontWeight="$normal"
-                  >
-                    posts
-                  </Text>
-                </VStack>
-                <Divider
-                  mx="$2.5"
-                  h="$10"
-                  bg="$background400"
-                  w="$0.5"
-                  orientation="vertical"
+            <Card bg="$background50" $base-flexGrow={1} $lg-flexGrow={0}>
+              <UserCard direction="column">
+                <UserCardAvatar
+                  name="John Smith"
+                  src={require('../assets/avatar-icon.png')}
+                  bgColor="$black"
+                  size="lg"
                 />
-                <VStack alignItems="center" space="sm">
+                <UserCardStack mt="$3" alignItems="center" width="$full">
                   <Text
                     fontFamily="$heading"
-                    fontSize="$sm"
+                    fontSize="$lg"
                     color="$text900"
                     fontWeight="$bold"
                   >
-                    108.3k
+                    John Smith
                   </Text>
                   <Text
                     fontFamily="$body"
                     fontSize="$sm"
-                    color="$text900"
+                    color="$text700"
                     fontWeight="$normal"
+                    mt="$0.5"
                   >
-                    followers
-                  </Text>
-                </VStack>
-                <Divider
-                  mx="$2.5"
-                  h="$10"
-                  bg="$background400"
-                  w="$0.5"
-                  orientation="vertical"
-                />
-                <VStack alignItems="center" space="sm">
-                  <Text
-                    fontFamily="$heading"
-                    fontSize="$sm"
-                    color="$text900"
-                    fontWeight="$bold"
-                  >
-                    40
+                    john@example.com
                   </Text>
                   <Text
                     fontFamily="$body"
                     fontSize="$sm"
-                    color="$text900"
+                    color="$text700"
                     fontWeight="$normal"
+                    textAlign="center"
+                    width="$full"
+                    mt="$2.5"
                   >
-                    following
+                    Pushing the boundaries of reality with XR design wizardry
+                    ✨🚀 #XRDesigner
                   </Text>
-                </VStack>
-              </HStack>
-            </VStack>
+                </UserCardStack>
+                <HStack
+                  $base-space="xs"
+                  $sm-space="md"
+                  alignItems="center"
+                  mt="$8"
+                  mb="$2"
+                  width="$full"
+                  justifyContent="center"
+                >
+                  <VStack alignItems="center" space="sm">
+                    <Text
+                      fontFamily="$heading"
+                      fontSize="$sm"
+                      color="$text900"
+                      fontWeight="$bold"
+                    >
+                      232
+                    </Text>
+                    <Text
+                      fontFamily="$body"
+                      fontSize="$sm"
+                      color="$text900"
+                      fontWeight="$normal"
+                    >
+                      posts
+                    </Text>
+                  </VStack>
+                  <Divider
+                    mx="$2.5"
+                    h="$10"
+                    bg="$background400"
+                    w="$0.5"
+                    orientation="vertical"
+                  />
+                  <VStack alignItems="center" space="sm">
+                    <Text
+                      fontFamily="$heading"
+                      fontSize="$sm"
+                      color="$text900"
+                      fontWeight="$bold"
+                    >
+                      108.3k
+                    </Text>
+                    <Text
+                      fontFamily="$body"
+                      fontSize="$sm"
+                      color="$text900"
+                      fontWeight="$normal"
+                    >
+                      followers
+                    </Text>
+                  </VStack>
+                  <Divider
+                    mx="$2.5"
+                    h="$10"
+                    bg="$background400"
+                    w="$0.5"
+                    orientation="vertical"
+                  />
+                  <VStack alignItems="center" space="sm">
+                    <Text
+                      fontFamily="$heading"
+                      fontSize="$sm"
+                      color="$text900"
+                      fontWeight="$bold"
+                    >
+                      40
+                    </Text>
+                    <Text
+                      fontFamily="$body"
+                      fontSize="$sm"
+                      color="$text900"
+                      fontWeight="$normal"
+                    >
+                      following
+                    </Text>
+                  </VStack>
+                </HStack>
+              </UserCard>
+            </Card>
             <Box $lg-p="$3" $base-p="$1" display="flex" flexDirection="column">
               <VStack $sm-minWidth="$72" $base-minWidth="$56">
                 {comments.map((comment) => (
