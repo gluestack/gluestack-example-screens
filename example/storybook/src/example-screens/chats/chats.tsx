@@ -774,7 +774,7 @@ const Chats = () => {
               </Pressable>
             </Box>
             <UserCardAvatar
-              name="John Smith"
+              name={selectedChat.name}
               src={require('../assets/Avatar9.png')}
               w="$16"
               h="$16"
@@ -1102,6 +1102,7 @@ const Chats = () => {
       />
       <VStack
         sx={{
+          '@lg': { display: 'none' },
           '@md': {
             display: 'flex',
             flex: 1,
@@ -1123,6 +1124,23 @@ const Chats = () => {
             <TypeMessage />
           </>
         )}
+      </VStack>
+
+      <VStack
+        sx={{
+          '@lg': {
+            display: 'flex',
+            flex: 1,
+          },
+        }}
+        display="none"
+        w="$2/5"
+      >
+        <ChatTopBar />
+        <ScrollView>
+          <ChatList selectedChat={selectedChat} />
+        </ScrollView>
+        <TypeMessage />
       </VStack>
 
       <Divider
