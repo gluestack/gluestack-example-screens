@@ -477,6 +477,7 @@ const Cards: any = ({ w = '100%', h = '100%', ...props }: any) => {
       $lg-p="$6"
       h={h}
       w={w}
+      overflow="hidden"
     >
       <VStack
         flex={1}
