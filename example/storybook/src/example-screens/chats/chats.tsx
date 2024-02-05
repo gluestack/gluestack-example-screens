@@ -14,7 +14,6 @@ import {
   SearchIcon,
   Heading,
   Text,
-  AvatarImage,
   AvatarFallbackText,
   Avatar,
   ScrollView,
@@ -56,6 +55,11 @@ import {
 } from 'lucide-react-native';
 import { Lock } from 'lucide-react-native';
 import { DotIcon, GluestackIcon } from './Icons';
+import UserCard from '../components/UserCard';
+import UserCardAvatar from '../components/UserCardAvatar';
+import UserCardStack from '../components/UserCardStack';
+import Stats from '../components/Stats';
+
 const chatData = [
   {
     avatarSource: require('../assets/Avatar1.svg'),
@@ -150,53 +154,46 @@ const Chats = () => {
     onSelect,
   }) => (
     <Pressable onPress={() => onSelect({ name, message })}>
-      <HStack space="sm" paddingHorizontal="$2">
-        <Avatar w="$9" h="$9">
-          <AvatarFallbackText>{name.charAt(0)}</AvatarFallbackText>
-          <AvatarImage source={avatarSource} />
-        </Avatar>
-
-        <VStack gap="$0.5" flex={1} ml="$2">
-          <HStack gap="$1" justifyContent="space-between" flex={1}>
-            <Text
-              numberOfLines={1}
-              sx={{ '.dark_theme': { color: '$text900' } }}
-              color="$text900"
-              fontSize="$sm"
-              fontWeight="$bold"
+      <UserCard direction="row">
+        <UserCardAvatar name={name} src={avatarSource} h="$9" w="$9" />
+        <UserCardStack>
+          <Text
+            numberOfLines={1}
+            sx={{ '.dark_theme': { color: '$text900' } }}
+            color="$text900"
+            fontSize="$sm"
+            fontWeight="$bold"
+          >
+            {name}
+          </Text>
+          <TruncatedText numberOfLines={1}>{message}</TruncatedText>
+        </UserCardStack>
+        <UserCardStack maxWidth="$6" alignItems="flex-end">
+          <Text
+            sx={{ '.dark_theme': { color: '$text500' } }}
+            color="$text500"
+            fontSize="$xs"
+            fontWeight="$normal"
+          >
+            12m
+          </Text>
+          {index < 3 && (
+            <Badge
+              h="$4"
+              w="$4"
+              bg="$background950"
+              borderRadius="$full"
+              variant="solid"
+              alignItems="center"
+              justifyContent="center"
             >
-              {name}
-            </Text>
-            <Text
-              sx={{ '.dark_theme': { color: '$text500' } }}
-              color="$text500"
-              fontSize="$xs"
-              fontWeight="$normal"
-            >
-              12m
-            </Text>
-          </HStack>
-
-          <HStack gap="$1" justifyContent="space-between" flex={1}>
-            <TruncatedText numberOfLines={1}>{message}</TruncatedText>
-            {index < 3 && (
-              <Badge
-                h="$4"
-                w="$4"
-                bg="$background950"
-                borderRadius="$full"
-                variant="solid"
-                alignItems="center"
-                justifyContent="center"
-              >
-                <BadgeText fontSize="$2xs" color="$text0">
-                  {badgeCount}
-                </BadgeText>
-              </Badge>
-            )}
-          </HStack>
-        </VStack>
-      </HStack>
+              <BadgeText fontSize="$2xs" color="$text0">
+                {badgeCount}
+              </BadgeText>
+            </Badge>
+          )}
+        </UserCardStack>
+      </UserCard>
     </Pressable>
   );
 
@@ -394,7 +391,7 @@ const Chats = () => {
           <Pressable>
             <IconWithTooltip
               icon={SmilePlus}
-              tooltip="SmilePlus"
+              tooltip="Choose Emoji"
               label={undefined}
             />
           </Pressable>
@@ -576,7 +573,7 @@ const Chats = () => {
                   )}
                 >
                   <TooltipContent>
-                    <TooltipText>Menu</TooltipText>
+                    <TooltipText>More Options</TooltipText>
                   </TooltipContent>
                 </Tooltip>
               )}
@@ -637,10 +634,10 @@ const Chats = () => {
   const Sidebar = () => {
     const icons = [
       { icon: Home, label: 'Home', tooltip: 'Home' },
-      { icon: CircleDollarSign, label: 'Dollar', tooltip: 'Dollar' },
+      { icon: CircleDollarSign, label: 'Dollar', tooltip: 'Payments' },
       { icon: CalendarDays, label: 'Calendar', tooltip: 'Calendar' },
       { icon: MessageCircle, label: 'Messages', tooltip: 'Messages' },
-      { icon: User, label: 'User', tooltip: 'User' },
+      { icon: User, label: 'User', tooltip: 'Profile' },
       { icon: Settings, label: 'Settings', tooltip: 'Settings' },
       { icon: BadgeHelp, label: 'Help', tooltip: 'Help' },
       { icon: LogOut, label: 'Logout', tooltip: 'Logout' },
@@ -667,7 +664,6 @@ const Chats = () => {
             placement="right"
             trigger={(triggerProps) => (
               <Pressable
-                onPress={() => handleIconPress(label)}
                 style={{
                   backgroundColor:
                     activeIcon === label ? '$primary500' : 'transparent',
@@ -676,6 +672,10 @@ const Chats = () => {
                   position: 'relative',
                 }}
                 {...triggerProps}
+                onPress={() => {
+                  handleIconPress(label);
+                  triggerProps.onPress();
+                }}
               >
                 <Icon
                   as={IconComponent}
@@ -762,38 +762,45 @@ const Chats = () => {
           borderTopRightRadius="$lg"
           bg="$background50"
         >
-          <Box
-            sx={{
-              '@base': { display: 'flex', alignSelf: 'flex-start' },
-              '@lg': { display: 'none' },
-            }}
-          >
-            <Pressable onPress={handleBackToChatList}>
-              <Icon as={ArrowLeft} />
-            </Pressable>
-          </Box>
-          <Avatar w="$16" h="$16" mb="$2">
-            <AvatarImage source={require('../assets/Avatar9.png')} />
-          </Avatar>
-
-          <Text
-            sx={{ '.dark_theme': { color: '$text900' } }}
-            color="$text900"
-            fontSize="$lg"
-            textAlign="center"
-            fontWeight="$bold"
-          >
-            {selectedChat.name}
-          </Text>
-          <Text
-            sx={{ '.dark_theme': { color: '$text700' } }}
-            color="$text700"
-            fontSize="$sm"
-            fontWeight="$normal"
-          >
-            +91 1234567890
-          </Text>
-          <HStack alignSelf="center" space="3xl" mt="$2">
+          <UserCard direction="column">
+            <Box
+              sx={{
+                '@base': { display: 'flex', alignSelf: 'flex-start' },
+                '@lg': { display: 'none' },
+              }}
+            >
+              <Pressable onPress={handleBackToChatList}>
+                <Icon as={ArrowLeft} />
+              </Pressable>
+            </Box>
+            <UserCardAvatar
+              name="John Smith"
+              src={require('../assets/Avatar9.png')}
+              w="$16"
+              h="$16"
+              mb="$2"
+            />
+            <UserCardStack mt="$3" alignItems="center">
+              <Text
+                sx={{ '.dark_theme': { color: '$text900' } }}
+                color="$text900"
+                fontSize="$lg"
+                textAlign="center"
+                fontWeight="$bold"
+              >
+                {selectedChat.name}
+              </Text>
+              <Text
+                sx={{ '.dark_theme': { color: '$text700' } }}
+                color="$text700"
+                fontSize="$sm"
+                fontWeight="$normal"
+              >
+                +91 1234567890
+              </Text>
+            </UserCardStack>
+          </UserCard>
+          <Stats mt="$1" space="3xl">
             <IconWithTooltip
               icon={Phone}
               label="Voice call"
@@ -809,7 +816,7 @@ const Chats = () => {
               label="Search"
               tooltip="Search"
             />
-          </HStack>
+          </Stats>
         </VStack>
 
         <VStack pl="$4.5" gap="$3">
