@@ -1,20 +1,24 @@
 import {
-  Text,
-  Box,
-  VStack,
+  Input,
+  InputField,
   HStack,
-  Divider,
-  AvatarImage,
+  VStack,
   Avatar,
   AvatarFallbackText,
+  AvatarImage,
+  Text,
+  Box,
+  Divider,
   Pressable,
   useToken,
   Menu,
   MenuItem,
   MenuItemLabel,
 } from '@gluestack-ui-new/themed';
-import React from 'react';
 import {
+  ArrowRight,
+  BellIcon,
+  Search,
   BadgeHelpIcon,
   CalendarDaysIcon,
   EyeIcon,
@@ -32,6 +36,7 @@ import {
   CircleDollarSignIcon,
   SettingsIcon,
 } from 'lucide-react-native';
+import React from 'react';
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -46,7 +51,6 @@ import {
   ArcElement,
 } from 'chart.js';
 import { Bar, Doughnut, Line } from 'react-chartjs-2';
-
 ChartJS.register(
   CategoryScale,
   LinearScale,
@@ -61,8 +65,51 @@ ChartJS.register(
   Legend,
   ArcElement
 );
-import { analytics } from './constants';
-import UserCard from '../components/UserCard';
+
+const UserCardStack = ({ children, ...props }: any) => {
+  return (
+    <VStack flex={1} {...props}>
+      {children}
+    </VStack>
+  );
+};
+
+const UserCardAvatar = ({ name, src, ...props }: any) => {
+  return (
+    <Avatar {...props}>
+      <AvatarFallbackText>{name.charAt(0)}</AvatarFallbackText>
+      <AvatarImage source={src} />
+    </Avatar>
+  );
+};
+
+const UserCard = ({ children, direction = 'row', ...props }: any) => {
+  return direction === 'row' ? (
+    <HStack w="$full" alignItems="center" space="md" {...props}>
+      {children}
+    </HStack>
+  ) : (
+    <VStack w="$full" alignItems="center" {...props}>
+      {children}
+    </VStack>
+  );
+};
+
+const Card = ({ children, ...props }: any) => {
+  return (
+    <VStack
+      $base-p="$5"
+      $xs-p="$6"
+      borderRadius="$xl"
+      borderWidth="$1"
+      borderColor="$border200"
+      hardShadow="5"
+      {...props}
+    >
+      {children}
+    </VStack>
+  );
+};
 
 interface CommentCardProps {
   userName: string;
@@ -371,6 +418,7 @@ const AreaChart = () => {
   };
   return <Line options={options} data={data} />;
 };
+
 const PieChart = () => {
   const color1 = useToken('colors', 'primary400');
   const color2 = useToken('colors', 'primary200');
@@ -491,7 +539,7 @@ const HomeView = () => {
         </Pressable>
       </HStack>
       <VStack $base-mx="$2" $sm-mx="$4" alignItems="center" mt="$4" mb="$6">
-        <HStack space="2xl" flexWrap="wrap" w="$full" rowGap="$4">
+        <HStack space="lg" flexWrap="wrap" w="$full" rowGap="$4">
           <AnalyticsCard
             title="Views"
             totalValue={analytics[tab].weeklyViews.views}
@@ -537,14 +585,14 @@ const HomeView = () => {
             borderRadius="$md"
             borderWidth="$1"
             hardShadow="5"
-            $md-p="$6"
-            $base-p="$4"
+            p="$4"
             space="sm"
+            maxHeight="$80"
             $md-flexGrow={1}
             $base-minWidth="$full"
             $md-minWidth="$1/3"
           >
-            <HStack justifyContent="space-between" w="$full">
+            <HStack justifyContent="space-between" mx="$2" w="$full">
               <Text
                 color="$text900"
                 fontWeight="$bold"
@@ -565,8 +613,8 @@ const HomeView = () => {
             <Text
               color="$text700"
               fontWeight="$normal"
-              $md-fontSize="$sm"
-              $base-fontSize="$xs"
+              fontSize="$sm"
+              mx="$2"
               fontFamily="$body"
               numberOfLines={2}
               $base-maxWidth="$48"
@@ -581,8 +629,6 @@ const HomeView = () => {
               $sm-maxWidth="$full"
               borderRadius="$2xl"
               mx="auto"
-              mt="$6"
-              minHeight="$32"
             >
               <BarChart />
             </Box>
@@ -594,8 +640,7 @@ const HomeView = () => {
             borderWidth="$1"
             hardShadow="5"
             space="sm"
-            $md-p="$6"
-            $base-p="$4"
+            py="$4"
             $md-flexGrow={1}
             $base-minWidth="$full"
             $md-minWidth="$1/3"
@@ -603,30 +648,24 @@ const HomeView = () => {
             <Text
               color="$text900"
               fontWeight="$bold"
-              $md-fontSize="$lg"
-              $base-fontSize="$md"
+              fontSize="$lg"
+              my="$2"
+              mx="$4"
               fontFamily="$heading"
             >
               Engaged Users
             </Text>
             <Box
               $md-minWidth="$80"
-              $base-minWidth="$32"
-              $base-maxWidth="$56"
-              $xl-maxWidth="$96"
+              $base-minWidth="$40"
+              $base-maxWidth="$64"
               $sm-maxWidth="$72"
               borderRadius="$2xl"
               mx="auto"
-              mt="$6"
-              $lg-maxHeight="$24"
-              $xl-maxHeight="$40"
-              display="flex"
-              flexDirection="row"
-              justifyContent="center"
             >
               <AreaChart />
             </Box>
-            <VStack alignItems="center" w="$full" mt="$3.5">
+            <VStack alignItems="center" w="$full">
               <Text
                 color="$text900"
                 fontWeight="$medium"
@@ -667,37 +706,21 @@ const HomeView = () => {
             borderRadius="$md"
             borderWidth="$1"
             hardShadow="5"
-            $md-p="$6"
-            $base-p="$4"
+            p="$4"
             space="sm"
             $md-flexGrow={1}
             $base-minWidth="$full"
             $md-minWidth="$1/3"
           >
-            <HStack justifyContent="space-between" w="$full">
-              <VStack space="sm">
-                <Text
-                  color="$text900"
-                  fontWeight="$bold"
-                  $md-fontSize="$lg"
-                  $base-fontSize="$md"
-                  fontFamily="$heading"
-                >
-                  Audience Age Split
-                </Text>
-                <Text
-                  color="$text700"
-                  fontWeight="$normal"
-                  $md-fontSize="$sm"
-                  $base-fontSize="$xs"
-                  fontFamily="$body"
-                  numberOfLines={2}
-                  $base-maxWidth="$48"
-                  $sm-maxWidth="$80"
-                >
-                  Quick insights into the demographic composition.
-                </Text>
-              </VStack>
+            <HStack justifyContent="space-between" mx="$2" w="$full">
+              <Text
+                color="$text900"
+                fontWeight="$bold"
+                fontSize="$lg"
+                fontFamily="$heading"
+              >
+                Audience Age Split
+              </Text>
               <Pressable>
                 <MoreVerticalIcon
                   color={iconColor}
@@ -706,13 +729,13 @@ const HomeView = () => {
                 />
               </Pressable>
             </HStack>
-            <HStack alignItems="center" space="md" alignSelf="center" mt="$4">
+            <HStack alignItems="center" space="md" alignSelf="center">
               <Box
                 h="$56"
-                $sm-minWidth="$36"
+                $sm-minWidth="$48"
                 $base-maxWidth="$24"
                 $sm-maxWidth="$40"
-                $xl-maxWidth="$56"
+                $lg-maxWidth="$56"
                 borderRadius="$3xl"
               >
                 <PieChart />
@@ -789,12 +812,12 @@ const HomeView = () => {
               borderRadius="$md"
               borderWidth="$1"
               hardShadow="5"
-              $md-p="$6"
-              $base-p="$4"
+              $md-p="$4"
+              $base-p="$2"
               space="md"
               justifyContent="space-between"
             >
-              <VStack space="sm" alignSelf="flex-start">
+              <VStack space="md" alignSelf="flex-start">
                 <Text
                   color="$text900"
                   fontWeight="$bold"
@@ -818,54 +841,46 @@ const HomeView = () => {
                 </Text>
               </VStack>
               <HStack
+                $sm-space="2xl"
+                $base-space="sm"
                 alignItems="center"
-                $lg-px="$5"
                 $md-px="$4"
                 $base-px="$2"
-                mt="$6"
-                w="$full"
+                mb="$4"
               >
-                {[...Array(5)].map((_, index) => {
-                  if (index % 2 === 0) {
-                    return (
-                      <VStack space="xs" key={index} alignItems="center">
-                        <Text
-                          color="$text900"
-                          fontWeight="$bold"
-                          $base-fontSize="$sm"
-                          $md-fontSize="$lg"
-                          fontFamily="$heading"
-                        >
-                          {
-                            analytics[tab].topLocations[index ? index / 2 : 0]
-                              .name
-                          }
-                        </Text>
-                        <Text
-                          color="$text700"
-                          fontWeight="$normal"
-                          fontSize="$xs"
-                          fontFamily="$body"
-                        >
-                          {`+${
-                            analytics[tab].topLocations[index ? index / 2 : 0]
-                              .growth
-                          }%`}
-                        </Text>
-                      </VStack>
-                    );
-                  } else {
-                    return (
+                {[...Array(3)].map((_, index) => (
+                  <HStack key={index}>
+                    <VStack space="xs">
+                      <Text
+                        color="$text900"
+                        fontWeight="$bold"
+                        $base-fontSize="$sm"
+                        $md-fontSize="$lg"
+                        fontFamily="$heading"
+                      >
+                        {analytics[tab].topLocations[index].name}
+                      </Text>
+                      <Text
+                        color="$text700"
+                        fontWeight="$normal"
+                        fontSize="$xs"
+                        fontFamily="$body"
+                      >
+                        {`+${analytics[tab].topLocations[index].growth}%`}
+                      </Text>
+                    </VStack>
+                    {index < 2 && (
                       <Divider
                         orientation="vertical"
                         w="$0.5"
                         h="$10"
-                        mx="auto"
+                        $md-mx="$8"
+                        $base-mx="$2"
                         bgColor="$background200"
                       />
-                    );
-                  }
-                })}
+                    )}
+                  </HStack>
+                ))}
               </HStack>
             </VStack>
             <VStack
@@ -874,11 +889,11 @@ const HomeView = () => {
               borderRadius="$md"
               borderWidth="$1"
               hardShadow="5"
-              $md-p="$6"
-              $base-p="$4"
+              $md-p="$4"
+              $base-p="$2"
               space="md"
             >
-              <VStack space="sm" alignSelf="flex-start">
+              <VStack space="md" alignSelf="flex-start">
                 <Text
                   color="$text900"
                   fontWeight="$bold"
@@ -902,57 +917,48 @@ const HomeView = () => {
                 </Text>
               </VStack>
               <HStack
+                $sm-space="2xl"
+                $base-space="sm"
                 alignItems="center"
-                $lg-px="$5"
                 $md-px="$4"
                 $base-px="$2"
-                mt="$6"
-                w="$full"
+                mb="$4"
+                justifyContent="space-between"
               >
-                {[...Array(5)].map((_, index) => {
-                  if (index % 2 === 0) {
-                    return (
-                      <VStack space="xs" key={index} alignItems="center">
-                        <Text
-                          color="$text900"
-                          fontWeight="$bold"
-                          $base-fontSize="$sm"
-                          $md-fontSize="$lg"
-                          fontFamily="$heading"
-                        >
-                          {
-                            analytics[tab].topEngagements[
-                              index > 0 ? index / 2 : 0
-                            ].name
-                          }
-                        </Text>
-                        <Text
-                          color="$text700"
-                          fontWeight="$normal"
-                          fontSize="$xs"
-                          fontFamily="$body"
-                          numberOfLines={2}
-                        >
-                          {`${
-                            analytics[tab].topEngagements[
-                              index > 0 ? index / 2 : 0
-                            ].growth
-                          } views`}
-                        </Text>
-                      </VStack>
-                    );
-                  } else {
-                    return (
+                {[...Array(3)].map((_, index) => (
+                  <HStack key={index}>
+                    <VStack space="xs">
+                      <Text
+                        color="$text900"
+                        fontWeight="$bold"
+                        $base-fontSize="$sm"
+                        $md-fontSize="$lg"
+                        fontFamily="$heading"
+                      >
+                        {analytics[tab].topEngagements[index].name}
+                      </Text>
+                      <Text
+                        color="$text700"
+                        fontWeight="$normal"
+                        fontSize="$xs"
+                        fontFamily="$body"
+                        numberOfLines={2}
+                      >
+                        {`${analytics[tab].topEngagements[index].growth} views`}
+                      </Text>
+                    </VStack>
+                    {index < 2 && (
                       <Divider
                         orientation="vertical"
                         w="$0.5"
                         h="$10"
-                        mx="auto"
+                        $md-mx="$8"
+                        $base-mx="$2"
                         bgColor="$background200"
                       />
-                    );
-                  }
-                })}
+                    )}
+                  </HStack>
+                ))}
               </HStack>
             </VStack>
           </VStack>
@@ -961,6 +967,7 @@ const HomeView = () => {
     </Box>
   );
 };
+
 const NotificationsView = () => {
   return (
     <Box
@@ -979,6 +986,7 @@ const NotificationsView = () => {
     </Box>
   );
 };
+
 const CalendarView = () => {
   return (
     <Box
@@ -1003,6 +1011,7 @@ const CalendarView = () => {
     </Box>
   );
 };
+
 const CurrencyView = () => {
   return (
     <Box
@@ -1027,6 +1036,7 @@ const CurrencyView = () => {
     </Box>
   );
 };
+
 const ProfileView = () => {
   return (
     <Box
@@ -1051,6 +1061,7 @@ const ProfileView = () => {
     </Box>
   );
 };
+
 const SettingsView = () => {
   return (
     <Box
@@ -1075,6 +1086,7 @@ const SettingsView = () => {
     </Box>
   );
 };
+
 const HelpView = () => {
   return (
     <Box
@@ -1099,6 +1111,7 @@ const HelpView = () => {
     </Box>
   );
 };
+
 const ExitView = () => {
   return (
     <Box
@@ -1124,16 +1137,754 @@ const ExitView = () => {
   );
 };
 
-export {
-  AnalyticsCard,
-  ExitView,
-  CalendarView,
-  HelpView,
-  SettingsView,
-  ProfileView,
-  CurrencyView,
-  HomeView,
-  NotificationsView,
-  CommentCard,
-  MiniNavbarMenu,
+const comments = [
+  {
+    userName: 'John Smith',
+    comment: 'Loved the animation! Can you link the tutorial? 👀',
+    profileImage: '../assets/avatar-icon.png',
+  },
+  {
+    userName: 'Mila Dann',
+    comment: 'This looks great! Have been following you from a long time 🤩',
+    profileImage: '../assets/avatar-icon.png',
+  },
+  {
+    userName: 'Mila Dann',
+    comment: 'Woah! loved the transition 💯',
+    profileImage: '../assets/avatar-icon.png',
+  },
+  {
+    userName: 'Ruth Joseph',
+    comment: 'Woah! Would love to try this out 🤯',
+    profileImage: '../assets/avatar-icon.png',
+  },
+  {
+    userName: 'Mila Dann',
+    comment: 'Woah! loved the transition 💯',
+    profileImage: '../assets/avatar-icon.png',
+  },
+];
+
+const analytics = {
+  instagram: {
+    weeklyViews: {
+      views: 100000,
+      growth: 0,
+      loss: '1.5',
+    },
+    weeklyFollowers: {
+      views: 15790,
+      growth: '11.5',
+      loss: 0,
+    },
+    weeklyComments: {
+      views: 62809,
+      growth: '0.5',
+      loss: 0,
+    },
+    engagedUsers: {
+      users: 12200,
+      growth: '1.5',
+      loss: 0,
+    },
+    totalVisits: 90279,
+    topLocations: [
+      {
+        name: 'Canada',
+        growth: '10.5',
+      },
+      {
+        name: 'US',
+        growth: '8.2',
+      },
+      {
+        name: 'India',
+        growth: '6.5',
+      },
+    ],
+    topEngagements: [
+      {
+        name: 'Videos',
+        growth: '7688',
+      },
+      {
+        name: 'Corousel',
+        growth: '122',
+      },
+      {
+        name: 'Pictures',
+        growth: '6923',
+      },
+    ],
+  },
+  youtube: {
+    weeklyViews: {
+      views: 900000,
+      growth: 0,
+      loss: '3.5',
+    },
+    weeklyFollowers: {
+      views: 45790,
+      growth: '1.5',
+      loss: 0,
+    },
+    weeklyComments: {
+      views: 682809,
+      growth: '1.5',
+      loss: 0,
+    },
+    engagedUsers: {
+      users: 92200,
+      growth: '6.5',
+      loss: 0,
+    },
+    totalVisits: 90279,
+    topLocations: [
+      {
+        name: 'India',
+        growth: '12.5',
+      },
+      {
+        name: 'UK',
+        growth: '4.2',
+      },
+      {
+        name: 'Canada',
+        growth: '1.5',
+      },
+    ],
+    topEngagements: [
+      {
+        name: 'Videos',
+        growth: '8888',
+      },
+      {
+        name: 'Corousel',
+        growth: '4122',
+      },
+      {
+        name: 'Pictures',
+        growth: '6723',
+      },
+    ],
+  },
+  twitter: {
+    weeklyViews: {
+      views: 300000,
+      growth: 0,
+      loss: '9.5',
+    },
+    weeklyFollowers: {
+      views: 725790,
+      growth: '8.1',
+      loss: 0,
+    },
+    weeklyComments: {
+      views: 82809,
+      growth: '3.5',
+      loss: 0,
+    },
+    engagedUsers: {
+      users: 492200,
+      growth: '7.5',
+      loss: 0,
+    },
+    totalVisits: 190279,
+    topLocations: [
+      {
+        name: 'Europe',
+        growth: '10.5',
+      },
+      {
+        name: 'Russia',
+        growth: '6.1',
+      },
+      {
+        name: 'India',
+        growth: '3.5',
+      },
+    ],
+    topEngagements: [
+      {
+        name: 'Videos',
+        growth: '9988',
+      },
+      {
+        name: 'Corousel',
+        growth: '4822',
+      },
+      {
+        name: 'Pictures',
+        growth: '6723',
+      },
+    ],
+  },
+  facebook: {
+    weeklyViews: {
+      views: 600000,
+      growth: 0,
+      loss: '9.5',
+    },
+    weeklyFollowers: {
+      views: 745790,
+      growth: '8.5',
+      loss: 0,
+    },
+    weeklyComments: {
+      views: 8682809,
+      growth: '5.5',
+      loss: 0,
+    },
+    engagedUsers: {
+      users: 192200,
+      growth: '3.5',
+      loss: 0,
+    },
+    totalVisits: 7690279,
+    topLocations: [
+      {
+        name: 'China',
+        growth: '10.5',
+      },
+      {
+        name: 'India',
+        growth: '8.2',
+      },
+      {
+        name: 'Germany',
+        growth: '3.5',
+      },
+    ],
+    topEngagements: [
+      {
+        name: 'Videos',
+        growth: '8898',
+      },
+      {
+        name: 'Corousel',
+        growth: '4822',
+      },
+      {
+        name: 'Pictures',
+        growth: '6923',
+      },
+    ],
+  },
 };
+
+const viewRenderer = (view: string) => {
+  switch (view) {
+    case 'home':
+      return <HomeView />;
+    case 'notifications':
+      return <NotificationsView />;
+    case 'calendar':
+      return <CalendarView />;
+    case 'currency':
+      return <CurrencyView />;
+    case 'profile':
+      return <ProfileView />;
+    case 'settings':
+      return <SettingsView />;
+    case 'help':
+      return <HelpView />;
+    case 'exit':
+      return <ExitView />;
+    default:
+      return <HomeView />;
+  }
+};
+
+const Dashboard: any = ({ w = '100%', ...props }: any) => {
+  const [view, setView] = React.useState<
+    | 'home'
+    | 'notifications'
+    | 'calendar'
+    | 'currency'
+    | 'profile'
+    | 'settings'
+    | 'help'
+    | 'exit'
+  >('home');
+  const iconColor = useToken('colors', 'background200');
+  const searchIconColor = useToken('colors', 'background500');
+  const bellIconColor = useToken('colors', 'background600');
+  const arrowIconColor = useToken('colors', 'background800');
+  const miniNavbarIconColor = useToken('colors', 'white');
+  const iconSize = useToken('space', '6');
+  const arrowIconSize = useToken('space', '3');
+  const searchIconSize = useToken('space', '3.5');
+
+  const handleViewChange = (viewInput: typeof view) => {
+    setView(viewInput);
+  };
+
+  return (
+    <Box
+      {...props}
+      w={w}
+      borderWidth="$1"
+      borderColor="$border200"
+      borderRadius="$lg"
+      display="flex"
+      $base-flexDirection="column"
+      $md-flexDirection="row"
+      bg="$background0"
+    >
+      <HStack
+        bg="$background950"
+        justifyContent="space-between"
+        alignItems="center"
+        $base-display="flex"
+        $md-display="none"
+        p="$2"
+        mb="$2"
+        sx={{
+          _web: {
+            position: 'sticky',
+            top: 0,
+            zIndex: 99,
+          },
+        }}
+      >
+        <Pressable p="$2">
+          <MiniNavbarMenu
+            onViewChange={(view: string) => handleViewChange(view)}
+          />
+        </Pressable>
+        <Pressable p="$2">
+          <Search
+            color={miniNavbarIconColor}
+            width={iconSize}
+            height={iconSize}
+          />
+        </Pressable>
+      </HStack>
+      <VStack
+        alignItems="center"
+        mb="$10"
+        ml="$6"
+        justifyContent="space-between"
+        $base-display="none"
+        $md-display="flex"
+        h="$full"
+        $sm-top={45}
+        $lg-top={100}
+        sx={{
+          _web: {
+            position: 'sticky',
+          },
+        }}
+      >
+        <VStack
+          alignItems="center"
+          $md-p="$4"
+          $base-p="$2"
+          bg="$background950"
+          space="lg"
+          borderRadius="$3xl"
+        >
+          <Pressable
+            p="$2"
+            $focus-bg="$background800"
+            borderRadius="$xl"
+            bg={view === 'home' ? '$background800' : '$background950'}
+            onPress={() => handleViewChange('home')}
+          >
+            <LayoutDashboardIcon
+              color={iconColor}
+              width={iconSize}
+              height={iconSize}
+            />
+          </Pressable>
+          <Pressable
+            p="$2"
+            $focus-bg="$background800"
+            borderRadius="$xl"
+            bg={view === 'notifications' ? '$background800' : '$background950'}
+            onPress={() => handleViewChange('notifications')}
+          >
+            <MegaphoneIcon
+              color={iconColor}
+              width={iconSize}
+              height={iconSize}
+            />
+          </Pressable>
+          <Pressable
+            p="$2"
+            $focus-bg="$background800"
+            borderRadius="$xl"
+            bg={view === 'calendar' ? '$background800' : '$background950'}
+            onPress={() => handleViewChange('calendar')}
+          >
+            <CalendarDaysIcon
+              color={iconColor}
+              width={iconSize}
+              height={iconSize}
+            />
+          </Pressable>
+          <Pressable
+            p="$2"
+            $focus-bg="$background800"
+            borderRadius="$xl"
+            bg={view === 'currency' ? '$background800' : '$background950'}
+            onPress={() => handleViewChange('currency')}
+          >
+            <CircleDollarSignIcon
+              color={iconColor}
+              width={iconSize}
+              height={iconSize}
+            />
+          </Pressable>
+          <Divider
+            bg="$background600"
+            h="$0.5"
+            orientation="horizontal"
+            w="$full"
+            my="$10"
+          />
+          <Pressable
+            p="$2"
+            $focus-bg="$background800"
+            borderRadius="$xl"
+            bg={view === 'profile' ? '$background800' : '$background950'}
+            onPress={() => handleViewChange('profile')}
+          >
+            <UserIcon color={iconColor} width={iconSize} height={iconSize} />
+          </Pressable>
+          <Pressable
+            p="$2"
+            $focus-bg="$background800"
+            borderRadius="$xl"
+            bg={view === 'settings' ? '$background800' : '$background950'}
+            onPress={() => handleViewChange('settings')}
+          >
+            <SettingsIcon
+              color={iconColor}
+              width={iconSize}
+              height={iconSize}
+            />
+          </Pressable>
+          <Pressable
+            p="$2"
+            $focus-bg="$background800"
+            borderRadius="$xl"
+            bg={view === 'help' ? '$background800' : '$background950'}
+            onPress={() => handleViewChange('help')}
+          >
+            <BadgeHelpIcon
+              color={iconColor}
+              width={iconSize}
+              height={iconSize}
+            />
+          </Pressable>
+        </VStack>
+        <VStack
+          alignItems="center"
+          $md-p="$4"
+          $base-p="$2"
+          bg="$background950"
+          mt="$32"
+          borderRadius="$3xl"
+        >
+          <Pressable
+            p="$2"
+            $focus-bg="$background800"
+            borderRadius="$xl"
+            bg={view === 'exit' ? '$background800' : '$background950'}
+            onPress={() => handleViewChange('exit')}
+          >
+            <LogOutIcon color={iconColor} width={iconSize} height={iconSize} />
+          </Pressable>
+        </VStack>
+      </VStack>
+      <Box
+        display="flex"
+        $base-flexDirection="column"
+        $lg-flexDirection="row"
+        flex={1}
+      >
+        <Box
+          $xl-width="$4/6"
+          $lg-width="$3/5"
+          $base-width="$full"
+          borderLeftWidth="$0"
+          $md-borderRightWidth="$1"
+          $base-borderRightWidth="$0"
+          borderColor="$border200"
+        >
+          <VStack>
+            <HStack
+              $md-pt="$6"
+              $lg-px="$2"
+              $sm-px="$4"
+              $sm-pt="$4"
+              $base-pt="$2"
+              $base-px="$2"
+              justifyContent="space-between"
+              alignItems="center"
+            >
+              <VStack space="xs">
+                <Text
+                  $xl-fontSize="$3xl"
+                  $md-fontSize="$xl"
+                  $base-fontSize="$lg"
+                  color="$text900"
+                  fontWeight="$bold"
+                  fontFamily="$heading"
+                >
+                  Good morning, John
+                </Text>
+                <Text
+                  $md-fontSize="$sm"
+                  $base-fontSize="$xs"
+                  color="$text700"
+                  fontWeight="$normal"
+                  fontFamily="$body"
+                >
+                  Let’s take a look at your social presence
+                </Text>
+              </VStack>
+              <HStack
+                h="$10"
+                alignItems="center"
+                space="sm"
+                $xl-minWidth="$1/3"
+                $xl-justifyContent="flex-end"
+                $base-justifyContent="center"
+              >
+                <HStack
+                  $md-borderWidth="$1"
+                  borderColor="$border300"
+                  borderRadius="$lg"
+                  alignItems="center"
+                  space="sm"
+                  $base-px="$0"
+                  $md-px="$4"
+                  $xl-flex={0.95}
+                  $md-flex={0.8}
+                  $base-flex={0.5}
+                  $base-borderWidth="$0"
+                  $base-display="none"
+                  $md-display="flex"
+                >
+                  <Search
+                    color={searchIconColor}
+                    width={searchIconSize}
+                    height={searchIconSize}
+                  />
+                  <Input
+                    borderWidth="$0"
+                    sx={{
+                      _web: {
+                        boxShadow: 'none',
+                      },
+                    }}
+                    flex={0.95}
+                    $base-display="none"
+                    $md-display="flex"
+                  >
+                    <InputField
+                      placeholder="Search.."
+                      fontSize="$sm"
+                      color="$text400"
+                    />
+                  </Input>
+                </HStack>
+                <Pressable
+                  bg="$background100"
+                  borderRadius="$lg"
+                  $base-p="$0.5"
+                  $sm-p="$2"
+                >
+                  <BellIcon
+                    color={bellIconColor}
+                    width={iconSize}
+                    height={iconSize}
+                  />
+                </Pressable>
+              </HStack>
+            </HStack>
+            <Box mt="$10">{viewRenderer(view)}</Box>
+          </VStack>
+        </Box>
+        <Box $xl-width="$2/6" $lg-width="$2/5" $base-width="$full" $lg-p="$3">
+          <VStack
+            space="2xl"
+            $lg-alignItems="center"
+            $base-mx="$2"
+            mb="$2"
+            $sm-mx="$4"
+            $lg-mx="$0"
+            flexGrow={1}
+          >
+            <Card bg="$background50" $base-flexGrow={1} $lg-flexGrow={0}>
+              <UserCard direction="column">
+                <UserCardAvatar
+                  name="John Smith"
+                  src={require('../assets/avatar-icon.png')}
+                  bgColor="$black"
+                  size="lg"
+                />
+                <UserCardStack
+                  mt="$3"
+                  alignItems="center"
+                  width="$full"
+                  space="xs"
+                >
+                  <Text
+                    fontFamily="$heading"
+                    fontSize="$lg"
+                    color="$text900"
+                    fontWeight="$bold"
+                  >
+                    John Smith
+                  </Text>
+                  <Text
+                    fontFamily="$body"
+                    fontSize="$sm"
+                    color="$text700"
+                    fontWeight="$normal"
+                  >
+                    john@example.com
+                  </Text>
+                  <Text
+                    fontFamily="$body"
+                    fontSize="$sm"
+                    color="$text700"
+                    fontWeight="$normal"
+                    textAlign="center"
+                    width="$full"
+                  >
+                    Pushing the boundaries of reality with XR design wizardry
+                    ✨🚀 #XRDesigner
+                  </Text>
+                </UserCardStack>
+                <HStack
+                  $base-space="xs"
+                  $sm-space="md"
+                  alignItems="center"
+                  mt="$8"
+                  mb="$2"
+                  width="$full"
+                  justifyContent="center"
+                >
+                  <VStack alignItems="center" space="sm">
+                    <Text
+                      fontFamily="$heading"
+                      fontSize="$sm"
+                      color="$text900"
+                      fontWeight="$bold"
+                    >
+                      232
+                    </Text>
+                    <Text
+                      fontFamily="$body"
+                      fontSize="$sm"
+                      color="$text900"
+                      fontWeight="$normal"
+                    >
+                      posts
+                    </Text>
+                  </VStack>
+                  <Divider
+                    mx="$2.5"
+                    h="$10"
+                    bg="$background400"
+                    w="$0.5"
+                    orientation="vertical"
+                  />
+                  <VStack alignItems="center" space="sm">
+                    <Text
+                      fontFamily="$heading"
+                      fontSize="$sm"
+                      color="$text900"
+                      fontWeight="$bold"
+                    >
+                      108.3k
+                    </Text>
+                    <Text
+                      fontFamily="$body"
+                      fontSize="$sm"
+                      color="$text900"
+                      fontWeight="$normal"
+                    >
+                      followers
+                    </Text>
+                  </VStack>
+                  <Divider
+                    mx="$2.5"
+                    h="$10"
+                    bg="$background400"
+                    w="$0.5"
+                    orientation="vertical"
+                  />
+                  <VStack alignItems="center" space="sm">
+                    <Text
+                      fontFamily="$heading"
+                      fontSize="$sm"
+                      color="$text900"
+                      fontWeight="$bold"
+                    >
+                      40
+                    </Text>
+                    <Text
+                      fontFamily="$body"
+                      fontSize="$sm"
+                      color="$text900"
+                      fontWeight="$normal"
+                    >
+                      following
+                    </Text>
+                  </VStack>
+                </HStack>
+              </UserCard>
+            </Card>
+            <Box $lg-p="$3" $base-p="$1" display="flex" flexDirection="column">
+              <VStack $sm-minWidth="$72" $base-minWidth="$56">
+                {comments.map((comment) => (
+                  <VStack justifyContent="center">
+                    <CommentCard
+                      comment={comment.comment}
+                      userName={comment.userName}
+                      key={comment.userName}
+                    />
+                    <Divider
+                      orientation="horizontal"
+                      my="$2"
+                      bg="$background200"
+                      h="$0.5"
+                    />
+                  </VStack>
+                ))}
+              </VStack>
+              <Pressable mt="$20">
+                <HStack
+                  space="sm"
+                  justifyContent="flex-end"
+                  alignItems="center"
+                >
+                  <Text
+                    fontWeight="$semibold"
+                    fontSize="$xs"
+                    color="$secondary600"
+                    fontFamily="$body"
+                  >
+                    See All Activity
+                  </Text>
+                  <ArrowRight
+                    color={arrowIconColor}
+                    width={arrowIconSize}
+                    height={arrowIconSize}
+                  />
+                </HStack>
+              </Pressable>
+            </Box>
+          </VStack>
+        </Box>
+      </Box>
+    </Box>
+  );
+};
+
+export default Dashboard;

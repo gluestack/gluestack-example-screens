@@ -1154,10 +1154,10 @@ export const gluestackUIConfig = createConfig({
           shadowColor: '$background900',
           shadowOffset: {
             width: 0,
-            height: 3,
+            height: 2,
           },
           shadowRadius: 8,
-          shadowOpacity: 0.2,
+          shadowOpacity: 0.1,
           elevation: 10,
         },
       },
