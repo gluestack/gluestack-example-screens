@@ -7,6 +7,8 @@ import UserCardAvatar from '../UserCardAvatar';
 import UserCardStack from '../UserCardStack';
 import StatsItems from '../StatsItems';
 import StatsDivider from '../StatsDivider';
+// import CustomInput from '../CustomInput';
+// import { SearchIcon } from 'lucide-react-native';
 
 const profileInfo = [
   {
@@ -62,6 +64,9 @@ const ProfileCard = () => {
           ))}
         </Stats>
       </UserCard>
+      {/* <CustomInput mt="$4" icon={SearchIcon}>
+        <InputField type="text" placeholder="Search" />
+      </CustomInput> */}
     </Card>
   );
 };
