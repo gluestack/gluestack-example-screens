@@ -560,6 +560,7 @@ const Chats = () => {
             />
 
             <Menu
+              borderWidth={1}
               placement="bottom right"
               disabledKeys={['Theme']}
               trigger={({ ...triggerProps }) => (
