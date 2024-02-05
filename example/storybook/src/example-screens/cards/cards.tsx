@@ -447,17 +447,17 @@ const LoginCard = () => {
         <ButtonText>Login</ButtonText>
       </Button>
       <HStack space="md">
-        <Button flex={1} size="md" variant="outline">
+        <Button flex={1} size="md" variant="outline" action="secondary">
           <ButtonIcon>
             <Icon as={GoogleIcon} />
           </ButtonIcon>
         </Button>
-        <Button flex={1} size="md" variant="outline">
+        <Button flex={1} size="md" variant="outline" action="secondary">
           <ButtonIcon>
             <Icon as={Twittericon} />
           </ButtonIcon>
         </Button>
-        <Button flex={1} size="md" variant="outline">
+        <Button flex={1} size="md" variant="outline" action="secondary">
           <ButtonIcon>
             <Icon as={GithubIcon} />
           </ButtonIcon>
@@ -472,12 +472,12 @@ const Cards: any = ({ w = '100%', h = '100%', ...props }: any) => {
     <Box
       {...props}
       bg="$background0"
-      $base-p="$4"
+      $base-p="$2"
       $md-p="$5"
       $lg-p="$6"
       h={h}
       w={w}
-      overflow="hidden"
+      // overflow="hidden"
     >
       <VStack
         flex={1}
