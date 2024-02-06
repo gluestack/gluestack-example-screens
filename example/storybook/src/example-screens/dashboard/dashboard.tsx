@@ -5,12 +5,12 @@ import {
   HStack,
   Divider,
   Pressable,
-  Input,
   InputField,
   useToken,
   Tooltip,
   TooltipContent,
   TooltipText,
+  InputIcon,
 } from '@gluestack-ui-new/themed';
 import React from 'react';
 import { comments } from './constants';
@@ -44,6 +44,7 @@ import Card from '../components/Card';
 import UserCard from '../components/UserCard';
 import UserCardAvatar from '../components/UserCardAvatar';
 import UserCardStack from '../components/UserCardStack';
+import CustomInput from '../components/CustomInput';
 
 const viewRenderer = (view: string) => {
   switch (view) {
@@ -354,28 +355,32 @@ const Dashboard: any = ({ w = '100%', ...props }: any) => {
                   $base-display="none"
                   $md-display="flex"
                 >
-                  <Search
-                    color={searchIconColor}
-                    width={searchIconSize}
-                    height={searchIconSize}
-                  />
-                  <Input
-                    borderWidth="$0"
-                    sx={{
-                      _web: {
-                        boxShadow: 'none',
+                  <CustomInput
+                    inputStyles={{
+                      'borderWidth': '$0',
+                      'sx': {
+                        _web: {
+                          boxShadow: 'none',
+                        },
                       },
+                      '$base-display': 'none',
+                      '$md-display': 'flex',
                     }}
-                    flex={0.95}
-                    $base-display="none"
-                    $md-display="flex"
+                    icon={
+                      <InputIcon
+                        color={searchIconColor}
+                        as={Search}
+                        width={searchIconSize}
+                        height={searchIconSize}
+                      />
+                    }
                   >
                     <InputField
                       placeholder="Search.."
                       fontSize="$sm"
                       color="$text400"
                     />
-                  </Input>
+                  </CustomInput>
                 </HStack>
                 <Tooltip
                   placement="top"
