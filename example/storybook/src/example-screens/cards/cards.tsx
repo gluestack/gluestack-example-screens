@@ -241,7 +241,7 @@ const SettingsCard = () => {
                   );
                 }}
               >
-                <TooltipContent>
+                <TooltipContent backgroundColor="$background600">
                   <TooltipText textAlign="center" fontSize="$xs" maxWidth="$48">
                     Click to switch your notification preferences.
                   </TooltipText>
@@ -447,17 +447,17 @@ const LoginCard = () => {
         <ButtonText>Login</ButtonText>
       </Button>
       <HStack space="md">
-        <Button flex={1} size="md" variant="outline">
+        <Button flex={1} size="md" variant="outline" action="secondary">
           <ButtonIcon>
             <Icon as={GoogleIcon} />
           </ButtonIcon>
         </Button>
-        <Button flex={1} size="md" variant="outline">
+        <Button flex={1} size="md" variant="outline" action="secondary">
           <ButtonIcon>
             <Icon as={Twittericon} />
           </ButtonIcon>
         </Button>
-        <Button flex={1} size="md" variant="outline">
+        <Button flex={1} size="md" variant="outline" action="secondary">
           <ButtonIcon>
             <Icon as={GithubIcon} />
           </ButtonIcon>
@@ -469,7 +469,16 @@ const LoginCard = () => {
 
 const Cards: any = ({ w = '100%', h = '100%', ...props }: any) => {
   return (
-    <Box {...props} bg="$background0" p="$1" h={h} w={w}>
+    <Box
+      {...props}
+      bg="$background0"
+      $base-p="$2"
+      $md-p="$5"
+      $lg-p="$6"
+      h={h}
+      w={w}
+      // overflow="hidden"
+    >
       <VStack
         flex={1}
         $xl-flexDirection="row"

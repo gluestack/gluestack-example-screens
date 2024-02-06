@@ -111,13 +111,12 @@ const Chats = () => {
   const [selectedChat, setSelectedChat] = useState({
     name: 'Richard Lyod',
     message: '',
-    avatarSource: '',
   });
   const [showChatList, setShowChatList] = useState(false);
   const [showProfile, setShowProfile] = useState(false);
 
-  const handleChatSelect = ({ name, message, avatarSource }) => {
-    setSelectedChat({ name, message, avatarSource });
+  const handleChatSelect = ({ name, message }) => {
+    setSelectedChat({ name, message });
     setShowChatList(true);
     setShowProfile(false);
   };
@@ -154,7 +153,7 @@ const Chats = () => {
     index,
     onSelect,
   }) => (
-    <Pressable onPress={() => onSelect({ name, message, avatarSource })}>
+    <Pressable onPress={() => onSelect({ name, message })}>
       <UserCard direction="row">
         <UserCardAvatar name={name} src={avatarSource} h="$9" w="$9" />
         <UserCardStack>
@@ -560,7 +559,6 @@ const Chats = () => {
             />
 
             <Menu
-              borderWidth={1}
               placement="bottom right"
               disabledKeys={['Theme']}
               trigger={({ ...triggerProps }) => (
@@ -777,7 +775,7 @@ const Chats = () => {
             </Box>
             <UserCardAvatar
               name={selectedChat.name}
-              src={selectedChat.avatarSource}
+              src={require('../assets/Avatar9.png')}
               w="$16"
               h="$16"
               mb="$2"
