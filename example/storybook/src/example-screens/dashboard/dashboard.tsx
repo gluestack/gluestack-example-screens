@@ -597,5 +597,3 @@ const Dashboard: any = ({ w = '100%', ...props }: any) => {
 };
 
 export default Dashboard;
-
-export { Text, Box };
