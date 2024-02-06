@@ -7,10 +7,6 @@ import {
   HStack,
   Button,
   ButtonText,
-  FormControl,
-  FormControlLabel,
-  FormControlLabelText,
-  Input,
   InputField,
   Progress,
   ProgressFilledTrack,
@@ -41,6 +37,15 @@ import UserCardStack from '../components/UserCardStack';
 import Stats from '../components/Stats';
 import StatsItems from '../components/StatsItems';
 import StatsDivider from '../components/StatsDivider';
+import CustomInput from '../components/CustomInput';
+import {
+  inviteValidationSchema,
+  inviteValidationType,
+  loginValidationSchema,
+  loginValidationType,
+} from './validation';
+import { useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
 
 const BlogCard = () => {
   return (
@@ -146,6 +151,20 @@ const ProfileCard = () => {
 };
 
 const FormInputcard = () => {
+  const { control, trigger, handleSubmit } = useForm<inviteValidationType>({
+    mode: 'onBlur',
+    defaultValues: {
+      inviteMessage: '',
+    },
+    resolver: zodResolver(inviteValidationSchema),
+  });
+  /* eslint-disable */
+  const onSubmit = (data: { data: inviteValidationType }) => {
+    // console.log(data, 'form submission data');
+  };
+  const onError = (error: any) => {
+    // console.log(error, 'form submission errors');
+  };
   return (
     <Card space="2xl">
       <VStack>
@@ -163,17 +182,26 @@ const FormInputcard = () => {
         </Heading>
       </VStack>
       <HStack justifyContent="space-between" space="sm">
-        <FormControl size="md" flex={1}>
-          <FormControlLabel mb="$2">
-            <FormControlLabelText fontSize="$sm">
-              Send an invite
-            </FormControlLabelText>
-          </FormControlLabel>
-          <Input>
-            <InputField type="text" placeholder="abc@example.com" />
-          </Input>
-        </FormControl>
-        <Button size="md" alignSelf="flex-end">
+        <CustomInput
+          label={'Send an invite'}
+          formControlStyles={{
+            flex: 1,
+          }}
+          validatorProps={{
+            control: control,
+            trigger: trigger,
+            name: 'inviteMessage',
+          }}
+        >
+          <InputField type="text" placeholder="abc@example.com" />
+        </CustomInput>
+        <Button
+          size="md"
+          mt="$6"
+          onPress={() => {
+            handleSubmit(onSubmit, onError)();
+          }}
+        >
           <ButtonText>Send</ButtonText>
         </Button>
       </HStack>
@@ -350,6 +378,21 @@ const FileUploadCard = () => {
 };
 
 const LoginCard = () => {
+  const { control, trigger, handleSubmit } = useForm<loginValidationType>({
+    mode: 'onBlur',
+    defaultValues: {
+      email: '',
+      password: '',
+    },
+    resolver: zodResolver(loginValidationSchema),
+  });
+  /* eslint-disable */
+  const onSubmit = (data: { data: loginValidationType }) => {
+    // console.log(data, 'form submission data');
+  };
+  const onError = (error: any) => {
+    // console.log(error, 'form submission errors');
+  };
   return (
     <Card space="4xl" $md-width="$1/2" $xl-width="$full">
       <VStack space="xs">
@@ -378,22 +421,26 @@ const LoginCard = () => {
         </HStack>
       </VStack>
       <VStack space="xl">
-        <FormControl size="sm">
-          <FormControlLabel mb="$2">
-            <FormControlLabelText fontSize="$sm">Email</FormControlLabelText>
-          </FormControlLabel>
-          <Input>
-            <InputField type="text" placeholder="abc@example.com" />
-          </Input>
-        </FormControl>
-        <FormControl size="sm">
-          <FormControlLabel mb="$2">
-            <FormControlLabelText fontSize="$sm">Password</FormControlLabelText>
-          </FormControlLabel>
-          <Input>
-            <InputField type="password" placeholder="Enter password" />
-          </Input>
-        </FormControl>
+        <CustomInput
+          label={'Email'}
+          validatorProps={{
+            control: control,
+            trigger: trigger,
+            name: 'email',
+          }}
+        >
+          <InputField type="text" placeholder="abc@example.com" />
+        </CustomInput>
+        <CustomInput
+          label={'Password'}
+          validatorProps={{
+            control: control,
+            trigger: trigger,
+            name: 'password',
+          }}
+        >
+          <InputField type="password" placeholder="Enter password" />
+        </CustomInput>
         <HStack justifyContent="space-between" alignItems="center">
           <Checkbox value="" size="sm">
             <CheckboxIndicator mr="$2">
@@ -443,7 +490,13 @@ const LoginCard = () => {
           orientation="horizontal"
         ></Divider>
       </HStack>
-      <Button size="sm" borderRadius="$md">
+      <Button
+        size="sm"
+        borderRadius="$md"
+        onPress={() => {
+          handleSubmit(onSubmit, onError)();
+        }}
+      >
         <ButtonText>Login</ButtonText>
       </Button>
       <HStack space="md">
