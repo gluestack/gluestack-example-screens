@@ -46,7 +46,10 @@
   },
   "packageManager": "yarn@1.22.17",
   "dependencies": {
+    "@hookform/resolvers": "^3.3.4",
     "chart.js": "^4.4.1",
-    "react-chartjs-2": "^5.2.0"
+    "react-chartjs-2": "^5.2.0",
+    "react-hook-form": "^7.50.0",
+    "zod": "^3.22.4"
   }
 }

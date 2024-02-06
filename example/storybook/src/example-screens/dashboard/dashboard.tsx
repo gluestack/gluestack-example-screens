@@ -7,6 +7,9 @@ import {
   Pressable,
   InputField,
   useToken,
+  Tooltip,
+  TooltipContent,
+  TooltipText,
   InputIcon,
 } from '@gluestack-ui-new/themed';
 import React from 'react';
@@ -22,6 +25,7 @@ import {
   HelpView,
   SettingsView,
   MiniNavbarMenu,
+  SidebarItem,
 } from './components';
 import {
   ArrowRight,
@@ -138,8 +142,7 @@ const Dashboard: any = ({ w = '100%', ...props }: any) => {
         $base-display="none"
         $md-display="flex"
         h="$full"
-        $sm-top={45}
-        $lg-top={141}
+        top={45}
         sx={{
           _web: {
             position: 'sticky',
@@ -154,58 +157,63 @@ const Dashboard: any = ({ w = '100%', ...props }: any) => {
           space="lg"
           borderRadius="$3xl"
         >
-          <Pressable
-            p="$2"
-            $focus-bg="$background800"
-            borderRadius="$xl"
-            bg={view === 'home' ? '$background800' : '$background950'}
-            onPress={() => handleViewChange('home')}
-          >
-            <LayoutDashboardIcon
-              color={iconColor}
-              width={iconSize}
-              height={iconSize}
-            />
-          </Pressable>
-          <Pressable
-            p="$2"
-            $focus-bg="$background800"
-            borderRadius="$xl"
-            bg={view === 'notifications' ? '$background800' : '$background950'}
-            onPress={() => handleViewChange('notifications')}
-          >
-            <MegaphoneIcon
-              color={iconColor}
-              width={iconSize}
-              height={iconSize}
-            />
-          </Pressable>
-          <Pressable
-            p="$2"
-            $focus-bg="$background800"
-            borderRadius="$xl"
-            bg={view === 'calendar' ? '$background800' : '$background950'}
-            onPress={() => handleViewChange('calendar')}
-          >
-            <CalendarDaysIcon
-              color={iconColor}
-              width={iconSize}
-              height={iconSize}
-            />
-          </Pressable>
-          <Pressable
-            p="$2"
-            $focus-bg="$background800"
-            borderRadius="$xl"
-            bg={view === 'currency' ? '$background800' : '$background950'}
-            onPress={() => handleViewChange('currency')}
-          >
-            <CircleDollarSignIcon
-              color={iconColor}
-              width={iconSize}
-              height={iconSize}
-            />
-          </Pressable>
+          <SidebarItem
+            tooltipText="Dashboard"
+            itemProps={{
+              bg: view === 'home' ? '$background800' : '$background950',
+              onPress: () => handleViewChange('home'),
+            }}
+            icon={
+              <LayoutDashboardIcon
+                color={iconColor}
+                width={iconSize}
+                height={iconSize}
+              />
+            }
+          />
+          <SidebarItem
+            tooltipText="Announcements"
+            itemProps={{
+              bg:
+                view === 'notifications' ? '$background800' : '$background950',
+              onPress: () => handleViewChange('notifications'),
+            }}
+            icon={
+              <MegaphoneIcon
+                color={iconColor}
+                width={iconSize}
+                height={iconSize}
+              />
+            }
+          />
+          <SidebarItem
+            tooltipText="Calendar"
+            itemProps={{
+              bg: view === 'calendar' ? '$background800' : '$background950',
+              onPress: () => handleViewChange('calendar'),
+            }}
+            icon={
+              <CalendarDaysIcon
+                color={iconColor}
+                width={iconSize}
+                height={iconSize}
+              />
+            }
+          />
+          <SidebarItem
+            tooltipText="Currency"
+            itemProps={{
+              bg: view === 'currency' ? '$background800' : '$background950',
+              onPress: () => handleViewChange('currency'),
+            }}
+            icon={
+              <CircleDollarSignIcon
+                color={iconColor}
+                width={iconSize}
+                height={iconSize}
+              />
+            }
+          />
           <Divider
             bg="$background600"
             h="$0.5"
@@ -213,59 +221,67 @@ const Dashboard: any = ({ w = '100%', ...props }: any) => {
             w="$full"
             my="$10"
           />
-          <Pressable
-            p="$2"
-            $focus-bg="$background800"
-            borderRadius="$xl"
-            bg={view === 'profile' ? '$background800' : '$background950'}
-            onPress={() => handleViewChange('profile')}
-          >
-            <UserIcon color={iconColor} width={iconSize} height={iconSize} />
-          </Pressable>
-          <Pressable
-            p="$2"
-            $focus-bg="$background800"
-            borderRadius="$xl"
-            bg={view === 'settings' ? '$background800' : '$background950'}
-            onPress={() => handleViewChange('settings')}
-          >
-            <SettingsIcon
-              color={iconColor}
-              width={iconSize}
-              height={iconSize}
-            />
-          </Pressable>
-          <Pressable
-            p="$2"
-            $focus-bg="$background800"
-            borderRadius="$xl"
-            bg={view === 'help' ? '$background800' : '$background950'}
-            onPress={() => handleViewChange('help')}
-          >
-            <BadgeHelpIcon
-              color={iconColor}
-              width={iconSize}
-              height={iconSize}
-            />
-          </Pressable>
+          <SidebarItem
+            tooltipText="Profile"
+            itemProps={{
+              bg: view === 'profile' ? '$background800' : '$background950',
+              onPress: () => handleViewChange('profile'),
+            }}
+            icon={
+              <UserIcon color={iconColor} width={iconSize} height={iconSize} />
+            }
+          />
+          <SidebarItem
+            tooltipText="Settings"
+            itemProps={{
+              bg: view === 'settings' ? '$background800' : '$background950',
+              onPress: () => handleViewChange('settings'),
+            }}
+            icon={
+              <SettingsIcon
+                color={iconColor}
+                width={iconSize}
+                height={iconSize}
+              />
+            }
+          />
+          <SidebarItem
+            tooltipText="Help"
+            itemProps={{
+              bg: view === 'help' ? '$background800' : '$background950',
+              onPress: () => handleViewChange('help'),
+            }}
+            icon={
+              <BadgeHelpIcon
+                color={iconColor}
+                width={iconSize}
+                height={iconSize}
+              />
+            }
+          />
         </VStack>
         <VStack
           alignItems="center"
           $md-p="$4"
           $base-p="$2"
           bg="$background950"
-          mt="$32"
+          mt="$24"
           borderRadius="$3xl"
         >
-          <Pressable
-            p="$2"
-            $focus-bg="$background800"
-            borderRadius="$xl"
-            bg={view === 'exit' ? '$background800' : '$background950'}
-            onPress={() => handleViewChange('exit')}
-          >
-            <LogOutIcon color={iconColor} width={iconSize} height={iconSize} />
-          </Pressable>
+          <SidebarItem
+            tooltipText="Exit"
+            itemProps={{
+              bg: view === 'exit' ? '$background800' : '$background950',
+              onPress: () => handleViewChange('exit'),
+            }}
+            icon={
+              <LogOutIcon
+                color={iconColor}
+                width={iconSize}
+                height={iconSize}
+              />
+            }
+          />
         </VStack>
       </VStack>
       <Box
@@ -366,34 +382,50 @@ const Dashboard: any = ({ w = '100%', ...props }: any) => {
                     />
                   </CustomInput>
                 </HStack>
-                <Pressable
-                  bg="$background100"
-                  borderRadius="$lg"
-                  $base-p="$0.5"
-                  $sm-p="$2"
+                <Tooltip
+                  placement="top"
+                  trigger={(triggerProps) => {
+                    return (
+                      <Pressable
+                        bg="$background100"
+                        borderRadius="$lg"
+                        $base-p="$0.5"
+                        $sm-p="$2"
+                        {...triggerProps}
+                      >
+                        <BellIcon
+                          color={bellIconColor}
+                          width={iconSize}
+                          height={iconSize}
+                        />
+                      </Pressable>
+                    );
+                  }}
                 >
-                  <BellIcon
-                    color={bellIconColor}
-                    width={iconSize}
-                    height={iconSize}
-                  />
-                </Pressable>
+                  <TooltipContent>
+                    <TooltipText>Notifications</TooltipText>
+                  </TooltipContent>
+                </Tooltip>
               </HStack>
             </HStack>
             <Box mt="$11">{viewRenderer(view)}</Box>
           </VStack>
         </Box>
-        <Box $xl-width="$2/6" $lg-width="$2/5" $base-width="$full" $lg-p="$3">
-          <VStack
-            space="2xl"
-            $lg-alignItems="center"
-            $base-mx="$2"
-            mb="$2"
-            $sm-mx="$4"
-            $lg-mx="$0"
-            flexGrow={1}
-          >
-            <Card bg="$background50" $base-flexGrow={1} $lg-flexGrow={0}>
+        <Box $xl-width="$2/6" $lg-width="$2/5" $base-width="$full">
+          <VStack flexGrow={1}>
+            <Card
+              bg="$background50"
+              $base-flexGrow={1}
+              $lg-flexGrow={0}
+              $xs-py="$4.5"
+              $xs-px="$3"
+              $base-py="$3.5"
+              $base-px="$2"
+              $base-my="$3"
+              $base-mx="$2"
+              $md-mx="$4"
+              $lg-mx="$3"
+            >
               <UserCard direction="column">
                 <UserCardAvatar
                   name="John Smith"
@@ -512,10 +544,16 @@ const Dashboard: any = ({ w = '100%', ...props }: any) => {
                 </HStack>
               </UserCard>
             </Card>
-            <Box $lg-p="$3" $base-p="$1" display="flex" flexDirection="column">
-              <VStack $sm-minWidth="$72" $base-minWidth="$56">
+            <Box
+              display="flex"
+              flexDirection="column"
+              mt="$2"
+              $md-p="$6"
+              $base-p="$4"
+            >
+              <VStack $sm-minWidth="$72" $base-minWidth="$56" space="xl">
                 {comments.map((comment) => (
-                  <VStack justifyContent="center">
+                  <VStack justifyContent="center" space="lg">
                     <CommentCard
                       comment={comment.comment}
                       userName={comment.userName}
@@ -523,7 +561,6 @@ const Dashboard: any = ({ w = '100%', ...props }: any) => {
                     />
                     <Divider
                       orientation="horizontal"
-                      my="$2"
                       bg="$background200"
                       h="$0.5"
                     />

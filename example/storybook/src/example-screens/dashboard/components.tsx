@@ -12,6 +12,9 @@ import {
   Menu,
   MenuItem,
   MenuItemLabel,
+  TooltipContent,
+  Tooltip,
+  TooltipText,
 } from '@gluestack-ui-new/themed';
 import React from 'react';
 import {
@@ -38,7 +41,6 @@ import {
   LinearScale,
   BarElement,
   Title,
-  Tooltip,
   Legend,
   PointElement,
   LineElement,
@@ -52,22 +54,52 @@ ChartJS.register(
   LinearScale,
   BarElement,
   Title,
-  Tooltip,
   PointElement,
   LineElement,
   Title,
-  Tooltip,
   Filler,
   Legend,
   ArcElement
 );
 import { analytics } from './constants';
 import UserCard from '../components/UserCard';
+import Card from '../components/Card';
 
 interface CommentCardProps {
   userName: string;
   comment: string;
 }
+
+interface SidebarItemProps {
+  tooltipText: string;
+  icon: React.JSX.Element;
+  itemProps: any;
+}
+
+const SidebarItem = ({ icon, tooltipText, itemProps }: SidebarItemProps) => {
+  return (
+    <Tooltip
+      placement="right"
+      trigger={(triggerProps) => {
+        return (
+          <Pressable
+            p="$2"
+            $focus-bg="$background800"
+            borderRadius="$xl"
+            {...triggerProps}
+            {...itemProps}
+          >
+            {icon}
+          </Pressable>
+        );
+      }}
+    >
+      <TooltipContent>
+        <TooltipText>{tooltipText}</TooltipText>
+      </TooltipContent>
+    </Tooltip>
+  );
+};
 
 const MiniNavbarMenu = ({
   onViewChange,
@@ -187,7 +219,7 @@ const MiniNavbarMenu = ({
 
 const CommentCard = ({ userName, comment }: CommentCardProps) => {
   return (
-    <VStack justifyContent="flex-start" minWidth="$64" space="sm" mx="$1">
+    <VStack justifyContent="flex-start" minWidth="$56" space="sm" mx="$1">
       <UserCard
         direction="row"
         alignItems="center"
@@ -228,8 +260,7 @@ const AnalyticsCard = ({
   const iconColor = useToken('colors', 'primary500');
   const iconSize = useToken('space', '4.5');
   return (
-    <VStack
-      p="$6"
+    <Card
       borderColor="$border200"
       borderRadius="$md"
       borderWidth="$1"
@@ -279,7 +310,7 @@ const AnalyticsCard = ({
           )}
         </Box>
       </HStack>
-    </VStack>
+    </Card>
   );
 };
 
@@ -531,13 +562,8 @@ const HomeView = () => {
           $base-alignSelf="center"
           w="$full"
         >
-          <VStack
+          <Card
             alignItems="flex-start"
-            borderColor="$border200"
-            borderRadius="$md"
-            borderWidth="$1"
-            hardShadow="5"
-            $md-p="$6"
             $base-p="$4"
             space="sm"
             $md-flexGrow={1}
@@ -586,15 +612,10 @@ const HomeView = () => {
             >
               <BarChart />
             </Box>
-          </VStack>
-          <VStack
+          </Card>
+          <Card
             alignItems="flex-start"
-            borderColor="$border200"
-            borderRadius="$md"
-            borderWidth="$1"
-            hardShadow="5"
             space="sm"
-            $md-p="$6"
             $base-p="$4"
             $md-flexGrow={1}
             $base-minWidth="$full"
@@ -648,7 +669,7 @@ const HomeView = () => {
                 from last week
               </Text>
             </VStack>
-          </VStack>
+          </Card>
         </HStack>
         <HStack
           mx="$4"
@@ -661,13 +682,8 @@ const HomeView = () => {
           $base-alignSelf="center"
           w="$full"
         >
-          <VStack
+          <Card
             alignItems="flex-start"
-            borderColor="$border200"
-            borderRadius="$md"
-            borderWidth="$1"
-            hardShadow="5"
-            $md-p="$6"
             $base-p="$4"
             space="sm"
             $md-flexGrow={1}
@@ -775,7 +791,7 @@ const HomeView = () => {
                 </HStack>
               </VStack>
             </HStack>
-          </VStack>
+          </Card>
           <VStack
             space="3xl"
             alignContent="flex-start"
@@ -783,13 +799,8 @@ const HomeView = () => {
             $base-minWidth="$full"
             $md-minWidth="$1/3"
           >
-            <VStack
+            <Card
               alignItems="center"
-              borderColor="$border200"
-              borderRadius="$md"
-              borderWidth="$1"
-              hardShadow="5"
-              $md-p="$6"
               $base-p="$4"
               space="md"
               justifyContent="space-between"
@@ -867,17 +878,8 @@ const HomeView = () => {
                   }
                 })}
               </HStack>
-            </VStack>
-            <VStack
-              alignItems="center"
-              borderColor="$border200"
-              borderRadius="$md"
-              borderWidth="$1"
-              hardShadow="5"
-              $md-p="$6"
-              $base-p="$4"
-              space="md"
-            >
+            </Card>
+            <Card alignItems="center" $base-p="$4" space="md">
               <VStack space="sm" alignSelf="flex-start">
                 <Text
                   color="$text900"
@@ -954,7 +956,7 @@ const HomeView = () => {
                   }
                 })}
               </HStack>
-            </VStack>
+            </Card>
           </VStack>
         </HStack>
       </VStack>
@@ -1136,4 +1138,5 @@ export {
   NotificationsView,
   CommentCard,
   MiniNavbarMenu,
+  SidebarItem,
 };
