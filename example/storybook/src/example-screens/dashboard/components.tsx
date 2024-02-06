@@ -64,7 +64,17 @@ ChartJS.register(
 import { analytics } from './constants';
 import UserCard from '../components/UserCard';
 import Card from '../components/Card';
-import { CommentCardProps, SidebarItemProps } from './types';
+
+interface CommentCardProps {
+  userName: string;
+  comment: string;
+}
+
+interface SidebarItemProps {
+  tooltipText: string;
+  icon: React.JSX.Element;
+  itemProps: any;
+}
 
 const SidebarItem = ({ icon, tooltipText, itemProps }: SidebarItemProps) => {
   return (
