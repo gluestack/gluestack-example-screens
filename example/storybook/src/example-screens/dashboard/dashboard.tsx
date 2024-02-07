@@ -356,7 +356,7 @@ const Dashboard: any = ({ w = '100%', ...props }: any) => {
                   $md-display="flex"
                 >
                   <CustomInput
-                    inputStyles={{
+                    inputProps={{
                       'borderWidth': '$0',
                       'sx': {
                         _web: {

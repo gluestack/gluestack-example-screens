@@ -163,10 +163,15 @@ const ProfileCard = () => {
 };
 
 const FormInputcard = () => {
-  const { control, trigger, handleSubmit } = useForm<inviteValidationType>({
+  const {
+    control,
+    trigger,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<inviteValidationType>({
     mode: 'onBlur',
     defaultValues: {
-      inviteMessage: '',
+      inviteEmail: '',
     },
     resolver: zodResolver(inviteValidationSchema),
   });
@@ -201,13 +206,13 @@ const FormInputcard = () => {
       >
         <CustomInput
           label={'Send an invite'}
-          formControlStyles={{
+          formControlProps={{
             flex: 1,
           }}
           validatorProps={{
             control: control,
             trigger: trigger,
-            name: 'inviteMessage',
+            name: 'inviteEmail',
           }}
         >
           <InputField type="text" placeholder="abc@example.com" />
@@ -215,6 +220,7 @@ const FormInputcard = () => {
         <Button
           size="md"
           $lg-my="$6"
+          isDisabled={Object.keys(errors).length ? true : false}
           onPress={() => {
             handleSubmit(onSubmit, onError)();
           }}
@@ -400,7 +406,12 @@ const FileUploadCard = () => {
 };
 
 const LoginCard = () => {
-  const { control, trigger, handleSubmit } = useForm<loginValidationType>({
+  const {
+    control,
+    trigger,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<loginValidationType>({
     mode: 'onBlur',
     defaultValues: {
       email: '',
@@ -501,6 +512,7 @@ const LoginCard = () => {
       <Button
         size="sm"
         borderRadius="$md"
+        isDisabled={Object.keys(errors).length ? true : false}
         onPress={() => {
           handleSubmit(onSubmit, onError)();
         }}
