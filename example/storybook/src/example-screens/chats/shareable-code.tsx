@@ -7,6 +7,8 @@ import {
   BadgeText,
   Divider,
   HStack,
+  Input,
+  InputSlot,
   InputIcon,
   InputField,
   SearchIcon,
@@ -57,7 +59,6 @@ import UserCard from '../components/UserCard';
 import UserCardAvatar from '../components/UserCardAvatar';
 import UserCardStack from '../components/UserCardStack';
 import Stats from '../components/Stats';
-import CustomInput from '../components/CustomInput';
 
 const chatData = [
   {
@@ -110,13 +111,12 @@ const Chats = () => {
   const [selectedChat, setSelectedChat] = useState({
     name: 'Richard Lyod',
     message: '',
-    avatarSource: '',
   });
   const [showChatList, setShowChatList] = useState(false);
   const [showProfile, setShowProfile] = useState(false);
 
-  const handleChatSelect = ({ name, message, avatarSource }) => {
-    setSelectedChat({ name, message, avatarSource });
+  const handleChatSelect = ({ name, message }) => {
+    setSelectedChat({ name, message });
     setShowChatList(true);
     setShowProfile(false);
   };
@@ -153,7 +153,7 @@ const Chats = () => {
     index,
     onSelect,
   }) => (
-    <Pressable onPress={() => onSelect({ name, message, avatarSource })}>
+    <Pressable onPress={() => onSelect({ name, message })}>
       <UserCard direction="row">
         <UserCardAvatar name={name} src={avatarSource} h="$9" w="$9" />
         <UserCardStack>
@@ -395,21 +395,20 @@ const Chats = () => {
               label={undefined}
             />
           </Pressable>
-          <CustomInput
-            inputStyles={{
-              flex: 1,
-              variant: 'outline',
-              isDisabled: false,
-              isInvalid: false,
-              isReadOnly: false,
-              borderWidth: 0,
-              paddingVertical: '$2',
-              // w:"$96",
-              h: '$12',
-              borderColor: 'transparent',
-              borderRadius: '$lg',
-              alignItems: 'center',
-            }}
+
+          <Input
+            flex={1}
+            variant="outline"
+            isDisabled={false}
+            isInvalid={false}
+            isReadOnly={false}
+            borderWidth={0}
+            paddingVertical="$2"
+            // w="$96"
+            h="$12"
+            borderColor="transparent"
+            borderRadius="$lg"
+            alignItems="center"
           >
             <InputField
               borderColor="transparent"
@@ -420,7 +419,7 @@ const Chats = () => {
               placeholderTextColor="$text400"
               placeholder="Type a message here..."
             />
-          </CustomInput>
+          </Input>
         </HStack>
         <HStack alignItems="center" gap="$1.5">
           <Tooltip
@@ -560,7 +559,6 @@ const Chats = () => {
             />
 
             <Menu
-              borderWidth={1}
               placement="bottom right"
               disabledKeys={['Theme']}
               trigger={({ ...triggerProps }) => (
@@ -607,32 +605,30 @@ const Chats = () => {
 
   const SearchBar = () => {
     return (
-      <CustomInput
-        inputStyles={{
-          m: '$4',
-          borderRadius: '$lg',
-          style: {
-            shadowColor: '#262626',
-            shadowOffset: { width: 0, height: -2 },
-            shadowOpacity: 0.1,
-            shadowRadius: 10,
-            elevation: 5,
-          },
+      <Input
+        m="$4"
+        borderRadius="$lg"
+        style={{
+          shadowColor: '#262626',
+          shadowOffset: { width: 0, height: -2 },
+          shadowOpacity: 0.1,
+          shadowRadius: 10,
+          elevation: 5,
         }}
-        icon={
+      >
+        <InputSlot pl="$3">
           <InputIcon
             sx={{ '.dark_theme': { color: '$background700' } }}
             color="$background700"
             as={SearchIcon}
           />
-        }
-      >
+        </InputSlot>
         <InputField
-          type={'text'}
-          placeholderTextColor={'$text700'}
-          placeholder={'Search...'}
+          type="text"
+          placeholderTextColor="$text700"
+          placeholder="Search..."
         />
-      </CustomInput>
+      </Input>
     );
   };
   const Sidebar = () => {
@@ -779,7 +775,7 @@ const Chats = () => {
             </Box>
             <UserCardAvatar
               name={selectedChat.name}
-              src={selectedChat.avatarSource}
+              src={require('../assets/Avatar9.png')}
               w="$16"
               h="$16"
               mb="$2"
