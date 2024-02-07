@@ -62,12 +62,11 @@ const CustomInput = ({
         )}
         {validatorProps?.trigger && (
           <Text
-            mt="$1"
             color={error ? '$error600' : 'transparent'}
             fontSize="$sm"
             fontFamily="$body"
           >
-            {error ? error.message : ' '}
+            {error ? error.message : ''}
           </Text>
         )}
       </FormControl>
