@@ -4,9 +4,6 @@ import {
   VStack,
   HStack,
   Divider,
-  AvatarImage,
-  Avatar,
-  AvatarFallbackText,
   Pressable,
   useToken,
   Menu,
@@ -15,6 +12,7 @@ import {
   TooltipContent,
   Tooltip,
   TooltipText,
+  Center,
 } from '@gluestack-ui-new/themed';
 import React from 'react';
 import {
@@ -64,6 +62,7 @@ ChartJS.register(
 import { analytics } from './constants';
 import UserCard from '../components/UserCard';
 import Card from '../components/Card';
+import UserCardAvatar from '../components/UserCardAvatar';
 
 interface CommentCardProps {
   userName: string;
@@ -84,7 +83,9 @@ const SidebarItem = ({ icon, tooltipText, itemProps }: SidebarItemProps) => {
         return (
           <Pressable
             p="$2"
-            $focus-bg="$background800"
+            $focus-bg="$trueGray600"
+            bg="$trueGray800"
+            $hover-bg="$trueGray700"
             borderRadius="$xl"
             {...triggerProps}
             {...itemProps}
@@ -108,14 +109,15 @@ const MiniNavbarMenu = ({
 }) => {
   const [selected, setSelected] = React.useState(new Set([]));
   const [isOpen, setIsOpen] = React.useState<boolean>(false);
-  const miniNavbarIconColor = useToken('colors', 'white');
+  const miniNavbarIconColor = useToken('colors', 'trueGray200');
   const iconSize = useToken('space', '6');
-  const iconColor = useToken('colors', 'background600');
+  const iconColor = useToken('colors', 'trueGray200');
 
   return (
     <Menu
       placement="bottom"
       selectionMode="single"
+      bgColor="$trueGray800"
       selectedKeys={selected}
       closeOnSelect={true}
       isOpen={isOpen}
@@ -153,63 +155,103 @@ const MiniNavbarMenu = ({
         );
       }}
     >
-      <MenuItem key="Dashboard" textValue="Dashboard">
+      <MenuItem
+        key="Dashboard"
+        textValue="Dashboard"
+        $hover-bg="$trueGray700"
+        $focus-bg="$trueGray700"
+      >
         <LayoutDashboardIcon
           color={iconColor}
           width={iconSize}
           height={iconSize}
         />
-        <MenuItemLabel size="sm" ml="$2">
+        <MenuItemLabel size="sm" ml="$2" color="$trueGray100">
           Dashboard
         </MenuItemLabel>
       </MenuItem>
-      <MenuItem key="Announcements" textValue="Announcements">
+      <MenuItem
+        key="Announcements"
+        textValue="Announcements"
+        $hover-bg="$trueGray700"
+        $focus-bg="$trueGray700"
+      >
         <MegaphoneIcon color={iconColor} width={iconSize} height={iconSize} />
-        <MenuItemLabel size="sm" ml="$2">
+        <MenuItemLabel size="sm" ml="$2" color="$trueGray100">
           Announcements
         </MenuItemLabel>
       </MenuItem>
-      <MenuItem key="Calendar" textValue="Calendar">
+      <MenuItem
+        key="Calendar"
+        textValue="Calendar"
+        $hover-bg="$trueGray700"
+        $focus-bg="$trueGray700"
+      >
         <CalendarDaysIcon
           color={iconColor}
           width={iconSize}
           height={iconSize}
         />
-        <MenuItemLabel size="sm" ml="$2">
+        <MenuItemLabel size="sm" ml="$2" color="$trueGray100">
           Calendar
         </MenuItemLabel>
       </MenuItem>
-      <MenuItem key="Revenue" textValue="Revenue">
+      <MenuItem
+        key="Revenue"
+        textValue="Revenue"
+        $hover-bg="$trueGray700"
+        $focus-bg="$trueGray700"
+      >
         <CircleDollarSignIcon
           color={iconColor}
           width={iconSize}
           height={iconSize}
         />
-        <MenuItemLabel size="sm" ml="$2">
+        <MenuItemLabel size="sm" ml="$2" color="$trueGray100">
           Revenue
         </MenuItemLabel>
       </MenuItem>
-      <MenuItem key="Profile" textValue="Profile">
+      <MenuItem
+        key="Profile"
+        textValue="Profile"
+        $hover-bg="$trueGray700"
+        $focus-bg="$trueGray700"
+      >
         <UserIcon color={iconColor} width={iconSize} height={iconSize} />
-        <MenuItemLabel size="sm" ml="$2">
+        <MenuItemLabel size="sm" ml="$2" color="$trueGray100">
           Profile
         </MenuItemLabel>
       </MenuItem>
-      <MenuItem key="Settings" textValue="Settings">
+      <MenuItem
+        key="Settings"
+        textValue="Settings"
+        $hover-bg="$trueGray700"
+        $focus-bg="$trueGray700"
+      >
         <SettingsIcon color={iconColor} width={iconSize} height={iconSize} />
-        <MenuItemLabel size="sm" ml="$2">
+        <MenuItemLabel size="sm" ml="$2" color="$trueGray100">
           Settings
         </MenuItemLabel>
       </MenuItem>
-      <MenuItem key="Help" textValue="Help">
+      <MenuItem
+        key="Help"
+        textValue="Help"
+        $hover-bg="$trueGray700"
+        $focus-bg="$trueGray700"
+      >
         <BadgeHelpIcon color={iconColor} width={iconSize} height={iconSize} />
-        <MenuItemLabel size="sm" ml="$2">
+        <MenuItemLabel size="sm" ml="$2" color="$trueGray100">
           Help
         </MenuItemLabel>
       </MenuItem>
-      <MenuItem key="Logout" textValue="Logout">
+      <MenuItem
+        key="Logout"
+        textValue="Logout"
+        $hover-bg="$trueGray700"
+        $focus-bg="$trueGray700"
+      >
         <LogOutIcon color={iconColor} width={iconSize} height={iconSize} />
-        <MenuItemLabel size="sm" ml="$2">
+        <MenuItemLabel size="sm" ml="$2" color="$trueGray100">
           Logout
         </MenuItemLabel>
       </MenuItem>
@@ -219,19 +261,19 @@ const MiniNavbarMenu = ({
 
 const CommentCard = ({ userName, comment }: CommentCardProps) => {
   return (
-    <VStack justifyContent="flex-start" minWidth="$56" space="sm" mx="$1">
+    <VStack minWidth="$56" space="sm">
       <UserCard
         direction="row"
         alignItems="center"
         space="md"
         justifyContent="flex-start"
       >
-        <Box borderRadius="$full">
-          <Avatar bgColor="$black" size="sm">
-            <AvatarFallbackText>{userName}</AvatarFallbackText>
-            <AvatarImage source={require('../assets/avatar-icon.png')} />
-          </Avatar>
-        </Box>
+        <UserCardAvatar
+          name={userName}
+          src={require('../assets/avatar-icon.png')}
+          h="$9"
+          w="$9"
+        />
         <VStack>
           <Text fontSize="$sm" fontWeight="$bold" color="$text900">
             {userName}
@@ -260,15 +302,7 @@ const AnalyticsCard = ({
   const iconColor = useToken('colors', 'primary500');
   const iconSize = useToken('space', '4.5');
   return (
-    <Card
-      borderColor="$border200"
-      borderRadius="$md"
-      borderWidth="$1"
-      hardShadow="5"
-      $md-minWidth="$1/4"
-      $base-minWidth="$full"
-      flexGrow={1}
-    >
+    <Card $md-minWidth="$1/4" $base-minWidth="$full" flexGrow={1}>
       <HStack alignItems="flex-start" justifyContent="space-between">
         <VStack space="xs" mr="$8">
           <Text
@@ -315,7 +349,9 @@ const AnalyticsCard = ({
 };
 
 const BarChart = () => {
-  const color = useToken('colors', 'black');
+  const color = useToken('colors', 'primary400');
+  const textColor = useToken('colors', 'text400');
+  const borderColor = useToken('colors', 'border200');
   const options = {
     responsive: true,
     plugins: {
@@ -332,6 +368,26 @@ const BarChart = () => {
       y: {
         display: true,
         position: 'right',
+        grid: {
+          drawBorder: true,
+          color: borderColor,
+        },
+        ticks: {
+          beginAtZero: true,
+          color: textColor,
+          fontSize: 10,
+        },
+      },
+      x: {
+        grid: {
+          drawBorder: true,
+          color: borderColor,
+        },
+        ticks: {
+          beginAtZero: true,
+          color: textColor,
+          fontSize: 10,
+        },
       },
     },
   };
@@ -440,30 +496,23 @@ const HomeView = () => {
   const iconColor = useToken('colors', 'primary500');
   const iconSize = useToken('space', '4.5');
   return (
-    <Box w="$full">
-      <HStack
-        px="$4"
-        space="4xl"
-        $base-ml="$0"
-        $xl-ml="$6"
-        $base-overflowX="scroll"
-        $md-overflowX="visible"
-      >
+    <Box w="$full" px="$4">
+      <HStack $base-overflowX="scroll" $md-overflowX="visible">
         <Pressable
           opacity={tab === 'instagram' ? '$100' : '$60'}
           onPress={() => setTab('instagram')}
+          minWidth="$32"
         >
           <HStack
             space="xs"
             alignItems="center"
             alignSelf="center"
+            justifyContent="center"
             p="$1"
             borderBottomWidth="$2"
             borderBottomColor={
               tab === 'instagram' ? '$primary400' : '$background0'
             }
-            $base-flexGrow={1}
-            $md-flexGrow={0}
           >
             <InstagramIcon
               color={iconColor}
@@ -479,18 +528,18 @@ const HomeView = () => {
         <Pressable
           opacity={tab === 'youtube' ? '$100' : '$60'}
           onPress={() => setTab('youtube')}
+          minWidth="$32"
         >
           <HStack
             space="xs"
             alignItems="center"
             alignSelf="center"
+            justifyContent="center"
             p="$1"
             borderBottomWidth="$2"
             borderBottomColor={
               tab === 'youtube' ? '$primary400' : '$background0'
             }
-            $base-flexGrow={1}
-            $md-flexGrow={0}
           >
             <YoutubeIcon color={iconColor} height={iconSize} width={iconSize} />
             <Text fontSize="$md" color="$primary500" fontFamily="$heading">
@@ -501,18 +550,18 @@ const HomeView = () => {
         <Pressable
           opacity={tab === 'twitter' ? '$100' : '$60'}
           onPress={() => setTab('twitter')}
+          minWidth="$32"
         >
           <HStack
             space="xs"
             alignItems="center"
             alignSelf="center"
+            justifyContent="center"
             borderBottomWidth="$2"
             borderBottomColor={
               tab === 'twitter' ? '$primary400' : '$background0'
             }
             p="$1"
-            $base-flexGrow={1}
-            $md-flexGrow={0}
           >
             <TwitterIcon color={iconColor} height={iconSize} width={iconSize} />
             <Text fontSize="$md" color="$primary500" fontFamily="$heading">
@@ -521,8 +570,15 @@ const HomeView = () => {
           </HStack>
         </Pressable>
       </HStack>
-      <VStack $base-mx="$2" $sm-mx="$4" alignItems="center" mt="$4" mb="$6">
-        <HStack space="2xl" flexWrap="wrap" w="$full" rowGap="$4">
+      <VStack alignItems="center" $lg-my="$6" $base-my="$4">
+        <HStack
+          $lg-columnGap="$6"
+          $base-columnGap="$4"
+          $lg-rowGap="$6"
+          $base-rowGap="$4"
+          flexWrap="wrap"
+          w="$full"
+        >
           <AnalyticsCard
             title="Views"
             totalValue={analytics[tab].weeklyViews.views}
@@ -552,9 +608,12 @@ const HomeView = () => {
           />
         </HStack>
         <HStack
-          mx="$4"
-          mt="$6"
-          space="lg"
+          $lg-mt="$6"
+          $base-mt="$4"
+          $lg-columnGap="$6"
+          $base-columnGap="$4"
+          $lg-rowGap="$6"
+          $base-rowGap="$4"
           flexWrap="wrap"
           $base-justifyContent="center"
           $lg-justifyContent="flex-start"
@@ -604,6 +663,7 @@ const HomeView = () => {
               $md-minWidth="$80"
               $base-minWidth="$40"
               $base-maxWidth="$56"
+              $xs-maxWidth="$72"
               $sm-maxWidth="$full"
               borderRadius="$2xl"
               mx="auto"
@@ -634,6 +694,7 @@ const HomeView = () => {
               $md-minWidth="$80"
               $base-minWidth="$32"
               $base-maxWidth="$56"
+              $xs-maxWidth="$72"
               $xl-maxWidth="$96"
               $sm-maxWidth="$72"
               borderRadius="$2xl"
@@ -651,8 +712,7 @@ const HomeView = () => {
               <Text
                 color="$text900"
                 fontWeight="$medium"
-                $lg-fontSize="$5xl"
-                $md-fontSize="$4xl"
+                fontSize="$2xl"
                 fontFamily="$heading"
               >
                 {analytics[tab].engagedUsers.users}
@@ -672,9 +732,12 @@ const HomeView = () => {
           </Card>
         </HStack>
         <HStack
-          mx="$4"
-          mt="$6"
-          space="lg"
+          $lg-mt="$6"
+          $base-mt="$4"
+          $lg-columnGap="$6"
+          $base-columnGap="$4"
+          $lg-rowGap="$6"
+          $base-rowGap="$4"
           flexWrap="wrap"
           $base-justifyContent="center"
           $lg-justifyContent="flex-start"
@@ -722,13 +785,12 @@ const HomeView = () => {
                 />
               </Pressable>
             </HStack>
-            <HStack alignItems="center" space="md" alignSelf="center" mt="$4">
+            <HStack alignItems="center" alignSelf="center" space="md" mt="$4">
               <Box
                 h="$56"
-                $sm-minWidth="$36"
                 $base-maxWidth="$24"
                 $sm-maxWidth="$40"
-                $xl-maxWidth="$56"
+                $xl-maxWidth="$48"
                 borderRadius="$3xl"
               >
                 <PieChart />
@@ -742,7 +804,14 @@ const HomeView = () => {
                 space="md"
               >
                 <HStack space="sm">
-                  <Box w="$5" h="$5" borderRadius="$full" bg="$primary0" />
+                  <Box
+                    $sm-w="$5"
+                    $base-w="$3"
+                    $md-h="$5"
+                    $base-h="$3"
+                    borderRadius="$full"
+                    bg="$primary0"
+                  />
                   <Text
                     color="$text900"
                     $sm-fontSize="$sm"
@@ -754,7 +823,14 @@ const HomeView = () => {
                   </Text>
                 </HStack>
                 <HStack space="sm">
-                  <Box w="$5" h="$5" borderRadius="$full" bg="$primary50" />
+                  <Box
+                    $sm-w="$5"
+                    $base-w="$3"
+                    $md-h="$5"
+                    $base-h="$3"
+                    borderRadius="$full"
+                    bg="$primary50"
+                  />
                   <Text
                     color="$text900"
                     $sm-fontSize="$sm"
@@ -766,7 +842,14 @@ const HomeView = () => {
                   </Text>
                 </HStack>
                 <HStack space="sm">
-                  <Box w="$5" h="$5" borderRadius="$full" bg="$primary100" />
+                  <Box
+                    $sm-w="$5"
+                    $base-w="$3"
+                    $md-h="$5"
+                    $base-h="$3"
+                    borderRadius="$full"
+                    bg="$primary100"
+                  />
                   <Text
                     color="$text900"
                     $sm-fontSize="$sm"
@@ -778,7 +861,14 @@ const HomeView = () => {
                   </Text>
                 </HStack>
                 <HStack space="sm">
-                  <Box w="$5" h="$5" borderRadius="$full" bg="$primary400" />
+                  <Box
+                    $sm-w="$5"
+                    $base-w="$3"
+                    $md-h="$5"
+                    $base-h="$3"
+                    borderRadius="$full"
+                    bg="$primary400"
+                  />
                   <Text
                     color="$text900"
                     $sm-fontSize="$sm"
@@ -793,18 +883,16 @@ const HomeView = () => {
             </HStack>
           </Card>
           <VStack
-            space="3xl"
+            $lg-columnGap="$6"
+            $base-columnGap="$4"
+            $lg-rowGap="$6"
+            $base-rowGap="$4"
             alignContent="flex-start"
             $md-flexGrow={1}
             $base-minWidth="$full"
             $md-minWidth="$1/3"
           >
-            <Card
-              alignItems="center"
-              $base-p="$4"
-              space="md"
-              justifyContent="space-between"
-            >
+            <Card space="md">
               <VStack space="sm" alignSelf="flex-start">
                 <Text
                   color="$text900"
@@ -879,7 +967,7 @@ const HomeView = () => {
                 })}
               </HStack>
             </Card>
-            <Card alignItems="center" $base-p="$4" space="md">
+            <Card space="md">
               <VStack space="sm" alignSelf="flex-start">
                 <Text
                   color="$text900"
@@ -965,164 +1053,170 @@ const HomeView = () => {
 };
 const NotificationsView = () => {
   return (
-    <Box
-      bg="red"
-      $md-minWidth="$96"
-      $base-minWidth="$64"
-      minHeight="$72"
-      borderRadius="$3xl"
-      maxWidth="$1/2"
-      alignSelf="center"
-      my="$6"
-    >
-      <Text textAlign="center" fontSize="$lg" color="$white" my="auto">
-        Notifications
-      </Text>
-    </Box>
+    <Center px="$4" flex={1}>
+      <Box
+        borderWidth="$1"
+        borderRadius="$3xl"
+        alignSelf="center"
+        borderColor="$border200"
+        w="$full"
+        minHeight="$96"
+      >
+        <Text
+          textAlign="center"
+          fontSize="$lg"
+          color="$background950"
+          my="auto"
+          p="$4"
+        >
+          Notifications
+        </Text>
+      </Box>
+    </Center>
   );
 };
 const CalendarView = () => {
   return (
-    <Box
-      bg="blue"
-      $md-minWidth="$96"
-      $base-minWidth="$64"
-      minHeight="$72"
-      borderRadius="$3xl"
-      maxWidth="$1/2"
-      alignSelf="center"
-      my="$6"
-    >
-      <Text
-        textAlign="center"
-        fontSize="$lg"
-        color="$white"
-        my="auto"
-        fontFamily="$heading"
+    <Center px="$4" flex={1}>
+      <Box
+        borderWidth="$1"
+        borderRadius="$3xl"
+        alignSelf="center"
+        borderColor="$border200"
+        w="$full"
+        minHeight="$96"
       >
-        Calendar
-      </Text>
-    </Box>
+        <Text
+          textAlign="center"
+          fontSize="$lg"
+          color="$background950"
+          my="auto"
+          p="$4"
+        >
+          Calendar
+        </Text>
+      </Box>
+    </Center>
   );
 };
 const CurrencyView = () => {
   return (
-    <Box
-      bg="black"
-      $md-minWidth="$96"
-      $base-minWidth="$64"
-      minHeight="$72"
-      borderRadius="$3xl"
-      maxWidth="$1/2"
-      alignSelf="center"
-      my="$6"
-    >
-      <Text
-        textAlign="center"
-        fontSize="$lg"
-        color="$white"
-        my="auto"
-        fontFamily="$heading"
+    <Center px="$4" flex={1}>
+      <Box
+        borderWidth="$1"
+        borderRadius="$3xl"
+        alignSelf="center"
+        borderColor="$border200"
+        w="$full"
+        minHeight="$96"
       >
-        Currency
-      </Text>
-    </Box>
+        <Text
+          textAlign="center"
+          fontSize="$lg"
+          color="$background950"
+          my="auto"
+          p="$4"
+        >
+          Currency
+        </Text>
+      </Box>
+    </Center>
   );
 };
 const ProfileView = () => {
   return (
-    <Box
-      bg="$amber600"
-      $md-minWidth="$96"
-      $base-minWidth="$64"
-      minHeight="$72"
-      borderRadius="$3xl"
-      maxWidth="$1/2"
-      alignSelf="center"
-      my="$6"
-    >
-      <Text
-        textAlign="center"
-        fontSize="$lg"
-        color="$white"
-        my="auto"
-        fontFamily="$heading"
+    <Center px="$4" flex={1}>
+      <Box
+        borderWidth="$1"
+        borderRadius="$3xl"
+        alignSelf="center"
+        borderColor="$border200"
+        w="$full"
+        minHeight="$96"
       >
-        Profile
-      </Text>
-    </Box>
+        <Text
+          textAlign="center"
+          fontSize="$lg"
+          color="$background950"
+          my="auto"
+          p="$4"
+        >
+          Profile
+        </Text>
+      </Box>
+    </Center>
   );
 };
 const SettingsView = () => {
   return (
-    <Box
-      bg="$violet400"
-      $md-minWidth="$96"
-      $base-minWidth="$64"
-      minHeight="$72"
-      borderRadius="$3xl"
-      maxWidth="$1/2"
-      alignSelf="center"
-      my="$6"
-    >
-      <Text
-        textAlign="center"
-        fontSize="$lg"
-        color="$white"
-        my="auto"
-        fontFamily="$heading"
+    <Center px="$4" flex={1}>
+      <Box
+        borderWidth="$1"
+        borderRadius="$3xl"
+        alignSelf="center"
+        borderColor="$border200"
+        w="$full"
+        minHeight="$96"
       >
-        Settings
-      </Text>
-    </Box>
+        <Text
+          textAlign="center"
+          fontSize="$lg"
+          color="$background950"
+          my="auto"
+          p="$4"
+        >
+          Settings
+        </Text>
+      </Box>
+    </Center>
   );
 };
 const HelpView = () => {
   return (
-    <Box
-      bg="$green400"
-      $md-minWidth="$96"
-      $base-minWidth="$64"
-      minHeight="$72"
-      borderRadius="$3xl"
-      maxWidth="$1/2"
-      alignSelf="center"
-      my="$6"
-    >
-      <Text
-        textAlign="center"
-        fontSize="$lg"
-        color="$white"
-        my="auto"
-        fontFamily="$heading"
+    <Center px="$4" flex={1}>
+      <Box
+        borderWidth="$1"
+        borderRadius="$3xl"
+        alignSelf="center"
+        borderColor="$border200"
+        w="$full"
+        minHeight="$96"
       >
-        Help
-      </Text>
-    </Box>
+        <Text
+          textAlign="center"
+          fontSize="$lg"
+          color="$background950"
+          my="auto"
+          p="$4"
+        >
+          Help
+        </Text>
+      </Box>
+    </Center>
   );
 };
 const ExitView = () => {
   return (
-    <Box
-      bg="$tertiary600"
-      $md-minWidth="$96"
-      $base-minWidth="$64"
-      minHeight="$72"
-      borderRadius="$3xl"
-      maxWidth="$1/2"
-      alignSelf="center"
-      my="$6"
-    >
-      <Text
-        textAlign="center"
-        fontSize="$lg"
-        color="$white"
-        my="auto"
-        fontFamily="$heading"
+    <Center px="$4" flex={1}>
+      <Box
+        borderWidth="$1"
+        borderRadius="$3xl"
+        alignSelf="center"
+        borderColor="$border200"
+        w="$full"
+        minHeight="$96"
       >
-        Exit
-      </Text>
-    </Box>
+        <Text
+          textAlign="center"
+          fontSize="$lg"
+          color="$background950"
+          my="auto"
+          p="$4"
+        >
+          Exit
+        </Text>
+      </Box>
+    </Center>
   );
 };
 
