@@ -458,20 +458,6 @@ const Chats = () => {
               },
             }}
           >
-            {/* <Input
-            flex={1}
-            variant="outline"
-            isDisabled={false}
-            isInvalid={false}
-            isReadOnly={false}
-            borderWidth={0}
-            paddingVertical="$2"
-            // w="$96"
-            h="$12"
-            borderColor="transparent"
-            borderRadius="$lg"
-            alignItems="center"
-          > */}
             <InputField
               borderColor="transparent"
               w="$full"
@@ -699,10 +685,6 @@ const Chats = () => {
     const defaultActiveIcon = 'Messages';
     const [activeIcon, _setActiveIcon] = useState(defaultActiveIcon);
     const messagesBadgeCount = 3;
-
-    // const handleIconPress = (label: React.SetStateAction<string>) => {
-    //   setActiveIcon(label);
-    // };
 
     return (
       <VStack
