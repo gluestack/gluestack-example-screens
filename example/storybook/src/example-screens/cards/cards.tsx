@@ -203,7 +203,7 @@ const FormInputcard = () => {
         <Button
           size="md"
           mt="$6"
-          disabled={Object.keys(errors).length ? true : false}
+          isDisabled={Object.keys(errors).length ? true : false}
           onPress={() => {
             handleSubmit(onSubmit, onError)();
           }}
@@ -504,7 +504,7 @@ const LoginCard = () => {
       <Button
         size="sm"
         borderRadius="$md"
-        disabled={Object.keys(errors).length ? true : false}
+        isDisabled={Object.keys(errors).length ? true : false}
         onPress={() => {
           handleSubmit(onSubmit, onError)();
         }}

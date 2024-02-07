@@ -65,6 +65,7 @@ const CustomInput = ({
             color={error ? '$error600' : 'transparent'}
             fontSize="$sm"
             fontFamily="$body"
+            mt="$1"
           >
             {error ? error.message : ''}
           </Text>
