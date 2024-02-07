@@ -13,15 +13,15 @@ const CustomInput = ({
   label,
   icon,
   children,
-  formControlStyles,
-  inputStyles,
+  formControlProps,
+  inputProps,
   validatorProps,
 }: {
   label?: string;
   icon?: any;
   children: any;
-  formControlStyles?: any;
-  inputStyles?: any;
+  formControlProps?: any;
+  inputProps?: any;
   validatorProps?: any;
 }) => {
   let childrenWithProps;
@@ -44,19 +44,19 @@ const CustomInput = ({
       },
     });
     return (
-      <FormControl size="sm" {...formControlStyles}>
+      <FormControl size="sm" {...formControlProps}>
         {label && (
           <FormControlLabel mb="$2">
             <FormControlLabelText fontSize="$sm">{label}</FormControlLabelText>
           </FormControlLabel>
         )}
         {icon ? (
-          <Input borderRadius="$lg" hardShadow="5" {...inputStyles}>
+          <Input borderRadius="$lg" hardShadow="5" {...inputProps}>
             <InputSlot pl="$3">{icon}</InputSlot>
             {validatorProps ? childrenWithProps : children}
           </Input>
         ) : (
-          <Input {...inputStyles}>
+          <Input {...inputProps}>
             {validatorProps ? childrenWithProps : children}
           </Input>
         )}
@@ -65,6 +65,7 @@ const CustomInput = ({
             color={error ? '$error600' : 'transparent'}
             fontSize="$sm"
             fontFamily="$body"
+            mt="$1"
           >
             {error ? error.message : ''}
           </Text>
@@ -73,19 +74,19 @@ const CustomInput = ({
     );
   }
   return (
-    <FormControl size="sm" {...formControlStyles}>
+    <FormControl size="sm" {...formControlProps}>
       {label && (
         <FormControlLabel mb="$2">
           <FormControlLabelText fontSize="$sm">{label}</FormControlLabelText>
         </FormControlLabel>
       )}
       {icon ? (
-        <Input borderRadius="$lg" hardShadow="5" {...inputStyles}>
+        <Input borderRadius="$lg" hardShadow="5" {...inputProps}>
           <InputSlot pl="$3">{icon}</InputSlot>
           {children}
         </Input>
       ) : (
-        <Input {...inputStyles}>{children}</Input>
+        <Input {...inputProps}>{children}</Input>
       )}
     </FormControl>
   );
