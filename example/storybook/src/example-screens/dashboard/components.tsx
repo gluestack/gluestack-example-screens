@@ -76,7 +76,11 @@ interface SidebarItemProps {
   itemProps: any;
 }
 
-const SidebarItem = ({ icon, tooltipText, itemProps }: SidebarItemProps) => {
+export const SidebarItem = ({
+  icon,
+  tooltipText,
+  itemProps,
+}: SidebarItemProps) => {
   return (
     <Tooltip
       placement="right"
@@ -101,7 +105,7 @@ const SidebarItem = ({ icon, tooltipText, itemProps }: SidebarItemProps) => {
   );
 };
 
-const MiniNavbarMenu = ({
+export const MiniNavbarMenu = ({
   onViewChange,
 }: {
   onViewChange: (view: string) => void;
@@ -217,7 +221,7 @@ const MiniNavbarMenu = ({
   );
 };
 
-const CommentCard = ({ userName, comment }: CommentCardProps) => {
+export const CommentCard = ({ userName, comment }: CommentCardProps) => {
   return (
     <VStack justifyContent="flex-start" minWidth="$56" space="sm" mx="$1">
       <UserCard
@@ -433,7 +437,7 @@ const PieChart = () => {
   );
 };
 
-const HomeView = () => {
+export const HomeView = () => {
   const [tab, setTab] = React.useState<
     'instagram' | 'youtube' | 'twitter' | 'facebook'
   >('instagram');
@@ -963,7 +967,7 @@ const HomeView = () => {
     </Box>
   );
 };
-const NotificationsView = () => {
+export const NotificationsView = () => {
   return (
     <Box
       bg="red"
@@ -981,7 +985,7 @@ const NotificationsView = () => {
     </Box>
   );
 };
-const CalendarView = () => {
+export const CalendarView = () => {
   return (
     <Box
       bg="blue"
@@ -1005,7 +1009,7 @@ const CalendarView = () => {
     </Box>
   );
 };
-const CurrencyView = () => {
+export const CurrencyView = () => {
   return (
     <Box
       bg="black"
@@ -1029,7 +1033,7 @@ const CurrencyView = () => {
     </Box>
   );
 };
-const ProfileView = () => {
+export const ProfileView = () => {
   return (
     <Box
       bg="$amber600"
@@ -1053,7 +1057,7 @@ const ProfileView = () => {
     </Box>
   );
 };
-const SettingsView = () => {
+export const SettingsView = () => {
   return (
     <Box
       bg="$violet400"
@@ -1077,7 +1081,7 @@ const SettingsView = () => {
     </Box>
   );
 };
-const HelpView = () => {
+export const HelpView = () => {
   return (
     <Box
       bg="$green400"
@@ -1101,7 +1105,7 @@ const HelpView = () => {
     </Box>
   );
 };
-const ExitView = () => {
+export const ExitView = () => {
   return (
     <Box
       bg="$tertiary600"
@@ -1124,19 +1128,4 @@ const ExitView = () => {
       </Text>
     </Box>
   );
-};
-
-export {
-  AnalyticsCard,
-  ExitView,
-  CalendarView,
-  HelpView,
-  SettingsView,
-  ProfileView,
-  CurrencyView,
-  HomeView,
-  NotificationsView,
-  CommentCard,
-  MiniNavbarMenu,
-  SidebarItem,
 };

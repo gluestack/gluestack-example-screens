@@ -610,5 +610,3 @@ const Cards: any = ({ w = '100%', h = '100%', ...props }: any) => {
 };
 
 export default Cards;
-
-export { Text, Box };
