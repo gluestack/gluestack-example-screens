@@ -36,7 +36,6 @@ import {
   CheckCheck,
   ChevronDown,
   CircleDollarSign,
-  Home,
   ImagePlus,
   LogOut,
   MessageCircle,
@@ -59,58 +58,57 @@ import UserCardStack from '../components/UserCardStack';
 import Stats from '../components/Stats';
 import CustomInput from '../components/CustomInput';
 
-const chatData = [
-  {
-    avatarSource: require('../assets/Avatar1.svg'),
-    name: 'Mila Dann',
-    message: 'These are really cool 💯',
-    badgeCount: 1,
-  },
-  {
-    avatarSource: require('../assets/Avatar2.svg'),
-    name: 'Jared Dunn',
-    message: 'Typing...',
-    badgeCount: 1,
-  },
-  {
-    avatarSource: require('../assets/Avatar3.png'),
-    name: 'Richard Lyod',
-    message: 'Great 💯 Will be there soon!',
-    badgeCount: 4,
-  },
-  {
-    avatarSource: require('../assets/Avatar4.png'),
-    name: 'Mike',
-    message: 'wohoooooo 🔥',
-  },
-  {
-    avatarSource: require('../assets/Avatar5.png'),
-    name: 'Ben',
-    message: 'I’ll be there in 2 mins',
-  },
-
-  {
-    avatarSource: require('../assets/Avatar6.png'),
-    name: 'Taylor',
-    message: 'Okay',
-  },
-  {
-    avatarSource: require('../assets/Avatar7.png'),
-    name: 'Batch 2024',
-    message: 'Steve typing...',
-  },
-  {
-    avatarSource: require('../assets/Avatar8.png'),
-    name: 'Michele',
-    message: 'I can’t wait to hear about...',
-  },
-];
-
 const Chats = () => {
+  const chatData = [
+    {
+      avatarSource: require('../assets/Avatar1.svg'),
+      name: 'Mila Dann',
+      message: 'These are really cool 💯',
+      badgeCount: 1,
+    },
+    {
+      avatarSource: require('../assets/Avatar2.svg'),
+      name: 'Jared Dunn',
+      message: 'Typing...',
+      badgeCount: 1,
+    },
+    {
+      avatarSource: require('../assets/Avatar3.png'),
+      name: 'Richard Lyod',
+      message: 'Great 💯 Will be there soon!',
+      badgeCount: 4,
+    },
+    {
+      avatarSource: require('../assets/Avatar4.png'),
+      name: 'Mike',
+      message: 'wohoooooo 🔥',
+    },
+    {
+      avatarSource: require('../assets/Avatar5.png'),
+      name: 'Ben',
+      message: 'I’ll be there in 2 mins',
+    },
+
+    {
+      avatarSource: require('../assets/Avatar6.png'),
+      name: 'Taylor',
+      message: 'Okay',
+    },
+    {
+      avatarSource: require('../assets/Avatar7.png'),
+      name: 'Batch 2024',
+      message: 'Steve typing...',
+    },
+    {
+      avatarSource: require('../assets/Avatar8.png'),
+      name: 'Michele',
+      message: 'I can’t wait to hear about...',
+    },
+  ];
   const [selectedChat, setSelectedChat] = useState({
     name: 'Richard Lyod',
     message: '',
-    avatarSource: '',
+    avatarSource: require('../assets/Avatar3.png'),
   });
   const [showChatList, setShowChatList] = useState(false);
   const [showProfile, setShowProfile] = useState(false);
@@ -152,56 +150,68 @@ const Chats = () => {
     badgeCount,
     index,
     onSelect,
-  }) => (
-    <Pressable
-      sx={{
-        ':hover': { bg: '$background50', borderRadius: '$md' },
-        ':active': { bg: '$background100' },
-      }}
-      onPress={() => onSelect({ name, message, avatarSource })}
-    >
-      <UserCard paddingVertical="$2.5" paddingHorizontal="$4" direction="row">
-        <UserCardAvatar name={name} src={avatarSource} h="$9" w="$9" />
-        <UserCardStack>
-          <Text
-            numberOfLines={1}
-            sx={{ '.dark_theme': { color: '$text900' } }}
-            color="$text900"
-            fontSize="$sm"
-            fontWeight="$bold"
-          >
-            {name}
-          </Text>
-          <TruncatedText numberOfLines={1}>{message}</TruncatedText>
-        </UserCardStack>
-        <UserCardStack maxWidth="$6" alignItems="flex-end">
-          <Text
-            sx={{ '.dark_theme': { color: '$text500' } }}
-            color="$text500"
-            fontSize="$xs"
-            fontWeight="$normal"
-          >
-            12m
-          </Text>
-          {index < 3 && (
-            <Badge
-              h="$4"
-              w="$4"
-              bg="$background950"
-              borderRadius="$full"
-              variant="solid"
-              alignItems="center"
-              justifyContent="center"
+  }) => {
+    const defaultChatName = 'Richard Lyod';
+    const [activeChat, setActiveChat] = useState(defaultChatName);
+    const onChatPress = (name: React.SetStateAction<string>) => {
+      setActiveChat(name);
+    };
+    return (
+      <Pressable
+        sx={{
+          ':hover': { bg: '$background50', borderRadius: '$md' },
+          ':active': { bg: '$background100' },
+        }}
+        bg={activeChat === name ? '$background100' : 'transparent'}
+        borderRadius="$md"
+        onPress={() => {
+          onChatPress(name);
+          onSelect({ name, message, avatarSource });
+        }}
+      >
+        <UserCard paddingVertical="$2.5" paddingHorizontal="$4" direction="row">
+          <UserCardAvatar name={name} src={avatarSource} h="$9" w="$9" />
+          <UserCardStack>
+            <Text
+              numberOfLines={1}
+              sx={{ '.dark_theme': { color: '$text900' } }}
+              color="$text900"
+              fontSize="$sm"
+              fontWeight="$bold"
             >
-              <BadgeText fontSize="$2xs" color="$text0">
-                {badgeCount}
-              </BadgeText>
-            </Badge>
-          )}
-        </UserCardStack>
-      </UserCard>
-    </Pressable>
-  );
+              {name}
+            </Text>
+            <TruncatedText numberOfLines={1}>{message}</TruncatedText>
+          </UserCardStack>
+          <UserCardStack maxWidth="$6" alignItems="flex-end">
+            <Text
+              sx={{ '.dark_theme': { color: '$text500' } }}
+              color="$text500"
+              fontSize="$xs"
+              fontWeight="$normal"
+            >
+              12m
+            </Text>
+            {index < 3 && (
+              <Badge
+                h="$4"
+                w="$4"
+                bg="$background950"
+                borderRadius="$full"
+                variant="solid"
+                alignItems="center"
+                justifyContent="center"
+              >
+                <BadgeText fontSize="$2xs" color="$text0">
+                  {badgeCount}
+                </BadgeText>
+              </Badge>
+            )}
+          </UserCardStack>
+        </UserCard>
+      </Pressable>
+    );
+  };
 
   const Inbox = ({ chatData, onSelect }) => {
     return (
@@ -290,20 +300,6 @@ const Chats = () => {
           'Seems like we will be here for sometime 😂',
         ],
         messagesLeft: [
-          'Hey! Sorry I missed your call',
-          'Your number seems to be not reachable',
-          "What's the scoop?",
-          'oh! I was just on my way from office',
-          'Will be reaching home in 40mins',
-          'Are you guys about to leave?',
-          'Great 💯 Will be there soon!',
-          'Hey! Sorry I missed your call',
-          'Your number seems to be not reachable',
-          "What's the scoop?",
-          'oh! I was just on my way from office',
-          'Will be reaching home in 40mins',
-          'Are you guys about to leave?',
-          'Great 💯 Will be there soon!',
           'Hey! Sorry I missed your call',
           'Your number seems to be not reachable',
           "What's the scoop?",
@@ -414,30 +410,68 @@ const Chats = () => {
           elevation: 5,
         }}
       >
-        <HStack gap="$2" alignItems="center" flex={1}>
+        <HStack h="$12" gap="$2" alignItems="center" flex={1}>
           <Pressable>
-            <IconWithTooltip
-              icon={SmilePlus}
-              tooltip="Choose Emoji"
-              label={undefined}
-            />
+            <Tooltip
+              placement="top"
+              trigger={(triggerProps) => {
+                return (
+                  <Pressable {...triggerProps}>
+                    <Icon
+                      color="$secondary700"
+                      w="$4"
+                      h="$4"
+                      bg="$transparent"
+                      // p="$2"
+                      borderRadius="$lg"
+                      as={SmilePlus}
+                    />
+                  </Pressable>
+                );
+              }}
+            >
+              <TooltipContent>
+                <TooltipText>Choose Emoji</TooltipText>
+              </TooltipContent>
+            </Tooltip>
           </Pressable>
           <CustomInput
-            inputStyles={{
+            formControlStyles={{
               flex: 1,
               variant: 'outline',
               isDisabled: false,
               isInvalid: false,
               isReadOnly: false,
-              borderWidth: 0,
-              paddingVertical: '$2',
+
               // w:"$96",
-              h: '$12',
               borderColor: 'transparent',
               borderRadius: '$lg',
               alignItems: 'center',
             }}
+            inputStyles={{
+              w: '$full',
+              borderWidth: 0,
+              sx: {
+                _web: {
+                  boxShadow: 'none',
+                },
+              },
+            }}
           >
+            {/* <Input
+            flex={1}
+            variant="outline"
+            isDisabled={false}
+            isInvalid={false}
+            isReadOnly={false}
+            borderWidth={0}
+            paddingVertical="$2"
+            // w="$96"
+            h="$12"
+            borderColor="transparent"
+            borderRadius="$lg"
+            alignItems="center"
+          > */}
             <InputField
               borderColor="transparent"
               w="$full"
@@ -451,7 +485,7 @@ const Chats = () => {
         </HStack>
         <HStack alignItems="center" gap="$6">
           <Tooltip
-            placement="bottom"
+            placement="top"
             trigger={(triggerProps) => {
               return (
                 <Pressable {...triggerProps}>
@@ -474,7 +508,7 @@ const Chats = () => {
           </Tooltip>
 
           <Tooltip
-            placement="bottom"
+            placement="top"
             trigger={(triggerProps) => {
               return (
                 <Pressable {...triggerProps}>
@@ -497,7 +531,7 @@ const Chats = () => {
           </Tooltip>
 
           <Tooltip
-            placement="bottom"
+            placement="top"
             trigger={(triggerProps) => {
               return (
                 <Pressable {...triggerProps}>
@@ -520,7 +554,7 @@ const Chats = () => {
           </Tooltip>
 
           <Tooltip
-            placement="bottom"
+            placement="top"
             trigger={(triggerProps) => {
               return (
                 <Pressable {...triggerProps}>
@@ -653,10 +687,9 @@ const Chats = () => {
   };
   const Sidebar = () => {
     const icons = [
-      { icon: Home, label: 'Home', tooltip: 'Home' },
+      { icon: MessageCircle, label: 'Messages', tooltip: 'Messages' },
       { icon: CircleDollarSign, label: 'Dollar', tooltip: 'Payments' },
       { icon: CalendarDays, label: 'Calendar', tooltip: 'Calendar' },
-      { icon: MessageCircle, label: 'Messages', tooltip: 'Messages' },
       { icon: User, label: 'User', tooltip: 'Profile' },
       { icon: Settings, label: 'Settings', tooltip: 'Settings' },
       { icon: BadgeHelp, label: 'Help', tooltip: 'Help' },
@@ -664,12 +697,12 @@ const Chats = () => {
     ];
 
     const defaultActiveIcon = 'Messages';
-    const [activeIcon, setActiveIcon] = useState(defaultActiveIcon);
+    const [activeIcon, _setActiveIcon] = useState(defaultActiveIcon);
     const messagesBadgeCount = 3;
 
-    const handleIconPress = (label: React.SetStateAction<string>) => {
-      setActiveIcon(label);
-    };
+    // const handleIconPress = (label: React.SetStateAction<string>) => {
+    //   setActiveIcon(label);
+    // };
 
     return (
       <VStack
@@ -684,18 +717,19 @@ const Chats = () => {
             placement="right"
             trigger={(triggerProps) => (
               <Pressable
-                {...triggerProps}
-                onPress={() => {
-                  handleIconPress(label);
-                  triggerProps.onPress();
+                sx={{
+                  ':hover': { bg: '$background50' },
+                  ':active': { bg: '$background100' },
+                  'borderRadius': '$lg',
                 }}
+                {...triggerProps}
               >
                 <Icon
                   as={IconComponent}
                   w="$6"
                   h="$6"
                   p="$2"
-                  bg={activeIcon === label ? '$primary400' : 'transparent'}
+                  bg={activeIcon === label ? '$primary500' : 'transparent'}
                   color={
                     activeIcon === label ? '$background200' : '$background800'
                   }
@@ -833,7 +867,7 @@ const Chats = () => {
           </Stats>
         </VStack>
 
-        <VStack mt="$6" pl="$4.5" gap="$3">
+        <VStack alignItems="flex-start" mt="$6" pl="$4.5" gap="$3">
           <Text
             sx={{ '.dark_theme': { color: '$text900' } }}
             color="$text900"
@@ -842,40 +876,42 @@ const Chats = () => {
           >
             Media, links , docs
           </Text>
-          <HStack display="flex" alignItems="flex-start" gap="$3">
-            <Image
-              h="$20"
-              w="$20"
-              source={require('../assets/Image.svg')}
-              resizeMode="contain"
-              style={{ flex: 1 }}
-              alt=""
-            />
-            <Image
-              h="$20"
-              w="$20"
-              source={require('../assets/Image.png')}
-              resizeMode="contain"
-              style={{ flex: 1 }}
-              alt=""
-            />
-            <Image
-              h="$20"
-              w="$20"
-              source={require('../assets/Image.png')}
-              resizeMode="contain"
-              style={{ flex: 1 }}
-              alt=""
-            />
-            <Image
-              h="$20"
-              w="$20"
-              source={require('../assets/Image.png')}
-              resizeMode="contain"
-              style={{ flex: 1 }}
-              alt=""
-            />
-          </HStack>
+          <ScrollView>
+            <HStack display="flex" gap="$3">
+              <Image
+                h="$20"
+                w="$20"
+                source={require('../assets/Image.png')}
+                resizeMode="contain"
+                style={{ flex: 1 }}
+                alt=""
+              />
+              <Image
+                h="$20"
+                w="$20"
+                source={require('../assets/Image.png')}
+                resizeMode="contain"
+                style={{ flex: 1 }}
+                alt=""
+              />
+              <Image
+                h="$20"
+                w="$20"
+                source={require('../assets/Image.png')}
+                resizeMode="contain"
+                style={{ flex: 1 }}
+                alt=""
+              />
+              <Image
+                h="$20"
+                w="$20"
+                source={require('../assets/Image.png')}
+                resizeMode="contain"
+                style={{ flex: 1 }}
+                alt=""
+              />
+            </HStack>
+          </ScrollView>
         </VStack>
 
         <VStack mt="$5" gap="$5" p="$6">
@@ -1155,7 +1191,9 @@ const Chats = () => {
         >
           {showProfile ? (
             <>
-              <Profile />
+              <ScrollView>
+                <Profile />
+              </ScrollView>
             </>
           ) : (
             <>
