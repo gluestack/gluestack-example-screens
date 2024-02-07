@@ -49,8 +49,13 @@ import { zodResolver } from '@hookform/resolvers/zod';
 
 const BlogCard = () => {
   return (
-    <Card>
-      <Box w="auto" h="$64" backgroundColor="$background50"></Box>
+    <Card $base-mb="$4" $lg-mb="$6">
+      <Box
+        w="auto"
+        h="$64"
+        backgroundColor="$background50"
+        borderRadius="$lg"
+      ></Box>
       <VStack mt="$4" width="$full">
         <Heading size="xs" fontWeight="$normal" color="$text700">
           May 15, 2023
@@ -86,7 +91,14 @@ const BlogCard = () => {
 
 const ProfileCard = () => {
   return (
-    <Card flex={1} alignItems="center" $xl-width="$full" maxHeight="$80">
+    <Card
+      flex={1}
+      alignItems="center"
+      $xl-width="$full"
+      justifyContent="center"
+      $base-height="$80"
+      $xl-height="$full"
+    >
       <UserCard direction="column">
         <UserCardAvatar
           name="John Smith"
@@ -186,10 +198,15 @@ const FormInputcard = () => {
           Email friends who have never tried glueStack UI
         </Heading>
       </VStack>
-      <HStack justifyContent="space-between" space="sm">
+      <HStack
+        justifyContent="space-between"
+        space="xs"
+        $base-flexDirection="column"
+        $lg-flexDirection="row"
+      >
         <CustomInput
           label={'Send an invite'}
-          formControlStyles={{
+          formControlProps={{
             flex: 1,
           }}
           validatorProps={{
@@ -202,7 +219,7 @@ const FormInputcard = () => {
         </CustomInput>
         <Button
           size="md"
-          mt="$6"
+          $lg-my="$6"
           isDisabled={Object.keys(errors).length ? true : false}
           onPress={() => {
             handleSubmit(onSubmit, onError)();
@@ -217,7 +234,7 @@ const FormInputcard = () => {
 
 const SettingsCard = () => {
   return (
-    <Card>
+    <Card $base-mb="$4" $md-mb="$4" $lg-mb="$6">
       <Heading size="md" fontWeight="$bold" color="$text900">
         Notification Settings
       </Heading>
@@ -232,6 +249,8 @@ const SettingsCard = () => {
               borderRadius="$xl"
               backgroundColor="$background50"
               alignSelf="center"
+              $base-display="none"
+              $sm-display="flex"
             >
               {option.Icon && <Icon as={option.Icon} size="xl" />}
             </Box>
@@ -275,7 +294,7 @@ const SettingsCard = () => {
                   );
                 }}
               >
-                <TooltipContent backgroundColor="$background600">
+                <TooltipContent>
                   <TooltipText textAlign="center" fontSize="$xs" maxWidth="$48">
                     Click to switch your notification preferences.
                   </TooltipText>
@@ -291,7 +310,7 @@ const SettingsCard = () => {
 
 const FileUploadCard = () => {
   return (
-    <Card>
+    <Card flex={1}>
       <VStack>
         <Heading size="md" fontWeight="$bold" color="$text900">
           Upload Your Files
@@ -305,11 +324,14 @@ const FileUploadCard = () => {
         $md-mt="$12"
         $lg-mt="$5"
         py="$6"
+        $md-py="$20"
+        $lg-py="$11"
         alignItems="center"
         borderRadius="$xl"
         borderStyle="dashed"
         borderWidth="$1"
         borderColor="$border300"
+        justifyContent="center"
       >
         <Pressable>
           <Box alignItems="center">
@@ -335,11 +357,11 @@ const FileUploadCard = () => {
           </Badge>
         </Pressable>
       </VStack>
-      <VStack $base-mt="$6" $md-mt="$8" $lg-mt="$6" $md-mb="$8" $lg-mb="$0">
+      <VStack $base-mt="$6" $md-mt="$5" $lg-mt="$6" $lg-mb="$0">
         <Heading size="xs" fontWeight="$bold" color="$text900">
           Uploading 1 file
         </Heading>
-        <HStack mt="$3.5" justifyContent="space-between" alignItems="center">
+        <HStack mt="$3" justifyContent="space-between" alignItems="center">
           <Box $base-padding="$1" $xs-padding="$3">
             <Icon as={FileIcon} size="xl" />
           </Box>
@@ -405,7 +427,15 @@ const LoginCard = () => {
     // console.log(error, 'form submission errors');
   };
   return (
-    <Card space="4xl" $md-width="$1/2" $xl-width="$full">
+    <Card
+      space="4xl"
+      $md-width="$1/2"
+      $xl-width="$full"
+      $base-mb="$4"
+      $md-mr="$4"
+      $lg-mr="$6"
+      $xl-mr="$0"
+    >
       <VStack space="xs">
         <Heading
           size="xl"
@@ -431,7 +461,7 @@ const LoginCard = () => {
           </Pressable>
         </HStack>
       </VStack>
-      <VStack space="xl">
+      <VStack space="md">
         <CustomInput
           label={'Email'}
           validatorProps={{
@@ -479,6 +509,16 @@ const LoginCard = () => {
           </Tooltip>
         </HStack>
       </VStack>
+      <Button
+        size="sm"
+        borderRadius="$md"
+        isDisabled={Object.keys(errors).length ? true : false}
+        onPress={() => {
+          handleSubmit(onSubmit, onError)();
+        }}
+      >
+        <ButtonText>Login</ButtonText>
+      </Button>
       <HStack
         alignItems="center"
         justifyContent="center"
@@ -501,16 +541,6 @@ const LoginCard = () => {
           orientation="horizontal"
         ></Divider>
       </HStack>
-      <Button
-        size="sm"
-        borderRadius="$md"
-        isDisabled={Object.keys(errors).length ? true : false}
-        onPress={() => {
-          handleSubmit(onSubmit, onError)();
-        }}
-      >
-        <ButtonText>Login</ButtonText>
-      </Button>
       <HStack space="md">
         <Button flex={1} size="md" variant="outline" action="secondary">
           <ButtonIcon>
@@ -537,32 +567,41 @@ const Cards: any = ({ w = '100%', h = '100%', ...props }: any) => {
     <Box
       {...props}
       bg="$background0"
-      $base-p="$2"
+      $base-p="$4"
       $md-p="$5"
       $lg-p="$6"
       h={h}
       w={w}
-      // overflow="hidden"
     >
-      <VStack
-        flex={1}
-        $xl-flexDirection="row"
-        space="2xl"
-        maxWidth={1440}
-        mx="auto"
-      >
-        <VStack $base-width="$full" $xl-width="$2/3" space="2xl">
-          <VStack $sm-flexDirection="row" space="2xl">
-            <VStack $base-width="$full" $md-width="$2/5" space="2xl">
+      <VStack flex={1} $xl-flexDirection="row">
+        <VStack
+          $base-width="$full"
+          $xl-width="$2/3"
+          $lg-mr="$6"
+          $base-mb="$4"
+          $lg-mb="$6"
+          $xl-mb="$0"
+        >
+          <VStack $sm-flexDirection="row">
+            <VStack
+              $base-width="$full"
+              $md-width="$2/5"
+              $md-mr="$4"
+              $lg-mr="$6"
+              $base-mb="$4"
+              $md-mb="$0"
+            >
               <BlogCard />
               <FormInputcard />
             </VStack>
-            <VStack flex={1} $base-width="$full" $md-width="$3/5" space="2xl">
+            <VStack flex={1} $base-width="$full" $md-width="$3/5">
               <SettingsCard />
               <FileUploadCard />
             </VStack>
           </VStack>
           <Card
+            $base-mt="$4"
+            $lg-mt="$6"
             w="$full"
             justifyContent="space-between"
             alignItems="center"
@@ -586,7 +625,7 @@ const Cards: any = ({ w = '100%', h = '100%', ...props }: any) => {
             <HStack
               space="md"
               $base-width="$full"
-              $base-mt="$3"
+              $base-mt="$6"
               $md-mt="$0"
               ml="$3"
               $sm-width="auto"
@@ -611,7 +650,6 @@ const Cards: any = ({ w = '100%', h = '100%', ...props }: any) => {
           $base-width="$full"
           $md-flexDirection="row"
           $xl-flexDirection="column"
-          space="2xl"
         >
           <LoginCard />
           <ProfileCard />
@@ -622,5 +660,3 @@ const Cards: any = ({ w = '100%', h = '100%', ...props }: any) => {
 };
 
 export default Cards;
-
-export { Text, Box };

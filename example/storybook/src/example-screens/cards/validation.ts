@@ -1,7 +1,7 @@
 import * as z from 'zod';
-type loginValidationType = z.infer<typeof loginValidationSchema>;
-type inviteValidationType = z.infer<typeof inviteValidationSchema>;
-const loginValidationSchema = z.object({
+export type loginValidationType = z.infer<typeof loginValidationSchema>;
+export type inviteValidationType = z.infer<typeof inviteValidationSchema>;
+export const loginValidationSchema = z.object({
   email: z
     .string({ required_error: 'email is required' })
     .min(1, {
@@ -17,7 +17,7 @@ const loginValidationSchema = z.object({
       message: 'Password should be less than 12 characters',
     }),
 });
-const inviteValidationSchema = z.object({
+export const inviteValidationSchema = z.object({
   inviteEmail: z
     .string({ required_error: 'email is required' })
     .min(1, {
@@ -25,10 +25,3 @@ const inviteValidationSchema = z.object({
     })
     .email({ message: 'Please enter valid invite email' }),
 });
-
-export {
-  loginValidationSchema,
-  loginValidationType,
-  inviteValidationSchema,
-  inviteValidationType,
-};
