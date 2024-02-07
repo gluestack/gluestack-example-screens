@@ -14,6 +14,9 @@ import {
   Menu,
   MenuItem,
   MenuItemLabel,
+  TooltipContent,
+  TooltipText,
+  Tooltip,
 } from '@gluestack-ui-new/themed';
 import {
   ArrowRight,
@@ -43,7 +46,6 @@ import {
   LinearScale,
   BarElement,
   Title,
-  Tooltip,
   Legend,
   PointElement,
   LineElement,
@@ -56,15 +58,49 @@ ChartJS.register(
   LinearScale,
   BarElement,
   Title,
-  Tooltip,
   PointElement,
   LineElement,
   Title,
-  Tooltip,
   Filler,
   Legend,
   ArcElement
 );
+
+interface CommentCardProps {
+  userName: string;
+  comment: string;
+}
+
+interface SidebarItemProps {
+  tooltipText: string;
+  icon: React.JSX.Element;
+  itemProps: any;
+}
+
+const SidebarItem = ({ icon, tooltipText, itemProps }: SidebarItemProps) => {
+  return (
+    <Tooltip
+      placement="right"
+      trigger={(triggerProps) => {
+        return (
+          <Pressable
+            p="$2"
+            $focus-bg="$background800"
+            borderRadius="$xl"
+            {...triggerProps}
+            {...itemProps}
+          >
+            {icon}
+          </Pressable>
+        );
+      }}
+    >
+      <TooltipContent>
+        <TooltipText>{tooltipText}</TooltipText>
+      </TooltipContent>
+    </Tooltip>
+  );
+};
 
 const UserCardStack = ({ children, ...props }: any) => {
   return (
@@ -110,11 +146,6 @@ const Card = ({ children, ...props }: any) => {
     </VStack>
   );
 };
-
-interface CommentCardProps {
-  userName: string;
-  comment: string;
-}
 
 const MiniNavbarMenu = ({
   onViewChange,
@@ -539,7 +570,7 @@ const HomeView = () => {
         </Pressable>
       </HStack>
       <VStack $base-mx="$2" $sm-mx="$4" alignItems="center" mt="$4" mb="$6">
-        <HStack space="lg" flexWrap="wrap" w="$full" rowGap="$4">
+        <HStack space="2xl" flexWrap="wrap" w="$full" rowGap="$4">
           <AnalyticsCard
             title="Views"
             totalValue={analytics[tab].weeklyViews.views}
@@ -579,20 +610,15 @@ const HomeView = () => {
           $base-alignSelf="center"
           w="$full"
         >
-          <VStack
+          <Card
             alignItems="flex-start"
-            borderColor="$border200"
-            borderRadius="$md"
-            borderWidth="$1"
-            hardShadow="5"
-            p="$4"
+            $base-p="$4"
             space="sm"
-            maxHeight="$80"
             $md-flexGrow={1}
             $base-minWidth="$full"
             $md-minWidth="$1/3"
           >
-            <HStack justifyContent="space-between" mx="$2" w="$full">
+            <HStack justifyContent="space-between" w="$full">
               <Text
                 color="$text900"
                 fontWeight="$bold"
@@ -613,8 +639,8 @@ const HomeView = () => {
             <Text
               color="$text700"
               fontWeight="$normal"
-              fontSize="$sm"
-              mx="$2"
+              $md-fontSize="$sm"
+              $base-fontSize="$xs"
               fontFamily="$body"
               numberOfLines={2}
               $base-maxWidth="$48"
@@ -629,18 +655,16 @@ const HomeView = () => {
               $sm-maxWidth="$full"
               borderRadius="$2xl"
               mx="auto"
+              mt="$6"
+              minHeight="$32"
             >
               <BarChart />
             </Box>
-          </VStack>
-          <VStack
+          </Card>
+          <Card
             alignItems="flex-start"
-            borderColor="$border200"
-            borderRadius="$md"
-            borderWidth="$1"
-            hardShadow="5"
             space="sm"
-            py="$4"
+            $base-p="$4"
             $md-flexGrow={1}
             $base-minWidth="$full"
             $md-minWidth="$1/3"
@@ -648,24 +672,30 @@ const HomeView = () => {
             <Text
               color="$text900"
               fontWeight="$bold"
-              fontSize="$lg"
-              my="$2"
-              mx="$4"
+              $md-fontSize="$lg"
+              $base-fontSize="$md"
               fontFamily="$heading"
             >
               Engaged Users
             </Text>
             <Box
               $md-minWidth="$80"
-              $base-minWidth="$40"
-              $base-maxWidth="$64"
+              $base-minWidth="$32"
+              $base-maxWidth="$56"
+              $xl-maxWidth="$96"
               $sm-maxWidth="$72"
               borderRadius="$2xl"
               mx="auto"
+              mt="$6"
+              $lg-maxHeight="$24"
+              $xl-maxHeight="$40"
+              display="flex"
+              flexDirection="row"
+              justifyContent="center"
             >
               <AreaChart />
             </Box>
-            <VStack alignItems="center" w="$full">
+            <VStack alignItems="center" w="$full" mt="$3.5">
               <Text
                 color="$text900"
                 fontWeight="$medium"
@@ -687,7 +717,7 @@ const HomeView = () => {
                 from last week
               </Text>
             </VStack>
-          </VStack>
+          </Card>
         </HStack>
         <HStack
           mx="$4"
@@ -700,27 +730,38 @@ const HomeView = () => {
           $base-alignSelf="center"
           w="$full"
         >
-          <VStack
+          <Card
             alignItems="flex-start"
-            borderColor="$border200"
-            borderRadius="$md"
-            borderWidth="$1"
-            hardShadow="5"
-            p="$4"
+            $base-p="$4"
             space="sm"
             $md-flexGrow={1}
             $base-minWidth="$full"
             $md-minWidth="$1/3"
           >
-            <HStack justifyContent="space-between" mx="$2" w="$full">
-              <Text
-                color="$text900"
-                fontWeight="$bold"
-                fontSize="$lg"
-                fontFamily="$heading"
-              >
-                Audience Age Split
-              </Text>
+            <HStack justifyContent="space-between" w="$full">
+              <VStack space="sm">
+                <Text
+                  color="$text900"
+                  fontWeight="$bold"
+                  $md-fontSize="$lg"
+                  $base-fontSize="$md"
+                  fontFamily="$heading"
+                >
+                  Audience Age Split
+                </Text>
+                <Text
+                  color="$text700"
+                  fontWeight="$normal"
+                  $md-fontSize="$sm"
+                  $base-fontSize="$xs"
+                  fontFamily="$body"
+                  numberOfLines={2}
+                  $base-maxWidth="$48"
+                  $sm-maxWidth="$80"
+                >
+                  Quick insights into the demographic composition.
+                </Text>
+              </VStack>
               <Pressable>
                 <MoreVerticalIcon
                   color={iconColor}
@@ -729,13 +770,13 @@ const HomeView = () => {
                 />
               </Pressable>
             </HStack>
-            <HStack alignItems="center" space="md" alignSelf="center">
+            <HStack alignItems="center" space="md" alignSelf="center" mt="$4">
               <Box
                 h="$56"
-                $sm-minWidth="$48"
+                $sm-minWidth="$36"
                 $base-maxWidth="$24"
                 $sm-maxWidth="$40"
-                $lg-maxWidth="$56"
+                $xl-maxWidth="$56"
                 borderRadius="$3xl"
               >
                 <PieChart />
@@ -798,7 +839,7 @@ const HomeView = () => {
                 </HStack>
               </VStack>
             </HStack>
-          </VStack>
+          </Card>
           <VStack
             space="3xl"
             alignContent="flex-start"
@@ -806,18 +847,13 @@ const HomeView = () => {
             $base-minWidth="$full"
             $md-minWidth="$1/3"
           >
-            <VStack
+            <Card
               alignItems="center"
-              borderColor="$border200"
-              borderRadius="$md"
-              borderWidth="$1"
-              hardShadow="5"
-              $md-p="$4"
-              $base-p="$2"
+              $base-p="$4"
               space="md"
               justifyContent="space-between"
             >
-              <VStack space="md" alignSelf="flex-start">
+              <VStack space="sm" alignSelf="flex-start">
                 <Text
                   color="$text900"
                   fontWeight="$bold"
@@ -841,59 +877,58 @@ const HomeView = () => {
                 </Text>
               </VStack>
               <HStack
-                $sm-space="2xl"
-                $base-space="sm"
                 alignItems="center"
+                $lg-px="$5"
                 $md-px="$4"
                 $base-px="$2"
-                mb="$4"
+                mt="$6"
+                w="$full"
               >
-                {[...Array(3)].map((_, index) => (
-                  <HStack key={index}>
-                    <VStack space="xs">
-                      <Text
-                        color="$text900"
-                        fontWeight="$bold"
-                        $base-fontSize="$sm"
-                        $md-fontSize="$lg"
-                        fontFamily="$heading"
-                      >
-                        {analytics[tab].topLocations[index].name}
-                      </Text>
-                      <Text
-                        color="$text700"
-                        fontWeight="$normal"
-                        fontSize="$xs"
-                        fontFamily="$body"
-                      >
-                        {`+${analytics[tab].topLocations[index].growth}%`}
-                      </Text>
-                    </VStack>
-                    {index < 2 && (
+                {[...Array(5)].map((_, index) => {
+                  if (index % 2 === 0) {
+                    return (
+                      <VStack space="xs" key={index} alignItems="center">
+                        <Text
+                          color="$text900"
+                          fontWeight="$bold"
+                          $base-fontSize="$sm"
+                          $md-fontSize="$lg"
+                          fontFamily="$heading"
+                        >
+                          {
+                            analytics[tab].topLocations[index ? index / 2 : 0]
+                              .name
+                          }
+                        </Text>
+                        <Text
+                          color="$text700"
+                          fontWeight="$normal"
+                          fontSize="$xs"
+                          fontFamily="$body"
+                        >
+                          {`+${
+                            analytics[tab].topLocations[index ? index / 2 : 0]
+                              .growth
+                          }%`}
+                        </Text>
+                      </VStack>
+                    );
+                  } else {
+                    return (
                       <Divider
                         orientation="vertical"
                         w="$0.5"
                         h="$10"
-                        $md-mx="$8"
-                        $base-mx="$2"
+                        mx="auto"
                         bgColor="$background200"
                       />
-                    )}
-                  </HStack>
-                ))}
+                    );
+                  }
+                })}
               </HStack>
-            </VStack>
-            <VStack
-              alignItems="center"
-              borderColor="$border200"
-              borderRadius="$md"
-              borderWidth="$1"
-              hardShadow="5"
-              $md-p="$4"
-              $base-p="$2"
-              space="md"
-            >
-              <VStack space="md" alignSelf="flex-start">
+            </Card>
+            <Card alignItems="center" $base-p="$4" space="md">
+              <VStack space="sm" alignSelf="flex-start">
                 <Text
                   color="$text900"
                   fontWeight="$bold"
@@ -917,50 +952,59 @@ const HomeView = () => {
                 </Text>
               </VStack>
               <HStack
-                $sm-space="2xl"
-                $base-space="sm"
                 alignItems="center"
+                $lg-px="$5"
                 $md-px="$4"
                 $base-px="$2"
-                mb="$4"
-                justifyContent="space-between"
+                mt="$6"
+                w="$full"
               >
-                {[...Array(3)].map((_, index) => (
-                  <HStack key={index}>
-                    <VStack space="xs">
-                      <Text
-                        color="$text900"
-                        fontWeight="$bold"
-                        $base-fontSize="$sm"
-                        $md-fontSize="$lg"
-                        fontFamily="$heading"
-                      >
-                        {analytics[tab].topEngagements[index].name}
-                      </Text>
-                      <Text
-                        color="$text700"
-                        fontWeight="$normal"
-                        fontSize="$xs"
-                        fontFamily="$body"
-                        numberOfLines={2}
-                      >
-                        {`${analytics[tab].topEngagements[index].growth} views`}
-                      </Text>
-                    </VStack>
-                    {index < 2 && (
+                {[...Array(5)].map((_, index) => {
+                  if (index % 2 === 0) {
+                    return (
+                      <VStack space="xs" key={index} alignItems="center">
+                        <Text
+                          color="$text900"
+                          fontWeight="$bold"
+                          $base-fontSize="$sm"
+                          $md-fontSize="$lg"
+                          fontFamily="$heading"
+                        >
+                          {
+                            analytics[tab].topEngagements[
+                              index > 0 ? index / 2 : 0
+                            ].name
+                          }
+                        </Text>
+                        <Text
+                          color="$text700"
+                          fontWeight="$normal"
+                          fontSize="$xs"
+                          fontFamily="$body"
+                          numberOfLines={2}
+                        >
+                          {`${
+                            analytics[tab].topEngagements[
+                              index > 0 ? index / 2 : 0
+                            ].growth
+                          } views`}
+                        </Text>
+                      </VStack>
+                    );
+                  } else {
+                    return (
                       <Divider
                         orientation="vertical"
                         w="$0.5"
                         h="$10"
-                        $md-mx="$8"
-                        $base-mx="$2"
+                        mx="auto"
                         bgColor="$background200"
                       />
-                    )}
-                  </HStack>
-                ))}
+                    );
+                  }
+                })}
               </HStack>
-            </VStack>
+            </Card>
           </VStack>
         </HStack>
       </VStack>
@@ -1468,8 +1512,7 @@ const Dashboard: any = ({ w = '100%', ...props }: any) => {
         $base-display="none"
         $md-display="flex"
         h="$full"
-        $sm-top={45}
-        $lg-top={100}
+        top={45}
         sx={{
           _web: {
             position: 'sticky',
@@ -1484,58 +1527,63 @@ const Dashboard: any = ({ w = '100%', ...props }: any) => {
           space="lg"
           borderRadius="$3xl"
         >
-          <Pressable
-            p="$2"
-            $focus-bg="$background800"
-            borderRadius="$xl"
-            bg={view === 'home' ? '$background800' : '$background950'}
-            onPress={() => handleViewChange('home')}
-          >
-            <LayoutDashboardIcon
-              color={iconColor}
-              width={iconSize}
-              height={iconSize}
-            />
-          </Pressable>
-          <Pressable
-            p="$2"
-            $focus-bg="$background800"
-            borderRadius="$xl"
-            bg={view === 'notifications' ? '$background800' : '$background950'}
-            onPress={() => handleViewChange('notifications')}
-          >
-            <MegaphoneIcon
-              color={iconColor}
-              width={iconSize}
-              height={iconSize}
-            />
-          </Pressable>
-          <Pressable
-            p="$2"
-            $focus-bg="$background800"
-            borderRadius="$xl"
-            bg={view === 'calendar' ? '$background800' : '$background950'}
-            onPress={() => handleViewChange('calendar')}
-          >
-            <CalendarDaysIcon
-              color={iconColor}
-              width={iconSize}
-              height={iconSize}
-            />
-          </Pressable>
-          <Pressable
-            p="$2"
-            $focus-bg="$background800"
-            borderRadius="$xl"
-            bg={view === 'currency' ? '$background800' : '$background950'}
-            onPress={() => handleViewChange('currency')}
-          >
-            <CircleDollarSignIcon
-              color={iconColor}
-              width={iconSize}
-              height={iconSize}
-            />
-          </Pressable>
+          <SidebarItem
+            tooltipText="Dashboard"
+            itemProps={{
+              bg: view === 'home' ? '$background800' : '$background950',
+              onPress: () => handleViewChange('home'),
+            }}
+            icon={
+              <LayoutDashboardIcon
+                color={iconColor}
+                width={iconSize}
+                height={iconSize}
+              />
+            }
+          />
+          <SidebarItem
+            tooltipText="Announcements"
+            itemProps={{
+              bg:
+                view === 'notifications' ? '$background800' : '$background950',
+              onPress: () => handleViewChange('notifications'),
+            }}
+            icon={
+              <MegaphoneIcon
+                color={iconColor}
+                width={iconSize}
+                height={iconSize}
+              />
+            }
+          />
+          <SidebarItem
+            tooltipText="Calendar"
+            itemProps={{
+              bg: view === 'calendar' ? '$background800' : '$background950',
+              onPress: () => handleViewChange('calendar'),
+            }}
+            icon={
+              <CalendarDaysIcon
+                color={iconColor}
+                width={iconSize}
+                height={iconSize}
+              />
+            }
+          />
+          <SidebarItem
+            tooltipText="Currency"
+            itemProps={{
+              bg: view === 'currency' ? '$background800' : '$background950',
+              onPress: () => handleViewChange('currency'),
+            }}
+            icon={
+              <CircleDollarSignIcon
+                color={iconColor}
+                width={iconSize}
+                height={iconSize}
+              />
+            }
+          />
           <Divider
             bg="$background600"
             h="$0.5"
@@ -1543,59 +1591,67 @@ const Dashboard: any = ({ w = '100%', ...props }: any) => {
             w="$full"
             my="$10"
           />
-          <Pressable
-            p="$2"
-            $focus-bg="$background800"
-            borderRadius="$xl"
-            bg={view === 'profile' ? '$background800' : '$background950'}
-            onPress={() => handleViewChange('profile')}
-          >
-            <UserIcon color={iconColor} width={iconSize} height={iconSize} />
-          </Pressable>
-          <Pressable
-            p="$2"
-            $focus-bg="$background800"
-            borderRadius="$xl"
-            bg={view === 'settings' ? '$background800' : '$background950'}
-            onPress={() => handleViewChange('settings')}
-          >
-            <SettingsIcon
-              color={iconColor}
-              width={iconSize}
-              height={iconSize}
-            />
-          </Pressable>
-          <Pressable
-            p="$2"
-            $focus-bg="$background800"
-            borderRadius="$xl"
-            bg={view === 'help' ? '$background800' : '$background950'}
-            onPress={() => handleViewChange('help')}
-          >
-            <BadgeHelpIcon
-              color={iconColor}
-              width={iconSize}
-              height={iconSize}
-            />
-          </Pressable>
+          <SidebarItem
+            tooltipText="Profile"
+            itemProps={{
+              bg: view === 'profile' ? '$background800' : '$background950',
+              onPress: () => handleViewChange('profile'),
+            }}
+            icon={
+              <UserIcon color={iconColor} width={iconSize} height={iconSize} />
+            }
+          />
+          <SidebarItem
+            tooltipText="Settings"
+            itemProps={{
+              bg: view === 'settings' ? '$background800' : '$background950',
+              onPress: () => handleViewChange('settings'),
+            }}
+            icon={
+              <SettingsIcon
+                color={iconColor}
+                width={iconSize}
+                height={iconSize}
+              />
+            }
+          />
+          <SidebarItem
+            tooltipText="Help"
+            itemProps={{
+              bg: view === 'help' ? '$background800' : '$background950',
+              onPress: () => handleViewChange('help'),
+            }}
+            icon={
+              <BadgeHelpIcon
+                color={iconColor}
+                width={iconSize}
+                height={iconSize}
+              />
+            }
+          />
         </VStack>
         <VStack
           alignItems="center"
           $md-p="$4"
           $base-p="$2"
           bg="$background950"
-          mt="$32"
+          mt="$24"
           borderRadius="$3xl"
         >
-          <Pressable
-            p="$2"
-            $focus-bg="$background800"
-            borderRadius="$xl"
-            bg={view === 'exit' ? '$background800' : '$background950'}
-            onPress={() => handleViewChange('exit')}
-          >
-            <LogOutIcon color={iconColor} width={iconSize} height={iconSize} />
-          </Pressable>
+          <SidebarItem
+            tooltipText="Exit"
+            itemProps={{
+              bg: view === 'exit' ? '$background800' : '$background950',
+              onPress: () => handleViewChange('exit'),
+            }}
+            icon={
+              <LogOutIcon
+                color={iconColor}
+                width={iconSize}
+                height={iconSize}
+              />
+            }
+          />
         </VStack>
       </VStack>
       <Box
@@ -1617,6 +1673,7 @@ const Dashboard: any = ({ w = '100%', ...props }: any) => {
             <HStack
               $md-pt="$6"
               $lg-px="$2"
+              $xl-px="$6"
               $sm-px="$4"
               $sm-pt="$4"
               $base-pt="$2"
@@ -1691,34 +1748,50 @@ const Dashboard: any = ({ w = '100%', ...props }: any) => {
                     />
                   </Input>
                 </HStack>
-                <Pressable
-                  bg="$background100"
-                  borderRadius="$lg"
-                  $base-p="$0.5"
-                  $sm-p="$2"
+                <Tooltip
+                  placement="top"
+                  trigger={(triggerProps) => {
+                    return (
+                      <Pressable
+                        bg="$background100"
+                        borderRadius="$lg"
+                        $base-p="$0.5"
+                        $sm-p="$2"
+                        {...triggerProps}
+                      >
+                        <BellIcon
+                          color={bellIconColor}
+                          width={iconSize}
+                          height={iconSize}
+                        />
+                      </Pressable>
+                    );
+                  }}
                 >
-                  <BellIcon
-                    color={bellIconColor}
-                    width={iconSize}
-                    height={iconSize}
-                  />
-                </Pressable>
+                  <TooltipContent>
+                    <TooltipText>Notifications</TooltipText>
+                  </TooltipContent>
+                </Tooltip>
               </HStack>
             </HStack>
-            <Box mt="$10">{viewRenderer(view)}</Box>
+            <Box mt="$11">{viewRenderer(view)}</Box>
           </VStack>
         </Box>
-        <Box $xl-width="$2/6" $lg-width="$2/5" $base-width="$full" $lg-p="$3">
-          <VStack
-            space="2xl"
-            $lg-alignItems="center"
-            $base-mx="$2"
-            mb="$2"
-            $sm-mx="$4"
-            $lg-mx="$0"
-            flexGrow={1}
-          >
-            <Card bg="$background50" $base-flexGrow={1} $lg-flexGrow={0}>
+        <Box $xl-width="$2/6" $lg-width="$2/5" $base-width="$full">
+          <VStack flexGrow={1}>
+            <Card
+              bg="$background50"
+              $base-flexGrow={1}
+              $lg-flexGrow={0}
+              $xs-py="$4.5"
+              $xs-px="$3"
+              $base-py="$3.5"
+              $base-px="$2"
+              $base-my="$3"
+              $base-mx="$2"
+              $md-mx="$4"
+              $lg-mx="$3"
+            >
               <UserCard direction="column">
                 <UserCardAvatar
                   name="John Smith"
@@ -1726,12 +1799,7 @@ const Dashboard: any = ({ w = '100%', ...props }: any) => {
                   bgColor="$black"
                   size="lg"
                 />
-                <UserCardStack
-                  mt="$3"
-                  alignItems="center"
-                  width="$full"
-                  space="xs"
-                >
+                <UserCardStack mt="$3" alignItems="center" width="$full">
                   <Text
                     fontFamily="$heading"
                     fontSize="$lg"
@@ -1745,6 +1813,7 @@ const Dashboard: any = ({ w = '100%', ...props }: any) => {
                     fontSize="$sm"
                     color="$text700"
                     fontWeight="$normal"
+                    mt="$0.5"
                   >
                     john@example.com
                   </Text>
@@ -1755,6 +1824,7 @@ const Dashboard: any = ({ w = '100%', ...props }: any) => {
                     fontWeight="$normal"
                     textAlign="center"
                     width="$full"
+                    mt="$2.5"
                   >
                     Pushing the boundaries of reality with XR design wizardry
                     ✨🚀 #XRDesigner
@@ -1840,10 +1910,16 @@ const Dashboard: any = ({ w = '100%', ...props }: any) => {
                 </HStack>
               </UserCard>
             </Card>
-            <Box $lg-p="$3" $base-p="$1" display="flex" flexDirection="column">
-              <VStack $sm-minWidth="$72" $base-minWidth="$56">
+            <Box
+              display="flex"
+              flexDirection="column"
+              mt="$2"
+              $md-p="$6"
+              $base-p="$4"
+            >
+              <VStack $sm-minWidth="$72" $base-minWidth="$56" space="xl">
                 {comments.map((comment) => (
-                  <VStack justifyContent="center">
+                  <VStack justifyContent="center" space="lg">
                     <CommentCard
                       comment={comment.comment}
                       userName={comment.userName}
@@ -1851,7 +1927,6 @@ const Dashboard: any = ({ w = '100%', ...props }: any) => {
                     />
                     <Divider
                       orientation="horizontal"
-                      my="$2"
                       bg="$background200"
                       h="$0.5"
                     />

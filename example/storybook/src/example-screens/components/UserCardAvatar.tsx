@@ -8,7 +8,7 @@ import {
 const UserCardAvatar = ({ name, src, ...props }: any) => {
   return (
     <Avatar {...props}>
-      <AvatarFallbackText>{name.charAt(0)}</AvatarFallbackText>
+      <AvatarFallbackText>{name}</AvatarFallbackText>
       <AvatarImage source={src} />
     </Avatar>
   );

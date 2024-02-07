@@ -7,8 +7,6 @@ import {
   BadgeText,
   Divider,
   HStack,
-  Input,
-  InputSlot,
   InputIcon,
   InputField,
   SearchIcon,
@@ -59,6 +57,7 @@ import UserCard from '../components/UserCard';
 import UserCardAvatar from '../components/UserCardAvatar';
 import UserCardStack from '../components/UserCardStack';
 import Stats from '../components/Stats';
+import CustomInput from '../components/CustomInput';
 
 const chatData = [
   {
@@ -416,42 +415,28 @@ const Chats = () => {
         }}
       >
         <HStack gap="$2" alignItems="center" flex={1}>
-          <Tooltip
-            placement="bottom"
-            trigger={(triggerProps) => {
-              return (
-                <Pressable {...triggerProps}>
-                  <Icon
-                    color="$secondary700"
-                    w="$4"
-                    h="$4"
-                    bg="$transparent"
-                    // p="$2"
-                    borderRadius="$lg"
-                    as={SmilePlus}
-                  />
-                </Pressable>
-              );
+          <Pressable>
+            <IconWithTooltip
+              icon={SmilePlus}
+              tooltip="Choose Emoji"
+              label={undefined}
+            />
+          </Pressable>
+          <CustomInput
+            inputStyles={{
+              flex: 1,
+              variant: 'outline',
+              isDisabled: false,
+              isInvalid: false,
+              isReadOnly: false,
+              borderWidth: 0,
+              paddingVertical: '$2',
+              // w:"$96",
+              h: '$12',
+              borderColor: 'transparent',
+              borderRadius: '$lg',
+              alignItems: 'center',
             }}
-          >
-            <TooltipContent>
-              <TooltipText>Choose Emoji</TooltipText>
-            </TooltipContent>
-          </Tooltip>
-
-          <Input
-            flex={1}
-            variant="outline"
-            isDisabled={false}
-            isInvalid={false}
-            isReadOnly={false}
-            borderWidth={0}
-            paddingVertical="$2"
-            // w="$96"
-            h="$12"
-            borderColor="transparent"
-            borderRadius="$lg"
-            alignItems="center"
           >
             <InputField
               borderColor="transparent"
@@ -462,7 +447,7 @@ const Chats = () => {
               placeholderTextColor="$text400"
               placeholder="Type a message here..."
             />
-          </Input>
+          </CustomInput>
         </HStack>
         <HStack alignItems="center" gap="$6">
           <Tooltip
@@ -638,30 +623,32 @@ const Chats = () => {
 
   const SearchBar = () => {
     return (
-      <Input
-        m="$4"
-        borderRadius="$lg"
-        shadowColor="$trueGray800"
-        style={{
-          shadowOffset: { width: 0, height: -2 },
-          shadowOpacity: 0.1,
-          shadowRadius: 10,
-          elevation: 5,
+      <CustomInput
+        inputStyles={{
+          m: '$4',
+          borderRadius: '$lg',
+          style: {
+            shadowColor: '#262626',
+            shadowOffset: { width: 0, height: -2 },
+            shadowOpacity: 0.1,
+            shadowRadius: 10,
+            elevation: 5,
+          },
         }}
-      >
-        <InputSlot pl="$3">
+        icon={
           <InputIcon
             sx={{ '.dark_theme': { color: '$background700' } }}
             color="$background700"
             as={SearchIcon}
           />
-        </InputSlot>
+        }
+      >
         <InputField
-          type="text"
-          placeholderTextColor="$text700"
-          placeholder="Search..."
+          type={'text'}
+          placeholderTextColor={'$text700'}
+          placeholder={'Search...'}
         />
-      </Input>
+      </CustomInput>
     );
   };
   const Sidebar = () => {
