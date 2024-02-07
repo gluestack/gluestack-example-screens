@@ -436,7 +436,7 @@ const Chats = () => {
             </Tooltip>
           </Pressable>
           <CustomInput
-            formControlStyles={{
+            formControlProps={{
               flex: 1,
               variant: 'outline',
               isDisabled: false,
@@ -448,7 +448,7 @@ const Chats = () => {
               borderRadius: '$lg',
               alignItems: 'center',
             }}
-            inputStyles={{
+            inputProps={{
               w: '$full',
               borderWidth: 0,
               sx: {
