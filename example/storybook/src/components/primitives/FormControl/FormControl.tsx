@@ -61,7 +61,7 @@ import {
 
 const FormControlBasic = ({ ...props }) => {
   return (
-    <FormControl {...props}>
+    <FormControl gap="$1.5" {...props}>
       <FormControlLabel>
         <FormControlLabelText>Password</FormControlLabelText>
       </FormControlLabel>
