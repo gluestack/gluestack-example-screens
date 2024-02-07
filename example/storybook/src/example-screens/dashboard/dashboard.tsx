@@ -351,7 +351,7 @@ const Dashboard: any = ({ w = '100%', ...props }: any) => {
                 $base-justifyContent="center"
               >
                 <CustomInput
-                  inputStyles={{
+                  inputProps={{
                     'sx': {
                       _web: {
                         boxShadow: 'none',
@@ -360,7 +360,7 @@ const Dashboard: any = ({ w = '100%', ...props }: any) => {
                     '$base-display': 'none',
                     '$md-display': 'flex',
                   }}
-                  formControlStyles={{
+                  formControlProps={{
                     '$base-display': 'none',
                     '$md-display': 'flex',
                     'flexGrow': 1,
@@ -601,5 +601,3 @@ const Dashboard: any = ({ w = '100%', ...props }: any) => {
 };
 
 export default Dashboard;
-
-export { Text, Box };
