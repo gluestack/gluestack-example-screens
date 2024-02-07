@@ -11,7 +11,7 @@ const ButtonIsLoading = ({}) => {
         disabled={isLoading}
         focusable={!isLoading}
         opacity={isLoading ? 0.4 : 1}
-        action="negative"
+        // action="negative"
       >
         <ButtonSpinner color="white" />
       </Button>
@@ -19,7 +19,7 @@ const ButtonIsLoading = ({}) => {
         disabled={isLoading}
         focusable={!isLoading}
         opacity={isLoading ? 0.4 : 1}
-        action="negative"
+        // action="negative"
         gap="$2"
       >
         <ButtonSpinner color="white" />
@@ -29,7 +29,7 @@ const ButtonIsLoading = ({}) => {
         disabled={isLoading}
         focusable={!isLoading}
         opacity={isLoading ? 0.4 : 1}
-        action="negative"
+        // action="negative"
         gap="$2"
       >
         <ButtonText>Submitting</ButtonText>

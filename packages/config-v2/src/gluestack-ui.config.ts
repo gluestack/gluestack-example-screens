@@ -416,6 +416,8 @@ export const gluestackUIConfig = createConfig({
       blueGray700: '#334155',
       blueGray800: '#1e293b',
       blueGray900: '#0f172a',
+
+      background: '#FBFBFB',
     },
     space: {
       'px': '1px',
@@ -438,6 +440,7 @@ export const gluestackUIConfig = createConfig({
       '11': 44,
       '12': 48,
       '16': 64,
+      '18': 72,
       '20': 80,
       '24': 96,
       '32': 128,
@@ -1115,7 +1118,7 @@ export const gluestackUIConfig = createConfig({
             height: 2,
           },
           shadowRadius: 8,
-          shadowOpacity: 0.5,
+          shadowOpacity: 0.2,
           elevation: 10,
         },
         '2': {
@@ -1124,8 +1127,8 @@ export const gluestackUIConfig = createConfig({
             width: 0,
             height: 3,
           },
-          shadowRadius: 8,
-          shadowOpacity: 0.5,
+          shadowRadius: 10,
+          shadowOpacity: 0.2,
           elevation: 10,
         },
         '3': {
@@ -1135,7 +1138,7 @@ export const gluestackUIConfig = createConfig({
             height: 2,
           },
           shadowRadius: 8,
-          shadowOpacity: 0.5,
+          shadowOpacity: 0.2,
           elevation: 10,
         },
         '4': {
@@ -1144,8 +1147,8 @@ export const gluestackUIConfig = createConfig({
             width: 0,
             height: -3,
           },
-          shadowRadius: 8,
-          shadowOpacity: 0.5,
+          shadowRadius: 10,
+          shadowOpacity: 0.2,
           elevation: 10,
         },
         // this 5th version is only for toast shadow
@@ -1156,7 +1159,7 @@ export const gluestackUIConfig = createConfig({
             width: 0,
             height: 2,
           },
-          shadowRadius: 8,
+          shadowRadius: 10,
           shadowOpacity: 0.1,
           elevation: 10,
         },
@@ -1213,7 +1216,7 @@ export const gluestackUIConfig = createConfig({
             height: 0,
           },
           shadowRadius: 40,
-          shadowOpacity: 0.1,
+          shadowOpacity: 0.2,
           elevation: 10,
           _android: {
             shadowColor: '$background500',
