@@ -176,7 +176,7 @@ const FormInputcard = () => {
     resolver: zodResolver(inviteValidationSchema),
   });
   /* eslint-disable */
-  const onSubmit = (data: { data: inviteValidationType }) => {
+  const onSubmit = (data: inviteValidationType) => {
     // console.log(data, 'form submission data');
   };
   const onError = (error: any) => {
@@ -420,7 +420,7 @@ const LoginCard = () => {
     resolver: zodResolver(loginValidationSchema),
   });
   /* eslint-disable */
-  const onSubmit = (data: { data: loginValidationType }) => {
+  const onSubmit = (data: loginValidationType) => {
     // console.log(data, 'form submission data');
   };
   const onError = (error: any) => {
