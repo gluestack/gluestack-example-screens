@@ -24,6 +24,7 @@ import {
   Tooltip,
   TooltipContent,
   TooltipText,
+  useMediaQuery,
 } from '@gluestack-ui-new/themed';
 import {
   AlertCircle,
@@ -112,16 +113,22 @@ const Chats = () => {
   });
   const [showChatList, setShowChatList] = useState(false);
   const [showProfile, setShowProfile] = useState(false);
-
+  const [showTabButton, setShowTabButton] = useState(true);
+  const isSmallScreen = useMediaQuery({ maxWidth: 480 }); // Define your breakpoint for small screens
+  const placeholderText = isSmallScreen
+    ? 'Type here...'
+    : 'Type a message here...';
   const handleChatSelect = ({ name, message, avatarSource }) => {
     setSelectedChat({ name, message, avatarSource });
     setShowChatList(true);
     setShowProfile(false);
+    setShowTabButton(false);
   };
 
   const handleBackToInbox = () => {
     setShowChatList(false);
     setShowProfile(false);
+    setShowTabButton(true);
   };
   const handleBackToChatList = () => {
     setShowChatList(true);
@@ -130,6 +137,7 @@ const Chats = () => {
   const handleShowProfile = () => {
     setShowChatList(false);
     setShowProfile(true);
+    setShowTabButton(false);
   };
 
   const TruncatedText = ({ children, numberOfLines }) => (
@@ -151,21 +159,18 @@ const Chats = () => {
     index,
     onSelect,
   }) => {
-    const defaultChatName = 'Richard Lyod';
-    const [activeChat, setActiveChat] = useState(defaultChatName);
-    const onChatPress = (name: React.SetStateAction<string>) => {
-      setActiveChat(name);
-    };
     return (
       <Pressable
         sx={{
           ':hover': { bg: '$background50', borderRadius: '$md' },
           ':active': { bg: '$background100' },
+          '@md': {
+            bg: selectedChat.name === name ? '$background100' : 'transparent',
+          },
         }}
-        bg={activeChat === name ? '$background100' : 'transparent'}
+        // bg={selectedChat.name === name ? '$background100' : 'transparent'}
         borderRadius="$md"
         onPress={() => {
-          onChatPress(name);
           onSelect({ name, message, avatarSource });
         }}
       >
@@ -215,7 +220,12 @@ const Chats = () => {
 
   const Inbox = ({ chatData, onSelect }) => {
     return (
-      <VStack paddingVertical="$6" paddingHorizontal="$3" gap="$5">
+      <VStack
+        sx={{ '@md': { paddingVertical: '$6' } }}
+        paddingVertical="$0"
+        paddingHorizontal="$3"
+        gap="$5"
+      >
         <VStack gap="$1" width="100%">
           {chatData.map((chat, index) => (
             <ChatItem key={index} {...chat} index={index} onSelect={onSelect} />
@@ -300,6 +310,13 @@ const Chats = () => {
           'Seems like we will be here for sometime 😂',
         ],
         messagesLeft: [
+          'Hey! Sorry I missed your call',
+          'Your number seems to be not reachable',
+          "What's the scoop?",
+          'oh! I was just on my way from office',
+          'Will be reaching home in 40mins',
+          'Are you guys about to leave?',
+          'Great 💯 Will be there soon!',
           'Hey! Sorry I missed your call',
           'Your number seems to be not reachable',
           "What's the scoop?",
@@ -398,10 +415,10 @@ const Chats = () => {
         sx={{
           '.dark_theme': { borderColor: '$border300' },
           '@md': { borderRadius: '$none' },
-          '@base': {
-            borderBottomLeftRadius: '$lg',
-            borderBottomRightRadius: '$lg',
-          },
+          // '@base': {
+          //   borderBottomLeftRadius: '$lg',
+          //   borderBottomRightRadius: '$lg',
+          // },
         }}
         style={{
           shadowOffset: { width: 0, height: -2 },
@@ -465,7 +482,7 @@ const Chats = () => {
               fontWeight="$normal"
               type="text"
               placeholderTextColor="$text400"
-              placeholder="Type a message here..."
+              placeholder={placeholderText}
             />
           </CustomInput>
         </HStack>
@@ -569,7 +586,14 @@ const Chats = () => {
   const ChatTopBar = () => {
     return (
       <Pressable>
-        <HStack p="$4" justifyContent="space-between">
+        <HStack
+          sx={{
+            '@base': { bg: '$background100' },
+            '@md': { bg: 'transparent' },
+          }}
+          p="$4"
+          justifyContent="space-between"
+        >
           <HStack alignItems="center" gap="$4">
             <Box
               sx={{ '@sm': { display: 'flex' }, '@md': { display: 'none' } }}
@@ -856,16 +880,15 @@ const Chats = () => {
             fontSize="$md"
             fontWeight="$medium"
           >
-            Media, links , docs
+            Media, links, docs
           </Text>
-          <ScrollView>
-            <HStack display="flex" gap="$3">
+          <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
+            <HStack gap="$3">
               <Image
                 h="$20"
                 w="$20"
                 source={require('../assets/Image.png')}
                 resizeMode="contain"
-                style={{ flex: 1 }}
                 alt=""
               />
               <Image
@@ -873,7 +896,6 @@ const Chats = () => {
                 w="$20"
                 source={require('../assets/Image.png')}
                 resizeMode="contain"
-                style={{ flex: 1 }}
                 alt=""
               />
               <Image
@@ -881,7 +903,6 @@ const Chats = () => {
                 w="$20"
                 source={require('../assets/Image.png')}
                 resizeMode="contain"
-                style={{ flex: 1 }}
                 alt=""
               />
               <Image
@@ -889,7 +910,6 @@ const Chats = () => {
                 w="$20"
                 source={require('../assets/Image.png')}
                 resizeMode="contain"
-                style={{ flex: 1 }}
                 alt=""
               />
             </HStack>
@@ -1023,21 +1043,91 @@ const Chats = () => {
       </>
     );
   };
+  const TabButton = ({ tab, icon, text }) => (
+    <Pressable opacity={tab === text.toLowerCase() ? '$100' : '$60'}>
+      <HStack
+        gap="$1.5"
+        alignItems="center"
+        alignSelf="center"
+        borderBottomWidth="$2"
+        pb="$1.5"
+        borderBottomColor={
+          tab === text.toLowerCase() ? '$primary400' : 'transparent'
+        }
+      >
+        <Icon
+          sx={{ '@base': { display: 'none' }, '@xs': { display: 'flex' } }}
+          w="$4.5"
+          h="$4.5"
+          as={icon}
+        />
+        <Text fontSize="$md" color="$primary500" fontWeight="$medium">
+          {text}
+        </Text>
+      </HStack>
+    </Pressable>
+  );
 
+  const Content = () => {
+    return <ChatsContent />;
+  };
+
+  const ChatsContent = () => {
+    return (
+      <>
+        {showProfile ? (
+          <>
+            <ScrollView>
+              <Profile />
+            </ScrollView>
+          </>
+        ) : (
+          <>
+            {showChatList ? (
+              <>
+                <VStack h="100vh" justifyContent="space-between">
+                  <ChatTopBar />
+                  <ScrollView>
+                    <ChatList selectedChat={selectedChat} />
+                  </ScrollView>
+                  <TypeMessage />
+                </VStack>
+              </>
+            ) : (
+              <>
+                <ScrollView>
+                  <Inbox chatData={chatData} onSelect={handleChatSelect} />
+                </ScrollView>
+              </>
+            )}
+          </>
+        )}
+      </>
+    );
+  };
+
+  const [tab, _setTab] = React.useState<'chats' | 'payments' | 'calender'>(
+    'chats'
+  );
   return (
-    <Box sx={{ '@md': { h: 720 }, '@base': { h: 550 } }} w="$full">
+    <Box
+      sx={{
+        '@md': { h: 720 },
+        // '@base': { h: 550 }
+      }}
+      w="$full"
+    >
       <HStack
         bg="$background0"
         sx={{
           '.dark_theme': { borderColor: '$border200' },
-          '@md': { borderWidth: 1 },
+          '@md': { borderWidth: 1, borderRadius: '$lg' },
           '@sm': { borderWidth: 0 },
         }}
         h="$full"
         w="$full"
         overflow="hidden"
         flex={1}
-        borderRadius="$lg"
         borderColor="$border200"
         alignSelf="center"
       >
@@ -1115,10 +1205,9 @@ const Chats = () => {
         </VStack>
 
         <VStack
+          height="100vh"
           sx={{
             '@md': {
-              w: '$1/4',
-              flex: 'none',
               display: 'none',
             },
             '@base': {
@@ -1127,33 +1216,67 @@ const Chats = () => {
             },
           }}
         >
-          {showProfile ? (
+          {showTabButton && (
             <>
-              <ScrollView>
-                <Profile />
-              </ScrollView>
-            </>
-          ) : (
-            <>
-              {showChatList ? (
-                <>
-                  <ChatTopBar />
-                  <ScrollView>
-                    <ChatList selectedChat={selectedChat} />
-                  </ScrollView>
-                  <TypeMessage />
-                </>
-              ) : (
-                <>
-                  <SearchBar />
-                  <ScrollView>
-                    <Inbox chatData={chatData} onSelect={handleChatSelect} />
-                  </ScrollView>
-                </>
-              )}
+              <HStack bg="$background100" p="$4" justifyContent="space-between">
+                <Pressable>
+                  <Icon as={GluestackIcon} w="$5" h="$5" />
+                </Pressable>
+                <HStack gap="$4">
+                  <Pressable>
+                    <Icon as={SearchIcon} w="$5" h="$5" />
+                  </Pressable>
+                  <Menu
+                    borderWidth={1}
+                    placement="bottom right"
+                    disabledKeys={['Theme']}
+                    trigger={({ ...triggerProps }) => (
+                      <Pressable bg="transparent" {...triggerProps}>
+                        <Icon as={MoreVertical} />
+                      </Pressable>
+                    )}
+                  >
+                    <MenuItem
+                      sx={{ '@lg': { display: 'none' } }}
+                      display="flex"
+                      key="Profile"
+                      textValue="Profile"
+                    >
+                      <Icon as={UserCircle} size="sm" mr="$2" />
+                      <MenuItemLabel size="sm">Profile</MenuItemLabel>
+                    </MenuItem>
+                    <MenuItem key="Settings" textValue="Settings">
+                      <Icon as={Ban} size="sm" mr="$2" />
+                      <MenuItemLabel size="sm">Settings</MenuItemLabel>
+                    </MenuItem>
+                    <MenuItem key="Help" textValue="Help">
+                      <Icon as={AlertCircle} size="sm" mr="$2" />
+                      <MenuItemLabel size="sm">Help</MenuItemLabel>
+                    </MenuItem>
+                    <MenuItem key="Logout" textValue="Logout">
+                      <Icon as={AlertCircle} size="sm" mr="$2" />
+                      <MenuItemLabel size="sm">Logout</MenuItemLabel>
+                    </MenuItem>
+                  </Menu>
+                </HStack>
+              </HStack>
+              <HStack
+                p="$6"
+                pb="$2"
+                justifyContent="space-between"
+                alignItems="center"
+              >
+                <TabButton tab={tab} icon={MessageCircle} text="Chats" />
+                <TabButton tab={tab} icon={CircleDollarSign} text="Payments" />
+                <TabButton tab={tab} icon={CalendarDays} text="Calendar" />
+              </HStack>
             </>
           )}
+          <ScrollView>
+            <Content tab={tab} />
+          </ScrollView>
         </VStack>
+
         <Divider
           sx={{ '@base': { display: 'none' }, '@md': { display: 'flex' } }}
           orientation="vertical"
