@@ -59,6 +59,26 @@ import UserCardStack from '../components/UserCardStack';
 import Stats from '../components/Stats';
 import CustomInput from '../components/CustomInput';
 
+type chatDataType = {
+  avatarSource: any;
+  name: string;
+  message: string;
+  badgeCount?: number;
+};
+
+type MessageType = {
+  [key: string]: {
+    messagesRight: string[];
+    messagesLeft: string[];
+  };
+};
+
+type selectedChatType = {
+  name: string;
+  message: string;
+  avatarSource: string;
+};
+
 const Chats = () => {
   const chatData = [
     {
@@ -118,7 +138,15 @@ const Chats = () => {
   const placeholderText = isSmallScreen
     ? 'Type here...'
     : 'Type a message here...';
-  const handleChatSelect = ({ name, message, avatarSource }) => {
+  const handleChatSelect = ({
+    name,
+    message,
+    avatarSource,
+  }: {
+    name: string;
+    message: string;
+    avatarSource: any;
+  }) => {
     setSelectedChat({ name, message, avatarSource });
     setShowChatList(true);
     setShowProfile(false);
@@ -140,7 +168,13 @@ const Chats = () => {
     setShowTabButton(false);
   };
 
-  const TruncatedText = ({ children, numberOfLines }) => (
+  const TruncatedText = ({
+    children,
+    numberOfLines,
+  }: {
+    children: React.ReactNode;
+    numberOfLines: number;
+  }) => (
     <Text
       color="$text500"
       size="sm"
@@ -158,6 +192,17 @@ const Chats = () => {
     badgeCount,
     index,
     onSelect,
+  }: {
+    avatarSource: string;
+    name: string;
+    message: string;
+    badgeCount?: number;
+    index: number;
+    onSelect: (arg0: {
+      name: string;
+      message: string;
+      avatarSource: string;
+    }) => void;
   }) => {
     return (
       <Pressable
@@ -218,7 +263,17 @@ const Chats = () => {
     );
   };
 
-  const Inbox = ({ chatData, onSelect }) => {
+  const Inbox = ({
+    chatData,
+    onSelect,
+  }: {
+    chatData: chatDataType[];
+    onSelect: (arg0: {
+      name: string;
+      message: string;
+      avatarSource: string;
+    }) => void;
+  }) => {
     return (
       <VStack
         sx={{ '@md': { paddingVertical: '$6' } }}
@@ -227,7 +282,7 @@ const Chats = () => {
         gap="$5"
       >
         <VStack gap="$1" width="100%">
-          {chatData.map((chat, index) => (
+          {chatData.map((chat: chatDataType, index: number) => (
             <ChatItem key={index} {...chat} index={index} onSelect={onSelect} />
           ))}
         </VStack>
@@ -235,7 +290,15 @@ const Chats = () => {
     );
   };
 
-  const ChatMessage = ({ message, time, isRight }) => (
+  const ChatMessage = ({
+    message,
+    time,
+    isRight,
+  }: {
+    message: string;
+    time: string;
+    isRight: boolean;
+  }) => (
     <VStack
       borderRadius="$lg"
       px="$2"
@@ -293,8 +356,8 @@ const Chats = () => {
     </VStack>
   );
 
-  const ChatList = ({ selectedChat }) => {
-    const messages = {
+  const ChatList = ({ selectedChat }: { selectedChat: selectedChatType }) => {
+    const messages: MessageType = {
       'Mila Dann': {
         messagesRight: ['These are really cool 💯'],
         messagesLeft: [],
@@ -774,7 +837,15 @@ const Chats = () => {
       </VStack>
     );
   };
-  const IconWithTooltip = ({ icon: IconComponent, label, tooltip }) => (
+  const IconWithTooltip = ({
+    icon: IconComponent,
+    label,
+    tooltip,
+  }: {
+    icon: React.ComponentType<any>;
+    label: string | undefined;
+    tooltip: string;
+  }) => (
     <Tooltip
       key={label}
       placement="bottom"
@@ -1043,7 +1114,15 @@ const Chats = () => {
       </>
     );
   };
-  const TabButton = ({ tab, icon, text }) => (
+  const TabButton = ({
+    tab,
+    icon,
+    text,
+  }: {
+    tab: string;
+    icon: React.ComponentType<any>;
+    text: string;
+  }) => (
     <Pressable opacity={tab === text.toLowerCase() ? '$100' : '$60'}>
       <HStack
         gap="$1.5"
@@ -1273,7 +1352,7 @@ const Chats = () => {
             </>
           )}
           <ScrollView>
-            <Content tab={tab} />
+            <Content />
           </ScrollView>
         </VStack>
 
