@@ -76,6 +76,16 @@ interface SidebarItemProps {
   itemProps: any;
 }
 
+export type ViewType =
+  | 'home'
+  | 'notifications'
+  | 'calendar'
+  | 'currency'
+  | 'profile'
+  | 'settings'
+  | 'help'
+  | 'exit';
+
 const SidebarItem = ({ icon, tooltipText, itemProps }: SidebarItemProps) => {
   return (
     <Tooltip
@@ -104,7 +114,7 @@ const SidebarItem = ({ icon, tooltipText, itemProps }: SidebarItemProps) => {
 const MiniNavbarMenu = ({
   onViewChange,
 }: {
-  onViewChange: (view: string) => void;
+  onViewChange: (view: ViewType) => void;
 }) => {
   const [selected, setSelected] = React.useState(new Set([]));
   const [isOpen, setIsOpen] = React.useState<boolean>(false);
@@ -120,7 +130,8 @@ const MiniNavbarMenu = ({
       closeOnSelect={true}
       isOpen={isOpen}
       onOpen={() => setIsOpen(true)}
-      onSelectionChange={(keys) => {
+      /*TYPE ERROR FIX LATER*/
+      onSelectionChange={(keys: any) => {
         setSelected(keys);
         if (keys?.currentKey === 'Dashboard') {
           onViewChange('home');
@@ -331,7 +342,7 @@ const BarChart = () => {
     scales: {
       y: {
         display: true,
-        position: 'right',
+        position: 'right' as const,
       },
     },
   };
