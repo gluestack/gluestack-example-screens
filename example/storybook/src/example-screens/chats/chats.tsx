@@ -459,7 +459,7 @@ const Chats = () => {
             />
           </Pressable>
           <CustomInput
-            inputStyles={{
+            inputProps={{
               flex: 1,
               variant: 'outline',
               isDisabled: false,
@@ -671,7 +671,7 @@ const Chats = () => {
   const SearchBar = () => {
     return (
       <CustomInput
-        inputStyles={{
+        inputProps={{
           m: '$4',
           borderRadius: '$lg',
           style: {
