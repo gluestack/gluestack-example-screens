@@ -134,7 +134,7 @@ const Chats = () => {
   const [showChatList, setShowChatList] = useState(false);
   const [showProfile, setShowProfile] = useState(false);
   const [showTabButton, setShowTabButton] = useState(true);
-  const isSmallScreen = useMediaQuery({ maxWidth: 480 }); // Define your breakpoint for small screens
+  const [isSmallScreen] = useMediaQuery({ maxWidth: 480 }); // Define your breakpoint for small screens
   const placeholderText = isSmallScreen
     ? 'Type here...'
     : 'Type a message here...';
