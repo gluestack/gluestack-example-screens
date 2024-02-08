@@ -380,13 +380,6 @@ const Chats = () => {
           'Will be reaching home in 40mins',
           'Are you guys about to leave?',
           'Great 💯 Will be there soon!',
-          'Hey! Sorry I missed your call',
-          'Your number seems to be not reachable',
-          "What's the scoop?",
-          'oh! I was just on my way from office',
-          'Will be reaching home in 40mins',
-          'Are you guys about to leave?',
-          'Great 💯 Will be there soon!',
         ],
       },
       'Mike': {
