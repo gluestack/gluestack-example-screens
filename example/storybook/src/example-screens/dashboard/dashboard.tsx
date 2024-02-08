@@ -26,6 +26,7 @@ import {
   SettingsView,
   MiniNavbarMenu,
   SidebarItem,
+  ViewType,
 } from './components';
 import {
   ArrowRight,
@@ -70,16 +71,7 @@ const viewRenderer = (view: string) => {
 };
 
 const Dashboard: any = ({ w = '100%', ...props }: any) => {
-  const [view, setView] = React.useState<
-    | 'home'
-    | 'notifications'
-    | 'calendar'
-    | 'currency'
-    | 'profile'
-    | 'settings'
-    | 'help'
-    | 'exit'
-  >('home');
+  const [view, setView] = React.useState<ViewType>('home');
   const iconColor = useToken('colors', 'background200');
   const searchIconColor = useToken('colors', 'background500');
   const bellIconColor = useToken('colors', 'background600');
@@ -123,7 +115,7 @@ const Dashboard: any = ({ w = '100%', ...props }: any) => {
       >
         <Pressable p="$2">
           <MiniNavbarMenu
-            onViewChange={(view: string) => handleViewChange(view)}
+            onViewChange={(newView: typeof view) => handleViewChange(newView)}
           />
         </Pressable>
         <Pressable p="$2">
