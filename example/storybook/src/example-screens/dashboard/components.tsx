@@ -13,6 +13,8 @@ import {
   Tooltip,
   TooltipText,
   Center,
+  Fab,
+  FabIcon,
 } from '@gluestack-ui-new/themed';
 import React from 'react';
 import {
@@ -44,6 +46,7 @@ import {
   LineElement,
   Filler,
   ArcElement,
+  Tooltip as Tooler,
 } from 'chart.js';
 import { Bar, Doughnut, Line } from 'react-chartjs-2';
 
@@ -57,7 +60,8 @@ ChartJS.register(
   Title,
   Filler,
   Legend,
-  ArcElement
+  ArcElement,
+  Tooler
 );
 import { analytics } from './constants';
 import UserCard from '../components/UserCard';
@@ -97,7 +101,7 @@ export const SidebarItem = ({
         return (
           <Pressable
             p="$2"
-            $focus-bg="$trueGray600"
+            $active-bg="$trueGray600"
             bg="$trueGray800"
             $hover-bg="$trueGray700"
             borderRadius="$xl"
@@ -123,18 +127,18 @@ export const MiniNavbarMenu = ({
 }) => {
   const [selected, setSelected] = React.useState(new Set([]));
   const [isOpen, setIsOpen] = React.useState<boolean>(false);
-  const miniNavbarIconColor = useToken('colors', 'trueGray200');
   const iconSize = useToken('space', '6');
-  const iconColor = useToken('colors', 'trueGray200');
+  const iconColor = useToken('colors', 'trueGray400');
 
   return (
     <Menu
-      placement="bottom"
+      placement="top left"
       selectionMode="single"
-      bgColor="$trueGray800"
+      borderWidth={1}
       selectedKeys={selected}
       closeOnSelect={true}
       isOpen={isOpen}
+      onPointerLeave={() => setIsOpen(false)}
       onOpen={() => setIsOpen(true)}
       /*TYPE ERROR FIX LATER*/
       onSelectionChange={(keys: any) => {
@@ -160,9 +164,112 @@ export const MiniNavbarMenu = ({
       }}
       trigger={({ ...triggerProps }) => {
         return (
-          <Pressable p="$2" {...triggerProps}>
-            <MenuIcon
-              color={miniNavbarIconColor}
+          <Fab
+            size="md"
+            placement="bottom right"
+            isHovered={false}
+            isDisabled={false}
+            isPressed={false}
+            $base-display="flex"
+            $md-display="none"
+            renderInPortal={true}
+            position="fixed"
+            {...triggerProps}
+          >
+            <FabIcon as={MenuIcon} />
+          </Fab>
+        );
+      }}
+    >
+      <MenuItem key="Dashboard" textValue="Dashboard">
+        <LayoutDashboardIcon
+          color={iconColor}
+          width={iconSize}
+          height={iconSize}
+        />
+        <MenuItemLabel size="sm" ml="$2">
+          Dashboard
+        </MenuItemLabel>
+      </MenuItem>
+      <MenuItem key="Announcements" textValue="Announcements">
+        <MegaphoneIcon color={iconColor} width={iconSize} height={iconSize} />
+        <MenuItemLabel size="sm" ml="$2">
+          Announcements
+        </MenuItemLabel>
+      </MenuItem>
+      <MenuItem key="Calendar" textValue="Calendar">
+        <CalendarDaysIcon
+          color={iconColor}
+          width={iconSize}
+          height={iconSize}
+        />
+        <MenuItemLabel size="sm" ml="$2">
+          Calendar
+        </MenuItemLabel>
+      </MenuItem>
+      <MenuItem key="Revenue" textValue="Revenue">
+        <CircleDollarSignIcon
+          color={iconColor}
+          width={iconSize}
+          height={iconSize}
+        />
+        <MenuItemLabel size="sm" ml="$2">
+          Revenue
+        </MenuItemLabel>
+      </MenuItem>
+      <MenuItem key="Profile" textValue="Profile">
+        <UserIcon color={iconColor} width={iconSize} height={iconSize} />
+        <MenuItemLabel size="sm" ml="$2">
+          Profile
+        </MenuItemLabel>
+      </MenuItem>
+      <MenuItem key="Settings" textValue="Settings">
+        <SettingsIcon color={iconColor} width={iconSize} height={iconSize} />
+        <MenuItemLabel size="sm" ml="$2">
+          Settings
+        </MenuItemLabel>
+      </MenuItem>
+      <MenuItem key="Help" textValue="Help">
+        <BadgeHelpIcon color={iconColor} width={iconSize} height={iconSize} />
+        <MenuItemLabel size="sm" ml="$2">
+          Help
+        </MenuItemLabel>
+      </MenuItem>
+      <MenuItem key="Logout" textValue="Logout">
+        <LogOutIcon color={iconColor} width={iconSize} height={iconSize} />
+        <MenuItemLabel size="sm" ml="$2">
+          Logout
+        </MenuItemLabel>
+      </MenuItem>
+    </Menu>
+  );
+};
+
+export const ChartOptionsMenu = ({ menuData }: { menuData: Array<string> }) => {
+  const [selected, setSelected] = React.useState(new Set([]));
+  const [isOpen, setIsOpen] = React.useState<boolean>(false);
+  const iconSize = useToken('space', '6');
+  const iconColor = useToken('colors', 'background400');
+
+  return (
+    <Menu
+      placement="left top"
+      selectionMode="single"
+      borderWidth={1}
+      selectedKeys={selected}
+      closeOnSelect={true}
+      isOpen={isOpen}
+      onOpen={() => setIsOpen(true)}
+      onSelectionChange={(keys) => {
+        setSelected(keys);
+        setIsOpen(false);
+      }}
+      onPointerLeave={() => setIsOpen(false)}
+      trigger={({ ...triggerProps }) => {
+        return (
+          <Pressable {...triggerProps}>
+            <MoreVerticalIcon
+              color={iconColor}
               width={iconSize}
               height={iconSize}
             />
@@ -170,106 +277,13 @@ export const MiniNavbarMenu = ({
         );
       }}
     >
-      <MenuItem
-        key="Dashboard"
-        textValue="Dashboard"
-        $hover-bg="$trueGray700"
-        $focus-bg="$trueGray700"
-      >
-        <LayoutDashboardIcon
-          color={iconColor}
-          width={iconSize}
-          height={iconSize}
-        />
-        <MenuItemLabel size="sm" ml="$2" color="$trueGray100">
-          Dashboard
-        </MenuItemLabel>
-      </MenuItem>
-      <MenuItem
-        key="Announcements"
-        textValue="Announcements"
-        $hover-bg="$trueGray700"
-        $focus-bg="$trueGray700"
-      >
-        <MegaphoneIcon color={iconColor} width={iconSize} height={iconSize} />
-        <MenuItemLabel size="sm" ml="$2" color="$trueGray100">
-          Announcements
-        </MenuItemLabel>
-      </MenuItem>
-      <MenuItem
-        key="Calendar"
-        textValue="Calendar"
-        $hover-bg="$trueGray700"
-        $focus-bg="$trueGray700"
-      >
-        <CalendarDaysIcon
-          color={iconColor}
-          width={iconSize}
-          height={iconSize}
-        />
-        <MenuItemLabel size="sm" ml="$2" color="$trueGray100">
-          Calendar
-        </MenuItemLabel>
-      </MenuItem>
-      <MenuItem
-        key="Revenue"
-        textValue="Revenue"
-        $hover-bg="$trueGray700"
-        $focus-bg="$trueGray700"
-      >
-        <CircleDollarSignIcon
-          color={iconColor}
-          width={iconSize}
-          height={iconSize}
-        />
-        <MenuItemLabel size="sm" ml="$2" color="$trueGray100">
-          Revenue
-        </MenuItemLabel>
-      </MenuItem>
-      <MenuItem
-        key="Profile"
-        textValue="Profile"
-        $hover-bg="$trueGray700"
-        $focus-bg="$trueGray700"
-      >
-        <UserIcon color={iconColor} width={iconSize} height={iconSize} />
-        <MenuItemLabel size="sm" ml="$2" color="$trueGray100">
-          Profile
-        </MenuItemLabel>
-      </MenuItem>
-      <MenuItem
-        key="Settings"
-        textValue="Settings"
-        $hover-bg="$trueGray700"
-        $focus-bg="$trueGray700"
-      >
-        <SettingsIcon color={iconColor} width={iconSize} height={iconSize} />
-        <MenuItemLabel size="sm" ml="$2" color="$trueGray100">
-          Settings
-        </MenuItemLabel>
-      </MenuItem>
-      <MenuItem
-        key="Help"
-        textValue="Help"
-        $hover-bg="$trueGray700"
-        $focus-bg="$trueGray700"
-      >
-        <BadgeHelpIcon color={iconColor} width={iconSize} height={iconSize} />
-        <MenuItemLabel size="sm" ml="$2" color="$trueGray100">
-          Help
-        </MenuItemLabel>
-      </MenuItem>
-      <MenuItem
-        key="Logout"
-        textValue="Logout"
-        $hover-bg="$trueGray700"
-        $focus-bg="$trueGray700"
-      >
-        <LogOutIcon color={iconColor} width={iconSize} height={iconSize} />
-        <MenuItemLabel size="sm" ml="$2" color="$trueGray100">
-          Logout
-        </MenuItemLabel>
-      </MenuItem>
+      {menuData.map((item) => (
+        <MenuItem key={item} textValue={item}>
+          <MenuItemLabel size="sm" ml="$2">
+            {item}
+          </MenuItemLabel>
+        </MenuItem>
+      ))}
     </Menu>
   );
 };
@@ -429,6 +443,23 @@ const AreaChart = () => {
 
   const options = {
     responsive: true,
+    maintainAspectRatio: false,
+    spanGaps: false,
+    scales: {
+      xAxes: [
+        {
+          ticks: {
+            autoSkip: false,
+          },
+        },
+      ],
+      y: {
+        display: false,
+      },
+      x: {
+        display: false,
+      },
+    },
     plugins: {
       legend: {
         display: false,
@@ -438,13 +469,11 @@ const AreaChart = () => {
         display: false,
         text: 'Chart.js Bar Chart',
       },
-    },
-    scales: {
-      y: {
-        display: false,
+      customCanvasBackgroundColor: {
+        color: backgroundColor,
       },
-      x: {
-        display: false,
+      filler: {
+        propagate: false,
       },
     },
   };
@@ -459,13 +488,14 @@ const AreaChart = () => {
         borderColor: borderColor,
         backgroundColor: backgroundColor,
         fill: {
-          target: 'origin',
+          target: true,
+          boundary: 'start',
           above: aboveFillColor,
           below: belowFillColor,
         },
         elements: {
           line: {
-            tension: 0.6,
+            tension: 0.300306,
           },
         },
       },
@@ -654,13 +684,9 @@ export const HomeView = () => {
               >
                 Latest Posts
               </Text>
-              <Pressable>
-                <MoreVerticalIcon
-                  color={iconColor}
-                  width={iconSize}
-                  height={iconSize}
-                />
-              </Pressable>
+              <ChartOptionsMenu
+                menuData={['Most Liked', 'Neutral Posts', 'Most Hated']}
+              />
             </HStack>
             <Text
               color="$text700"
@@ -680,7 +706,6 @@ export const HomeView = () => {
               $base-maxWidth="$56"
               $xs-maxWidth="$72"
               $sm-maxWidth="$full"
-              borderRadius="$2xl"
               mx="auto"
               mt="$6"
               minHeight="$32"
@@ -707,16 +732,12 @@ export const HomeView = () => {
             </Text>
             <Box
               $md-minWidth="$80"
-              $base-minWidth="$32"
+              $base-minWidth="$40"
               $base-maxWidth="$56"
               $xs-maxWidth="$72"
-              $xl-maxWidth="$96"
-              $sm-maxWidth="$72"
-              borderRadius="$2xl"
+              $sm-maxWidth="$full"
               mx="auto"
               mt="$6"
-              $lg-maxHeight="$24"
-              $xl-maxHeight="$40"
               display="flex"
               flexDirection="row"
               justifyContent="center"
@@ -792,13 +813,14 @@ export const HomeView = () => {
                   Quick insights into the demographic composition.
                 </Text>
               </VStack>
-              <Pressable>
-                <MoreVerticalIcon
-                  color={iconColor}
-                  width={iconSize}
-                  height={iconSize}
-                />
-              </Pressable>
+              <ChartOptionsMenu
+                menuData={[
+                  'Most Active',
+                  'Most Interacted',
+                  'Less Active',
+                  'Less Interacted',
+                ]}
+              />
             </HStack>
             <HStack alignItems="center" alignSelf="center" space="md" mt="$4">
               <Box
@@ -806,7 +828,6 @@ export const HomeView = () => {
                 $base-maxWidth="$24"
                 $sm-maxWidth="$40"
                 $xl-maxWidth="$48"
-                borderRadius="$3xl"
               >
                 <PieChart />
               </Box>

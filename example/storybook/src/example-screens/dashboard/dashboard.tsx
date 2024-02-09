@@ -82,7 +82,9 @@ const Dashboard: any = ({ w = '100%', ...props }: any) => {
   const searchIconSize = useToken('space', '3.5');
 
   const handleViewChange = (viewInput: typeof view) => {
-    setView(viewInput);
+    if (viewInput !== 'home') {
+      setView('home');
+    }
   };
 
   return (
@@ -96,14 +98,15 @@ const Dashboard: any = ({ w = '100%', ...props }: any) => {
       $base-flexDirection="column"
       $md-flexDirection="row"
       bg="$background0"
+      position="relative"
     >
       <HStack
         bg="$trueGray800"
-        justifyContent="space-between"
+        justifyContent="flex-end"
         alignItems="center"
         $base-display="flex"
         $md-display="none"
-        p="$2"
+        p="$4"
         mb="$2"
         sx={{
           _web: {
@@ -113,11 +116,6 @@ const Dashboard: any = ({ w = '100%', ...props }: any) => {
           },
         }}
       >
-        <Pressable p="$2">
-          <MiniNavbarMenu
-            onViewChange={(newView: typeof view) => handleViewChange(newView)}
-          />
-        </Pressable>
         <HStack space="md">
           <Pressable p="$2">
             <Search
@@ -415,7 +413,7 @@ const Dashboard: any = ({ w = '100%', ...props }: any) => {
               $base-py="$3.5"
               $base-px="$2"
               $base-my="$3"
-              $base-mx="$2"
+              $base-mx="$3"
               $md-mx="$4"
               $lg-mx="$3"
             >
@@ -566,7 +564,7 @@ const Dashboard: any = ({ w = '100%', ...props }: any) => {
               <Pressable mt="$20" px="$5">
                 <HStack
                   space="sm"
-                  justifyContent="flex-end"
+                  justifyContent="flex-start"
                   alignItems="center"
                 >
                   <Text
@@ -588,6 +586,9 @@ const Dashboard: any = ({ w = '100%', ...props }: any) => {
           </VStack>
         </Box>
       </Box>
+      <MiniNavbarMenu
+        onViewChange={(newView: typeof view) => handleViewChange(newView)}
+      />
     </Box>
   );
 };
