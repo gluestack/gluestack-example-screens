@@ -36,7 +36,7 @@ import {
   SettingsIcon,
 } from 'lucide-react-native';
 import {
-  Chart as ChartJS,
+  Chart,
   CategoryScale,
   LinearScale,
   BarElement,
@@ -49,7 +49,7 @@ import {
 } from 'chart.js';
 import { Bar, Doughnut, Line } from 'react-chartjs-2';
 
-ChartJS.register(
+Chart.register(
   CategoryScale,
   LinearScale,
   BarElement,

@@ -1,5 +1,5 @@
 import React from 'react';
-import { createIcon } from '@gluestack-ui/themed';
+import { createIcon } from '@gluestack-ui-new/themed';
 import { Circle, Path, G, Svg, Image } from 'react-native-svg';
 
 export const DotIcon = createIcon({
