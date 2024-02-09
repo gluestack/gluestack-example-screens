@@ -134,7 +134,7 @@ const Chats = () => {
   const [showChatList, setShowChatList] = useState(false);
   const [showProfile, setShowProfile] = useState(false);
   const [showTabButton, setShowTabButton] = useState(true);
-  const isSmallScreen = useMediaQuery({ maxWidth: 480 }); // Define your breakpoint for small screens
+  const [isSmallScreen] = useMediaQuery({ maxWidth: 480 }); // Define your breakpoint for small screens
   const placeholderText = isSmallScreen
     ? 'Type here...'
     : 'Type a message here...';
@@ -373,13 +373,6 @@ const Chats = () => {
           'Seems like we will be here for sometime 😂',
         ],
         messagesLeft: [
-          'Hey! Sorry I missed your call',
-          'Your number seems to be not reachable',
-          "What's the scoop?",
-          'oh! I was just on my way from office',
-          'Will be reaching home in 40mins',
-          'Are you guys about to leave?',
-          'Great 💯 Will be there soon!',
           'Hey! Sorry I missed your call',
           'Your number seems to be not reachable',
           "What's the scoop?",
@@ -1190,10 +1183,11 @@ const Chats = () => {
   );
   return (
     <Box
-      sx={{
-        '@md': { h: 720 },
-        // '@base': { h: 550 }
-      }}
+      // sx={{
+      //   '@md': { h: 720 },
+      //   // '@base': { h: 550 }
+      // }}
+      h="100vh"
       w="$full"
     >
       <HStack
@@ -1238,7 +1232,7 @@ const Chats = () => {
           bg="$background200"
           w="$full"
           transform="translateY(-50%)"
-          top="10%"
+          top="$18"
           position="absolute"
         />
         <Divider
