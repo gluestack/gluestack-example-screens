@@ -175,6 +175,7 @@ export const ProfileView = () => {
               isReadOnly={false}
               isInvalid={false}
               isDisabled={false}
+              h="$16"
               w="$full"
               mt="$2"
             >

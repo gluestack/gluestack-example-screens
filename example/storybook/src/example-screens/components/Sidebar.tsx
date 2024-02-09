@@ -1,7 +1,6 @@
 import { HStack, Text } from '@gluestack-ui/themed';
-import { Pressable, VStack } from '@gluestack-ui/themed';
+import { Pressable, VStack, Icon } from '@gluestack-ui/themed';
 import React from 'react';
-
 interface SidebarItemProps {
   key: string;
   value: string;
@@ -31,7 +30,7 @@ const Sidebar = ({
     onSelected(itemInput);
   };
   return (
-    <VStack w="$full" flexGrow={1} space="sm">
+    <VStack w="$full" flexGrow={1} space={isNested ? '3xl' : 'sm'}>
       {!isNested ? (
         <>
           {sidebarItems.map((item) => (
@@ -46,61 +45,66 @@ const Sidebar = ({
               borderRadius="$md"
               {...itemProps}
             >
-              <Text
-                color="$primary950"
-                fontSize="$md"
-                px="$4"
-                fontFamily="$body"
-              >
-                {item.value}
-              </Text>
+              <HStack>
+                <Text
+                  color="$primary950"
+                  fontSize="$md"
+                  px="$4"
+                  fontFamily="$body"
+                >
+                  {item.value}
+                </Text>
+              </HStack>
             </Pressable>
           ))}
         </>
       ) : (
         <>
           {sidebarItems.map((item: any) => (
-            <VStack
-              w="$full"
-              flexGrow={1}
-              space="sm"
-              maxHeight="$56"
-              overflow="scroll"
-              key={item?.heading}
-            >
+            <VStack>
               <Text
                 color="$primary950"
                 fontSize="$lg"
-                px="$4"
+                fontWeight="$bold"
+                mx="$4"
                 fontFamily="$heading"
               >
                 {item?.heading}
               </Text>
-              {item?.heading?.subItems?.map((item: NestedSidebarItemProps) => (
-                <Pressable
-                  w="$full"
-                  p="$2"
-                  $active-bg="$background100"
-                  $hover-bg="$background100"
-                  key={item.key}
-                  onPress={() => handlePress(item)}
-                  bg={item.key === selected.key ? '$background100' : ''}
-                  borderRadius="$md"
-                  {...itemProps}
-                >
-                  <HStack alignItems="center" space="sm">
-                    {item.icon}
-                    <Text
-                      color="$primary950"
-                      fontSize="$md"
-                      px="$4"
-                      fontFamily="$body"
-                    >
-                      {item.value}
-                    </Text>
-                  </HStack>
-                </Pressable>
-              ))}
+              <VStack
+                w="$full"
+                flexGrow={1}
+                space="sm"
+                maxHeight="$56"
+                overflow="scroll"
+                key={item?.heading}
+                mt="$2"
+              >
+                {item?.subItems?.map((item: NestedSidebarItemProps) => (
+                  <Pressable
+                    w="$full"
+                    p="$2"
+                    $active-bg="$background100"
+                    $hover-bg="$background100"
+                    key={item.key}
+                    onPress={() => handlePress(item)}
+                    bg={item.key === selected.key ? '$background100' : ''}
+                    borderRadius="$md"
+                    {...itemProps}
+                  >
+                    <HStack alignItems="center" space="sm" ml="$1.5">
+                      {item?.icon && <Icon as={item.icon} />}
+                      <Text
+                        color="$primary950"
+                        fontSize="$md"
+                        fontFamily="$body"
+                      >
+                        {item.value}
+                      </Text>
+                    </HStack>
+                  </Pressable>
+                ))}
+              </VStack>
             </VStack>
           ))}
         </>
