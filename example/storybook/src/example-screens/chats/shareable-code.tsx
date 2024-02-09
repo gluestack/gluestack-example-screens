@@ -1183,10 +1183,11 @@ const Chats = () => {
   );
   return (
     <Box
-      sx={{
-        '@md': { h: 720 },
-        // '@base': { h: 550 }
-      }}
+      // sx={{
+      //   '@md': { h: 720 },
+      //   // '@base': { h: 550 }
+      // }}
+      h="100vh"
       w="$full"
     >
       <HStack
@@ -1231,7 +1232,7 @@ const Chats = () => {
           bg="$background200"
           w="$full"
           transform="translateY(-50%)"
-          top="10%"
+          top="$18"
           position="absolute"
         />
         <Divider
