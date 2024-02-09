@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import {
   VStack,
   Icon,
@@ -127,13 +127,13 @@ const chatData = [
 ];
 
 const Chats = () => {
-  const [selectedChat, setSelectedChat] = useState({
+  const [selectedChat, setSelectedChat] = React.useState({
     name: 'Richard Lyod',
     message: '',
     avatarSource: '',
   });
-  const [showChatList, setShowChatList] = useState(false);
-  const [showProfile, setShowProfile] = useState(false);
+  const [showChatList, setShowChatList] = React.useState(false);
+  const [showProfile, setShowProfile] = React.useState(false);
 
   const handleChatSelect = ({
     name,
@@ -711,7 +711,7 @@ const Chats = () => {
     ];
 
     const defaultActiveIcon = 'Messages';
-    const [activeIcon, setActiveIcon] = useState(defaultActiveIcon);
+    const [activeIcon, setActiveIcon] = React.useState(defaultActiveIcon);
     const messagesBadgeCount = 3;
 
     const handleIconPress = (label: React.SetStateAction<string>) => {

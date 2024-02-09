@@ -29,6 +29,59 @@ async function filterImports(file) {
   return { result, imports };
 }
 
+function mergeImports(importStatements) {
+  const namedImports = {};
+  const namespaceImports = new Set();
+  const defaultImports = new Set();
+
+  // Regex to match different types of imports
+  const regex =
+    /import\s+(?:(\{\s*([^}]*)\s*\})|\*\s+as\s+(\w+)|(\w+))\s+from\s+'([^']*)';/;
+
+  importStatements.forEach((statement) => {
+    const match = statement.match(regex);
+    if (match) {
+      const [, named, namedGroup, namespace, defaultImport, source] = match;
+      // Skip imports from the same directory
+      if (source.startsWith('./') && !source.startsWith('../')) {
+        return;
+      }
+      if (named) {
+        // Split named imports and remove whitespace
+        const names = namedGroup.split(',').map((name) => name.trim());
+        if (!namedImports[source]) {
+          namedImports[source] = new Set();
+        }
+        names.forEach((name) => namedImports[source].add(name));
+      } else if (namespace) {
+        namespaceImports.add(`import * as ${namespace} from '${source}';`);
+      } else if (defaultImport) {
+        defaultImports.add(`import ${defaultImport} from '${source}';`);
+      }
+    }
+  });
+
+  // Merge named imports
+  const mergedNamedImports = Object.entries(namedImports).map(
+    ([source, names]) => {
+      return `import { ${Array.from(names)
+        .filter((n) => n.trim().length > 0)
+        .join(', ')} } from '${source}';`;
+    }
+  );
+
+  // Convert Sets to Arrays
+  const mergedNamespaceImports = Array.from(namespaceImports);
+  const mergedDefaultImports = Array.from(defaultImports);
+
+  // Combine all imports into a single array
+  return [
+    ...mergedDefaultImports,
+    ...mergedNamespaceImports,
+    ...mergedNamedImports,
+  ];
+}
+
 async function getCodeFromFiles(directoryPath, targetFile) {
   try {
     const files = await fs.promises.readdir(directoryPath);
@@ -43,24 +96,29 @@ async function getCodeFromFiles(directoryPath, targetFile) {
         !file.endsWith('.stories.tsx')
       );
     });
-    // Create a writable stream for the target file
-    const writableStream = fs.createWriteStream(targetFile, { flags: 'a' });
 
-    // Iterate over filtered files
     let fileImports = [];
+    let fileContent = '';
     for (const file of filteredFiles) {
       const filePath = path.join(directoryPath, file);
       const { result, imports } = await filterImports(filePath);
-      fileImports = [...fileImports, ...imports];
-
-      writableStream.write(`/*** ${file} ***/\n`);
-      writableStream.write(result + '\n');
+      if (imports) fileImports.push(...imports);
+      fileContent += result + '\n';
     }
-    // Close the writable stream
-    writableStream.end();
+
+    const cleanedImports = mergeImports(fileImports);
+
+    writeFileContent(fileContent, targetFile, cleanedImports);
   } catch (error) {
     console.error('Error:', error);
   }
+}
+
+function writeFileContent(sourceFile, targetFile, imports) {
+  const writableStream = fs.createWriteStream(targetFile, { flags: 'a' });
+  writableStream.write(imports.join('\n') + '\n');
+  writableStream.write(sourceFile + '\n');
+  writableStream.end();
 }
 
 Promise.all(
