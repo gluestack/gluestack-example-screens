@@ -63,7 +63,7 @@ const Forms: any = ({ w = '100%', ...props }: any) => {
         >
           Manage your account settings and set e-mail preferences
         </Text>
-        <Divider w="$full" mt="$5" bg="$background200" h="1px" />
+        <Divider w="$full" mt="$5" bg="$background200" h="$px" />
       </VStack>
       <HStack w="$full" mt="$7">
         <Box
