@@ -14,8 +14,11 @@ import {
   Text,
   VStack,
   Menu,
+  Box,
 } from '@gluestack-ui-new/themed';
 import { PlusCircle } from 'lucide-react-native';
+import Sidebar from '../components/Sidebar';
+import { sidebarItems } from './constants';
 
 const tabs = [
   { label: 'Music', key: 'music' },
@@ -150,7 +153,6 @@ const Tab = ({ label, isActive, onPress, disabled }) => (
     </Text>
   </Pressable>
 );
-
 const Music = () => {
   const [activeTab, setActiveTab] = useState('music');
 
@@ -167,7 +169,7 @@ const Music = () => {
             <Text>Top picks for you. Updated daily.</Text>
             <Divider />
             <ScrollView horizontal={true}>
-              <HStack gap="$4">
+              <HStack mb="$4" gap="$4">
                 {images.map((image, index) => (
                   <VStack key={index} gap="$2">
                     <Image w="$64" h="$80" borderRadius="$md" source={image} />
@@ -181,15 +183,18 @@ const Music = () => {
           <VStack gap="$3">
             <Heading>Made for You</Heading>
             <Text>Your personal playlists. Updated daily.</Text>
-            <HStack gap="$4">
-              {personalPlaylists.map((image, index) => (
-                <VStack key={index} gap="$2">
-                  <Image w="$40" h="$40" borderRadius="$md" source={image} />
-                  <Text fontSize="$md">{personalTitles[index]}</Text>
-                  <Text fontSize="$sm">{personalArtists[index]}</Text>
-                </VStack>
-              ))}
-            </HStack>
+            <Divider />
+            <ScrollView horizontal={true}>
+              <HStack mb="$4" gap="$4">
+                {personalPlaylists.map((image, index) => (
+                  <VStack key={index} gap="$2">
+                    <Image w="$40" h="$40" borderRadius="$md" source={image} />
+                    <Text fontSize="$md">{personalTitles[index]}</Text>
+                    <Text fontSize="$sm">{personalArtists[index]}</Text>
+                  </VStack>
+                ))}
+              </HStack>
+            </ScrollView>
           </VStack>
         </>
       );
@@ -201,6 +206,7 @@ const Music = () => {
           <Divider />
           <VStack
             borderWidth={1}
+            borderStyle="dashed"
             borderRadius="$md"
             justifyContent="center"
             alignItems="center"
@@ -238,74 +244,89 @@ const Music = () => {
       h="$full"
       w="$full"
     >
-      <HStack
-        w="$full"
-        h="$10"
-        flexDirection="row"
-        borderBottomWidth="$1"
-        borderBottomColor="$border200"
-      >
-        {navTabs.map(({ label, key, menuItems }) => (
-          <Menu
-            zIndex={1}
-            borderWidth={1}
-            key={key}
-            placement="bottom left"
-            trigger={({ ...triggerProps }) => {
-              return (
-                <Button
-                  sx={{ ':hover': { bg: '$background100' } }}
-                  bg="transparent"
-                  {...triggerProps}
-                >
-                  <ButtonText
-                    fontWeight={label === 'Music' ? 'bold' : '$normal'}
-                    color="$black"
-                    fontSize="$md"
+      <VStack w="$full" h="$full">
+        <HStack
+          w="$full"
+          h="$10"
+          flexDirection="row"
+          borderBottomWidth="$1"
+          borderBottomColor="$border200"
+        >
+          {navTabs.map(({ label, key, menuItems }) => (
+            <Menu
+              // ml="$4"
+              zIndex={1}
+              borderWidth={1}
+              key={key}
+              placement="bottom left"
+              trigger={({ ...triggerProps }) => {
+                return (
+                  <Button
+                    sx={{ ':hover': { bg: '$background100' } }}
+                    bg="transparent"
+                    {...triggerProps}
                   >
-                    {label}
-                  </ButtonText>
-                </Button>
-              );
-            }}
-          >
-            {menuItems.map((menuItem, index) => (
-              <MenuItem key={index} textValue={menuItem.label}>
-                <MenuItemLabel size="sm">{menuItem.label}</MenuItemLabel>
-              </MenuItem>
-            ))}
-          </Menu>
-        ))}
-      </HStack>
-
-      <VStack gap="$6" p="$10">
-        <HStack justifyContent="space-between">
-          <HStack bg="$background100" borderRadius="$md">
-            {tabs.map(({ label, key, disabled }) => (
-              <Tab
-                key={key}
-                isActive={activeTab === key}
-                label={label}
-                onPress={() => handleTabPress(key)}
-                disabled={disabled}
-              />
-            ))}
-          </HStack>
-          <Button
-            size="md"
-            variant="solid"
-            action="primary"
-            isDisabled={false}
-            isFocusVisible={false}
-            gap="$1"
-          >
-            <ButtonIcon as={PlusCircle} />
-            <ButtonText fontWeight="$medium" fontSize="$sm">
-              Add music
-            </ButtonText>
-          </Button>
+                    <ButtonText
+                      fontWeight={label === 'Music' ? 'bold' : '$normal'}
+                      color="$black"
+                      fontSize="$md"
+                    >
+                      {label}
+                    </ButtonText>
+                  </Button>
+                );
+              }}
+            >
+              {menuItems.map((menuItem, index) => (
+                <MenuItem key={index} textValue={menuItem.label}>
+                  <MenuItemLabel size="sm">{menuItem.label}</MenuItemLabel>
+                </MenuItem>
+              ))}
+            </Menu>
+          ))}
         </HStack>
-        {renderListenNow()}
+        <HStack w="$full">
+          <Box paddingVertical="$6" paddingHorizontal="$2" w="$1/5">
+            <Sidebar sidebarItems={sidebarItems} isNested />
+          </Box>
+
+          <VStack
+            p="$6"
+            borderColor="$border200"
+            borderLeftWidth={1}
+            gap="$6"
+            flex={1}
+          >
+            {/* Added flex: 1 */}
+            <HStack justifyContent="space-between">
+              <HStack bg="$background100" borderRadius="$md">
+                {tabs.map(({ label, key, disabled }) => (
+                  <Tab
+                    key={key}
+                    isActive={activeTab === key}
+                    label={label}
+                    onPress={() => handleTabPress(key)}
+                    disabled={disabled}
+                  />
+                ))}
+              </HStack>
+              <Button
+                size="md"
+                variant="solid"
+                action="primary"
+                isDisabled={false}
+                isFocusVisible={false}
+                gap="$1"
+              >
+                <ButtonIcon as={PlusCircle} />
+                <ButtonText fontWeight="$medium" fontSize="$sm">
+                  Add music
+                </ButtonText>
+              </Button>
+            </HStack>
+            {renderListenNow()}
+          </VStack>
+        </HStack>
       </VStack>
     </VStack>
   );
