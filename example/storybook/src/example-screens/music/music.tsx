@@ -7,10 +7,13 @@ import {
   HStack,
   Heading,
   Image,
+  MenuItem,
+  MenuItemLabel,
   Pressable,
   ScrollView,
   Text,
   VStack,
+  Menu,
 } from '@gluestack-ui-new/themed';
 import { PlusCircle } from 'lucide-react-native';
 
@@ -231,7 +234,7 @@ const Music = () => {
       }}
       overflow="hidden"
       borderColor="$border200"
-      alignSelf="center"
+      alignSelf="flex-start"
       h="$full"
       w="$full"
     >
@@ -242,15 +245,36 @@ const Music = () => {
         borderBottomWidth="$1"
         borderBottomColor="$border200"
       >
-        {navTabs.map(({ label, key, disabled }) => (
-          <Tab
+        {navTabs.map(({ label, key, menuItems }) => (
+          <Menu
+            zIndex={1}
+            borderWidth={1}
             key={key}
-            label={label}
-            // onPress={() => handleTabPress(key)}
-            isActive={activeTab === key}
-            disabled={disabled}
-            onPress={undefined}
-          />
+            placement="bottom left"
+            trigger={({ ...triggerProps }) => {
+              return (
+                <Button
+                  sx={{ ':hover': { bg: '$background100' } }}
+                  bg="transparent"
+                  {...triggerProps}
+                >
+                  <ButtonText
+                    fontWeight={label === 'Music' ? 'bold' : '$normal'}
+                    color="$black"
+                    fontSize="$md"
+                  >
+                    {label}
+                  </ButtonText>
+                </Button>
+              );
+            }}
+          >
+            {menuItems.map((menuItem, index) => (
+              <MenuItem key={index} textValue={menuItem.label}>
+                <MenuItemLabel size="sm">{menuItem.label}</MenuItemLabel>
+              </MenuItem>
+            ))}
+          </Menu>
         ))}
       </HStack>
 

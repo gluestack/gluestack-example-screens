@@ -1,6 +1,6 @@
 import React from 'react';
 import { HStack, VStack } from '@gluestack-ui-new/themed';
-import SkeletonComponent from '../SkeletonComponent';
+import { SkeletonBox, SkeletonCircle } from '../SkeletonComponent';
 
 const Skeleton = ({ ...props }) => {
   return (
@@ -14,16 +14,16 @@ const Skeleton = ({ ...props }) => {
       {...props}
     >
       <VStack bg="$white" p="$4" borderRadius="$md" gap="$4">
-        <SkeletonComponent type="bar" />
-        <SkeletonComponent type="bar" />
+        <SkeletonBox />
+        <SkeletonBox />
       </VStack>
       <HStack bg="$white" p="$4" borderRadius="$md" gap="$4">
-        <SkeletonComponent type="circle" />
-        <SkeletonComponent type="bar" />
+        <SkeletonCircle />
+        <SkeletonBox />
       </HStack>
       <HStack bg="$white" p="$4" borderRadius="$md" gap="$4">
-        <SkeletonComponent type="circle" />
-        <SkeletonComponent type="bar" />
+        <SkeletonCircle />
+        <SkeletonBox />
       </HStack>
     </VStack>
   );
