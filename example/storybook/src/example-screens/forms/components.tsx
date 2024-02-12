@@ -31,6 +31,7 @@ import {
   CheckboxLabel,
   CheckIcon,
   Switch,
+  Pressable,
 } from '@gluestack-ui/themed';
 import React from 'react';
 import CustomInput from '../components/CustomInput';
@@ -43,6 +44,7 @@ import {
   languages,
   notifications,
 } from './constants';
+import Skeleton from '../components/Skeleton/Skeleton';
 
 export type ViewType =
   | 'profile'
@@ -427,6 +429,7 @@ export const AccountView = () => {
   );
 };
 export const AppearanceView = () => {
+  const [theme, setTheme] = React.useState<'light' | 'dark'>('light');
   return (
     <VStack flex={1} alignItems="flex-start">
       <Box w="$full" maxWidth="$4/6" px="$4">
@@ -465,6 +468,80 @@ export const AppearanceView = () => {
             >
               Set the font you want to use in the dashboard.
             </Text>
+          </VStack>
+          <VStack w="$full" alignItems="flex-start" space="sm" mt="$7">
+            <Text
+              fontSize="$sm"
+              fontFamily="$heading"
+              color="$primary950"
+              fontWeight="$normal"
+            >
+              Theme
+            </Text>
+            <Text
+              fontSize="$xs"
+              fontFamily="$body"
+              color="$primary200"
+              fontWeight="$normal"
+            >
+              Select the theme for the dashboard.
+            </Text>
+            <HStack
+              alignItems="center"
+              width="$3/5"
+              space="lg"
+              justifyContent="flex-start"
+              mt="$3"
+            >
+              <VStack flexGrow={1} space="sm">
+                <Pressable
+                  flexGrow={1}
+                  onPress={() => setTheme('light')}
+                  display="flex"
+                  flexDirection="column"
+                  bg="$background0"
+                  p="$1"
+                  borderRadius="$md"
+                  borderWidth="$2"
+                  borderColor={theme === 'light' ? '$primary950' : '$primary0'}
+                >
+                  <Skeleton w="$full" />
+                </Pressable>
+                <Text
+                  fontSize="$sm"
+                  fontFamily="$heading"
+                  color="$primary950"
+                  fontWeight="$normal"
+                  textAlign="center"
+                >
+                  Light
+                </Text>
+              </VStack>
+              <VStack flexGrow={1} space="sm">
+                <Pressable
+                  flexGrow={1}
+                  onPress={() => setTheme('dark')}
+                  display="flex"
+                  flexDirection="column"
+                  p="$1"
+                  bg="$background0"
+                  borderRadius="$md"
+                  borderWidth="$2"
+                  borderColor={theme === 'dark' ? '$primary950' : '$primary0'}
+                >
+                  <Skeleton w="$full" />
+                </Pressable>
+                <Text
+                  fontSize="$sm"
+                  fontFamily="$heading"
+                  color="$primary950"
+                  fontWeight="$normal"
+                  textAlign="center"
+                >
+                  Dark
+                </Text>
+              </VStack>
+            </HStack>
           </VStack>
           <Button variant="solid" size="lg" mt="$4" borderRadius="$md" p="$3">
             <Text
