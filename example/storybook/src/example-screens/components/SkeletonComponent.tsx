@@ -15,10 +15,10 @@ const AnimatedBox = styled(AnimatedView, {
   },
 });
 
-export const SkeletonCircle = ({ size, borderRadius, ...props }) => {
+export const SkeletonCircle = ({ size, ...props }) => {
   return (
     <AnimatedBox
-      borderRadius={borderRadius}
+      borderRadius="$full"
       bg="$background100"
       w={size}
       h={size}
@@ -27,13 +27,13 @@ export const SkeletonCircle = ({ size, borderRadius, ...props }) => {
   );
 };
 
-export const SkeletonBox = ({ width, height, borderRadius, ...props }) => {
+export const SkeletonBox = ({ width, height, ...props }) => {
   return (
     <AnimatedBox
       bg="$background100"
       w={width}
       h={height}
-      borderRadius={borderRadius}
+      borderRadius="$3xl"
       {...props}
     />
   );
@@ -41,11 +41,9 @@ export const SkeletonBox = ({ width, height, borderRadius, ...props }) => {
 
 SkeletonCircle.propTypes = {
   size: PropTypes.string.isRequired,
-  borderRadius: PropTypes.string,
 };
 
 SkeletonBox.propTypes = {
   width: PropTypes.string.isRequired,
   height: PropTypes.string.isRequired,
-  borderRadius: PropTypes.string,
 };
