@@ -1,6 +1,6 @@
 import React from 'react';
 import { HStack, VStack } from '@gluestack-ui-new/themed';
-import SkeletonComp from '../SkeletonComponent';
+import { SkeletonCircle, SkeletonBox } from '../SkeletonComponent';
 
 const Skeleton = ({ ...props }) => {
   return (
@@ -14,43 +14,16 @@ const Skeleton = ({ ...props }) => {
       {...props}
     >
       <VStack bg="$white" p="$4" borderRadius="$md" gap="$4">
-        <SkeletonComp
-          type="box"
-          dimensions={undefined}
-          borderRadius={undefined}
-        />
-
-        <SkeletonComp
-          type="box"
-          dimensions={undefined}
-          borderRadius={undefined}
-        />
+        <SkeletonBox width="$3/5" height="$5" borderRadius={undefined} />
+        <SkeletonBox width="$3/5" height="$5" borderRadius={undefined} />
       </VStack>
       <HStack bg="$white" p="$4" borderRadius="$md" gap="$4">
-        <SkeletonComp
-          type="circle"
-          dimensions={undefined}
-          borderRadius={undefined}
-        />
-
-        <SkeletonComp
-          type="box"
-          dimensions={undefined}
-          borderRadius={undefined}
-        />
+        <SkeletonCircle size="$6" borderRadius={undefined} />
+        <SkeletonBox width="$3/5" height="$5" borderRadius={undefined} />
       </HStack>
       <HStack bg="$white" p="$4" borderRadius="$md" gap="$4">
-        <SkeletonComp
-          type="circle"
-          dimensions={undefined}
-          borderRadius={undefined}
-        />
-
-        <SkeletonComp
-          type="box"
-          dimensions={undefined}
-          borderRadius={undefined}
-        />
+        <SkeletonCircle size="$6" borderRadius={undefined} />
+        <SkeletonBox width="$3/5" height="$5" borderRadius={undefined} />
       </HStack>
     </VStack>
   );

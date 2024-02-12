@@ -1,56 +1,59 @@
 import React from 'react';
-import { Box } from '@gluestack-ui-new/themed';
+import { styled } from '@gluestack-ui-new/themed';
 import PropTypes from 'prop-types';
+import { AnimatedView } from '@gluestack-style/animation-resolver';
 
-const SkeletonCircle = ({ size, borderRadius }) => {
-  return (
-    <Box borderRadius={borderRadius} bg="$background100" w={size} h={size} />
-  );
-};
-
-const SkeletonBox = ({ width, height, borderRadius }) => {
-  return (
-    <Box bg="$background100" w={width} h={height} borderRadius={borderRadius} />
-  );
-};
-
-const SkeletonComp = ({ type, dimensions, borderRadius, ...props }) => {
-  let SkeletonComponent;
-
-  switch (type) {
-    case 'circle':
-      SkeletonComponent = SkeletonCircle;
-      break;
-    case 'box':
-      SkeletonComponent = SkeletonBox;
-      break;
-    default:
-      SkeletonComponent = SkeletonBox;
-  }
-
-  return (
-    <SkeletonComponent borderRadius={borderRadius} {...dimensions} {...props} />
-  );
-};
-
-SkeletonComp.propTypes = {
-  type: PropTypes.oneOf(['circle', 'box']),
-  dimensions: PropTypes.shape({
-    width: PropTypes.string.isRequired,
-    height: PropTypes.string.isRequired,
-    size: PropTypes.string, // Required if type is 'circle'
-  }).isRequired,
-  borderRadius: PropTypes.string, // Optional border radius
-};
-
-SkeletonComp.defaultProps = {
-  type: 'box',
-  dimensions: {
-    width: '$3/5',
-    height: '$5',
-    size: '$5', // Default size for circle
+const AnimatedBox = styled(AnimatedView, {
+  ':initial': {
+    opacity: 0,
   },
-  borderRadius: '$full', // Default border radius
+  ':animate': {
+    opacity: 1,
+  },
+  ':exit': {
+    opacity: 0,
+  },
+});
+
+export const SkeletonCircle = ({ size, borderRadius, ...props }) => {
+  return (
+    <AnimatedBox
+      borderRadius={borderRadius}
+      bg="$background100"
+      w={size}
+      h={size}
+      {...props}
+    />
+  );
 };
 
-export default SkeletonComp;
+export const SkeletonBox = ({ width, height, borderRadius, ...props }) => {
+  return (
+    <AnimatedBox
+      bg="$background100"
+      w={width}
+      h={height}
+      borderRadius={borderRadius}
+      {...props}
+    />
+  );
+};
+
+SkeletonCircle.propTypes = {
+  size: PropTypes.string.isRequired,
+  borderRadius: PropTypes.string,
+};
+
+SkeletonCircle.defaultProps = {
+  borderRadius: '$full',
+};
+
+SkeletonBox.propTypes = {
+  width: PropTypes.string.isRequired,
+  height: PropTypes.string.isRequired,
+  borderRadius: PropTypes.string,
+};
+
+SkeletonBox.defaultProps = {
+  borderRadius: '$full',
+};
