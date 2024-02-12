@@ -5,15 +5,15 @@ const commonComponentsPath = '../components/';
 const directoryPaths = [
   {
     directory: './src/example-screens/dashboard',
-    targetFile: './src/example-screens/dashboard/sharableCode.tsx',
+    targetFile: './src/example-screens/dashboard/shareableCode.tsx',
   },
   {
     directory: './src/example-screens/cards',
-    targetFile: './src/example-screens/cards/sharableCode.tsx',
+    targetFile: './src/example-screens/cards/shareableCode.tsx',
   },
   {
     directory: './src/example-screens/chats',
-    targetFile: './src/example-screens/chats/sharableCode.tsx',
+    targetFile: './src/example-screens/chats/shareableCode.tsx',
   },
 ];
 
