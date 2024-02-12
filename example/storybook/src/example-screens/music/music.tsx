@@ -1,12 +1,290 @@
-import React from 'react';
-import { Box, Text } from '@gluestack-ui-new/themed';
+import React, { useState } from 'react';
+import {
+  Button,
+  ButtonIcon,
+  ButtonText,
+  Divider,
+  HStack,
+  Heading,
+  Image,
+  Pressable,
+  ScrollView,
+  Text,
+  VStack,
+} from '@gluestack-ui-new/themed';
+import { PlusCircle } from 'lucide-react-native';
 
-const music = () => {
+const tabs = [
+  { label: 'Music', key: 'music' },
+  { label: 'Podcasts', key: 'podcasts' },
+  { label: 'Live', key: 'live', disabled: true },
+];
+const navTabs = [
+  {
+    label: 'Music',
+    key: 'music',
+    menuItems: [
+      { label: 'About Music' },
+      { label: 'Preferences...' },
+      { label: 'Hide Music...' },
+      { label: 'Hide Others...' },
+      { label: 'Quit Music' },
+    ],
+  },
+  {
+    label: 'File',
+    key: 'file',
+    menuItems: [
+      { label: 'New' },
+      { label: 'Open Stream URL... ' },
+      { label: 'Close Window' },
+      { label: 'Library' },
+      { label: 'Import...' },
+      { label: 'Burn Playlist to Disc...', disabled: true },
+      { label: 'Show in Finder' },
+      { label: 'Convert' },
+      { label: 'Page Setup...' },
+      { label: 'Print...', disabled: true },
+    ],
+  },
+  {
+    label: 'Edit',
+    key: 'edit',
+    menuItems: [
+      { label: 'Undo', disabled: true },
+      { label: 'Redo', disabled: true },
+      { label: 'Cut', disabled: true },
+      { label: 'Copy', disabled: true },
+      { label: 'Paste', disabled: true },
+      { label: 'Select All' },
+      { label: 'Deselect All', disabled: true },
+      { label: 'Smart Dictation...' },
+      { label: 'Emoji & Symbols' },
+    ],
+  },
+  {
+    label: 'View',
+    key: 'view',
+    menuItems: [
+      { label: 'Show Playing Next' },
+      { label: 'Show Lyrics' },
+      { label: 'Show Status Bar', disabled: true },
+      { label: 'Hide Sidebar' },
+      { label: 'Enter Full Screen', disabled: true },
+    ],
+  },
+  {
+    label: 'Account',
+    key: 'account',
+    menuItems: [
+      { label: 'Switch Account' },
+      { label: 'Andy' },
+      { label: 'Benoit' },
+      { label: 'Luis' },
+      { label: 'Manage Family...' },
+      { label: 'Add Account...' },
+    ],
+  },
+];
+
+const images = [
+  require('../assets/music1.png'),
+  require('../assets/music2.png'),
+  require('../assets/music3.png'),
+  require('../assets/music4.png'),
+];
+
+const titles = [
+  'React Rendezvous',
+  'Async Awakenings',
+  'The Art of Reusability',
+  'Stateful Symphony',
+];
+
+const artists = ['Ethan Byte', 'Nina Netcode', 'Lena Logic', 'Beth Binary'];
+
+const personalPlaylists = [
+  require('../assets/music5.png'),
+  require('../assets/music6.png'),
+  require('../assets/music1.png'),
+  require('../assets/music8.png'),
+  require('../assets/music2.png'),
+  require('../assets/music4.png'),
+];
+
+const personalTitles = [
+  'Thinking Components',
+  'Functional Fury',
+  'React Rendezvous',
+  'Stateful Symphony',
+  'Async Awakenings',
+  'The Art of Reusability',
+];
+
+const personalArtists = [
+  'Lena Logic',
+  'Beth Binary',
+  'Ethan Byte',
+  'Beth Binary',
+  'Nina Netcode',
+  'Lena Logic',
+];
+
+const Tab = ({ label, isActive, onPress, disabled }) => (
+  <Pressable
+    justifyContent="center"
+    alignItems="center"
+    marginHorizontal="$2"
+    onPress={disabled ? undefined : onPress}
+    bg={isActive ? '$white' : 'transparent'}
+    m="$1"
+    borderRadius="$md"
+    zIndex={1}
+    opacity={disabled ? 0.5 : 1}
+  >
+    <Text p="$2" style={{ fontWeight: label === 'Music' ? 'bold' : 'normal' }}>
+      {label}
+    </Text>
+  </Pressable>
+);
+
+const Music = () => {
+  const [activeTab, setActiveTab] = useState('music');
+
+  const handleTabPress = (tab) => {
+    setActiveTab(tab);
+  };
+
+  const renderListenNow = () => {
+    if (activeTab === 'music') {
+      return (
+        <>
+          <VStack gap="$3">
+            <Heading>Listen Now</Heading>
+            <Text>Top picks for you. Updated daily.</Text>
+            <Divider />
+            <ScrollView horizontal={true}>
+              <HStack gap="$4">
+                {images.map((image, index) => (
+                  <VStack key={index} gap="$2">
+                    <Image w="$64" h="$80" borderRadius="$md" source={image} />
+                    <Text fontSize="$md">{titles[index]}</Text>
+                    <Text fontSize="$sm">{artists[index]}</Text>
+                  </VStack>
+                ))}
+              </HStack>
+            </ScrollView>
+          </VStack>
+          <VStack gap="$3">
+            <Heading>Made for You</Heading>
+            <Text>Your personal playlists. Updated daily.</Text>
+            <HStack gap="$4">
+              {personalPlaylists.map((image, index) => (
+                <VStack key={index} gap="$2">
+                  <Image w="$40" h="$40" borderRadius="$md" source={image} />
+                  <Text fontSize="$md">{personalTitles[index]}</Text>
+                  <Text fontSize="$sm">{personalArtists[index]}</Text>
+                </VStack>
+              ))}
+            </HStack>
+          </VStack>
+        </>
+      );
+    } else if (activeTab === 'podcasts') {
+      return (
+        <VStack gap="$3">
+          <Heading>Recommended Podcasts</Heading>
+          <Text>Your favorite podcasts. Updated daily.</Text>
+          <Divider />
+          <VStack
+            borderWidth={1}
+            borderRadius="$md"
+            justifyContent="center"
+            alignItems="center"
+            gap="$4"
+            h="$96"
+            borderColor="$border200"
+          >
+            <Image w="$10" h="$10" source={require('../assets/podcasts.svg')} />
+            <Text fontWeight="$semibold">No episodes added</Text>
+            <Text color="$text800">
+              You have not added any podcasts. Add one below.
+            </Text>
+            <Button>
+              <ButtonText fontWeight="$medium" fontSize="$sm">
+                Add Podcast
+              </ButtonText>
+            </Button>
+          </VStack>
+        </VStack>
+      );
+    }
+  };
+
   return (
-    <Box>
-      <Text>music</Text>
-    </Box>
+    <VStack
+      bg="$white"
+      sx={{
+        '.dark_theme': { borderColor: '$border200' },
+        '@md': { borderWidth: 1, borderRadius: '$lg' },
+        '@sm': { borderWidth: 0 },
+      }}
+      overflow="hidden"
+      borderColor="$border200"
+      alignSelf="center"
+      h="$full"
+      w="$full"
+    >
+      <HStack
+        w="$full"
+        h="$10"
+        flexDirection="row"
+        borderBottomWidth="$1"
+        borderBottomColor="$border200"
+      >
+        {navTabs.map(({ label, key, disabled }) => (
+          <Tab
+            key={key}
+            label={label}
+            // onPress={() => handleTabPress(key)}
+            isActive={activeTab === key}
+            disabled={disabled}
+            onPress={undefined}
+          />
+        ))}
+      </HStack>
+
+      <VStack gap="$6" p="$10">
+        <HStack justifyContent="space-between">
+          <HStack bg="$background100" borderRadius="$md">
+            {tabs.map(({ label, key, disabled }) => (
+              <Tab
+                key={key}
+                isActive={activeTab === key}
+                label={label}
+                onPress={() => handleTabPress(key)}
+                disabled={disabled}
+              />
+            ))}
+          </HStack>
+          <Button
+            size="md"
+            variant="solid"
+            action="primary"
+            isDisabled={false}
+            isFocusVisible={false}
+            gap="$1"
+          >
+            <ButtonIcon as={PlusCircle} />
+            <ButtonText fontWeight="$medium" fontSize="$sm">
+              Add music
+            </ButtonText>
+          </Button>
+        </HStack>
+        {renderListenNow()}
+      </VStack>
+    </VStack>
   );
 };
 
-export default music;
+export default Music;
