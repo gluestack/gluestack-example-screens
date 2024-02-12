@@ -106,7 +106,7 @@ export const ProfileView = () => {
           >
             This is how other will see you on site
           </Text>
-          <Divider w="$full" mt="$5" bg="$background200" h="$0.25" />
+          <Divider w="$full" mt="$5" bg="$background200" h="1px" />
           <VStack mt="$5" w="$full">
             <CustomInput
               label={'Username'}
@@ -279,7 +279,7 @@ export const AccountView = () => {
             Update your account settings. Set your preferred language and
             timezone
           </Text>
-          <Divider w="$full" mt="$5" bg="$background200" h="$0.25" />
+          <Divider w="$full" mt="$5" bg="$background200" h="1px" />
           <VStack mt="$5" w="$full">
             <CustomInput
               label={'Name'}
@@ -372,7 +372,7 @@ export const AppearanceView = () => {
             Customize the appearance of the app. Automatically switch between
             day and night themes.
           </Text>
-          <Divider w="$full" mt="$5" bg="$background200" h="$0.25" />
+          <Divider w="$full" mt="$5" bg="$background200" h="1px" />
           <VStack mt="$5" w="$full">
             <CustomSelect
               inputPlaceholder="Select Font"
@@ -439,7 +439,7 @@ export const NotificationsView = () => {
           >
             Configure how you receive notifications.
           </Text>
-          <Divider w="$full" mt="$5" bg="$background200" h="$0.25" />
+          <Divider w="$full" mt="$5" bg="$background200" h="1px" />
           <Button variant="solid" size="lg" mt="$4" borderRadius="$md" p="$3">
             <Text
               fontSize="$sm"
@@ -476,7 +476,7 @@ export const DisplayView = () => {
           >
             Turn items on or off to control what's displayed in the app.
           </Text>
-          <Divider w="$full" mt="$5" bg="$background200" h="$0.25" />
+          <Divider w="$full" mt="$5" bg="$background200" h="1px" />
           <VStack mt="$5" space="sm">
             <Text
               fontSize="$lg"
