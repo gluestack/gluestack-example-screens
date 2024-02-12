@@ -19,9 +19,32 @@ import {
   Textarea,
   TextareaInput,
   Button,
+  HStack,
+  RadioGroup,
+  Radio,
+  RadioIcon,
+  RadioLabel,
+  CircleIcon,
+  Checkbox,
+  CheckboxIndicator,
+  CheckboxIcon,
+  CheckboxLabel,
+  CheckIcon,
+  Switch,
+  Pressable,
 } from '@gluestack-ui/themed';
 import React from 'react';
 import CustomInput from '../components/CustomInput';
+import { RadioIndicator } from '@gluestack-ui/themed';
+import {
+  displaySidebarItems,
+  emailNotifications,
+  emails,
+  fonts,
+  languages,
+  notifications,
+} from './constants';
+import { SkeletonBox, SkeletonCircle } from '../components/SkeletonComponent';
 
 export type ViewType =
   | 'profile'
@@ -29,6 +52,87 @@ export type ViewType =
   | 'appearance'
   | 'notifications'
   | 'display';
+
+const CustomCheck = ({
+  variant,
+  label,
+  value,
+}: {
+  variant: 'radio' | 'checkbox';
+  label?: string;
+  value: string;
+}) => {
+  return (
+    <HStack alignItems="center">
+      {variant === 'radio' ? (
+        <RadioGroup>
+          <Radio value={value} size="sm" isInvalid={false} isDisabled={false}>
+            <RadioIndicator mr="$2">
+              <RadioIcon as={CircleIcon} strokeWidth={1} />
+            </RadioIndicator>
+            {label && (
+              <RadioLabel color="$primary950" fontSize="$sm">
+                {label}
+              </RadioLabel>
+            )}
+          </Radio>
+        </RadioGroup>
+      ) : (
+        <Checkbox size="sm" isInvalid={false} isDisabled={false} value={value}>
+          <CheckboxIndicator mr="$2">
+            <CheckboxIcon as={CheckIcon} />
+          </CheckboxIndicator>
+          {label && (
+            <CheckboxLabel color="$primary950" fontSize="$sm">
+              {label}
+            </CheckboxLabel>
+          )}
+        </Checkbox>
+      )}
+    </HStack>
+  );
+};
+
+const SwitchRow = ({
+  title,
+  subTitle,
+}: {
+  title: string;
+  subTitle: string;
+}) => {
+  return (
+    <HStack
+      alignItems="center"
+      justifyContent="space-between"
+      p="$4"
+      width="$full"
+      borderWidth="$1"
+      borderColor="$border200"
+      borderRadius="$md"
+    >
+      <VStack alignItems="flex-start" space="xs">
+        <Text
+          fontSize="$md"
+          fontFamily="$heading"
+          color="$primary950"
+          fontWeight="$normal"
+        >
+          {title}
+        </Text>
+        <Text
+          fontSize="$xs"
+          fontFamily="$body"
+          color="$primary200"
+          fontWeight="$normal"
+          numberOfLines={2}
+        >
+          {subTitle}
+        </Text>
+      </VStack>
+      <Switch size="md" />
+    </HStack>
+  );
+};
 
 const CustomSelect = ({
   inputPlaceholder,
@@ -135,20 +239,7 @@ export const ProfileView = () => {
             <CustomSelect
               inputPlaceholder="Select a verified email to display"
               label="Email"
-              selectionData={[
-                {
-                  label: 'm@example.com',
-                  value: 'm@example.com',
-                },
-                {
-                  label: 'm@google.com',
-                  value: 'm@google.com',
-                },
-                {
-                  label: 'm@support.com',
-                  value: 'm@support.com',
-                },
-              ]}
+              selectionData={emails}
             />
             <Text
               fontSize="$xs"
@@ -246,7 +337,7 @@ export const ProfileView = () => {
             <Text
               fontSize="$sm"
               fontFamily="$heading"
-              color="$white"
+              color="$background0"
               fontWeight="$normal"
             >
               Update Profile
@@ -308,20 +399,7 @@ export const AccountView = () => {
             <CustomSelect
               inputPlaceholder="Select language"
               label="Language"
-              selectionData={[
-                {
-                  label: 'English',
-                  value: 'english',
-                },
-                {
-                  label: 'Chinese',
-                  value: 'chinese',
-                },
-                {
-                  label: 'Russian',
-                  value: 'russian',
-                },
-              ]}
+              selectionData={languages}
             />
             <Text
               fontSize="$xs"
@@ -339,7 +417,7 @@ export const AccountView = () => {
             <Text
               fontSize="$sm"
               fontFamily="$heading"
-              color="$white"
+              color="$background0"
               fontWeight="$normal"
             >
               Update account
@@ -351,6 +429,7 @@ export const AccountView = () => {
   );
 };
 export const AppearanceView = () => {
+  const [theme, setTheme] = React.useState<'light' | 'dark'>('light');
   return (
     <VStack flex={1} alignItems="flex-start">
       <Box w="$full" maxWidth="$4/6" px="$4">
@@ -377,20 +456,7 @@ export const AppearanceView = () => {
             <CustomSelect
               inputPlaceholder="Select Font"
               label="Font"
-              selectionData={[
-                {
-                  label: 'Inter',
-                  value: 'inter',
-                },
-                {
-                  label: 'Monospace',
-                  value: 'monospace',
-                },
-                {
-                  label: 'System',
-                  value: 'system',
-                },
-              ]}
+              selectionData={fonts}
             />
             <Text
               fontSize="$xs"
@@ -403,11 +469,152 @@ export const AppearanceView = () => {
               Set the font you want to use in the dashboard.
             </Text>
           </VStack>
+          <VStack w="$full" alignItems="flex-start" space="sm" mt="$7">
+            <Text
+              fontSize="$sm"
+              fontFamily="$heading"
+              color="$primary950"
+              fontWeight="$normal"
+            >
+              Theme
+            </Text>
+            <Text
+              fontSize="$xs"
+              fontFamily="$body"
+              color="$primary200"
+              fontWeight="$normal"
+            >
+              Select the theme for the dashboard.
+            </Text>
+            <HStack
+              alignItems="center"
+              width="$3/5"
+              space="lg"
+              justifyContent="flex-start"
+              mt="$3"
+            >
+              <VStack flexGrow={1} space="sm">
+                <Pressable
+                  flexGrow={1}
+                  onPress={() => setTheme('light')}
+                  display="flex"
+                  flexDirection="column"
+                  bg="$background0"
+                  p="$1"
+                  borderRadius="$md"
+                  borderWidth="$2"
+                  borderColor={theme === 'light' ? '$primary950' : '$primary0'}
+                >
+                  <VStack
+                    borderRadius="$md"
+                    gap="$2"
+                    p="$2"
+                    w="$full"
+                    bg="$background100"
+                  >
+                    <VStack bg="$white" p="$2" borderRadius="$md" gap="$2">
+                      <SkeletonBox width="$3/5" height="$3" />
+                      <SkeletonBox width="$3/5" height="$3" />
+                    </VStack>
+                    <HStack
+                      bg="$white"
+                      p="$2"
+                      borderRadius="$md"
+                      gap="$2"
+                      alignItems="center"
+                    >
+                      <SkeletonCircle size="$6" />
+                      <SkeletonBox width="$3/5" height="$3" />
+                    </HStack>
+                    <HStack
+                      bg="$white"
+                      p="$2"
+                      borderRadius="$md"
+                      gap="$2"
+                      alignItems="center"
+                    >
+                      <SkeletonCircle size="$6" />
+                      <SkeletonBox width="$3/5" height="$3" />
+                    </HStack>
+                  </VStack>
+                </Pressable>
+                <Text
+                  fontSize="$sm"
+                  fontFamily="$heading"
+                  color="$primary950"
+                  fontWeight="$normal"
+                  textAlign="center"
+                >
+                  Light
+                </Text>
+              </VStack>
+              <VStack flexGrow={1} space="sm">
+                <Pressable
+                  flexGrow={1}
+                  onPress={() => setTheme('dark')}
+                  display="flex"
+                  flexDirection="column"
+                  p="$1"
+                  bg="$background0"
+                  borderRadius="$md"
+                  borderWidth="$2"
+                  borderColor={theme === 'dark' ? '$primary950' : '$primary0'}
+                >
+                  <VStack
+                    borderRadius="$md"
+                    gap="$2"
+                    p="$2"
+                    w="$full"
+                    bg="$trueGray800"
+                  >
+                    <VStack
+                      bg="$trueGray700"
+                      p="$2"
+                      borderRadius="$md"
+                      gap="$2"
+                    >
+                      <SkeletonBox width="$3/5" height="$3" bg="$trueGray500" />
+                      <SkeletonBox width="$3/5" height="$3" bg="$trueGray500" />
+                    </VStack>
+                    <HStack
+                      bg="$trueGray700"
+                      p="$2"
+                      borderRadius="$md"
+                      gap="$2"
+                      alignItems="center"
+                    >
+                      <SkeletonCircle size="$6" bg="$trueGray500" />
+                      <SkeletonBox width="$3/5" height="$3" bg="$trueGray500" />
+                    </HStack>
+                    <HStack
+                      bg="$trueGray700"
+                      p="$2"
+                      borderRadius="$md"
+                      gap="$2"
+                      alignItems="center"
+                    >
+                      <SkeletonCircle size="$6" bg="$trueGray500" />
+                      <SkeletonBox width="$3/5" height="$3" bg="$trueGray500" />
+                    </HStack>
+                  </VStack>
+                </Pressable>
+                <Text
+                  fontSize="$sm"
+                  fontFamily="$heading"
+                  color="$primary950"
+                  fontWeight="$normal"
+                  textAlign="center"
+                >
+                  Dark
+                </Text>
+              </VStack>
+            </HStack>
+          </VStack>
           <Button variant="solid" size="lg" mt="$4" borderRadius="$md" p="$3">
             <Text
               fontSize="$sm"
               fontFamily="$heading"
-              color="$white"
+              color="$background0"
               fontWeight="$normal"
             >
               Update preferences
@@ -440,11 +647,71 @@ export const NotificationsView = () => {
             Configure how you receive notifications.
           </Text>
           <Divider w="$full" mt="$5" bg="$background200" h="$px" />
+          <Text
+            fontSize="$sm"
+            fontFamily="$body"
+            color="$primary950"
+            fontWeight="$normal"
+            mt="$5"
+          >
+            Notify me about...
+          </Text>
+          <VStack mt="$3" alignItems="flex-start" space="md">
+            {notifications.map((iterator) => (
+              <CustomCheck
+                label={iterator}
+                key={iterator}
+                variant="radio"
+                value={iterator}
+              />
+            ))}
+          </VStack>
+          <Text
+            fontSize="$lg"
+            fontFamily="$heading"
+            color="$primary950"
+            fontWeight="$bold"
+            mt="$5"
+          >
+            Email Notifications
+          </Text>
+          <VStack width="$full" space="lg" mt="$3">
+            {emailNotifications.map((iterator) => (
+              <SwitchRow
+                subTitle={iterator.subTitle}
+                title={iterator.title}
+                key={iterator.title}
+              />
+            ))}
+          </VStack>
+          <HStack alignItems="flex-start" mt="$5" space="xs">
+            <CustomCheck variant="checkbox" value={'mobile-settings'} />
+            <VStack alignItems="flex-start" space="xs">
+              <Text
+                fontSize="$sm"
+                fontFamily="$body"
+                color="$primary950"
+                fontWeight="$normal"
+              >
+                Use different settings for my mobile devices
+              </Text>
+              <Text
+                fontSize="$xs"
+                fontFamily="$body"
+                color="$primary200"
+                fontWeight="$normal"
+                numberOfLines={2}
+              >
+                You can manage your mobile notifications in the mobile settings
+                page.
+              </Text>
+            </VStack>
+          </HStack>
           <Button variant="solid" size="lg" mt="$4" borderRadius="$md" p="$3">
             <Text
               fontSize="$sm"
               fontFamily="$heading"
-              color="$white"
+              color="$background0"
               fontWeight="$normal"
             >
               Update notifications
@@ -495,11 +762,21 @@ export const DisplayView = () => {
               Select the items you want to display in the sidebar.
             </Text>
           </VStack>
+          <VStack mt="$3" space="sm">
+            {displaySidebarItems.map((iterator) => (
+              <CustomCheck
+                value={iterator}
+                variant="checkbox"
+                label={iterator}
+                key={iterator}
+              />
+            ))}
+          </VStack>
           <Button variant="solid" size="lg" mt="$4" borderRadius="$md" p="$3">
             <Text
               fontSize="$sm"
               fontFamily="$heading"
-              color="$white"
+              color="$background0"
               fontWeight="$normal"
             >
               Update display
