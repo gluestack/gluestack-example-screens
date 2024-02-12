@@ -44,7 +44,7 @@ import {
   languages,
   notifications,
 } from './constants';
-import Skeleton from '../components/Skeleton/Skeleton';
+import { SkeletonBox, SkeletonCircle } from '../components/SkeletonComponent';
 
 export type ViewType =
   | 'profile'
@@ -65,18 +65,16 @@ const CustomCheck = ({
   return (
     <HStack alignItems="center">
       {variant === 'radio' ? (
-        <RadioGroup>
-          <Radio value={value} size="sm" isInvalid={false} isDisabled={false}>
-            <RadioIndicator mr="$2">
-              <RadioIcon as={CircleIcon} strokeWidth={1} />
-            </RadioIndicator>
-            {label && (
-              <RadioLabel color="$primary950" fontSize="$sm">
-                {label}
-              </RadioLabel>
-            )}
-          </Radio>
-        </RadioGroup>
+        <Radio value={value} size="sm" isInvalid={false} isDisabled={false}>
+          <RadioIndicator mr="$2">
+            <RadioIcon as={CircleIcon} strokeWidth={1} />
+          </RadioIndicator>
+          {label && (
+            <RadioLabel color="$primary950" fontSize="$sm">
+              {label}
+            </RadioLabel>
+          )}
+        </Radio>
       ) : (
         <Checkbox size="sm" isInvalid={false} isDisabled={false} value={value}>
           <CheckboxIndicator mr="$2">
@@ -505,7 +503,38 @@ export const AppearanceView = () => {
                   borderWidth="$2"
                   borderColor={theme === 'light' ? '$primary950' : '$primary0'}
                 >
-                  <Skeleton w="$full" />
+                  <VStack
+                    borderRadius="$md"
+                    gap="$2"
+                    p="$2"
+                    w="$full"
+                    bg="$background100"
+                  >
+                    <VStack bg="$white" p="$2" borderRadius="$md" gap="$2">
+                      <SkeletonBox width="$3/5" height="$3" />
+                      <SkeletonBox width="$3/5" height="$3" />
+                    </VStack>
+                    <HStack
+                      bg="$white"
+                      p="$2"
+                      borderRadius="$md"
+                      gap="$2"
+                      alignItems="center"
+                    >
+                      <SkeletonCircle size="$6" />
+                      <SkeletonBox width="$3/5" height="$3" />
+                    </HStack>
+                    <HStack
+                      bg="$white"
+                      p="$2"
+                      borderRadius="$md"
+                      gap="$2"
+                      alignItems="center"
+                    >
+                      <SkeletonCircle size="$6" />
+                      <SkeletonBox width="$3/5" height="$3" />
+                    </HStack>
+                  </VStack>
                 </Pressable>
                 <Text
                   fontSize="$sm"
@@ -529,7 +558,43 @@ export const AppearanceView = () => {
                   borderWidth="$2"
                   borderColor={theme === 'dark' ? '$primary950' : '$primary0'}
                 >
-                  <Skeleton w="$full" />
+                  <VStack
+                    borderRadius="$md"
+                    gap="$2"
+                    p="$2"
+                    w="$full"
+                    bg="$trueGray800"
+                  >
+                    <VStack
+                      bg="$trueGray700"
+                      p="$2"
+                      borderRadius="$md"
+                      gap="$2"
+                    >
+                      <SkeletonBox width="$3/5" height="$3" bg="$trueGray500" />
+                      <SkeletonBox width="$3/5" height="$3" bg="$trueGray500" />
+                    </VStack>
+                    <HStack
+                      bg="$trueGray700"
+                      p="$2"
+                      borderRadius="$md"
+                      gap="$2"
+                      alignItems="center"
+                    >
+                      <SkeletonCircle size="$6" bg="$trueGray500" />
+                      <SkeletonBox width="$3/5" height="$3" bg="$trueGray500" />
+                    </HStack>
+                    <HStack
+                      bg="$trueGray700"
+                      p="$2"
+                      borderRadius="$md"
+                      gap="$2"
+                      alignItems="center"
+                    >
+                      <SkeletonCircle size="$6" bg="$trueGray500" />
+                      <SkeletonBox width="$3/5" height="$3" bg="$trueGray500" />
+                    </HStack>
+                  </VStack>
                 </Pressable>
                 <Text
                   fontSize="$sm"
@@ -589,16 +654,18 @@ export const NotificationsView = () => {
           >
             Notify me about...
           </Text>
-          <VStack mt="$3" alignItems="flex-start" space="md">
-            {notifications.map((iterator) => (
-              <CustomCheck
-                label={iterator}
-                key={iterator}
-                variant="radio"
-                value={iterator}
-              />
-            ))}
-          </VStack>
+          <RadioGroup>
+            <VStack mt="$3" alignItems="flex-start" space="md">
+              {notifications.map((iterator) => (
+                <CustomCheck
+                  label={iterator}
+                  key={iterator}
+                  variant="radio"
+                  value={iterator}
+                />
+              ))}
+            </VStack>
+          </RadioGroup>
           <Text
             fontSize="$lg"
             fontFamily="$heading"
