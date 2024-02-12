@@ -44,16 +44,8 @@ SkeletonCircle.propTypes = {
   borderRadius: PropTypes.string,
 };
 
-SkeletonCircle.defaultProps = {
-  borderRadius: '$full',
-};
-
 SkeletonBox.propTypes = {
   width: PropTypes.string.isRequired,
   height: PropTypes.string.isRequired,
   borderRadius: PropTypes.string,
-};
-
-SkeletonBox.defaultProps = {
-  borderRadius: '$full',
 };

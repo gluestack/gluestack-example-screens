@@ -171,11 +171,18 @@ const Music = () => {
             <ScrollView horizontal={true}>
               <HStack mb="$4" gap="$4">
                 {images.map((image, index) => (
-                  <VStack key={index} gap="$2">
-                    <Image w="$64" h="$80" borderRadius="$md" source={image} />
-                    <Text fontSize="$md">{titles[index]}</Text>
-                    <Text fontSize="$sm">{artists[index]}</Text>
-                  </VStack>
+                  <Pressable>
+                    <VStack key={index} gap="$2">
+                      <Image
+                        w="$64"
+                        h="$80"
+                        borderRadius="$md"
+                        source={image}
+                      />
+                      <Text fontSize="$md">{titles[index]}</Text>
+                      <Text fontSize="$sm">{artists[index]}</Text>
+                    </VStack>
+                  </Pressable>
                 ))}
               </HStack>
             </ScrollView>
@@ -187,11 +194,18 @@ const Music = () => {
             <ScrollView horizontal={true}>
               <HStack mb="$4" gap="$4">
                 {personalPlaylists.map((image, index) => (
-                  <VStack key={index} gap="$2">
-                    <Image w="$40" h="$40" borderRadius="$md" source={image} />
-                    <Text fontSize="$md">{personalTitles[index]}</Text>
-                    <Text fontSize="$sm">{personalArtists[index]}</Text>
-                  </VStack>
+                  <Pressable>
+                    <VStack key={index} gap="$2">
+                      <Image
+                        w="$40"
+                        h="$40"
+                        borderRadius="$md"
+                        source={image}
+                      />
+                      <Text fontSize="$md">{personalTitles[index]}</Text>
+                      <Text fontSize="$sm">{personalArtists[index]}</Text>
+                    </VStack>
+                  </Pressable>
                 ))}
               </HStack>
             </ScrollView>
@@ -286,7 +300,12 @@ const Music = () => {
           ))}
         </HStack>
         <HStack w="$full">
-          <Box paddingVertical="$6" paddingHorizontal="$2" w="$1/5">
+          <Box
+            sx={{ '@base': { display: 'none' }, '@md': { display: 'flex' } }}
+            paddingVertical="$6"
+            paddingHorizontal="$2"
+            w="$1/5"
+          >
             <Sidebar sidebarItems={sidebarItems} isNested />
           </Box>
 
