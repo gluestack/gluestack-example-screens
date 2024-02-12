@@ -582,7 +582,7 @@ const Cards: any = ({ w = '100%', h = '100%', ...props }: any) => {
           $lg-mb="$6"
           $xl-mb="$0"
         >
-          <VStack $sm-flexDirection="row">
+          <VStack $md-flexDirection="row">
             <VStack
               $base-width="$full"
               $md-width="$2/5"

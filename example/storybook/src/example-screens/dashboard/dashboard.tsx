@@ -72,17 +72,19 @@ const viewRenderer = (view: string) => {
 
 const Dashboard: any = ({ w = '100%', ...props }: any) => {
   const [view, setView] = React.useState<ViewType>('home');
-  const iconColor = useToken('colors', 'background200');
+  const iconColor = useToken('colors', 'trueGray200');
   const searchIconColor = useToken('colors', 'background500');
   const bellIconColor = useToken('colors', 'background600');
   const arrowIconColor = useToken('colors', 'background800');
-  const miniNavbarIconColor = useToken('colors', 'white');
-  const iconSize = useToken('space', '6');
+  const miniNavbarIconColor = useToken('colors', 'trueGray200');
+  const iconSize = useToken('space', '5');
   const arrowIconSize = useToken('space', '3');
   const searchIconSize = useToken('space', '3.5');
 
   const handleViewChange = (viewInput: typeof view) => {
-    setView(viewInput);
+    if (viewInput !== 'home') {
+      setView('home');
+    }
   };
 
   return (
@@ -96,14 +98,15 @@ const Dashboard: any = ({ w = '100%', ...props }: any) => {
       $base-flexDirection="column"
       $md-flexDirection="row"
       bg="$background0"
+      position="relative"
     >
       <HStack
-        bg="$background950"
-        justifyContent="space-between"
+        bg="$trueGray800"
+        justifyContent="flex-end"
         alignItems="center"
         $base-display="flex"
         $md-display="none"
-        p="$2"
+        p="$4"
         mb="$2"
         sx={{
           _web: {
@@ -113,18 +116,27 @@ const Dashboard: any = ({ w = '100%', ...props }: any) => {
           },
         }}
       >
-        <Pressable p="$2">
-          <MiniNavbarMenu
-            onViewChange={(newView: typeof view) => handleViewChange(newView)}
-          />
-        </Pressable>
-        <Pressable p="$2">
-          <Search
-            color={miniNavbarIconColor}
-            width={iconSize}
-            height={iconSize}
-          />
-        </Pressable>
+        <HStack space="md">
+          <Pressable p="$2">
+            <Search
+              color={miniNavbarIconColor}
+              width={iconSize}
+              height={iconSize}
+            />
+          </Pressable>
+          <Pressable
+            borderRadius="$lg"
+            $base-display="flex"
+            $xs-display="none"
+            p="$2"
+          >
+            <BellIcon
+              color={miniNavbarIconColor}
+              width={iconSize}
+              height={iconSize}
+            />
+          </Pressable>
+        </HStack>
       </HStack>
       <VStack
         alignItems="center"
@@ -145,14 +157,14 @@ const Dashboard: any = ({ w = '100%', ...props }: any) => {
           alignItems="center"
           $md-p="$4"
           $base-p="$2"
-          bg="$background950"
+          bg="$trueGray800"
           space="lg"
           borderRadius="$3xl"
         >
           <SidebarItem
             tooltipText="Dashboard"
             itemProps={{
-              bg: view === 'home' ? '$background800' : '$background950',
+              bg: view === 'home' ? '$trueGray600' : '$trueGray800',
               onPress: () => handleViewChange('home'),
             }}
             icon={
@@ -166,8 +178,7 @@ const Dashboard: any = ({ w = '100%', ...props }: any) => {
           <SidebarItem
             tooltipText="Announcements"
             itemProps={{
-              bg:
-                view === 'notifications' ? '$background800' : '$background950',
+              bg: view === 'notifications' ? '$trueGray600' : '$trueGray800',
               onPress: () => handleViewChange('notifications'),
             }}
             icon={
@@ -181,7 +192,7 @@ const Dashboard: any = ({ w = '100%', ...props }: any) => {
           <SidebarItem
             tooltipText="Calendar"
             itemProps={{
-              bg: view === 'calendar' ? '$background800' : '$background950',
+              bg: view === 'calendar' ? '$trueGray600' : '$trueGray800',
               onPress: () => handleViewChange('calendar'),
             }}
             icon={
@@ -195,7 +206,7 @@ const Dashboard: any = ({ w = '100%', ...props }: any) => {
           <SidebarItem
             tooltipText="Currency"
             itemProps={{
-              bg: view === 'currency' ? '$background800' : '$background950',
+              bg: view === 'currency' ? '$trueGray600' : '$trueGray800',
               onPress: () => handleViewChange('currency'),
             }}
             icon={
@@ -216,7 +227,7 @@ const Dashboard: any = ({ w = '100%', ...props }: any) => {
           <SidebarItem
             tooltipText="Profile"
             itemProps={{
-              bg: view === 'profile' ? '$background800' : '$background950',
+              bg: view === 'profile' ? '$trueGray600' : '$trueGray800',
               onPress: () => handleViewChange('profile'),
             }}
             icon={
@@ -226,7 +237,7 @@ const Dashboard: any = ({ w = '100%', ...props }: any) => {
           <SidebarItem
             tooltipText="Settings"
             itemProps={{
-              bg: view === 'settings' ? '$background800' : '$background950',
+              bg: view === 'settings' ? '$trueGray600' : '$trueGray800',
               onPress: () => handleViewChange('settings'),
             }}
             icon={
@@ -240,7 +251,7 @@ const Dashboard: any = ({ w = '100%', ...props }: any) => {
           <SidebarItem
             tooltipText="Help"
             itemProps={{
-              bg: view === 'help' ? '$background800' : '$background950',
+              bg: view === 'help' ? '$trueGray600' : '$trueGray800',
               onPress: () => handleViewChange('help'),
             }}
             icon={
@@ -256,14 +267,14 @@ const Dashboard: any = ({ w = '100%', ...props }: any) => {
           alignItems="center"
           $md-p="$4"
           $base-p="$2"
-          bg="$background950"
+          bg="$trueGray800"
           mt="$24"
           borderRadius="$3xl"
         >
           <SidebarItem
             tooltipText="Exit"
             itemProps={{
-              bg: view === 'exit' ? '$background800' : '$background950',
+              bg: view === 'exit' ? '$trueGray600' : '$trueGray800',
               onPress: () => handleViewChange('exit'),
             }}
             icon={
@@ -293,15 +304,10 @@ const Dashboard: any = ({ w = '100%', ...props }: any) => {
         >
           <VStack>
             <HStack
-              $md-pt="$6"
-              $lg-px="$2"
-              $xl-px="$6"
-              $sm-px="$4"
-              $sm-pt="$4"
-              $base-pt="$2"
-              $base-px="$2"
+              px="$4"
+              pt="$4"
               justifyContent="space-between"
-              alignItems="center"
+              alignItems="flex-start"
             >
               <VStack space="xs">
                 <Text
@@ -320,60 +326,50 @@ const Dashboard: any = ({ w = '100%', ...props }: any) => {
                   color="$text700"
                   fontWeight="$normal"
                   fontFamily="$body"
+                  numberOfLines={2}
+                  $lg-maxWidth="$64"
+                  $xl-maxWidth="$72"
                 >
                   Let’s take a look at your social presence
                 </Text>
               </VStack>
               <HStack
-                h="$10"
                 alignItems="center"
                 space="sm"
                 $xl-minWidth="$1/3"
                 $xl-justifyContent="flex-end"
                 $base-justifyContent="center"
               >
-                <HStack
-                  $md-borderWidth="$1"
-                  borderColor="$border300"
-                  borderRadius="$lg"
-                  alignItems="center"
-                  space="sm"
-                  $base-px="$0"
-                  $md-px="$4"
-                  $xl-flex={0.95}
-                  $md-flex={0.8}
-                  $base-flex={0.5}
-                  $base-borderWidth="$0"
-                  $base-display="none"
-                  $md-display="flex"
-                >
-                  <CustomInput
-                    inputProps={{
-                      'borderWidth': '$0',
-                      'sx': {
-                        _web: {
-                          boxShadow: 'none',
-                        },
+                <CustomInput
+                  inputProps={{
+                    'sx': {
+                      _web: {
+                        boxShadow: 'none',
                       },
-                      '$base-display': 'none',
-                      '$md-display': 'flex',
-                    }}
-                    icon={
-                      <InputIcon
-                        color={searchIconColor}
-                        as={Search}
-                        width={searchIconSize}
-                        height={searchIconSize}
-                      />
-                    }
-                  >
-                    <InputField
-                      placeholder="Search.."
-                      fontSize="$sm"
-                      color="$text400"
+                    },
+                    '$base-display': 'none',
+                    '$md-display': 'flex',
+                  }}
+                  formControlProps={{
+                    '$base-display': 'none',
+                    '$md-display': 'flex',
+                    'flexGrow': 1,
+                  }}
+                  icon={
+                    <InputIcon
+                      color={searchIconColor}
+                      as={Search}
+                      width={searchIconSize}
+                      height={searchIconSize}
                     />
-                  </CustomInput>
-                </HStack>
+                  }
+                >
+                  <InputField
+                    placeholder="Search.."
+                    fontSize="$sm"
+                    color="$text400"
+                  />
+                </CustomInput>
                 <Tooltip
                   placement="top"
                   trigger={(triggerProps) => {
@@ -381,8 +377,9 @@ const Dashboard: any = ({ w = '100%', ...props }: any) => {
                       <Pressable
                         bg="$background100"
                         borderRadius="$lg"
-                        $base-p="$0.5"
-                        $sm-p="$2"
+                        p="$2"
+                        $base-display="none"
+                        $xs-display="flex"
                         {...triggerProps}
                       >
                         <BellIcon
@@ -400,13 +397,15 @@ const Dashboard: any = ({ w = '100%', ...props }: any) => {
                 </Tooltip>
               </HStack>
             </HStack>
-            <Box mt="$11">{viewRenderer(view)}</Box>
+            <Box mt="$10">{viewRenderer(view)}</Box>
           </VStack>
         </Box>
         <Box $xl-width="$2/6" $lg-width="$2/5" $base-width="$full">
           <VStack flexGrow={1}>
             <Card
               bg="$background50"
+              hardShadow="0"
+              borderWidth="$0"
               $base-flexGrow={1}
               $lg-flexGrow={0}
               $xs-py="$4.5"
@@ -414,7 +413,7 @@ const Dashboard: any = ({ w = '100%', ...props }: any) => {
               $base-py="$3.5"
               $base-px="$2"
               $base-my="$3"
-              $base-mx="$2"
+              $base-mx="$3"
               $md-mx="$4"
               $lg-mx="$3"
             >
@@ -451,6 +450,9 @@ const Dashboard: any = ({ w = '100%', ...props }: any) => {
                     textAlign="center"
                     width="$full"
                     mt="$2.5"
+                    maxWidth="$72"
+                    numberOfLines={2}
+                    lineHeight="$sm"
                   >
                     Pushing the boundaries of reality with XR design wizardry
                     ✨🚀 #XRDesigner
@@ -465,7 +467,7 @@ const Dashboard: any = ({ w = '100%', ...props }: any) => {
                   width="$full"
                   justifyContent="center"
                 >
-                  <VStack alignItems="center" space="sm">
+                  <VStack alignItems="center" space="sm" $sm-w="$20">
                     <Text
                       fontFamily="$heading"
                       fontSize="$sm"
@@ -490,7 +492,7 @@ const Dashboard: any = ({ w = '100%', ...props }: any) => {
                     w="$0.5"
                     orientation="vertical"
                   />
-                  <VStack alignItems="center" space="sm">
+                  <VStack alignItems="center" space="sm" $sm-w="$20">
                     <Text
                       fontFamily="$heading"
                       fontSize="$sm"
@@ -515,7 +517,7 @@ const Dashboard: any = ({ w = '100%', ...props }: any) => {
                     w="$0.5"
                     orientation="vertical"
                   />
-                  <VStack alignItems="center" space="sm">
+                  <VStack alignItems="center" space="sm" $sm-w="$20">
                     <Text
                       fontFamily="$heading"
                       fontSize="$sm"
@@ -545,7 +547,7 @@ const Dashboard: any = ({ w = '100%', ...props }: any) => {
             >
               <VStack $sm-minWidth="$72" $base-minWidth="$56" space="xl">
                 {comments.map((comment) => (
-                  <VStack justifyContent="center" space="lg">
+                  <VStack justifyContent="center" space="lg" px="$5">
                     <CommentCard
                       comment={comment.comment}
                       userName={comment.userName}
@@ -559,10 +561,10 @@ const Dashboard: any = ({ w = '100%', ...props }: any) => {
                   </VStack>
                 ))}
               </VStack>
-              <Pressable mt="$20">
+              <Pressable mt="$20" px="$5">
                 <HStack
                   space="sm"
-                  justifyContent="flex-end"
+                  justifyContent="flex-start"
                   alignItems="center"
                 >
                   <Text
@@ -584,6 +586,9 @@ const Dashboard: any = ({ w = '100%', ...props }: any) => {
           </VStack>
         </Box>
       </Box>
+      <MiniNavbarMenu
+        onViewChange={(newView: typeof view) => handleViewChange(newView)}
+      />
     </Box>
   );
 };
