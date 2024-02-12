@@ -44,7 +44,7 @@ import {
   languages,
   notifications,
 } from './constants';
-import Skeleton from '../components/Skeleton/Skeleton';
+import { SkeletonBox, SkeletonCircle } from '../components/SkeletonComponent';
 
 export type ViewType =
   | 'profile'
@@ -505,7 +505,38 @@ export const AppearanceView = () => {
                   borderWidth="$2"
                   borderColor={theme === 'light' ? '$primary950' : '$primary0'}
                 >
-                  <Skeleton w="$full" />
+                  <VStack
+                    borderRadius="$md"
+                    gap="$2"
+                    p="$2"
+                    w="$full"
+                    bg="$background100"
+                  >
+                    <VStack bg="$white" p="$2" borderRadius="$md" gap="$2">
+                      <SkeletonBox width="$3/5" height="$3" />
+                      <SkeletonBox width="$3/5" height="$3" />
+                    </VStack>
+                    <HStack
+                      bg="$white"
+                      p="$2"
+                      borderRadius="$md"
+                      gap="$2"
+                      alignItems="center"
+                    >
+                      <SkeletonCircle size="$6" />
+                      <SkeletonBox width="$3/5" height="$3" />
+                    </HStack>
+                    <HStack
+                      bg="$white"
+                      p="$2"
+                      borderRadius="$md"
+                      gap="$2"
+                      alignItems="center"
+                    >
+                      <SkeletonCircle size="$6" />
+                      <SkeletonBox width="$3/5" height="$3" />
+                    </HStack>
+                  </VStack>
                 </Pressable>
                 <Text
                   fontSize="$sm"
@@ -529,7 +560,43 @@ export const AppearanceView = () => {
                   borderWidth="$2"
                   borderColor={theme === 'dark' ? '$primary950' : '$primary0'}
                 >
-                  <Skeleton w="$full" />
+                  <VStack
+                    borderRadius="$md"
+                    gap="$2"
+                    p="$2"
+                    w="$full"
+                    bg="$trueGray800"
+                  >
+                    <VStack
+                      bg="$trueGray700"
+                      p="$2"
+                      borderRadius="$md"
+                      gap="$2"
+                    >
+                      <SkeletonBox width="$3/5" height="$3" bg="$trueGray500" />
+                      <SkeletonBox width="$3/5" height="$3" bg="$trueGray500" />
+                    </VStack>
+                    <HStack
+                      bg="$trueGray700"
+                      p="$2"
+                      borderRadius="$md"
+                      gap="$2"
+                      alignItems="center"
+                    >
+                      <SkeletonCircle size="$6" bg="$trueGray500" />
+                      <SkeletonBox width="$3/5" height="$3" bg="$trueGray500" />
+                    </HStack>
+                    <HStack
+                      bg="$trueGray700"
+                      p="$2"
+                      borderRadius="$md"
+                      gap="$2"
+                      alignItems="center"
+                    >
+                      <SkeletonCircle size="$6" bg="$trueGray500" />
+                      <SkeletonBox width="$3/5" height="$3" bg="$trueGray500" />
+                    </HStack>
+                  </VStack>
                 </Pressable>
                 <Text
                   fontSize="$sm"
