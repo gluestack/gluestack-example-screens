@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import {
   Button,
   ButtonIcon,
@@ -18,11 +18,134 @@ import {
   Fab,
   FabIcon,
   EditIcon,
+  Icon,
+  ChevronRightIcon,
 } from '@gluestack-ui-new/themed';
-import { PlusCircle } from 'lucide-react-native';
-import Sidebar from '../components/Sidebar';
+import {
+  PlusCircle,
+  User,
+  File,
+  Pencil,
+  Eye,
+  Command,
+  ArrowBigUp,
+  Mic2,
+  Globe,
+} from 'lucide-react-native';
 import { sidebarItems } from './constants';
 
+interface SidebarItemProps {
+  key: string;
+  value: string;
+}
+interface NestedSidebarItemProps extends SidebarItemProps {
+  key: string;
+  value: string;
+  icon: any;
+}
+interface SidebarProps {
+  sidebarItems: Array<SidebarItemProps>;
+  itemProps?: any;
+  onSelected: (item: SidebarItemProps) => void;
+  isNested?: boolean;
+}
+
+const Sidebar = ({
+  sidebarItems,
+  itemProps,
+  onSelected,
+  isNested = false,
+}: SidebarProps) => {
+  const [selected, setSelected] = React.useState<SidebarItemProps>(
+    sidebarItems[0]
+  );
+  const handlePress = (itemInput: SidebarItemProps) => {
+    setSelected(itemInput);
+    onSelected(itemInput);
+  };
+  return (
+    <VStack w="$full" flexGrow={1} space={isNested ? '3xl' : 'sm'}>
+      {!isNested ? (
+        <>
+          {sidebarItems.map((item) => (
+            <Pressable
+              w="$full"
+              p="$2"
+              $active-bg="$background100"
+              $hover-bg="$background100"
+              key={item.key}
+              onPress={() => handlePress(item)}
+              bg={item.key === selected.key ? '$background100' : ''}
+              borderRadius="$md"
+              {...itemProps}
+            >
+              <HStack>
+                <Text
+                  color="$primary950"
+                  fontSize="$md"
+                  px="$4"
+                  fontFamily="$body"
+                >
+                  {item.value}
+                </Text>
+              </HStack>
+            </Pressable>
+          ))}
+        </>
+      ) : (
+        <>
+          {sidebarItems.map((item: any) => (
+            <VStack>
+              <Text
+                color="$primary950"
+                fontSize="$lg"
+                fontWeight="$bold"
+                mx="$4"
+                fontFamily="$heading"
+              >
+                {item?.heading}
+              </Text>
+              <VStack
+                w="$full"
+                flexGrow={1}
+                space="sm"
+                maxHeight="$56"
+                overflow="scroll"
+                key={item?.heading}
+                mt="$2"
+              >
+                {item?.subItems?.map((item: NestedSidebarItemProps) => (
+                  <Pressable
+                    w="$full"
+                    p="$2"
+                    $active-bg="$background100"
+                    $hover-bg="$background100"
+                    key={item.key}
+                    onPress={() => handlePress(item)}
+                    bg={item.key === selected.key ? '$background100' : ''}
+                    borderRadius="$md"
+                    {...itemProps}
+                  >
+                    <HStack alignItems="center" space="sm" ml="$1.5">
+                      {item?.icon && <Icon as={item.icon} />}
+                      <Text
+                        color="$primary950"
+                        fontSize="$md"
+                        fontFamily="$body"
+                      >
+                        {item.value}
+                      </Text>
+                    </HStack>
+                  </Pressable>
+                ))}
+              </VStack>
+            </VStack>
+          ))}
+        </>
+      )}
+    </VStack>
+  );
+};
 const tabs = [
   { label: 'Music', key: 'music' },
   { label: 'Podcasts', key: 'podcasts' },
@@ -34,41 +157,88 @@ const navTabs = [
     key: 'music',
     menuItems: [
       { label: 'About Music' },
-      { label: 'Preferences...' },
-      { label: 'Hide Music...' },
-      { label: 'Hide Others...' },
-      { label: 'Quit Music' },
+      { label: 'Preferences...', menuIcon: [{ icon: Command }], iconText: ',' },
+      { label: 'Hide Music...', menuIcon: [{ icon: Command }], iconText: 'H' },
+      {
+        label: 'Hide Others...',
+        menuIcon: [{ icon: ArrowBigUp }, { icon: Command }],
+        iconText: 'H',
+      },
+      { label: 'Quit Music', menuIcon: [{ icon: Command }], iconText: 'Q' },
     ],
   },
   {
     label: 'File',
     key: 'file',
     menuItems: [
-      { label: 'New' },
-      { label: 'Open Stream URL... ' },
-      { label: 'Close Window' },
-      { label: 'Library' },
-      { label: 'Import...' },
+      { label: 'New', menuIcon: [{ icon: ChevronRightIcon }] },
+      {
+        label: 'Open Stream URL... ',
+        menuIcon: [{ icon: Command }],
+        iconText: 'U',
+      },
+      { label: 'Close Window', menuIcon: [{ icon: Command }], iconText: 'W' },
+      { label: 'Library', menuIcon: [{ icon: ChevronRightIcon }] },
+      { label: 'Import...', menuIcon: [{ icon: Command }], iconText: 'O' },
       { label: 'Burn Playlist to Disc...', disabled: true },
-      { label: 'Show in Finder' },
+      {
+        label: 'Show in Finder',
+        menuIcon: [{ icon: ArrowBigUp }, { icon: Command }],
+        iconText: 'R',
+      },
       { label: 'Convert' },
       { label: 'Page Setup...' },
-      { label: 'Print...', disabled: true },
+      {
+        label: 'Print...',
+        disabled: true,
+        menuIcon: [{ icon: Command }],
+        iconText: 'P',
+      },
     ],
   },
   {
     label: 'Edit',
     key: 'edit',
     menuItems: [
-      { label: 'Undo', disabled: true },
-      { label: 'Redo', disabled: true },
-      { label: 'Cut', disabled: true },
-      { label: 'Copy', disabled: true },
-      { label: 'Paste', disabled: true },
-      { label: 'Select All' },
-      { label: 'Deselect All', disabled: true },
-      { label: 'Smart Dictation...' },
-      { label: 'Emoji & Symbols' },
+      {
+        label: 'Undo',
+        disabled: true,
+        menuIcon: [{ icon: Command }],
+        iconText: 'Z',
+      },
+      {
+        label: 'Redo',
+        disabled: true,
+        menuIcon: [{ icon: ArrowBigUp }, { icon: Command }],
+        iconText: 'Z',
+      },
+      {
+        label: 'Cut',
+        disabled: true,
+        menuIcon: [{ icon: Command }],
+        iconText: 'X',
+      },
+      {
+        label: 'Copy',
+        disabled: true,
+        menuIcon: [{ icon: Command }],
+        iconText: 'C',
+      },
+      {
+        label: 'Paste',
+        disabled: true,
+        menuIcon: [{ icon: Command }],
+        iconText: 'V',
+      },
+      { label: 'Select All', menuIcon: [{ icon: Command }], iconText: 'A' },
+      {
+        label: 'Deselect All',
+        disabled: true,
+        menuIcon: [{ icon: ArrowBigUp }, { icon: Command }],
+        iconText: 'A',
+      },
+      { label: 'Smart Dictation...', menuIcon: [{ icon: Mic2 }] },
+      { label: 'Emoji & Symbols', menuIcon: [{ icon: Globe }] },
     ],
   },
   {
@@ -151,13 +321,17 @@ const Tab = ({ label, isActive, onPress, disabled }) => (
     zIndex={1}
     opacity={disabled ? 0.5 : 1}
   >
-    <Text p="$2" style={{ fontWeight: label === 'Music' ? 'bold' : 'normal' }}>
+    <Text
+      p="$2"
+      sx={{ '@base': { fontSize: '$sm' }, '@md': { fontSize: '$md' } }}
+      style={{ fontWeight: label === 'Music' ? 'bold' : 'normal' }}
+    >
       {label}
     </Text>
   </Pressable>
 );
 const Music = () => {
-  const [activeTab, setActiveTab] = useState('music');
+  const [activeTab, setActiveTab] = React.useState('music');
 
   const handleTabPress = (tab: React.SetStateAction<string>) => {
     setActiveTab(tab);
@@ -181,13 +355,16 @@ const Music = () => {
                           w="$64"
                           h="$80"
                           borderRadius="$md"
-                          overflow="hidden" // Ensure the image stays within its container
+                          overflow="hidden"
                         >
                           <Image
                             w="100%"
                             h="100%"
                             source={image}
-                            transform={[{ scale: props.hovered ? 1.1 : 1 }]} // Adjust the scale factor as needed
+                            style={{
+                              transform: [{ scale: props.hovered ? 1.05 : 1 }],
+                              transition: 'transform 0.3s ease-in-out',
+                            }}
                           />
                         </Box>
                         <Text fontSize="$md">{titles[index]}</Text>
@@ -213,14 +390,17 @@ const Music = () => {
                           w="$40"
                           h="$40"
                           borderRadius="$md"
-                          overflow="hidden" // Ensure the image stays within its container
+                          overflow="hidden"
                         >
                           <Image
                             w="100%"
                             h="100%"
                             borderRadius="$md"
                             source={image}
-                            transform={[{ scale: props.hovered ? 1.05 : 1 }]} // Adjust the scale factor as needed
+                            style={{
+                              transform: [{ scale: props.hovered ? 1.05 : 1 }],
+                              transition: 'transform 0.3s ease-in-out',
+                            }}
                             alt="Explore"
                           />
                         </Box>
@@ -273,6 +453,17 @@ const Music = () => {
       );
     }
   };
+  const [selected, setSelected] = React.useState(new Set([]));
+
+  const [selectedKeys, setSelectedKeys] = React.useState({});
+
+  // Function to handle selection change for a specific tab
+  const handleSelectionChange = (tabKey, keys) => {
+    setSelectedKeys((prevState) => ({
+      ...prevState,
+      [tabKey]: keys,
+    }));
+  };
 
   return (
     <VStack
@@ -299,11 +490,17 @@ const Music = () => {
         >
           {navTabs.map(({ label, key, menuItems }) => (
             <Menu
-              // ml="$4"
+              disabledKeys={menuItems
+                .filter((item) => item.disabled)
+                .map((item) => item.label)}
               zIndex={1}
               borderWidth={1}
               key={key}
               placement="bottom left"
+              selectionMode="single"
+              selectedKeys={selectedKeys[key] || []} // Use selected keys for this tab
+              onSelectionChange={(keys) => handleSelectionChange(key, keys)}
+              closeOnSelect={true}
               trigger={({ ...triggerProps }) => {
                 return (
                   <Button
@@ -323,8 +520,19 @@ const Music = () => {
               }}
             >
               {menuItems.map((menuItem, index) => (
-                <MenuItem key={index} textValue={menuItem.label}>
+                <MenuItem
+                  justifyContent="space-between"
+                  key={index}
+                  textValue={menuItem.label}
+                >
                   <MenuItemLabel size="sm">{menuItem.label}</MenuItemLabel>
+                  <HStack>
+                    {menuItem.menuIcon &&
+                      menuItem.menuIcon.map((icon, iconIndex) => (
+                        <Icon size="xs" as={icon.icon} key={iconIndex} />
+                      ))}
+                    <Text size="xs">{menuItem.iconText}</Text>
+                  </HStack>
                 </MenuItem>
               ))}
             </Menu>
@@ -354,7 +562,6 @@ const Music = () => {
               '@base': { p: '$0' },
             }}
           >
-            {/* Added flex: 1 */}
             <HStack
               sx={{
                 '@md': { justifyContent: 'space-between' },
@@ -394,14 +601,51 @@ const Music = () => {
           </VStack>
         </HStack>
       </VStack>
-      <Fab
-        sx={{ '@base': { display: 'flex' }, '@md': { display: 'none' } }}
-        placement="bottom right"
-        position="fixed"
-        size="lg"
+
+      <Menu
+        borderWidth={1}
+        placement="top"
+        selectionMode="single"
+        selectedKeys={selected}
+        onSelectionChange={(keys) => {
+          setSelected(keys);
+        }}
+        closeOnSelect={true}
+        trigger={({ ...triggerProps }) => {
+          return (
+            <Fab
+              {...triggerProps}
+              sx={{ '@base': { display: 'flex' }, '@md': { display: 'none' } }}
+              placement="bottom right"
+              position="fixed"
+              size="lg"
+            >
+              <FabIcon as={EditIcon} />
+            </Fab>
+          );
+        }}
       >
-        <FabIcon as={EditIcon} />
-      </Fab>
+        <MenuItem key="File" textValue="File">
+          <Icon as={File} size="sm" mr="$2" />
+          <MenuItemLabel size="sm">File</MenuItemLabel>
+        </MenuItem>
+        <MenuItem key="Edit" textValue="Edit">
+          <Icon as={Pencil} size="sm" mr="$2" />
+          <MenuItemLabel size="sm">Edit</MenuItemLabel>
+        </MenuItem>
+        <MenuItem key="View" textValue="View">
+          <Icon as={Eye} size="sm" mr="$2" />
+          <MenuItemLabel size="sm">View</MenuItemLabel>
+        </MenuItem>
+        <MenuItem key="Account" textValue="Account">
+          <Icon as={User} size="sm" mr="$2" />
+          <MenuItemLabel size="sm">Account</MenuItemLabel>
+        </MenuItem>
+        <MenuItem key="Add music" textValue="Add music">
+          <Icon as={PlusCircle} size="sm" mr="$2" />
+          <MenuItemLabel size="sm">Add music</MenuItemLabel>
+        </MenuItem>
+      </Menu>
     </VStack>
   );
 };
