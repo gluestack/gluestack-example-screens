@@ -32,6 +32,14 @@ import {
   CheckIcon,
   Switch,
   Pressable,
+  useMediaQuery,
+  ScrollView,
+  Fab,
+  Menu,
+  MenuItem,
+  MenuItemLabel,
+  FabIcon,
+  MenuIcon,
 } from '@gluestack-ui/themed';
 import React from 'react';
 import CustomInput from '../components/CustomInput';
@@ -65,18 +73,16 @@ const CustomCheck = ({
   return (
     <HStack alignItems="center">
       {variant === 'radio' ? (
-        <RadioGroup>
-          <Radio value={value} size="sm" isInvalid={false} isDisabled={false}>
-            <RadioIndicator mr="$2">
-              <RadioIcon as={CircleIcon} strokeWidth={1} />
-            </RadioIndicator>
-            {label && (
-              <RadioLabel color="$primary950" fontSize="$sm">
-                {label}
-              </RadioLabel>
-            )}
-          </Radio>
-        </RadioGroup>
+        <Radio value={value} size="sm" isInvalid={false} isDisabled={false}>
+          <RadioIndicator mr="$2">
+            <RadioIcon as={CircleIcon} strokeWidth={1} />
+          </RadioIndicator>
+          {label && (
+            <RadioLabel color="$primary950" fontSize="$sm">
+              {label}
+            </RadioLabel>
+          )}
+        </Radio>
       ) : (
         <Checkbox size="sm" isInvalid={false} isDisabled={false} value={value}>
           <CheckboxIndicator mr="$2">
@@ -110,26 +116,29 @@ const SwitchRow = ({
       borderColor="$border200"
       borderRadius="$md"
     >
-      <VStack alignItems="flex-start" space="xs">
+      <VStack alignItems="flex-start" space="xs" maxWidth="$4/6">
         <Text
-          fontSize="$md"
+          $md-fontSize="$md"
+          $base-fontSize="$xs"
           fontFamily="$heading"
           color="$primary950"
           fontWeight="$normal"
+          numberOfLines={2}
         >
           {title}
         </Text>
         <Text
-          fontSize="$xs"
+          $md-fontSize="$xs"
+          $base-fontSize="$2xs"
           fontFamily="$body"
           color="$primary200"
           fontWeight="$normal"
-          numberOfLines={2}
+          numberOfLines={3}
         >
           {subTitle}
         </Text>
       </VStack>
-      <Switch size="md" />
+      <Switch $md-size="md" $base-size="sm" />
     </HStack>
   );
 };
@@ -146,11 +155,12 @@ const CustomSelect = ({
   return (
     <VStack w="$full">
       <Text
-        fontSize="$sm"
         fontFamily="$heading"
         color="$primary950"
         fontWeight="$normal"
         mb="$3"
+        $base-fontSize="$xs"
+        $md-fontSize="$sm"
       >
         {label}
       </Text>
@@ -192,10 +202,11 @@ export const ProfileView = () => {
   };
   return (
     <VStack flex={1} alignItems="flex-start">
-      <Box w="$full" maxWidth="$4/6" px="$4">
+      <Box w="$full" $base-maxWidth="$6/6" $lg-maxWidth="$4/6" px="$4">
         <VStack w="$full" alignItems="flex-start" space="sm">
           <Text
-            fontSize="$lg"
+            $base-fontSize="$md"
+            $md-fontSize="$lg"
             fontFamily="$heading"
             color="$primary950"
             fontWeight="$bold"
@@ -203,7 +214,8 @@ export const ProfileView = () => {
             Profile
           </Text>
           <Text
-            fontSize="$sm"
+            $base-fontSize="$xs"
+            $md-fontSize="$sm"
             fontFamily="$body"
             color="$primary200"
             fontWeight="$normal"
@@ -224,7 +236,8 @@ export const ProfileView = () => {
               <InputField type="text" placeholder="gluestack" size="sm" />
             </CustomInput>
             <Text
-              fontSize="$xs"
+              $base-fontSize="$2xs"
+              $md-fontSize="$xs"
               fontFamily="$body"
               color="$primary200"
               fontWeight="$normal"
@@ -242,7 +255,8 @@ export const ProfileView = () => {
               selectionData={emails}
             />
             <Text
-              fontSize="$xs"
+              $base-fontSize="$2xs"
+              $md-fontSize="$xs"
               fontFamily="$body"
               color="$primary200"
               fontWeight="$normal"
@@ -254,7 +268,8 @@ export const ProfileView = () => {
           </VStack>
           <VStack mt="$5" w="$full">
             <Text
-              fontSize="$sm"
+              $base-fontSize="$xs"
+              $md-fontSize="$sm"
               fontFamily="$heading"
               color="$primary700"
               fontWeight="$normal"
@@ -273,7 +288,8 @@ export const ProfileView = () => {
               <TextareaInput placeholder="Tell us a little bit of your self" />
             </Textarea>
             <Text
-              fontSize="$xs"
+              $base-fontSize="$2xs"
+              $md-fontSize="$xs"
               fontFamily="$body"
               color="$primary200"
               fontWeight="$normal"
@@ -285,7 +301,8 @@ export const ProfileView = () => {
           </VStack>
           <VStack mt="$5" w="$full">
             <Text
-              fontSize="$sm"
+              $base-fontSize="$xs"
+              $md-fontSize="$sm"
               fontFamily="$heading"
               color="$primary700"
               fontWeight="$normal"
@@ -293,7 +310,8 @@ export const ProfileView = () => {
               URLs
             </Text>
             <Text
-              fontSize="$xs"
+              $base-fontSize="$2xs"
+              $md-fontSize="$xs"
               fontFamily="$body"
               color="$primary200"
               fontWeight="$normal"
@@ -320,11 +338,13 @@ export const ProfileView = () => {
               mt="$2"
               w="$18"
               borderColor="$border200"
-              p="$2"
+              $md-p="$2"
+              $base-p="$1"
               onPress={handleAddUrl}
             >
               <Text
-                fontSize="$xs"
+                $base-fontSize="$2xs"
+                $md-fontSize="$xs"
                 fontFamily="$heading"
                 color="$primary700"
                 fontWeight="$semibold"
@@ -335,7 +355,8 @@ export const ProfileView = () => {
           </VStack>
           <Button variant="solid" size="lg" mt="$4" borderRadius="$md" p="$3">
             <Text
-              fontSize="$sm"
+              $base-fontSize="$xs"
+              $md-fontSize="$sm"
               fontFamily="$heading"
               color="$background0"
               fontWeight="$normal"
@@ -351,10 +372,11 @@ export const ProfileView = () => {
 export const AccountView = () => {
   return (
     <VStack flex={1} alignItems="flex-start">
-      <Box w="$full" maxWidth="$4/6" px="$4">
+      <Box w="$full" $base-maxWidth="$6/6" $lg-maxWidth="$4/6" px="$4">
         <VStack w="$full" alignItems="flex-start" space="sm">
           <Text
-            fontSize="$lg"
+            $base-fontSize="$md"
+            $md-fontSize="$lg"
             fontFamily="$heading"
             color="$primary950"
             fontWeight="$bold"
@@ -362,7 +384,8 @@ export const AccountView = () => {
             Account
           </Text>
           <Text
-            fontSize="$sm"
+            $base-fontSize="$xs"
+            $md-fontSize="$sm"
             fontFamily="$body"
             color="$primary200"
             fontWeight="$normal"
@@ -384,7 +407,8 @@ export const AccountView = () => {
               <InputField type="text" placeholder="Your name" size="sm" />
             </CustomInput>
             <Text
-              fontSize="$xs"
+              $base-fontSize="$2xs"
+              $md-fontSize="$xs"
               fontFamily="$body"
               color="$primary200"
               fontWeight="$normal"
@@ -402,7 +426,8 @@ export const AccountView = () => {
               selectionData={languages}
             />
             <Text
-              fontSize="$xs"
+              $base-fontSize="$2xs"
+              $md-fontSize="$xs"
               fontFamily="$body"
               color="$primary200"
               fontWeight="$normal"
@@ -415,7 +440,8 @@ export const AccountView = () => {
 
           <Button variant="solid" size="lg" mt="$4" borderRadius="$md" p="$3">
             <Text
-              fontSize="$sm"
+              $base-fontSize="$xs"
+              $md-fontSize="$sm"
               fontFamily="$heading"
               color="$background0"
               fontWeight="$normal"
@@ -432,10 +458,11 @@ export const AppearanceView = () => {
   const [theme, setTheme] = React.useState<'light' | 'dark'>('light');
   return (
     <VStack flex={1} alignItems="flex-start">
-      <Box w="$full" maxWidth="$4/6" px="$4">
+      <Box w="$full" $base-maxWidth="$6/6" $lg-maxWidth="$4/6" px="$4">
         <VStack w="$full" alignItems="flex-start" space="sm">
           <Text
-            fontSize="$lg"
+            $base-fontSize="$md"
+            $md-fontSize="$lg"
             fontFamily="$heading"
             color="$primary950"
             fontWeight="$bold"
@@ -443,7 +470,8 @@ export const AppearanceView = () => {
             Appearance
           </Text>
           <Text
-            fontSize="$sm"
+            $base-fontSize="$xs"
+            $md-fontSize="$sm"
             fontFamily="$body"
             color="$primary200"
             fontWeight="$normal"
@@ -459,7 +487,8 @@ export const AppearanceView = () => {
               selectionData={fonts}
             />
             <Text
-              fontSize="$xs"
+              $base-fontSize="$2xs"
+              $md-fontSize="$xs"
               fontFamily="$body"
               color="$primary200"
               fontWeight="$normal"
@@ -471,7 +500,8 @@ export const AppearanceView = () => {
           </VStack>
           <VStack w="$full" alignItems="flex-start" space="sm" mt="$7">
             <Text
-              fontSize="$sm"
+              $base-fontSize="$xs"
+              $md-fontSize="$sm"
               fontFamily="$heading"
               color="$primary950"
               fontWeight="$normal"
@@ -479,7 +509,8 @@ export const AppearanceView = () => {
               Theme
             </Text>
             <Text
-              fontSize="$xs"
+              $base-fontSize="$2xs"
+              $md-fontSize="$xs"
               fontFamily="$body"
               color="$primary200"
               fontWeight="$normal"
@@ -488,7 +519,9 @@ export const AppearanceView = () => {
             </Text>
             <HStack
               alignItems="center"
-              width="$3/5"
+              $md-width="$4/5"
+              $lg-width="$3/5"
+              $base-width="$full"
               space="lg"
               justifyContent="flex-start"
               mt="$3"
@@ -507,39 +540,85 @@ export const AppearanceView = () => {
                 >
                   <VStack
                     borderRadius="$md"
-                    gap="$2"
-                    p="$2"
+                    $base-gap="$1"
+                    $md-gap="$2"
+                    $md-p="$2"
+                    $base-p="$1"
                     w="$full"
                     bg="$background100"
                   >
-                    <VStack bg="$white" p="$2" borderRadius="$md" gap="$2">
-                      <SkeletonBox width="$3/5" height="$3" />
-                      <SkeletonBox width="$3/5" height="$3" />
+                    <VStack
+                      bg="$white"
+                      $md-p="$2"
+                      $base-p="$1"
+                      borderRadius="$md"
+                      $base-gap="$1"
+                      $md-gap="$2"
+                    >
+                      <SkeletonBox
+                        width="$3/5"
+                        height="$3"
+                        $md-height="$3"
+                        $base-height="$2"
+                      />
+                      <SkeletonBox
+                        width="$3/5"
+                        height="$3"
+                        $md-height="$3"
+                        $base-height="$2"
+                      />
                     </VStack>
                     <HStack
                       bg="$white"
-                      p="$2"
+                      $md-p="$2"
+                      $base-p="$1"
                       borderRadius="$md"
-                      gap="$2"
+                      $base-gap="$1"
+                      $md-gap="$2"
                       alignItems="center"
                     >
-                      <SkeletonCircle size="$6" />
-                      <SkeletonBox width="$3/5" height="$3" />
+                      <SkeletonCircle
+                        size="$6"
+                        $md-w="$6"
+                        $md-h="$6"
+                        $base-w="$3"
+                        $base-h="$3"
+                      />
+                      <SkeletonBox
+                        width="$3/5"
+                        height="$3"
+                        $base-h="$2"
+                        $md-h="$3"
+                      />
                     </HStack>
                     <HStack
                       bg="$white"
-                      p="$2"
+                      $md-p="$2"
+                      $base-p="$1"
                       borderRadius="$md"
-                      gap="$2"
+                      $base-gap="$1"
+                      $md-gap="$2"
                       alignItems="center"
                     >
-                      <SkeletonCircle size="$6" />
-                      <SkeletonBox width="$3/5" height="$3" />
+                      <SkeletonCircle
+                        size="$6"
+                        $md-w="$6"
+                        $md-h="$6"
+                        $base-w="$3"
+                        $base-h="$3"
+                      />
+                      <SkeletonBox
+                        width="$3/5"
+                        height="$3"
+                        $md-h="$3"
+                        $base-h="$2"
+                      />
                     </HStack>
                   </VStack>
                 </Pressable>
                 <Text
-                  fontSize="$sm"
+                  $base-fontSize="$xs"
+                  $md-fontSize="$sm"
                   fontFamily="$heading"
                   color="$primary950"
                   fontWeight="$normal"
@@ -562,44 +641,91 @@ export const AppearanceView = () => {
                 >
                   <VStack
                     borderRadius="$md"
-                    gap="$2"
-                    p="$2"
+                    $base-gap="$1"
+                    $md-gap="$2"
+                    $md-p="$2"
+                    $base-p="$1"
                     w="$full"
                     bg="$trueGray800"
                   >
                     <VStack
                       bg="$trueGray700"
-                      p="$2"
+                      $md-p="$2"
+                      $base-p="$1"
                       borderRadius="$md"
-                      gap="$2"
+                      $base-gap="$1"
+                      $md-gap="$2"
                     >
-                      <SkeletonBox width="$3/5" height="$3" bg="$trueGray500" />
-                      <SkeletonBox width="$3/5" height="$3" bg="$trueGray500" />
+                      <SkeletonBox
+                        width="$3/5"
+                        height="$3"
+                        $md-height="$3"
+                        $base-height="$2"
+                        bg="$trueGray500"
+                      />
+                      <SkeletonBox
+                        width="$3/5"
+                        height="$3"
+                        $md-height="$3"
+                        $base-height="$2"
+                        bg="$trueGray500"
+                      />
                     </VStack>
                     <HStack
                       bg="$trueGray700"
-                      p="$2"
+                      $md-p="$2"
+                      $base-p="$1"
                       borderRadius="$md"
-                      gap="$2"
+                      $base-gap="$1"
+                      $md-gap="$2"
                       alignItems="center"
                     >
-                      <SkeletonCircle size="$6" bg="$trueGray500" />
-                      <SkeletonBox width="$3/5" height="$3" bg="$trueGray500" />
+                      <SkeletonCircle
+                        size="$6"
+                        $md-w="$6"
+                        $md-h="$6"
+                        $base-w="$3"
+                        $base-h="$3"
+                        bg="$trueGray500"
+                      />
+                      <SkeletonBox
+                        width="$3/5"
+                        height="$3"
+                        $base-h="$2"
+                        $md-h="$3"
+                        bg="$trueGray500"
+                      />
                     </HStack>
                     <HStack
                       bg="$trueGray700"
-                      p="$2"
+                      $md-p="$2"
+                      $base-p="$1"
                       borderRadius="$md"
-                      gap="$2"
+                      $base-gap="$1"
+                      $md-gap="$2"
                       alignItems="center"
                     >
-                      <SkeletonCircle size="$6" bg="$trueGray500" />
-                      <SkeletonBox width="$3/5" height="$3" bg="$trueGray500" />
+                      <SkeletonCircle
+                        size="$6"
+                        $md-w="$6"
+                        $md-h="$6"
+                        $base-w="$3"
+                        $base-h="$3"
+                        bg="$trueGray500"
+                      />
+                      <SkeletonBox
+                        width="$3/5"
+                        height="$3"
+                        $md-h="$3"
+                        $base-h="$2"
+                        bg="$trueGray500"
+                      />
                     </HStack>
                   </VStack>
                 </Pressable>
                 <Text
-                  fontSize="$sm"
+                  $base-fontSize="$xs"
+                  $md-fontSize="$sm"
                   fontFamily="$heading"
                   color="$primary950"
                   fontWeight="$normal"
@@ -612,7 +738,8 @@ export const AppearanceView = () => {
           </VStack>
           <Button variant="solid" size="lg" mt="$4" borderRadius="$md" p="$3">
             <Text
-              fontSize="$sm"
+              $base-fontSize="$xs"
+              $md-fontSize="$sm"
               fontFamily="$heading"
               color="$background0"
               fontWeight="$normal"
@@ -628,10 +755,11 @@ export const AppearanceView = () => {
 export const NotificationsView = () => {
   return (
     <VStack flex={1} alignItems="flex-start">
-      <Box w="$full" maxWidth="$4/6" px="$4">
+      <Box w="$full" $base-maxWidth="$6/6" $lg-maxWidth="$4/6" px="$4">
         <VStack w="$full" alignItems="flex-start" space="sm">
           <Text
-            fontSize="$lg"
+            $base-fontSize="$md"
+            $md-fontSize="$lg"
             fontFamily="$heading"
             color="$primary950"
             fontWeight="$bold"
@@ -639,7 +767,8 @@ export const NotificationsView = () => {
             Notifications
           </Text>
           <Text
-            fontSize="$sm"
+            $base-fontSize="$xs"
+            $md-fontSize="$sm"
             fontFamily="$body"
             color="$primary200"
             fontWeight="$normal"
@@ -648,7 +777,8 @@ export const NotificationsView = () => {
           </Text>
           <Divider w="$full" mt="$5" bg="$background200" h="$px" />
           <Text
-            fontSize="$sm"
+            $base-fontSize="$xs"
+            $md-fontSize="$sm"
             fontFamily="$body"
             color="$primary950"
             fontWeight="$normal"
@@ -656,18 +786,21 @@ export const NotificationsView = () => {
           >
             Notify me about...
           </Text>
-          <VStack mt="$3" alignItems="flex-start" space="md">
-            {notifications.map((iterator) => (
-              <CustomCheck
-                label={iterator}
-                key={iterator}
-                variant="radio"
-                value={iterator}
-              />
-            ))}
-          </VStack>
+          <RadioGroup>
+            <VStack mt="$3" alignItems="flex-start" space="md">
+              {notifications.map((iterator) => (
+                <CustomCheck
+                  label={iterator}
+                  key={iterator}
+                  variant="radio"
+                  value={iterator}
+                />
+              ))}
+            </VStack>
+          </RadioGroup>
           <Text
-            fontSize="$lg"
+            $base-fontSize="$md"
+            $md-fontSize="$lg"
             fontFamily="$heading"
             color="$primary950"
             fontWeight="$bold"
@@ -686,9 +819,10 @@ export const NotificationsView = () => {
           </VStack>
           <HStack alignItems="flex-start" mt="$5" space="xs">
             <CustomCheck variant="checkbox" value={'mobile-settings'} />
-            <VStack alignItems="flex-start" space="xs">
+            <VStack alignItems="flex-start" space="xs" maxWidth="$5/6">
               <Text
-                fontSize="$sm"
+                $base-fontSize="$xs"
+                $md-fontSize="$sm"
                 fontFamily="$body"
                 color="$primary950"
                 fontWeight="$normal"
@@ -696,11 +830,12 @@ export const NotificationsView = () => {
                 Use different settings for my mobile devices
               </Text>
               <Text
-                fontSize="$xs"
+                $base-fontSize="$2xs"
+                $md-fontSize="$xs"
                 fontFamily="$body"
                 color="$primary200"
                 fontWeight="$normal"
-                numberOfLines={2}
+                numberOfLines={3}
               >
                 You can manage your mobile notifications in the mobile settings
                 page.
@@ -709,7 +844,8 @@ export const NotificationsView = () => {
           </HStack>
           <Button variant="solid" size="lg" mt="$4" borderRadius="$md" p="$3">
             <Text
-              fontSize="$sm"
+              $base-fontSize="$xs"
+              $md-fontSize="$sm"
               fontFamily="$heading"
               color="$background0"
               fontWeight="$normal"
@@ -725,10 +861,11 @@ export const NotificationsView = () => {
 export const DisplayView = () => {
   return (
     <VStack flex={1} alignItems="flex-start">
-      <Box w="$full" maxWidth="$4/6" px="$4">
+      <Box w="$full" $base-maxWidth="$6/6" $lg-maxWidth="$4/6" px="$4">
         <VStack w="$full" alignItems="flex-start" space="sm">
           <Text
-            fontSize="$lg"
+            $base-fontSize="$md"
+            $md-fontSize="$lg"
             fontFamily="$heading"
             color="$primary950"
             fontWeight="$bold"
@@ -736,7 +873,8 @@ export const DisplayView = () => {
             Display
           </Text>
           <Text
-            fontSize="$sm"
+            $base-fontSize="$xs"
+            $md-fontSize="$sm"
             fontFamily="$body"
             color="$primary200"
             fontWeight="$normal"
@@ -746,7 +884,8 @@ export const DisplayView = () => {
           <Divider w="$full" mt="$5" bg="$background200" h="$px" />
           <VStack mt="$5" space="sm">
             <Text
-              fontSize="$lg"
+              $base-fontSize="$md"
+              $md-fontSize="$lg"
               fontFamily="$heading"
               color="$primary950"
               fontWeight="$bold"
@@ -754,7 +893,8 @@ export const DisplayView = () => {
               Sidebar
             </Text>
             <Text
-              fontSize="$sm"
+              $base-fontSize="$xs"
+              $md-fontSize="$sm"
               fontFamily="$body"
               color="$primary200"
               fontWeight="$normal"
@@ -774,7 +914,8 @@ export const DisplayView = () => {
           </VStack>
           <Button variant="solid" size="lg" mt="$4" borderRadius="$md" p="$3">
             <Text
-              fontSize="$sm"
+              $base-fontSize="$xs"
+              $md-fontSize="$sm"
               fontFamily="$heading"
               color="$background0"
               fontWeight="$normal"
@@ -785,5 +926,206 @@ export const DisplayView = () => {
         </VStack>
       </Box>
     </VStack>
+  );
+};
+
+interface SidebarItemProps {
+  key: string;
+  value: string;
+}
+interface NestedSidebarItemProps extends SidebarItemProps {
+  key: string;
+  value: string;
+  icon: any;
+}
+interface SidebarProps {
+  sidebarItems: Array<SidebarItemProps>;
+  itemProps?: any;
+  onSelected: (item: SidebarItemProps) => void;
+  isNested?: boolean;
+}
+export const Sidebar = ({
+  sidebarItems,
+  itemProps,
+  onSelected,
+  isNested = false,
+}: SidebarProps) => {
+  const [selected, setSelected] = React.useState<SidebarItemProps>(
+    sidebarItems[0]
+  );
+  const handlePress = (itemInput: SidebarItemProps) => {
+    setSelected(itemInput);
+    onSelected(itemInput);
+  };
+  const handleViewChange = (selected: any) => {
+    const itemInput = {
+      key: selected,
+      value: selected,
+    };
+    onSelected(itemInput);
+  };
+  const [isMobileScreen] = useMediaQuery({ maxWidth: 760 });
+  if (isMobileScreen) {
+    return (
+      <FabSidebar
+        onViewChange={handleViewChange}
+        sidebarData={sidebarItems}
+        isNested={isNested}
+      />
+    );
+  }
+  return (
+    <ScrollView w="$full" h="$full">
+      <VStack w="$full" h="$full" space={isNested ? '3xl' : 'sm'} flexGrow={1}>
+        {!isNested ? (
+          <>
+            {sidebarItems.map((item) => (
+              <Pressable
+                w="$full"
+                p="$2"
+                $active-bg="$background100"
+                $hover-bg="$background100"
+                key={item.key}
+                onPress={() => handlePress(item)}
+                bg={item.key === selected.key ? '$background100' : ''}
+                borderRadius="$md"
+                {...itemProps}
+              >
+                <HStack>
+                  <Text
+                    color="$primary950"
+                    fontSize="$md"
+                    px="$4"
+                    fontFamily="$body"
+                  >
+                    {item.value}
+                  </Text>
+                </HStack>
+              </Pressable>
+            ))}
+          </>
+        ) : (
+          <>
+            {sidebarItems.map((item: any) => (
+              <VStack>
+                <Text
+                  color="$primary950"
+                  fontSize="$lg"
+                  fontWeight="$bold"
+                  mx="$4"
+                  fontFamily="$heading"
+                >
+                  {item?.heading}
+                </Text>
+                <VStack
+                  w="$full"
+                  flexGrow={1}
+                  space="sm"
+                  key={item?.heading}
+                  mt="$2"
+                >
+                  {item?.subItems?.map((item: NestedSidebarItemProps) => (
+                    <Pressable
+                      w="$full"
+                      p="$2"
+                      $active-bg="$background100"
+                      $hover-bg="$background100"
+                      key={item.key}
+                      onPress={() => handlePress(item)}
+                      bg={item.key === selected.key ? '$background100' : ''}
+                      borderRadius="$md"
+                      {...itemProps}
+                    >
+                      <HStack alignItems="center" space="sm" ml="$1.5">
+                        {item?.icon && <Icon as={item.icon} />}
+                        <Text
+                          color="$primary950"
+                          fontSize="$md"
+                          fontFamily="$body"
+                        >
+                          {item.value}
+                        </Text>
+                      </HStack>
+                    </Pressable>
+                  ))}
+                </VStack>
+              </VStack>
+            ))}
+          </>
+        )}
+      </VStack>
+    </ScrollView>
+  );
+};
+
+const FabSidebar = ({
+  onViewChange,
+  sidebarData,
+  isNested,
+}: {
+  sidebarData: any;
+  isNested: boolean;
+  onViewChange: (view: SidebarItemProps) => void;
+}) => {
+  const [selected, setSelected] = React.useState(new Set([]));
+  const [isOpen, setIsOpen] = React.useState<boolean>(false);
+  return (
+    <Menu
+      placement="top left"
+      selectionMode="single"
+      borderWidth={1}
+      selectedKeys={selected}
+      closeOnSelect={true}
+      isOpen={isOpen}
+      onPointerLeave={() => setIsOpen(false)}
+      onOpen={() => setIsOpen(true)}
+      onSelectionChange={(keys: any) => {
+        setSelected(keys);
+        onViewChange(keys?.currentKey);
+        setIsOpen(false);
+      }}
+      trigger={({ ...triggerProps }) => {
+        return (
+          <Fab
+            size="md"
+            placement="bottom right"
+            isHovered={false}
+            isDisabled={false}
+            isPressed={false}
+            renderInPortal={true}
+            position="fixed"
+            zIndex={999}
+            {...triggerProps}
+          >
+            <FabIcon as={MenuIcon} />
+          </Fab>
+        );
+      }}
+    >
+      {!isNested ? (
+        <>
+          {sidebarData.map((item: SidebarItemProps) => (
+            <MenuItem key={item.key} textValue={item.value}>
+              <MenuItemLabel size="sm" ml="$2">
+                {item.value}
+              </MenuItemLabel>
+            </MenuItem>
+          ))}
+        </>
+      ) : (
+        <>
+          {sidebarData.map((sidebarItem: any) => {
+            sidebarItem.subItems.map((item: NestedSidebarItemProps) => (
+              <MenuItem key={item.key} textValue={item.value}>
+                {item?.icon && <Icon as={item.icon} />}
+                <MenuItemLabel size="sm" ml="$2">
+                  {item.value}
+                </MenuItemLabel>
+              </MenuItem>
+            ));
+          })}
+        </>
+      )}
+    </Menu>
   );
 };
