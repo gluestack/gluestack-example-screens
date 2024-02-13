@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import {
   Button,
   ButtonIcon,
@@ -32,9 +32,120 @@ import {
   Mic2,
   Globe,
 } from 'lucide-react-native';
-import Sidebar from '../components/Sidebar';
 import { sidebarItems } from './constants';
 
+interface SidebarItemProps {
+  key: string;
+  value: string;
+}
+interface NestedSidebarItemProps extends SidebarItemProps {
+  key: string;
+  value: string;
+  icon: any;
+}
+interface SidebarProps {
+  sidebarItems: Array<SidebarItemProps>;
+  itemProps?: any;
+  onSelected: (item: SidebarItemProps) => void;
+  isNested?: boolean;
+}
+
+const Sidebar = ({
+  sidebarItems,
+  itemProps,
+  onSelected,
+  isNested = false,
+}: SidebarProps) => {
+  const [selected, setSelected] = React.useState<SidebarItemProps>(
+    sidebarItems[0]
+  );
+  const handlePress = (itemInput: SidebarItemProps) => {
+    setSelected(itemInput);
+    onSelected(itemInput);
+  };
+  return (
+    <VStack w="$full" flexGrow={1} space={isNested ? '3xl' : 'sm'}>
+      {!isNested ? (
+        <>
+          {sidebarItems.map((item) => (
+            <Pressable
+              w="$full"
+              p="$2"
+              $active-bg="$background100"
+              $hover-bg="$background100"
+              key={item.key}
+              onPress={() => handlePress(item)}
+              bg={item.key === selected.key ? '$background100' : ''}
+              borderRadius="$md"
+              {...itemProps}
+            >
+              <HStack>
+                <Text
+                  color="$primary950"
+                  fontSize="$md"
+                  px="$4"
+                  fontFamily="$body"
+                >
+                  {item.value}
+                </Text>
+              </HStack>
+            </Pressable>
+          ))}
+        </>
+      ) : (
+        <>
+          {sidebarItems.map((item: any) => (
+            <VStack>
+              <Text
+                color="$primary950"
+                fontSize="$lg"
+                fontWeight="$bold"
+                mx="$4"
+                fontFamily="$heading"
+              >
+                {item?.heading}
+              </Text>
+              <VStack
+                w="$full"
+                flexGrow={1}
+                space="sm"
+                maxHeight="$56"
+                overflow="scroll"
+                key={item?.heading}
+                mt="$2"
+              >
+                {item?.subItems?.map((item: NestedSidebarItemProps) => (
+                  <Pressable
+                    w="$full"
+                    p="$2"
+                    $active-bg="$background100"
+                    $hover-bg="$background100"
+                    key={item.key}
+                    onPress={() => handlePress(item)}
+                    bg={item.key === selected.key ? '$background100' : ''}
+                    borderRadius="$md"
+                    {...itemProps}
+                  >
+                    <HStack alignItems="center" space="sm" ml="$1.5">
+                      {item?.icon && <Icon as={item.icon} />}
+                      <Text
+                        color="$primary950"
+                        fontSize="$md"
+                        fontFamily="$body"
+                      >
+                        {item.value}
+                      </Text>
+                    </HStack>
+                  </Pressable>
+                ))}
+              </VStack>
+            </VStack>
+          ))}
+        </>
+      )}
+    </VStack>
+  );
+};
 const tabs = [
   { label: 'Music', key: 'music' },
   { label: 'Podcasts', key: 'podcasts' },
@@ -220,7 +331,7 @@ const Tab = ({ label, isActive, onPress, disabled }) => (
   </Pressable>
 );
 const Music = () => {
-  const [activeTab, setActiveTab] = useState('music');
+  const [activeTab, setActiveTab] = React.useState('music');
 
   const handleTabPress = (tab: React.SetStateAction<string>) => {
     setActiveTab(tab);
