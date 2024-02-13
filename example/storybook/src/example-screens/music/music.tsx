@@ -142,7 +142,7 @@ const Tab = ({ label, isActive, onPress, disabled }) => (
     alignItems="center"
     marginHorizontal="$2"
     onPress={disabled ? undefined : onPress}
-    bg={isActive ? '$white' : 'transparent'}
+    bg={isActive ? '$background0' : 'transparent'}
     m="$1"
     borderRadius="$md"
     zIndex={1}
@@ -156,7 +156,7 @@ const Tab = ({ label, isActive, onPress, disabled }) => (
 const Music = () => {
   const [activeTab, setActiveTab] = useState('music');
 
-  const handleTabPress = (tab) => {
+  const handleTabPress = (tab: React.SetStateAction<string>) => {
     setActiveTab(tab);
   };
 
@@ -171,17 +171,26 @@ const Music = () => {
             <ScrollView horizontal={true}>
               <HStack mb="$4" gap="$4">
                 {images.map((image, index) => (
-                  <Pressable>
-                    <VStack key={index} gap="$2">
-                      <Image
-                        w="$64"
-                        h="$80"
-                        borderRadius="$md"
-                        source={image}
-                      />
-                      <Text fontSize="$md">{titles[index]}</Text>
-                      <Text fontSize="$sm">{artists[index]}</Text>
-                    </VStack>
+                  <Pressable key={index}>
+                    {(props: any) => (
+                      <VStack gap="$2">
+                        <Box
+                          w="$64"
+                          h="$80"
+                          borderRadius="$md"
+                          overflow="hidden" // Ensure the image stays within its container
+                        >
+                          <Image
+                            w="100%"
+                            h="100%"
+                            source={image}
+                            transform={[{ scale: props.hovered ? 1.1 : 1 }]} // Adjust the scale factor as needed
+                          />
+                        </Box>
+                        <Text fontSize="$md">{titles[index]}</Text>
+                        <Text fontSize="$sm">{artists[index]}</Text>
+                      </VStack>
+                    )}
                   </Pressable>
                 ))}
               </HStack>
@@ -194,17 +203,28 @@ const Music = () => {
             <ScrollView horizontal={true}>
               <HStack mb="$4" gap="$4">
                 {personalPlaylists.map((image, index) => (
-                  <Pressable>
-                    <VStack key={index} gap="$2">
-                      <Image
-                        w="$40"
-                        h="$40"
-                        borderRadius="$md"
-                        source={image}
-                      />
-                      <Text fontSize="$md">{personalTitles[index]}</Text>
-                      <Text fontSize="$sm">{personalArtists[index]}</Text>
-                    </VStack>
+                  <Pressable key={index}>
+                    {(props: any) => (
+                      <VStack gap="$2">
+                        <Box
+                          w="$40"
+                          h="$40"
+                          borderRadius="$md"
+                          overflow="hidden" // Ensure the image stays within its container
+                        >
+                          <Image
+                            w="100%"
+                            h="100%"
+                            borderRadius="$md"
+                            source={image}
+                            transform={[{ scale: props.hovered ? 1.05 : 1 }]} // Adjust the scale factor as needed
+                            alt="Explore"
+                          />
+                        </Box>
+                        <Text fontSize="$md">{personalTitles[index]}</Text>
+                        <Text fontSize="$sm">{personalArtists[index]}</Text>
+                      </VStack>
+                    )}
                   </Pressable>
                 ))}
               </HStack>
@@ -227,14 +247,21 @@ const Music = () => {
             gap="$4"
             h="$96"
             borderColor="$border200"
+            p="$4"
           >
             <Image w="$10" h="$10" source={require('../assets/podcasts.svg')} />
-            <Text fontWeight="$semibold">No episodes added</Text>
-            <Text color="$text800">
+            <Text textAlign="center" fontWeight="$semibold">
+              No episodes added
+            </Text>
+            <Text textAlign="center" color="$text800">
               You have not added any podcasts. Add one below.
             </Text>
             <Button>
-              <ButtonText fontWeight="$medium" fontSize="$sm">
+              <ButtonText
+                textAlign="center"
+                fontWeight="$medium"
+                fontSize="$sm"
+              >
                 Add Podcast
               </ButtonText>
             </Button>
@@ -246,7 +273,7 @@ const Music = () => {
 
   return (
     <VStack
-      bg="$white"
+      bg="$transparent"
       sx={{
         '.dark_theme': { borderColor: '$border200' },
         '@md': { borderWidth: 1, borderRadius: '$lg' },
@@ -265,6 +292,7 @@ const Music = () => {
           flexDirection="row"
           borderBottomWidth="$1"
           borderBottomColor="$border200"
+          sx={{ '@md': { display: 'flex' }, '@base': { display: 'none' } }}
         >
           {navTabs.map(({ label, key, menuItems }) => (
             <Menu
@@ -282,7 +310,7 @@ const Music = () => {
                   >
                     <ButtonText
                       fontWeight={label === 'Music' ? 'bold' : '$normal'}
-                      color="$black"
+                      color="$background950"
                       fontSize="$md"
                     >
                       {label}
@@ -300,24 +328,35 @@ const Music = () => {
           ))}
         </HStack>
         <HStack w="$full">
-          <Box
-            sx={{ '@base': { display: 'none' }, '@md': { display: 'flex' } }}
-            paddingVertical="$6"
-            paddingHorizontal="$2"
-            w="$1/5"
-          >
-            <Sidebar sidebarItems={sidebarItems} isNested />
+          <Box paddingVertical="$6" paddingHorizontal="$2" $md-w="$1/5">
+            <Sidebar
+              sidebarItems={sidebarItems}
+              isNested
+              FabSidebarProps={{
+                w: '$12',
+                h: '$12',
+              }}
+            />
           </Box>
 
           <VStack
-            p="$6"
             borderColor="$border200"
-            borderLeftWidth={1}
             gap="$6"
             flex={1}
+            zIndex={-99}
+            sx={{
+              '@lg': { borderLeftWidth: 1 },
+              '@md': { borderLeftWidth: 0, p: '$6' },
+              '@base': { p: '$0' },
+            }}
           >
             {/* Added flex: 1 */}
-            <HStack justifyContent="space-between">
+            <HStack
+              sx={{
+                '@md': { justifyContent: 'space-between' },
+                '@base': { justifyContent: 'center' },
+              }}
+            >
               <HStack bg="$background100" borderRadius="$md">
                 {tabs.map(({ label, key, disabled }) => (
                   <Tab
@@ -336,6 +375,10 @@ const Music = () => {
                 isDisabled={false}
                 isFocusVisible={false}
                 gap="$1"
+                sx={{
+                  '@md': { display: 'flex' },
+                  '@base': { display: 'none' },
+                }}
               >
                 <ButtonIcon as={PlusCircle} />
                 <ButtonText fontWeight="$medium" fontSize="$sm">

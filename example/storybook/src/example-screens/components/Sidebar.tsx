@@ -28,12 +28,14 @@ interface SidebarProps {
   itemProps?: any;
   onSelected: (item: SidebarItemProps) => void;
   isNested?: boolean;
+  FabSidebarProps?: any;
 }
 const Sidebar = ({
   sidebarItems,
   itemProps,
   onSelected,
   isNested = false,
+  FabSidebarProps,
 }: SidebarProps) => {
   const [selected, setSelected] = React.useState<SidebarItemProps>(
     sidebarItems[0]
@@ -52,7 +54,12 @@ const Sidebar = ({
   const [isMobileScreen] = useMediaQuery({ maxWidth: 760 });
   if (isMobileScreen) {
     return (
-      <FabSidebar onViewChange={handleViewChange} sidebarData={sidebarItems} />
+      <FabSidebar
+        onViewChange={handleViewChange}
+        sidebarData={sidebarItems}
+        isNested={isNested}
+        {...FabSidebarProps}
+      />
     );
   }
   return (
@@ -91,7 +98,8 @@ const Sidebar = ({
               <VStack>
                 <Text
                   color="$primary950"
-                  fontSize="$lg"
+                  $lg-fontSize="$lg"
+                  $md-fontSize="$md"
                   fontWeight="$bold"
                   mx="$4"
                   fontFamily="$heading"
@@ -121,7 +129,8 @@ const Sidebar = ({
                         {item?.icon && <Icon as={item.icon} />}
                         <Text
                           color="$primary950"
-                          fontSize="$md"
+                          $md-fontSize="$sm"
+                          $lg-fontSize="$md"
                           fontFamily="$body"
                         >
                           {item.value}
@@ -142,9 +151,12 @@ const Sidebar = ({
 const FabSidebar = ({
   onViewChange,
   sidebarData,
+  isNested,
+  ...props
 }: {
   sidebarData: any;
   onViewChange: (view: SidebarItemProps) => void;
+  isNested: boolean;
 }) => {
   const [selected, setSelected] = React.useState(new Set([]));
   const [isOpen, setIsOpen] = React.useState<boolean>(false);
@@ -163,6 +175,8 @@ const FabSidebar = ({
         onViewChange(keys?.currentKey);
         setIsOpen(false);
       }}
+      maxHeight="$64"
+      overflow="scroll"
       trigger={({ ...triggerProps }) => {
         return (
           <Fab
@@ -174,20 +188,34 @@ const FabSidebar = ({
             renderInPortal={true}
             position="fixed"
             zIndex={999}
+            minWidth="$10"
+            minHeight="$10"
             {...triggerProps}
+            {...props}
           >
             <FabIcon as={MenuIcon} />
           </Fab>
         );
       }}
     >
-      {sidebarData.map((item: SidebarItemProps) => (
-        <MenuItem key={item.key} textValue={item.value}>
-          <MenuItemLabel size="sm" ml="$2">
-            {item.value}
-          </MenuItemLabel>
-        </MenuItem>
-      ))}
+      {!isNested
+        ? sidebarData.map((item: SidebarItemProps) => (
+            <MenuItem key={item.key} textValue={item.value}>
+              <MenuItemLabel size="sm" ml="$2">
+                {item.value}
+              </MenuItemLabel>
+            </MenuItem>
+          ))
+        : sidebarData.map((sidebarItem: any) => {
+            return sidebarItem.subItems.map((item: NestedSidebarItemProps) => (
+              <MenuItem key={item.key} textValue={item.value}>
+                {item?.icon && <Icon as={item.icon} />}
+                <MenuItemLabel size="sm" ml="$2">
+                  {item.value}
+                </MenuItemLabel>
+              </MenuItem>
+            ));
+          })}
     </Menu>
   );
 };

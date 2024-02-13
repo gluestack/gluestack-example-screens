@@ -943,12 +943,14 @@ interface SidebarProps {
   itemProps?: any;
   onSelected: (item: SidebarItemProps) => void;
   isNested?: boolean;
+  FabSidebarProps?: any;
 }
 export const Sidebar = ({
   sidebarItems,
   itemProps,
   onSelected,
   isNested = false,
+  FabSidebarProps,
 }: SidebarProps) => {
   const [selected, setSelected] = React.useState<SidebarItemProps>(
     sidebarItems[0]
@@ -971,6 +973,7 @@ export const Sidebar = ({
         onViewChange={handleViewChange}
         sidebarData={sidebarItems}
         isNested={isNested}
+        {...FabSidebarProps}
       />
     );
   }
@@ -1010,7 +1013,8 @@ export const Sidebar = ({
               <VStack>
                 <Text
                   color="$primary950"
-                  fontSize="$lg"
+                  $lg-fontSize="$lg"
+                  $md-fontSize="$md"
                   fontWeight="$bold"
                   mx="$4"
                   fontFamily="$heading"
@@ -1040,7 +1044,8 @@ export const Sidebar = ({
                         {item?.icon && <Icon as={item.icon} />}
                         <Text
                           color="$primary950"
-                          fontSize="$md"
+                          $lg-fontSize="$md"
+                          $md-fontSize="$sm"
                           fontFamily="$body"
                         >
                           {item.value}
@@ -1062,13 +1067,29 @@ const FabSidebar = ({
   onViewChange,
   sidebarData,
   isNested,
+  ...props
 }: {
   sidebarData: any;
-  isNested: boolean;
   onViewChange: (view: SidebarItemProps) => void;
+  isNested: boolean;
 }) => {
   const [selected, setSelected] = React.useState(new Set([]));
   const [isOpen, setIsOpen] = React.useState<boolean>(false);
+  // const [nestedSidebarItems, setNestedSidebarItems] = React.useState([]);
+
+  // React.useEffect(() => {
+  //   if (isNested) {
+  //     let obtainedSidebarItems = [];
+  //     sidebarData.map((item) => {
+  //       if (obtainedSidebarItems.length) {
+  //         obtainedSidebarItems = [...obtainedSidebarItems, ...item.subItems];
+  //       } else {
+  //         obtainedSidebarItems = [...item.subItems];
+  //       }
+  //     });
+  //     setNestedSidebarItems(obtainedSidebarItems);
+  //   }
+  // }, []);
   return (
     <Menu
       placement="top left"
@@ -1084,6 +1105,8 @@ const FabSidebar = ({
         onViewChange(keys?.currentKey);
         setIsOpen(false);
       }}
+      maxHeight="$64"
+      overflow="scroll"
       trigger={({ ...triggerProps }) => {
         return (
           <Fab
@@ -1095,27 +1118,26 @@ const FabSidebar = ({
             renderInPortal={true}
             position="fixed"
             zIndex={999}
+            minWidth="$10"
+            minHeight="$10"
             {...triggerProps}
+            {...props}
           >
             <FabIcon as={MenuIcon} />
           </Fab>
         );
       }}
     >
-      {!isNested ? (
-        <>
-          {sidebarData.map((item: SidebarItemProps) => (
+      {!isNested
+        ? sidebarData.map((item: SidebarItemProps) => (
             <MenuItem key={item.key} textValue={item.value}>
               <MenuItemLabel size="sm" ml="$2">
                 {item.value}
               </MenuItemLabel>
             </MenuItem>
-          ))}
-        </>
-      ) : (
-        <>
-          {sidebarData.map((sidebarItem: any) => {
-            sidebarItem.subItems.map((item: NestedSidebarItemProps) => (
+          ))
+        : sidebarData.map((sidebarItem: any) => {
+            return sidebarItem.subItems.map((item: NestedSidebarItemProps) => (
               <MenuItem key={item.key} textValue={item.value}>
                 {item?.icon && <Icon as={item.icon} />}
                 <MenuItemLabel size="sm" ml="$2">
@@ -1124,8 +1146,6 @@ const FabSidebar = ({
               </MenuItem>
             ));
           })}
-        </>
-      )}
     </Menu>
   );
 };

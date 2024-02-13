@@ -1,6 +1,6 @@
 import React from 'react';
-import { createIcon } from '@gluestack-ui/themed';
-import { Circle, Path, G, Svg, Image } from 'react-native-svg';
+import { createIcon } from '@gluestack-ui-new/themed';
+import { Circle, Path, G, Svg, Image as SvgImage } from 'react-native-svg';
 
 export const DotIcon = createIcon({
   viewBox: '0 0 7 7',
@@ -42,7 +42,7 @@ export const GluestackIcon = createIcon({
 export const Avatar1 = () => {
   return (
     <Svg width="72" height="72">
-      <Image href={require('../assets/Avatar1.svg')} />
+      <SvgImage href={require('../assets/Avatar1.svg')} />
     </Svg>
   );
 };

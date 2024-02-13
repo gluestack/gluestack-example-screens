@@ -260,7 +260,8 @@ export const ChartOptionsMenu = ({ menuData }: { menuData: Array<string> }) => {
       closeOnSelect={true}
       isOpen={isOpen}
       onOpen={() => setIsOpen(true)}
-      onSelectionChange={(keys) => {
+      /*TYPE ERROR FIX LATER*/
+      onSelectionChange={(keys: any) => {
         setSelected(keys);
         setIsOpen(false);
       }}
@@ -446,18 +447,14 @@ const AreaChart = () => {
     maintainAspectRatio: false,
     spanGaps: false,
     scales: {
-      xAxes: [
-        {
-          ticks: {
-            autoSkip: false,
-          },
-        },
-      ],
       y: {
         display: false,
       },
       x: {
         display: false,
+        ticks: {
+          autoSkip: false,
+        },
       },
     },
     plugins: {
