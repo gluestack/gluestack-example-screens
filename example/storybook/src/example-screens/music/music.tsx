@@ -18,8 +18,9 @@ import {
   Fab,
   FabIcon,
   EditIcon,
+  Icon,
 } from '@gluestack-ui-new/themed';
-import { PlusCircle } from 'lucide-react-native';
+import { PlusCircle, User, File, Pencil, Eye } from 'lucide-react-native';
 import Sidebar from '../components/Sidebar';
 import { sidebarItems } from './constants';
 
@@ -151,7 +152,11 @@ const Tab = ({ label, isActive, onPress, disabled }) => (
     zIndex={1}
     opacity={disabled ? 0.5 : 1}
   >
-    <Text p="$2" style={{ fontWeight: label === 'Music' ? 'bold' : 'normal' }}>
+    <Text
+      p="$2"
+      sx={{ '@base': { fontSize: '$sm' }, '@md': { fontSize: '$md' } }}
+      style={{ fontWeight: label === 'Music' ? 'bold' : 'normal' }}
+    >
       {label}
     </Text>
   </Pressable>
@@ -394,14 +399,45 @@ const Music = () => {
           </VStack>
         </HStack>
       </VStack>
-      <Fab
-        sx={{ '@base': { display: 'flex' }, '@md': { display: 'none' } }}
-        placement="bottom right"
-        position="fixed"
-        size="lg"
+
+      <Menu
+        borderWidth={1}
+        placement="top"
+        trigger={({ ...triggerProps }) => {
+          return (
+            <Fab
+              {...triggerProps}
+              sx={{ '@base': { display: 'flex' }, '@md': { display: 'none' } }}
+              placement="bottom right"
+              position="fixed"
+              size="lg"
+            >
+              <FabIcon as={EditIcon} />
+            </Fab>
+          );
+        }}
       >
-        <FabIcon as={EditIcon} />
-      </Fab>
+        <MenuItem key="File" textValue="File">
+          <Icon as={File} size="sm" mr="$2" />
+          <MenuItemLabel size="sm">File</MenuItemLabel>
+        </MenuItem>
+        <MenuItem key="Edit" textValue="Edit">
+          <Icon as={Pencil} size="sm" mr="$2" />
+          <MenuItemLabel size="sm">Edit</MenuItemLabel>
+        </MenuItem>
+        <MenuItem key="View" textValue="View">
+          <Icon as={Eye} size="sm" mr="$2" />
+          <MenuItemLabel size="sm">View</MenuItemLabel>
+        </MenuItem>
+        <MenuItem key="Account" textValue="Account">
+          <Icon as={User} size="sm" mr="$2" />
+          <MenuItemLabel size="sm">Account</MenuItemLabel>
+        </MenuItem>
+        <MenuItem key="Add music" textValue="Add music">
+          <Icon as={PlusCircle} size="sm" mr="$2" />
+          <MenuItemLabel size="sm">Add music</MenuItemLabel>
+        </MenuItem>
+      </Menu>
     </VStack>
   );
 };
