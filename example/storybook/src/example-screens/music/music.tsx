@@ -19,8 +19,19 @@ import {
   FabIcon,
   EditIcon,
   Icon,
+  ChevronRightIcon,
 } from '@gluestack-ui-new/themed';
-import { PlusCircle, User, File, Pencil, Eye } from 'lucide-react-native';
+import {
+  PlusCircle,
+  User,
+  File,
+  Pencil,
+  Eye,
+  Command,
+  ArrowBigUp,
+  Mic2,
+  Globe,
+} from 'lucide-react-native';
 import Sidebar from '../components/Sidebar';
 import { sidebarItems } from './constants';
 
@@ -35,41 +46,88 @@ const navTabs = [
     key: 'music',
     menuItems: [
       { label: 'About Music' },
-      { label: 'Preferences...' },
-      { label: 'Hide Music...' },
-      { label: 'Hide Others...' },
-      { label: 'Quit Music' },
+      { label: 'Preferences...', menuIcon: [{ icon: Command }], iconText: ',' },
+      { label: 'Hide Music...', menuIcon: [{ icon: Command }], iconText: 'H' },
+      {
+        label: 'Hide Others...',
+        menuIcon: [{ icon: ArrowBigUp }, { icon: Command }],
+        iconText: 'H',
+      },
+      { label: 'Quit Music', menuIcon: [{ icon: Command }], iconText: 'Q' },
     ],
   },
   {
     label: 'File',
     key: 'file',
     menuItems: [
-      { label: 'New' },
-      { label: 'Open Stream URL... ' },
-      { label: 'Close Window' },
-      { label: 'Library' },
-      { label: 'Import...' },
+      { label: 'New', menuIcon: [{ icon: ChevronRightIcon }] },
+      {
+        label: 'Open Stream URL... ',
+        menuIcon: [{ icon: Command }],
+        iconText: 'U',
+      },
+      { label: 'Close Window', menuIcon: [{ icon: Command }], iconText: 'W' },
+      { label: 'Library', menuIcon: [{ icon: ChevronRightIcon }] },
+      { label: 'Import...', menuIcon: [{ icon: Command }], iconText: 'O' },
       { label: 'Burn Playlist to Disc...', disabled: true },
-      { label: 'Show in Finder' },
+      {
+        label: 'Show in Finder',
+        menuIcon: [{ icon: ArrowBigUp }, { icon: Command }],
+        iconText: 'R',
+      },
       { label: 'Convert' },
       { label: 'Page Setup...' },
-      { label: 'Print...', disabled: true },
+      {
+        label: 'Print...',
+        disabled: true,
+        menuIcon: [{ icon: Command }],
+        iconText: 'P',
+      },
     ],
   },
   {
     label: 'Edit',
     key: 'edit',
     menuItems: [
-      { label: 'Undo', disabled: true },
-      { label: 'Redo', disabled: true },
-      { label: 'Cut', disabled: true },
-      { label: 'Copy', disabled: true },
-      { label: 'Paste', disabled: true },
-      { label: 'Select All' },
-      { label: 'Deselect All', disabled: true },
-      { label: 'Smart Dictation...' },
-      { label: 'Emoji & Symbols' },
+      {
+        label: 'Undo',
+        disabled: true,
+        menuIcon: [{ icon: Command }],
+        iconText: 'Z',
+      },
+      {
+        label: 'Redo',
+        disabled: true,
+        menuIcon: [{ icon: ArrowBigUp }, { icon: Command }],
+        iconText: 'Z',
+      },
+      {
+        label: 'Cut',
+        disabled: true,
+        menuIcon: [{ icon: Command }],
+        iconText: 'X',
+      },
+      {
+        label: 'Copy',
+        disabled: true,
+        menuIcon: [{ icon: Command }],
+        iconText: 'C',
+      },
+      {
+        label: 'Paste',
+        disabled: true,
+        menuIcon: [{ icon: Command }],
+        iconText: 'V',
+      },
+      { label: 'Select All', menuIcon: [{ icon: Command }], iconText: 'A' },
+      {
+        label: 'Deselect All',
+        disabled: true,
+        menuIcon: [{ icon: ArrowBigUp }, { icon: Command }],
+        iconText: 'A',
+      },
+      { label: 'Smart Dictation...', menuIcon: [{ icon: Mic2 }] },
+      { label: 'Emoji & Symbols', menuIcon: [{ icon: Globe }] },
     ],
   },
   {
@@ -310,6 +368,10 @@ const Music = () => {
         >
           {navTabs.map(({ label, key, menuItems }) => (
             <Menu
+              // disabledKeys={["File"]}
+              disabledKeys={menuItems
+                .filter((item) => item.disabled)
+                .map((item) => item.label)}
               // ml="$4"
               zIndex={1}
               borderWidth={1}
@@ -334,8 +396,19 @@ const Music = () => {
               }}
             >
               {menuItems.map((menuItem, index) => (
-                <MenuItem key={index} textValue={menuItem.label}>
+                <MenuItem
+                  justifyContent="space-between"
+                  key={index}
+                  textValue={menuItem.label}
+                >
                   <MenuItemLabel size="sm">{menuItem.label}</MenuItemLabel>
+                  <HStack>
+                    {menuItem.menuIcon &&
+                      menuItem.menuIcon.map((icon, iconIndex) => (
+                        <Icon size="xs" as={icon.icon} key={iconIndex} />
+                      ))}
+                    <Text size="xs">{menuItem.iconText}</Text>
+                  </HStack>
                 </MenuItem>
               ))}
             </Menu>
