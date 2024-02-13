@@ -1,5 +1,5 @@
 import React from 'react';
-import { createIcon } from '@gluestack-ui/themed';
+import { createIcon } from '@gluestack-ui-new/themed';
 import { Path, G, Defs, ClipPath, Rect } from 'react-native-svg';
 
 export const GoogleIcon = createIcon({
