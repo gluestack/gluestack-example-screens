@@ -145,6 +145,10 @@ async function getCodeFromFiles(directoryPath, targetFile) {
 
 function writeFileContent(sourceFile, targetFile, imports) {
   const writableStream = fs.createWriteStream(targetFile, { flags: 'a' });
+  // Remove export const and export type
+  sourceFile = sourceFile.replace(/export\s+type\s+/g, 'type ');
+  sourceFile = sourceFile.replace(/export\s+const\s+/g, 'const ');
+  // write content into the file
   writableStream.write(imports.join('\n') + '\n');
   writableStream.write(sourceFile + '\n');
   writableStream.end();
