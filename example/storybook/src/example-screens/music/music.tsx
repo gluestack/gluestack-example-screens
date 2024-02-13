@@ -453,6 +453,17 @@ const Music = () => {
       );
     }
   };
+  const [selected, setSelected] = React.useState(new Set([]));
+
+  const [selectedKeys, setSelectedKeys] = React.useState({});
+
+  // Function to handle selection change for a specific tab
+  const handleSelectionChange = (tabKey, keys) => {
+    setSelectedKeys((prevState) => ({
+      ...prevState,
+      [tabKey]: keys,
+    }));
+  };
 
   return (
     <VStack
@@ -479,15 +490,17 @@ const Music = () => {
         >
           {navTabs.map(({ label, key, menuItems }) => (
             <Menu
-              // disabledKeys={["File"]}
               disabledKeys={menuItems
                 .filter((item) => item.disabled)
                 .map((item) => item.label)}
-              // ml="$4"
               zIndex={1}
               borderWidth={1}
               key={key}
               placement="bottom left"
+              selectionMode="single"
+              selectedKeys={selectedKeys[key] || []} // Use selected keys for this tab
+              onSelectionChange={(keys) => handleSelectionChange(key, keys)}
+              closeOnSelect={true}
               trigger={({ ...triggerProps }) => {
                 return (
                   <Button
@@ -592,6 +605,12 @@ const Music = () => {
       <Menu
         borderWidth={1}
         placement="top"
+        selectionMode="single"
+        selectedKeys={selected}
+        onSelectionChange={(keys) => {
+          setSelected(keys);
+        }}
+        closeOnSelect={true}
         trigger={({ ...triggerProps }) => {
           return (
             <Fab
