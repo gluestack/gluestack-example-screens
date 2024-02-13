@@ -186,13 +186,16 @@ const Music = () => {
                           w="$64"
                           h="$80"
                           borderRadius="$md"
-                          overflow="hidden" // Ensure the image stays within its container
+                          overflow="hidden"
                         >
                           <Image
                             w="100%"
                             h="100%"
                             source={image}
-                            transform={[{ scale: props.hovered ? 1.1 : 1 }]} // Adjust the scale factor as needed
+                            style={{
+                              transform: [{ scale: props.hovered ? 1.05 : 1 }],
+                              transition: 'transform 0.3s ease-in-out',
+                            }}
                           />
                         </Box>
                         <Text fontSize="$md">{titles[index]}</Text>
@@ -218,14 +221,14 @@ const Music = () => {
                           w="$40"
                           h="$40"
                           borderRadius="$md"
-                          overflow="hidden" // Ensure the image stays within its container
+                          overflow="hidden"
                         >
                           <Image
                             w="100%"
                             h="100%"
                             borderRadius="$md"
                             source={image}
-                            transform={[{ scale: props.hovered ? 1.05 : 1 }]} // Adjust the scale factor as needed
+                            transform={[{ scale: props.hovered ? 1.05 : 1 }]}
                             alt="Explore"
                           />
                         </Box>
@@ -359,7 +362,6 @@ const Music = () => {
               '@base': { p: '$0' },
             }}
           >
-            {/* Added flex: 1 */}
             <HStack
               sx={{
                 '@md': { justifyContent: 'space-between' },
