@@ -228,7 +228,10 @@ const Music = () => {
                             h="100%"
                             borderRadius="$md"
                             source={image}
-                            transform={[{ scale: props.hovered ? 1.05 : 1 }]}
+                            style={{
+                              transform: [{ scale: props.hovered ? 1.05 : 1 }],
+                              transition: 'transform 0.3s ease-in-out',
+                            }}
                             alt="Explore"
                           />
                         </Box>
