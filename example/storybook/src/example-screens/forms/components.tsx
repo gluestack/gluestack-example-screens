@@ -1075,21 +1075,6 @@ const FabSidebar = ({
 }) => {
   const [selected, setSelected] = React.useState(new Set([]));
   const [isOpen, setIsOpen] = React.useState<boolean>(false);
-  // const [nestedSidebarItems, setNestedSidebarItems] = React.useState([]);
-
-  // React.useEffect(() => {
-  //   if (isNested) {
-  //     let obtainedSidebarItems = [];
-  //     sidebarData.map((item) => {
-  //       if (obtainedSidebarItems.length) {
-  //         obtainedSidebarItems = [...obtainedSidebarItems, ...item.subItems];
-  //       } else {
-  //         obtainedSidebarItems = [...item.subItems];
-  //       }
-  //     });
-  //     setNestedSidebarItems(obtainedSidebarItems);
-  //   }
-  // }, []);
   return (
     <Menu
       placement="top left"

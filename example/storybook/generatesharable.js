@@ -15,6 +15,18 @@ const directoryPaths = [
     directory: './src/example-screens/chats',
     targetFile: './src/example-screens/chats/shareableCode.tsx',
   },
+  {
+    directory: './src/example-screens/music',
+    targetFile: './src/example-screens/music/shareableCode.tsx',
+  },
+  {
+    directory: './src/example-screens/forms',
+    targetFile: './src/example-screens/forms/shareableCode.tsx',
+  },
+  {
+    directory: './src/example-screens/login',
+    targetFile: './src/example-screens/login/shareableCode.tsx',
+  },
 ];
 
 const fileRegex =
