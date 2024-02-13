@@ -16,7 +16,7 @@
     "storybook-watcher": "sb-rn-watcher --config-path .ondevice",
     "storybook": "NODE_OPTIONS=--openssl-legacy-provider start-storybook -p 6007",
     "dev": "yarn prebuild && yarn storybook",
-    "prebuild": "node shareablescript",
+    "prebuild": "node generatesharable",
     "build-storybook": "build-storybook",
     "build": "bob build",
     "release": "release-it",
