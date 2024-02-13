@@ -65,18 +65,16 @@ const CustomCheck = ({
   return (
     <HStack alignItems="center">
       {variant === 'radio' ? (
-        <RadioGroup>
-          <Radio value={value} size="sm" isInvalid={false} isDisabled={false}>
-            <RadioIndicator mr="$2">
-              <RadioIcon as={CircleIcon} strokeWidth={1} />
-            </RadioIndicator>
-            {label && (
-              <RadioLabel color="$primary950" fontSize="$sm">
-                {label}
-              </RadioLabel>
-            )}
-          </Radio>
-        </RadioGroup>
+        <Radio value={value} size="sm" isInvalid={false} isDisabled={false}>
+          <RadioIndicator mr="$2">
+            <RadioIcon as={CircleIcon} strokeWidth={1} />
+          </RadioIndicator>
+          {label && (
+            <RadioLabel color="$primary950" fontSize="$sm">
+              {label}
+            </RadioLabel>
+          )}
+        </Radio>
       ) : (
         <Checkbox size="sm" isInvalid={false} isDisabled={false} value={value}>
           <CheckboxIndicator mr="$2">
@@ -656,16 +654,18 @@ export const NotificationsView = () => {
           >
             Notify me about...
           </Text>
-          <VStack mt="$3" alignItems="flex-start" space="md">
-            {notifications.map((iterator) => (
-              <CustomCheck
-                label={iterator}
-                key={iterator}
-                variant="radio"
-                value={iterator}
-              />
-            ))}
-          </VStack>
+          <RadioGroup>
+            <VStack mt="$3" alignItems="flex-start" space="md">
+              {notifications.map((iterator) => (
+                <CustomCheck
+                  label={iterator}
+                  key={iterator}
+                  variant="radio"
+                  value={iterator}
+                />
+              ))}
+            </VStack>
+          </RadioGroup>
           <Text
             fontSize="$lg"
             fontFamily="$heading"
