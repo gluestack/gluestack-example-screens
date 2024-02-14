@@ -40,6 +40,7 @@ import {
   MenuItemLabel,
   FabIcon,
   MenuIcon,
+  CheckboxGroup,
 } from '@gluestack-ui/themed';
 import React from 'react';
 import CustomInput from '../components/CustomInput';
@@ -1040,6 +1041,21 @@ export const NotificationsView = () => {
   );
 };
 export const DisplayView = () => {
+  const [sidebarItems, setSidebarItems] = React.useState<Array<string>>([]);
+  const [errorMsg, setErrorMsg] = React.useState<string>('');
+  const onSidebarItemsChange = (value: any) => {
+    if (value?.length) {
+      setSidebarItems(value);
+      setErrorMsg('');
+    }
+  };
+  const onSubmit = () => {
+    if (sidebarItems?.length) {
+      setErrorMsg('');
+    } else {
+      setErrorMsg('You have to select at least one item.');
+    }
+  };
   return (
     <VStack flex={1} alignItems="flex-start">
       <Box w="$full" $base-maxWidth="$6/6" $lg-maxWidth="$4/6" px="$4">
@@ -1083,17 +1099,40 @@ export const DisplayView = () => {
               Select the items you want to display in the sidebar.
             </Text>
           </VStack>
-          <VStack mt="$3" space="sm">
-            {displaySidebarItems.map((iterator) => (
-              <CustomCheck
-                value={iterator}
-                variant="checkbox"
-                label={iterator}
-                key={iterator}
-              />
-            ))}
+          <VStack>
+            <CheckboxGroup
+              value={sidebarItems}
+              aria-label="sidebar"
+              onChange={(value: any) => onSidebarItemsChange(value)}
+            >
+              <VStack mt="$3" space="sm">
+                {displaySidebarItems.map((iterator) => (
+                  <CustomCheck
+                    value={iterator}
+                    variant="checkbox"
+                    label={iterator}
+                    key={iterator}
+                  />
+                ))}
+              </VStack>
+            </CheckboxGroup>
+            <Text
+              color={errorMsg?.length ? '$error600' : 'transparent'}
+              fontSize="$sm"
+              fontFamily="$body"
+              mt="$1"
+            >
+              {errorMsg?.length ? errorMsg : ''}
+            </Text>
           </VStack>
-          <Button variant="solid" size="lg" mt="$4" borderRadius="$md" p="$3">
+          <Button
+            variant="solid"
+            size="lg"
+            mt="$4"
+            borderRadius="$md"
+            p="$3"
+            onPress={onSubmit}
+          >
             <Text
               $base-fontSize="$xs"
               $md-fontSize="$sm"
