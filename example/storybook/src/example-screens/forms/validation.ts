@@ -1,4 +1,5 @@
 import * as z from 'zod';
+import { dummyUsernames } from './constants';
 export type profileViewValidationType = z.infer<
   typeof profileViewValidationSchema
 >;
@@ -9,9 +10,14 @@ export type appearanceViewValidationType = z.infer<
   typeof appearanceViewValidationSchema
 >;
 export const profileViewValidationSchema = z.object({
-  username: z.string({ required_error: 'Username is required' }).min(1, {
-    message: 'Username is required',
-  }),
+  username: z
+    .string({ required_error: 'Username is required' })
+    .min(1, {
+      message: 'Username is required',
+    })
+    .refine((value: string) => !dummyUsernames.includes(value), {
+      message: 'User name is already present',
+    }),
   email: z
     .string({ required_error: 'Email is required' })
     .min(1, {
@@ -23,6 +29,7 @@ export const profileViewValidationSchema = z.object({
     .min(1, {
       message: 'Url is required',
     })
+    .url('Please enter a valid url')
     .array(),
 });
 

@@ -40,11 +40,18 @@ import {
   MenuItemLabel,
   FabIcon,
   MenuIcon,
-  CheckboxGroup,
+  RadioIndicator,
+  FormControl,
+  FormControlLabel,
+  FormControlLabelText,
+  InputSlot,
+  Input,
+  styled,
+  Tooltip,
+  TooltipContent,
+  TooltipText,
 } from '@gluestack-ui/themed';
 import React from 'react';
-import CustomInput from '../components/CustomInput';
-import { RadioIndicator } from '@gluestack-ui/themed';
 import {
   displaySidebarItems,
   emailNotifications,
@@ -53,7 +60,6 @@ import {
   languages,
   notifications,
 } from './constants';
-import { SkeletonBox, SkeletonCircle } from '../components/SkeletonComponent';
 import { useController, useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import {
@@ -64,6 +70,8 @@ import {
   profileViewValidationSchema,
   profileViewValidationType,
 } from './validation';
+import PropTypes from 'prop-types';
+import { AnimatedView } from '@gluestack-style/animation-resolver';
 
 export type ViewType =
   | 'profile'
@@ -71,6 +79,134 @@ export type ViewType =
   | 'appearance'
   | 'notifications'
   | 'display';
+
+const AnimatedBox = styled(AnimatedView, {
+  ':initial': {
+    opacity: 0,
+  },
+  ':animate': {
+    opacity: 1,
+  },
+  ':exit': {
+    opacity: 0,
+  },
+});
+
+const SkeletonCircle = ({ size, ...props }) => {
+  return (
+    <AnimatedBox
+      borderRadius="$full"
+      bg="$background100"
+      w={size}
+      h={size}
+      {...props}
+    />
+  );
+};
+
+const SkeletonBox = ({ width, height, ...props }) => {
+  return (
+    <AnimatedBox
+      bg="$background100"
+      w={width}
+      h={height}
+      borderRadius="$3xl"
+      {...props}
+    />
+  );
+};
+
+SkeletonCircle.propTypes = {
+  size: PropTypes.string.isRequired,
+};
+
+SkeletonBox.propTypes = {
+  width: PropTypes.string.isRequired,
+  height: PropTypes.string.isRequired,
+};
+
+const CustomInput = ({
+  label,
+  icon,
+  children,
+  formControlProps,
+  inputProps,
+  validatorProps,
+}: {
+  label?: string;
+  icon?: any;
+  children: any;
+  formControlProps?: any;
+  inputProps?: any;
+  validatorProps?: any;
+}) => {
+  let childrenWithProps;
+  if (validatorProps) {
+    /* eslint-disable */
+    const {
+      field: { onChange, onBlur, value },
+      fieldState: { error, isTouched },
+    } = useController({
+      ...validatorProps,
+    });
+    childrenWithProps = React.cloneElement(children, {
+      onBlur: onBlur,
+      value: value,
+      onChangeText: (text: string) => {
+        onChange(text);
+        if (isTouched && validatorProps?.trigger) {
+          validatorProps.trigger(validatorProps?.name);
+        }
+      },
+    });
+    return (
+      <FormControl size="sm" {...formControlProps}>
+        {label && (
+          <FormControlLabel mb="$2">
+            <FormControlLabelText fontSize="$sm">{label}</FormControlLabelText>
+          </FormControlLabel>
+        )}
+        {icon ? (
+          <Input borderRadius="$lg" hardShadow="5" {...inputProps}>
+            <InputSlot pl="$3">{icon}</InputSlot>
+            {validatorProps ? childrenWithProps : children}
+          </Input>
+        ) : (
+          <Input {...inputProps}>
+            {validatorProps ? childrenWithProps : children}
+          </Input>
+        )}
+        {validatorProps?.trigger && (
+          <Text
+            color={error ? '$error600' : 'transparent'}
+            fontSize="$sm"
+            fontFamily="$body"
+            mt="$1"
+          >
+            {error ? error.message : ''}
+          </Text>
+        )}
+      </FormControl>
+    );
+  }
+  return (
+    <FormControl size="sm" {...formControlProps}>
+      {label && (
+        <FormControlLabel mb="$2">
+          <FormControlLabelText fontSize="$sm">{label}</FormControlLabelText>
+        </FormControlLabel>
+      )}
+      {icon ? (
+        <Input borderRadius="$lg" hardShadow="5" {...inputProps}>
+          <InputSlot pl="$3">{icon}</InputSlot>
+          {children}
+        </Input>
+      ) : (
+        <Input {...inputProps}>{children}</Input>
+      )}
+    </FormControl>
+  );
+};
 
 const CustomCheck = ({
   variant,
@@ -149,7 +285,18 @@ const SwitchRow = ({
           {subTitle}
         </Text>
       </VStack>
-      <Switch $md-size="md" $base-size="sm" />
+      <Tooltip
+        placement="top"
+        trigger={(triggerProps) => {
+          return <Switch $md-size="md" $base-size="sm" {...triggerProps} />;
+        }}
+      >
+        <TooltipContent>
+          <TooltipText $md-size="sm" $lg-size="md" $base-size="xs">
+            Toggle to {subTitle}
+          </TooltipText>
+        </TooltipContent>
+      </Tooltip>
     </HStack>
   );
 };
@@ -159,11 +306,13 @@ const CustomSelect = ({
   label,
   selectionData,
   validatorProps,
+  defaultValue,
 }: {
   inputPlaceholder: string;
   label: string;
   validatorProps: any;
   selectionData: Array<{ label: string; value: string }>;
+  defaultValue?: string;
 }) => {
   const {
     field: { onChange, onBlur, value },
@@ -194,6 +343,7 @@ const CustomSelect = ({
             validatorProps.trigger(validatorProps?.name);
           }
         }}
+        defaultValue={defaultValue ?? ''}
       >
         <SelectTrigger variant="outline" size="sm">
           <SelectInput placeholder={inputPlaceholder} />
@@ -235,6 +385,7 @@ export const ProfileView = () => {
     'https://gluestack.com',
     'https://gluestack.com/twitter',
   ]);
+  const [bioValue, setBioValue] = React.useState<string>('');
   const { control, trigger, handleSubmit } = useForm<profileViewValidationType>(
     {
       mode: 'onBlur',
@@ -295,7 +446,11 @@ export const ProfileView = () => {
                 name: 'username',
               }}
             >
-              <InputField type="text" placeholder="gluestack" size="sm" />
+              <InputField
+                type="text"
+                placeholder="gluestack@username"
+                size="sm"
+              />
             </CustomInput>
             <Text
               $base-fontSize="$2xs"
@@ -352,8 +507,29 @@ export const ProfileView = () => {
               w="$full"
               mt="$2"
             >
-              <TextareaInput placeholder="Tell us a little bit of your self" />
+              <TextareaInput
+                placeholder="Tell us a little bit of your self"
+                maxLength={256}
+                value={bioValue}
+                onChangeText={(text: string) => setBioValue(text)}
+              />
             </Textarea>
+            <Text
+              w="$full"
+              textAlign="right"
+              $base-fontSize="$3xs"
+              $md-fontSize="$2xs"
+              fontFamily="$body"
+              color={
+                bioValue?.replace(/<(.*?)>/g, '').length === 256
+                  ? '$error600'
+                  : '$primary200'
+              }
+              fontWeight="$normal"
+              mt="$1"
+            >
+              {bioValue?.replace(/<(.*?)>/g, '').length || '0'}/256
+            </Text>
             <Text
               $base-fontSize="$2xs"
               $md-fontSize="$xs"
@@ -458,7 +634,7 @@ export const AccountView = () => {
       mode: 'onBlur',
       defaultValues: {
         name: '',
-        language: '',
+        language: 'english',
       },
       resolver: zodResolver(accountViewValidationSchema),
     }
@@ -534,6 +710,7 @@ export const AccountView = () => {
                 trigger: trigger,
                 name: 'language',
               }}
+              defaultValue={languages[0].label}
             />
             <Text
               $base-fontSize="$2xs"
@@ -577,7 +754,7 @@ export const AppearanceView = () => {
     useForm<appearanceViewValidationType>({
       mode: 'onBlur',
       defaultValues: {
-        font: '',
+        font: 'inter',
       },
       resolver: zodResolver(appearanceViewValidationSchema),
     });
@@ -623,6 +800,7 @@ export const AppearanceView = () => {
                 trigger: trigger,
                 name: 'font',
               }}
+              defaultValue={fonts[0].label}
             />
             <Text
               $base-fontSize="$2xs"
@@ -1041,21 +1219,6 @@ export const NotificationsView = () => {
   );
 };
 export const DisplayView = () => {
-  const [sidebarItems, setSidebarItems] = React.useState<Array<string>>([]);
-  const [errorMsg, setErrorMsg] = React.useState<string>('');
-  const onSidebarItemsChange = (value: any) => {
-    if (value?.length) {
-      setSidebarItems(value);
-      setErrorMsg('');
-    }
-  };
-  const onSubmit = () => {
-    if (sidebarItems?.length) {
-      setErrorMsg('');
-    } else {
-      setErrorMsg('You have to select at least one item.');
-    }
-  };
   return (
     <VStack flex={1} alignItems="flex-start">
       <Box w="$full" $base-maxWidth="$6/6" $lg-maxWidth="$4/6" px="$4">
@@ -1099,40 +1262,17 @@ export const DisplayView = () => {
               Select the items you want to display in the sidebar.
             </Text>
           </VStack>
-          <VStack>
-            <CheckboxGroup
-              value={sidebarItems}
-              aria-label="sidebar"
-              onChange={(value: any) => onSidebarItemsChange(value)}
-            >
-              <VStack mt="$3" space="sm">
-                {displaySidebarItems.map((iterator) => (
-                  <CustomCheck
-                    value={iterator}
-                    variant="checkbox"
-                    label={iterator}
-                    key={iterator}
-                  />
-                ))}
-              </VStack>
-            </CheckboxGroup>
-            <Text
-              color={errorMsg?.length ? '$error600' : 'transparent'}
-              fontSize="$sm"
-              fontFamily="$body"
-              mt="$1"
-            >
-              {errorMsg?.length ? errorMsg : ''}
-            </Text>
+          <VStack mt="$3" space="sm">
+            {displaySidebarItems.map((iterator) => (
+              <CustomCheck
+                value={iterator}
+                variant="checkbox"
+                label={iterator}
+                key={iterator}
+              />
+            ))}
           </VStack>
-          <Button
-            variant="solid"
-            size="lg"
-            mt="$4"
-            borderRadius="$md"
-            p="$3"
-            onPress={onSubmit}
-          >
+          <Button variant="solid" size="lg" mt="$4" borderRadius="$md" p="$3">
             <Text
               $base-fontSize="$xs"
               $md-fontSize="$sm"

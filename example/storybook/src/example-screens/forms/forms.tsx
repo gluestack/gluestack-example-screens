@@ -17,6 +17,7 @@ import {
   ViewType,
   Sidebar,
 } from './components';
+
 const viewRenderer = (viewInput: ViewType) => {
   switch (viewInput) {
     case 'profile':
