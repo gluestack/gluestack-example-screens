@@ -41,10 +41,15 @@ import {
   FabIcon,
   MenuIcon,
   CheckboxGroup,
+  RadioIndicator,
+  FormControl,
+  FormControlLabel,
+  FormControlLabelText,
+  InputSlot,
+  Input,
+  styled,
 } from '@gluestack-ui/themed';
 import React from 'react';
-import CustomInput from '../components/CustomInput';
-import { RadioIndicator } from '@gluestack-ui/themed';
 import {
   displaySidebarItems,
   emailNotifications,
@@ -53,7 +58,6 @@ import {
   languages,
   notifications,
 } from './constants';
-import { SkeletonBox, SkeletonCircle } from '../components/SkeletonComponent';
 import { useController, useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import {
@@ -64,6 +68,8 @@ import {
   profileViewValidationSchema,
   profileViewValidationType,
 } from './validation';
+import PropTypes from 'prop-types';
+import { AnimatedView } from '@gluestack-style/animation-resolver';
 
 export type ViewType =
   | 'profile'
@@ -71,6 +77,134 @@ export type ViewType =
   | 'appearance'
   | 'notifications'
   | 'display';
+
+const AnimatedBox = styled(AnimatedView, {
+  ':initial': {
+    opacity: 0,
+  },
+  ':animate': {
+    opacity: 1,
+  },
+  ':exit': {
+    opacity: 0,
+  },
+});
+
+const SkeletonCircle = ({ size, ...props }) => {
+  return (
+    <AnimatedBox
+      borderRadius="$full"
+      bg="$background100"
+      w={size}
+      h={size}
+      {...props}
+    />
+  );
+};
+
+const SkeletonBox = ({ width, height, ...props }) => {
+  return (
+    <AnimatedBox
+      bg="$background100"
+      w={width}
+      h={height}
+      borderRadius="$3xl"
+      {...props}
+    />
+  );
+};
+
+SkeletonCircle.propTypes = {
+  size: PropTypes.string.isRequired,
+};
+
+SkeletonBox.propTypes = {
+  width: PropTypes.string.isRequired,
+  height: PropTypes.string.isRequired,
+};
+
+const CustomInput = ({
+  label,
+  icon,
+  children,
+  formControlProps,
+  inputProps,
+  validatorProps,
+}: {
+  label?: string;
+  icon?: any;
+  children: any;
+  formControlProps?: any;
+  inputProps?: any;
+  validatorProps?: any;
+}) => {
+  let childrenWithProps;
+  if (validatorProps) {
+    /* eslint-disable */
+    const {
+      field: { onChange, onBlur, value },
+      fieldState: { error, isTouched },
+    } = useController({
+      ...validatorProps,
+    });
+    childrenWithProps = React.cloneElement(children, {
+      onBlur: onBlur,
+      value: value,
+      onChangeText: (text: string) => {
+        onChange(text);
+        if (isTouched && validatorProps?.trigger) {
+          validatorProps.trigger(validatorProps?.name);
+        }
+      },
+    });
+    return (
+      <FormControl size="sm" {...formControlProps}>
+        {label && (
+          <FormControlLabel mb="$2">
+            <FormControlLabelText fontSize="$sm">{label}</FormControlLabelText>
+          </FormControlLabel>
+        )}
+        {icon ? (
+          <Input borderRadius="$lg" hardShadow="5" {...inputProps}>
+            <InputSlot pl="$3">{icon}</InputSlot>
+            {validatorProps ? childrenWithProps : children}
+          </Input>
+        ) : (
+          <Input {...inputProps}>
+            {validatorProps ? childrenWithProps : children}
+          </Input>
+        )}
+        {validatorProps?.trigger && (
+          <Text
+            color={error ? '$error600' : 'transparent'}
+            fontSize="$sm"
+            fontFamily="$body"
+            mt="$1"
+          >
+            {error ? error.message : ''}
+          </Text>
+        )}
+      </FormControl>
+    );
+  }
+  return (
+    <FormControl size="sm" {...formControlProps}>
+      {label && (
+        <FormControlLabel mb="$2">
+          <FormControlLabelText fontSize="$sm">{label}</FormControlLabelText>
+        </FormControlLabel>
+      )}
+      {icon ? (
+        <Input borderRadius="$lg" hardShadow="5" {...inputProps}>
+          <InputSlot pl="$3">{icon}</InputSlot>
+          {children}
+        </Input>
+      ) : (
+        <Input {...inputProps}>{children}</Input>
+      )}
+    </FormControl>
+  );
+};
 
 const CustomCheck = ({
   variant,

@@ -5,9 +5,9 @@ import {
   FormControlLabelText,
   InputSlot,
   Input,
+  Text,
 } from '@gluestack-ui/themed';
 import { useController } from 'react-hook-form';
-import { Text } from '@gluestack-ui/themed';
 
 const CustomInput = ({
   label,
