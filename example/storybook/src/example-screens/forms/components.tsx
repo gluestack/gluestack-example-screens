@@ -53,6 +53,16 @@ import {
   notifications,
 } from './constants';
 import { SkeletonBox, SkeletonCircle } from '../components/SkeletonComponent';
+import { useController, useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
+import {
+  accountViewValidationSchema,
+  accountViewValidationType,
+  appearanceViewValidationSchema,
+  appearanceViewValidationType,
+  profileViewValidationSchema,
+  profileViewValidationType,
+} from './validation';
 
 export type ViewType =
   | 'profile'
@@ -147,11 +157,20 @@ const CustomSelect = ({
   inputPlaceholder,
   label,
   selectionData,
+  validatorProps,
 }: {
   inputPlaceholder: string;
   label: string;
+  validatorProps: any;
   selectionData: Array<{ label: string; value: string }>;
 }) => {
+  const {
+    field: { onChange, onBlur, value },
+    fieldState: { error, isTouched },
+  } = useController({
+    ...validatorProps,
+  });
+
   return (
     <VStack w="$full">
       <Text
@@ -164,7 +183,17 @@ const CustomSelect = ({
       >
         {label}
       </Text>
-      <Select w="$full">
+      <Select
+        w="$full"
+        onClose={onBlur}
+        value={value}
+        onValueChange={(text: string) => {
+          onChange(text);
+          if (isTouched && validatorProps?.trigger) {
+            validatorProps.trigger(validatorProps?.name);
+          }
+        }}
+      >
         <SelectTrigger variant="outline" size="sm">
           <SelectInput placeholder={inputPlaceholder} />
           <SelectIcon mr="$3">
@@ -187,6 +216,16 @@ const CustomSelect = ({
           </SelectContent>
         </SelectPortal>
       </Select>
+      {validatorProps?.trigger && (
+        <Text
+          color={error ? '$error600' : 'transparent'}
+          fontSize="$sm"
+          fontFamily="$body"
+          mt="$1"
+        >
+          {error ? error.message : ''}
+        </Text>
+      )}
     </VStack>
   );
 };
@@ -195,11 +234,28 @@ export const ProfileView = () => {
     'https://gluestack.com',
     'https://gluestack.com/twitter',
   ]);
-  const handleAddUrl = () => {
-    setUrlArray((prev) => {
-      return [...prev, ''];
-    });
+  const { control, trigger, handleSubmit } = useForm<profileViewValidationType>(
+    {
+      mode: 'onBlur',
+      defaultValues: {
+        username: '',
+        email: '',
+        urls: ['https://gluestack.com', 'https://gluestack.com/twitter'],
+      },
+      resolver: zodResolver(profileViewValidationSchema),
+    }
+  );
+  /* eslint-disable */
+  const onSubmit = (data: profileViewValidationType) => {
+    // console.log(data, 'form submission data');
   };
+  const onError = (error: any) => {
+    // console.log(error, 'form submission errors');
+  };
+  const handleAddUrl = () => {
+    setUrlArray([...urlArray, '']);
+  };
+
   return (
     <VStack flex={1} alignItems="flex-start">
       <Box w="$full" $base-maxWidth="$6/6" $lg-maxWidth="$4/6" px="$4">
@@ -232,6 +288,11 @@ export const ProfileView = () => {
               inputProps={{
                 mt: '$1',
               }}
+              validatorProps={{
+                control: control,
+                trigger: trigger,
+                name: 'username',
+              }}
             >
               <InputField type="text" placeholder="gluestack" size="sm" />
             </CustomInput>
@@ -253,6 +314,11 @@ export const ProfileView = () => {
               inputPlaceholder="Select a verified email to display"
               label="Email"
               selectionData={emails}
+              validatorProps={{
+                control: control,
+                trigger: trigger,
+                name: 'email',
+              }}
             />
             <Text
               $base-fontSize="$2xs"
@@ -322,7 +388,14 @@ export const ProfileView = () => {
             </Text>
             <VStack space="md" mt="$2">
               {urlArray.map((url, index) => (
-                <CustomInput key={index}>
+                <CustomInput
+                  key={index}
+                  validatorProps={{
+                    control: control,
+                    trigger: trigger,
+                    name: `urls.${index}`,
+                  }}
+                >
                   <InputField
                     type="text"
                     placeholder=""
@@ -353,7 +426,16 @@ export const ProfileView = () => {
               </Text>
             </Button>
           </VStack>
-          <Button variant="solid" size="lg" mt="$4" borderRadius="$md" p="$3">
+          <Button
+            variant="solid"
+            size="lg"
+            mt="$4"
+            borderRadius="$md"
+            p="$3"
+            onPress={() => {
+              handleSubmit(onSubmit, onError)();
+            }}
+          >
             <Text
               $base-fontSize="$xs"
               $md-fontSize="$sm"
@@ -370,6 +452,23 @@ export const ProfileView = () => {
   );
 };
 export const AccountView = () => {
+  const { control, trigger, handleSubmit } = useForm<accountViewValidationType>(
+    {
+      mode: 'onBlur',
+      defaultValues: {
+        name: '',
+        language: '',
+      },
+      resolver: zodResolver(accountViewValidationSchema),
+    }
+  );
+  /* eslint-disable */
+  const onSubmit = (data: profileViewValidationType) => {
+    // console.log(data, 'form submission data');
+  };
+  const onError = (error: any) => {
+    // console.log(error, 'form submission errors');
+  };
   return (
     <VStack flex={1} alignItems="flex-start">
       <Box w="$full" $base-maxWidth="$6/6" $lg-maxWidth="$4/6" px="$4">
@@ -403,6 +502,11 @@ export const AccountView = () => {
               inputProps={{
                 mt: '$1',
               }}
+              validatorProps={{
+                control: control,
+                trigger: trigger,
+                name: 'name',
+              }}
             >
               <InputField type="text" placeholder="Your name" size="sm" />
             </CustomInput>
@@ -424,6 +528,11 @@ export const AccountView = () => {
               inputPlaceholder="Select language"
               label="Language"
               selectionData={languages}
+              validatorProps={{
+                control: control,
+                trigger: trigger,
+                name: 'language',
+              }}
             />
             <Text
               $base-fontSize="$2xs"
@@ -437,8 +546,16 @@ export const AccountView = () => {
               This is the language that will be used in the dashboard.
             </Text>
           </VStack>
-
-          <Button variant="solid" size="lg" mt="$4" borderRadius="$md" p="$3">
+          <Button
+            variant="solid"
+            size="lg"
+            mt="$4"
+            borderRadius="$md"
+            p="$3"
+            onPress={() => {
+              handleSubmit(onSubmit, onError)();
+            }}
+          >
             <Text
               $base-fontSize="$xs"
               $md-fontSize="$sm"
@@ -455,6 +572,21 @@ export const AccountView = () => {
   );
 };
 export const AppearanceView = () => {
+  const { control, trigger, handleSubmit } =
+    useForm<appearanceViewValidationType>({
+      mode: 'onBlur',
+      defaultValues: {
+        font: '',
+      },
+      resolver: zodResolver(appearanceViewValidationSchema),
+    });
+  /* eslint-disable */
+  const onSubmit = (data: profileViewValidationType) => {
+    // console.log(data, 'form submission data');
+  };
+  const onError = (error: any) => {
+    // console.log(error, 'form submission errors');
+  };
   const [theme, setTheme] = React.useState<'light' | 'dark'>('light');
   return (
     <VStack flex={1} alignItems="flex-start">
@@ -485,6 +617,11 @@ export const AppearanceView = () => {
               inputPlaceholder="Select Font"
               label="Font"
               selectionData={fonts}
+              validatorProps={{
+                control: control,
+                trigger: trigger,
+                name: 'font',
+              }}
             />
             <Text
               $base-fontSize="$2xs"
@@ -736,7 +873,16 @@ export const AppearanceView = () => {
               </VStack>
             </HStack>
           </VStack>
-          <Button variant="solid" size="lg" mt="$4" borderRadius="$md" p="$3">
+          <Button
+            variant="solid"
+            size="lg"
+            mt="$4"
+            borderRadius="$md"
+            p="$3"
+            onPress={() => {
+              handleSubmit(onSubmit, onError)();
+            }}
+          >
             <Text
               $base-fontSize="$xs"
               $md-fontSize="$sm"
@@ -753,6 +899,21 @@ export const AppearanceView = () => {
   );
 };
 export const NotificationsView = () => {
+  const [notificationType, setNotificationType] = React.useState<string>('');
+  const [errorMsg, setErrorMsg] = React.useState<string>('');
+  const onNotificationTypeChange = (value: any) => {
+    if (value?.length) {
+      setNotificationType(value);
+      setErrorMsg('');
+    }
+  };
+  const onSubmit = () => {
+    if (notificationType === '') {
+      setErrorMsg('You need to select a notification type.');
+    } else {
+      setErrorMsg('');
+    }
+  };
   return (
     <VStack flex={1} alignItems="flex-start">
       <Box w="$full" $base-maxWidth="$6/6" $lg-maxWidth="$4/6" px="$4">
@@ -786,18 +947,31 @@ export const NotificationsView = () => {
           >
             Notify me about...
           </Text>
-          <RadioGroup>
-            <VStack mt="$3" alignItems="flex-start" space="md">
-              {notifications.map((iterator) => (
-                <CustomCheck
-                  label={iterator}
-                  key={iterator}
-                  variant="radio"
-                  value={iterator}
-                />
-              ))}
-            </VStack>
-          </RadioGroup>
+          <VStack>
+            <RadioGroup
+              onChange={(value: any) => onNotificationTypeChange(value)}
+              value={notificationType}
+            >
+              <VStack mt="$3" alignItems="flex-start" space="md">
+                {notifications.map((iterator) => (
+                  <CustomCheck
+                    label={iterator}
+                    key={iterator}
+                    variant="radio"
+                    value={iterator}
+                  />
+                ))}
+              </VStack>
+            </RadioGroup>
+            <Text
+              color={errorMsg?.length ? '$error600' : 'transparent'}
+              fontSize="$sm"
+              fontFamily="$body"
+              mt="$1"
+            >
+              {errorMsg?.length ? errorMsg : ''}
+            </Text>
+          </VStack>
           <Text
             $base-fontSize="$md"
             $md-fontSize="$lg"
@@ -842,7 +1016,14 @@ export const NotificationsView = () => {
               </Text>
             </VStack>
           </HStack>
-          <Button variant="solid" size="lg" mt="$4" borderRadius="$md" p="$3">
+          <Button
+            variant="solid"
+            size="lg"
+            mt="$4"
+            borderRadius="$md"
+            p="$3"
+            onPress={onSubmit}
+          >
             <Text
               $base-fontSize="$xs"
               $md-fontSize="$sm"
@@ -987,23 +1168,23 @@ export const Sidebar = ({
                 w="$full"
                 p="$2"
                 $active-bg="$background100"
-                $hover-bg="$background100"
                 key={item.key}
                 onPress={() => handlePress(item)}
                 bg={item.key === selected.key ? '$background100' : ''}
                 borderRadius="$md"
                 {...itemProps}
               >
-                <HStack>
+                {({ hovered }) => (
                   <Text
                     color="$primary950"
                     fontSize="$md"
                     px="$4"
                     fontFamily="$body"
+                    underline={hovered}
                   >
                     {item.value}
                   </Text>
-                </HStack>
+                )}
               </Pressable>
             ))}
           </>

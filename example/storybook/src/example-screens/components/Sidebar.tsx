@@ -72,23 +72,23 @@ const Sidebar = ({
                 w="$full"
                 p="$2"
                 $active-bg="$background100"
-                $hover-bg="$background100"
                 key={item.key}
                 onPress={() => handlePress(item)}
                 bg={item.key === selected.key ? '$background100' : ''}
                 borderRadius="$md"
                 {...itemProps}
               >
-                <HStack>
+                {({ hovered }) => (
                   <Text
                     color="$primary950"
                     fontSize="$md"
                     px="$4"
                     fontFamily="$body"
+                    underline={hovered}
                   >
                     {item.value}
                   </Text>
-                </HStack>
+                )}
               </Pressable>
             ))}
           </>
