@@ -1,5 +1,18 @@
-import { HStack, Text } from '@gluestack-ui/themed';
-import { Pressable, VStack, Icon } from '@gluestack-ui/themed';
+import {
+  Fab,
+  FabIcon,
+  HStack,
+  MenuItem,
+  MenuItemLabel,
+  ScrollView,
+  Text,
+  useMediaQuery,
+  MenuIcon,
+  Menu,
+  Pressable,
+  VStack,
+  Icon,
+} from '@gluestack-ui/themed';
 import React from 'react';
 interface SidebarItemProps {
   key: string;
@@ -15,12 +28,14 @@ interface SidebarProps {
   itemProps?: any;
   onSelected: (item: SidebarItemProps) => void;
   isNested?: boolean;
+  FabSidebarProps?: any;
 }
 const Sidebar = ({
   sidebarItems,
   itemProps,
   onSelected,
   isNested = false,
+  FabSidebarProps,
 }: SidebarProps) => {
   const [selected, setSelected] = React.useState<SidebarItemProps>(
     sidebarItems[0]
@@ -29,88 +44,179 @@ const Sidebar = ({
     setSelected(itemInput);
     onSelected(itemInput);
   };
+  const handleViewChange = (selected: any) => {
+    const itemInput = {
+      key: selected,
+      value: selected,
+    };
+    onSelected(itemInput);
+  };
+  const [isMobileScreen] = useMediaQuery({ maxWidth: 760 });
+  if (isMobileScreen) {
+    return (
+      <FabSidebar
+        onViewChange={handleViewChange}
+        sidebarData={sidebarItems}
+        isNested={isNested}
+        {...FabSidebarProps}
+      />
+    );
+  }
   return (
-    <VStack w="$full" flexGrow={1} space={isNested ? '3xl' : 'sm'}>
-      {!isNested ? (
-        <>
-          {sidebarItems.map((item) => (
-            <Pressable
-              w="$full"
-              p="$2"
-              $active-bg="$background100"
-              $hover-bg="$background100"
-              key={item.key}
-              onPress={() => handlePress(item)}
-              bg={item.key === selected.key ? '$background100' : ''}
-              borderRadius="$md"
-              {...itemProps}
-            >
-              <HStack>
+    <ScrollView w="$full" h="$full">
+      <VStack w="$full" h="$full" space={isNested ? '3xl' : 'sm'} flexGrow={1}>
+        {!isNested ? (
+          <>
+            {sidebarItems.map((item) => (
+              <Pressable
+                w="$full"
+                p="$2"
+                $active-bg="$background100"
+                key={item.key}
+                onPress={() => handlePress(item)}
+                bg={item.key === selected.key ? '$background100' : ''}
+                borderRadius="$md"
+                {...itemProps}
+              >
+                {({ hovered }) => (
+                  <Text
+                    color="$primary950"
+                    fontSize="$md"
+                    px="$4"
+                    fontFamily="$body"
+                    underline={hovered}
+                  >
+                    {item.value}
+                  </Text>
+                )}
+              </Pressable>
+            ))}
+          </>
+        ) : (
+          <>
+            {sidebarItems.map((item: any) => (
+              <VStack>
                 <Text
                   color="$primary950"
-                  fontSize="$md"
-                  px="$4"
-                  fontFamily="$body"
+                  $lg-fontSize="$lg"
+                  $md-fontSize="$md"
+                  fontWeight="$bold"
+                  mx="$4"
+                  fontFamily="$heading"
                 >
-                  {item.value}
+                  {item?.heading}
                 </Text>
-              </HStack>
-            </Pressable>
-          ))}
-        </>
-      ) : (
-        <>
-          {sidebarItems.map((item: any) => (
-            <VStack>
-              <Text
-                color="$primary950"
-                fontSize="$lg"
-                fontWeight="$bold"
-                mx="$4"
-                fontFamily="$heading"
-              >
-                {item?.heading}
-              </Text>
-              <VStack
-                w="$full"
-                flexGrow={1}
-                space="sm"
-                maxHeight="$56"
-                overflow="scroll"
-                key={item?.heading}
-                mt="$2"
-              >
-                {item?.subItems?.map((item: NestedSidebarItemProps) => (
-                  <Pressable
-                    w="$full"
-                    p="$2"
-                    $active-bg="$background100"
-                    $hover-bg="$background100"
-                    key={item.key}
-                    onPress={() => handlePress(item)}
-                    bg={item.key === selected.key ? '$background100' : ''}
-                    borderRadius="$md"
-                    {...itemProps}
-                  >
-                    <HStack alignItems="center" space="sm" ml="$1.5">
-                      {item?.icon && <Icon as={item.icon} />}
-                      <Text
-                        color="$primary950"
-                        fontSize="$md"
-                        fontFamily="$body"
-                      >
-                        {item.value}
-                      </Text>
-                    </HStack>
-                  </Pressable>
-                ))}
+                <VStack
+                  w="$full"
+                  flexGrow={1}
+                  space="sm"
+                  key={item?.heading}
+                  mt="$2"
+                >
+                  {item?.subItems?.map((item: NestedSidebarItemProps) => (
+                    <Pressable
+                      w="$full"
+                      p="$2"
+                      $active-bg="$background100"
+                      $hover-bg="$background100"
+                      key={item.key}
+                      onPress={() => handlePress(item)}
+                      bg={item.key === selected.key ? '$background100' : ''}
+                      borderRadius="$md"
+                      {...itemProps}
+                    >
+                      <HStack alignItems="center" space="sm" ml="$1.5">
+                        {item?.icon && <Icon as={item.icon} />}
+                        <Text
+                          color="$primary950"
+                          $md-fontSize="$sm"
+                          $lg-fontSize="$md"
+                          fontFamily="$body"
+                        >
+                          {item.value}
+                        </Text>
+                      </HStack>
+                    </Pressable>
+                  ))}
+                </VStack>
               </VStack>
-            </VStack>
-          ))}
-        </>
-      )}
-    </VStack>
+            ))}
+          </>
+        )}
+      </VStack>
+    </ScrollView>
   );
 };
 
+const FabSidebar = ({
+  onViewChange,
+  sidebarData,
+  isNested,
+  ...props
+}: {
+  sidebarData: any;
+  onViewChange: (view: SidebarItemProps) => void;
+  isNested: boolean;
+}) => {
+  const [selected, setSelected] = React.useState(new Set([]));
+  const [isOpen, setIsOpen] = React.useState<boolean>(false);
+  return (
+    <Menu
+      placement="top left"
+      selectionMode="single"
+      borderWidth={1}
+      selectedKeys={selected}
+      closeOnSelect={true}
+      isOpen={isOpen}
+      onPointerLeave={() => setIsOpen(false)}
+      onOpen={() => setIsOpen(true)}
+      onSelectionChange={(keys: any) => {
+        setSelected(keys);
+        onViewChange(keys?.currentKey);
+        setIsOpen(false);
+      }}
+      maxHeight="$64"
+      overflow="scroll"
+      trigger={({ ...triggerProps }) => {
+        return (
+          <Fab
+            size="md"
+            placement="bottom right"
+            isHovered={false}
+            isDisabled={false}
+            isPressed={false}
+            renderInPortal={true}
+            position="fixed"
+            zIndex={999}
+            minWidth="$10"
+            minHeight="$10"
+            {...triggerProps}
+            {...props}
+          >
+            <FabIcon as={MenuIcon} />
+          </Fab>
+        );
+      }}
+    >
+      {!isNested
+        ? sidebarData.map((item: SidebarItemProps) => (
+            <MenuItem key={item.key} textValue={item.value}>
+              <MenuItemLabel size="sm" ml="$2">
+                {item.value}
+              </MenuItemLabel>
+            </MenuItem>
+          ))
+        : sidebarData.map((sidebarItem: any) => {
+            return sidebarItem.subItems.map((item: NestedSidebarItemProps) => (
+              <MenuItem key={item.key} textValue={item.value}>
+                {item?.icon && <Icon as={item.icon} />}
+                <MenuItemLabel size="sm" ml="$2">
+                  {item.value}
+                </MenuItemLabel>
+              </MenuItem>
+            ));
+          })}
+    </Menu>
+  );
+};
 export default Sidebar;
