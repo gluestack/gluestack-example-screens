@@ -16,7 +16,6 @@ import {
   Menu,
   Box,
   Icon,
-  ChevronRightIcon,
   useMediaQuery,
   Fab,
   FabIcon,
@@ -262,14 +261,14 @@ const navTabs = [
     label: 'File',
     key: 'file',
     menuItems: [
-      { label: 'New', menuIcon: [{ icon: ChevronRightIcon }] },
+      { label: 'New' },
       {
         label: 'Open Stream URL... ',
         menuIcon: [{ icon: Command }],
         iconText: 'U',
       },
       { label: 'Close Window', menuIcon: [{ icon: Command }], iconText: 'W' },
-      { label: 'Library', menuIcon: [{ icon: ChevronRightIcon }] },
+      { label: 'Library' },
       { label: 'Import...', menuIcon: [{ icon: Command }], iconText: 'O' },
       { label: 'Burn Playlist to Disc...', disabled: true },
       {
@@ -409,7 +408,6 @@ const Tab = ({ label, isActive, onPress, disabled }) => (
     bg={isActive ? '$background0' : 'transparent'}
     m="$1"
     borderRadius="$md"
-    zIndex={1}
     opacity={disabled ? 0.5 : 1}
   >
     <Text
@@ -556,24 +554,22 @@ const Music = () => {
   };
 
   return (
-    <VStack
-      bg="$transparent"
-      sx={{
-        '.dark_theme': { borderColor: '$border200' },
-        '@md': { borderWidth: 1, borderRadius: '$lg' },
-        '@sm': { borderWidth: 0 },
-      }}
-      overflow="hidden"
-      borderColor="$border200"
-      alignSelf="flex-start"
-      h="$full"
-      w="$full"
-    >
-      <VStack w="$full" h="$full">
+    <Box w="$full" h="100vh" overflow="hidden">
+      <VStack
+        bg="$background0"
+        sx={{
+          '.dark_theme': { borderColor: '$border200' },
+          '@md': { borderWidth: 1, borderRadius: '$lg' },
+          '@sm': { borderWidth: 0 },
+        }}
+        borderColor="$border200"
+        alignSelf="flex-start"
+        h="$full"
+        w="$full"
+        flexDirection="column" // Ensure content stacks vertically
+      >
         <HStack
           w="$full"
-          h="$10"
-          flexDirection="row"
           borderBottomWidth="$1"
           borderBottomColor="$border200"
           sx={{ '@md': { display: 'flex' }, '@base': { display: 'none' } }}
@@ -583,7 +579,6 @@ const Music = () => {
               disabledKeys={menuItems
                 .filter((item) => item.disabled)
                 .map((item) => item.label)}
-              zIndex={1}
               borderWidth={1}
               key={key}
               placement="bottom left"
@@ -628,8 +623,16 @@ const Music = () => {
             </Menu>
           ))}
         </HStack>
-        <HStack w="$full">
-          <Box paddingVertical="$6" paddingHorizontal="$2" $md-w="$1/5">
+        <HStack flex={1} w="$full">
+          <Box
+            // marginVertical="$6"
+            // paddingHorizontal="$2"
+            $md-mt="$6"
+            $md-mb="$6"
+            $md-mx="$2"
+            $md-my="$2"
+            $md-w="$1/5"
+          >
             <Sidebar
               sidebarItems={sidebarItems}
               isNested
@@ -641,15 +644,15 @@ const Music = () => {
           </Box>
 
           <VStack
-            borderColor="$border200"
             gap="$6"
             flex={1}
             zIndex={-99}
+            p="$6"
             sx={{
-              '@lg': { borderLeftWidth: 1 },
-              '@md': { borderLeftWidth: 0, p: '$6' },
-              '@base': { p: '$0' },
+              '@base': { p: '$4', borderLeftWidth: 0 },
+              '@md': { p: '$6', borderLeftWidth: 1 },
             }}
+            borderColor="$border200"
           >
             <HStack
               sx={{
@@ -686,11 +689,11 @@ const Music = () => {
                 </ButtonText>
               </Button>
             </HStack>
-            {renderListenNow()}
+            <ScrollView>{renderListenNow()}</ScrollView>
           </VStack>
         </HStack>
       </VStack>
-    </VStack>
+    </Box>
   );
 };
 
