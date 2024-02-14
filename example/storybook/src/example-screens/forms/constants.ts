@@ -93,3 +93,22 @@ export const displaySidebarItems = [
   'Downloads',
   'Documents',
 ];
+export const dummyUsernames = [
+  'test',
+  'test1',
+  'test2',
+  'test3',
+  'gluestack',
+  'gluestack1',
+  'gluestack2',
+  'gluestack3',
+  'user3',
+  'user2',
+  'user1',
+  'user',
+  'username',
+  'username1',
+  'username2',
+  'username3',
+  'developer',
+];
