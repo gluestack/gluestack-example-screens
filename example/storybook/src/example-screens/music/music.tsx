@@ -15,18 +15,15 @@ import {
   VStack,
   Menu,
   Box,
-  Fab,
-  FabIcon,
-  EditIcon,
   Icon,
   ChevronRightIcon,
+  useMediaQuery,
+  Fab,
+  FabIcon,
+  MenuIcon,
 } from '@gluestack-ui-new/themed';
 import {
   PlusCircle,
-  User,
-  File,
-  Pencil,
-  Eye,
   Command,
   ArrowBigUp,
   Mic2,
@@ -48,13 +45,14 @@ interface SidebarProps {
   itemProps?: any;
   onSelected: (item: SidebarItemProps) => void;
   isNested?: boolean;
+  FabSidebarProps?: any;
 }
-
 const Sidebar = ({
   sidebarItems,
   itemProps,
   onSelected,
   isNested = false,
+  FabSidebarProps,
 }: SidebarProps) => {
   const [selected, setSelected] = React.useState<SidebarItemProps>(
     sidebarItems[0]
@@ -63,89 +61,182 @@ const Sidebar = ({
     setSelected(itemInput);
     onSelected(itemInput);
   };
+  const handleViewChange = (selected: any) => {
+    const itemInput = {
+      key: selected,
+      value: selected,
+    };
+    onSelected(itemInput);
+  };
+  const [isMobileScreen] = useMediaQuery({ maxWidth: 760 });
+  if (isMobileScreen) {
+    return (
+      <FabSidebar
+        onViewChange={handleViewChange}
+        sidebarData={sidebarItems}
+        isNested={isNested}
+        {...FabSidebarProps}
+      />
+    );
+  }
   return (
-    <VStack w="$full" flexGrow={1} space={isNested ? '3xl' : 'sm'}>
-      {!isNested ? (
-        <>
-          {sidebarItems.map((item) => (
-            <Pressable
-              w="$full"
-              p="$2"
-              $active-bg="$background100"
-              $hover-bg="$background100"
-              key={item.key}
-              onPress={() => handlePress(item)}
-              bg={item.key === selected.key ? '$background100' : ''}
-              borderRadius="$md"
-              {...itemProps}
-            >
-              <HStack>
+    <ScrollView w="$full" h="$full">
+      <VStack w="$full" h="$full" space={isNested ? '3xl' : 'sm'} flexGrow={1}>
+        {!isNested ? (
+          <>
+            {sidebarItems.map((item) => (
+              <Pressable
+                w="$full"
+                p="$2"
+                $active-bg="$background100"
+                $hover-bg="$background100"
+                key={item.key}
+                onPress={() => handlePress(item)}
+                bg={item.key === selected.key ? '$background100' : ''}
+                borderRadius="$md"
+                {...itemProps}
+              >
+                <HStack>
+                  <Text
+                    color="$primary950"
+                    fontSize="$md"
+                    px="$4"
+                    fontFamily="$body"
+                  >
+                    {item.value}
+                  </Text>
+                </HStack>
+              </Pressable>
+            ))}
+          </>
+        ) : (
+          <>
+            {sidebarItems.map((item: any) => (
+              <VStack>
                 <Text
                   color="$primary950"
-                  fontSize="$md"
-                  px="$4"
-                  fontFamily="$body"
+                  $lg-fontSize="$lg"
+                  $md-fontSize="$md"
+                  fontWeight="$bold"
+                  mx="$4"
+                  fontFamily="$heading"
                 >
-                  {item.value}
+                  {item?.heading}
                 </Text>
-              </HStack>
-            </Pressable>
-          ))}
-        </>
-      ) : (
-        <>
-          {sidebarItems.map((item: any) => (
-            <VStack>
-              <Text
-                color="$primary950"
-                fontSize="$lg"
-                fontWeight="$bold"
-                mx="$4"
-                fontFamily="$heading"
-              >
-                {item?.heading}
-              </Text>
-              <VStack
-                w="$full"
-                flexGrow={1}
-                space="sm"
-                maxHeight="$56"
-                overflow="scroll"
-                key={item?.heading}
-                mt="$2"
-              >
-                {item?.subItems?.map((item: NestedSidebarItemProps) => (
-                  <Pressable
-                    w="$full"
-                    p="$2"
-                    $active-bg="$background100"
-                    $hover-bg="$background100"
-                    key={item.key}
-                    onPress={() => handlePress(item)}
-                    bg={item.key === selected.key ? '$background100' : ''}
-                    borderRadius="$md"
-                    {...itemProps}
-                  >
-                    <HStack alignItems="center" space="sm" ml="$1.5">
-                      {item?.icon && <Icon as={item.icon} />}
-                      <Text
-                        color="$primary950"
-                        fontSize="$md"
-                        fontFamily="$body"
-                      >
-                        {item.value}
-                      </Text>
-                    </HStack>
-                  </Pressable>
-                ))}
+                <VStack
+                  w="$full"
+                  flexGrow={1}
+                  space="sm"
+                  key={item?.heading}
+                  mt="$2"
+                >
+                  {item?.subItems?.map((item: NestedSidebarItemProps) => (
+                    <Pressable
+                      w="$full"
+                      p="$2"
+                      $active-bg="$background100"
+                      $hover-bg="$background100"
+                      key={item.key}
+                      onPress={() => handlePress(item)}
+                      bg={item.key === selected.key ? '$background100' : ''}
+                      borderRadius="$md"
+                      {...itemProps}
+                    >
+                      <HStack alignItems="center" space="sm" ml="$1.5">
+                        {item?.icon && <Icon as={item.icon} />}
+                        <Text
+                          color="$primary950"
+                          $lg-fontSize="$md"
+                          $md-fontSize="$sm"
+                          fontFamily="$body"
+                        >
+                          {item.value}
+                        </Text>
+                      </HStack>
+                    </Pressable>
+                  ))}
+                </VStack>
               </VStack>
-            </VStack>
-          ))}
-        </>
-      )}
-    </VStack>
+            ))}
+          </>
+        )}
+      </VStack>
+    </ScrollView>
   );
 };
+
+const FabSidebar = ({
+  onViewChange,
+  sidebarData,
+  isNested,
+  ...props
+}: {
+  sidebarData: any;
+  onViewChange: (view: SidebarItemProps) => void;
+  isNested: boolean;
+}) => {
+  const [selected, setSelected] = React.useState(new Set([]));
+  const [isOpen, setIsOpen] = React.useState<boolean>(false);
+  return (
+    <Menu
+      placement="top left"
+      selectionMode="single"
+      borderWidth={1}
+      selectedKeys={selected}
+      closeOnSelect={true}
+      isOpen={isOpen}
+      onPointerLeave={() => setIsOpen(false)}
+      onOpen={() => setIsOpen(true)}
+      onSelectionChange={(keys: any) => {
+        setSelected(keys);
+        onViewChange(keys?.currentKey);
+        setIsOpen(false);
+      }}
+      maxHeight="$64"
+      overflow="scroll"
+      trigger={({ ...triggerProps }) => {
+        return (
+          <Fab
+            size="md"
+            placement="bottom right"
+            isHovered={false}
+            isDisabled={false}
+            isPressed={false}
+            renderInPortal={true}
+            position="fixed"
+            zIndex={999}
+            minWidth="$10"
+            minHeight="$10"
+            {...triggerProps}
+            {...props}
+          >
+            <FabIcon as={MenuIcon} />
+          </Fab>
+        );
+      }}
+    >
+      {!isNested
+        ? sidebarData.map((item: SidebarItemProps) => (
+            <MenuItem key={item.key} textValue={item.value}>
+              <MenuItemLabel size="sm" ml="$2">
+                {item.value}
+              </MenuItemLabel>
+            </MenuItem>
+          ))
+        : sidebarData.map((sidebarItem: any) => {
+            return sidebarItem.subItems.map((item: NestedSidebarItemProps) => (
+              <MenuItem key={item.key} textValue={item.value}>
+                {item?.icon && <Icon as={item.icon} />}
+                <MenuItemLabel size="sm" ml="$2">
+                  {item.value}
+                </MenuItemLabel>
+              </MenuItem>
+            ));
+          })}
+    </Menu>
+  );
+};
+
 const tabs = [
   { label: 'Music', key: 'music' },
   { label: 'Podcasts', key: 'podcasts' },
@@ -453,7 +544,6 @@ const Music = () => {
       );
     }
   };
-  const [selected, setSelected] = React.useState(new Set([]));
 
   const [selectedKeys, setSelectedKeys] = React.useState({});
 
@@ -539,23 +629,22 @@ const Music = () => {
           ))}
         </HStack>
         <HStack w="$full">
-          <Box
-            sx={{
-              '@lg': { display: 'flex' },
-              '@md': { display: 'none' },
-              '@base': { display: 'none' },
-            }}
-            paddingVertical="$6"
-            paddingHorizontal="$2"
-            w="$1/5"
-          >
-            <Sidebar sidebarItems={sidebarItems} isNested />
+          <Box paddingVertical="$6" paddingHorizontal="$2" $md-w="$1/5">
+            <Sidebar
+              sidebarItems={sidebarItems}
+              isNested
+              FabSidebarProps={{
+                w: '$12',
+                h: '$12',
+              }}
+            />
           </Box>
 
           <VStack
             borderColor="$border200"
             gap="$6"
             flex={1}
+            zIndex={-99}
             sx={{
               '@lg': { borderLeftWidth: 1 },
               '@md': { borderLeftWidth: 0, p: '$6' },
@@ -601,51 +690,6 @@ const Music = () => {
           </VStack>
         </HStack>
       </VStack>
-
-      <Menu
-        borderWidth={1}
-        placement="top"
-        selectionMode="single"
-        selectedKeys={selected}
-        onSelectionChange={(keys) => {
-          setSelected(keys);
-        }}
-        closeOnSelect={true}
-        trigger={({ ...triggerProps }) => {
-          return (
-            <Fab
-              {...triggerProps}
-              sx={{ '@base': { display: 'flex' }, '@md': { display: 'none' } }}
-              placement="bottom right"
-              position="fixed"
-              size="lg"
-            >
-              <FabIcon as={EditIcon} />
-            </Fab>
-          );
-        }}
-      >
-        <MenuItem key="File" textValue="File">
-          <Icon as={File} size="sm" mr="$2" />
-          <MenuItemLabel size="sm">File</MenuItemLabel>
-        </MenuItem>
-        <MenuItem key="Edit" textValue="Edit">
-          <Icon as={Pencil} size="sm" mr="$2" />
-          <MenuItemLabel size="sm">Edit</MenuItemLabel>
-        </MenuItem>
-        <MenuItem key="View" textValue="View">
-          <Icon as={Eye} size="sm" mr="$2" />
-          <MenuItemLabel size="sm">View</MenuItemLabel>
-        </MenuItem>
-        <MenuItem key="Account" textValue="Account">
-          <Icon as={User} size="sm" mr="$2" />
-          <MenuItemLabel size="sm">Account</MenuItemLabel>
-        </MenuItem>
-        <MenuItem key="Add music" textValue="Add music">
-          <Icon as={PlusCircle} size="sm" mr="$2" />
-          <MenuItemLabel size="sm">Add music</MenuItemLabel>
-        </MenuItem>
-      </Menu>
     </VStack>
   );
 };
