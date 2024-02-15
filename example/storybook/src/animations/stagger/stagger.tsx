@@ -12,7 +12,7 @@ import {
   AnimatedView,
   AnimatePresence,
 } from '@gluestack-style/animation-resolver';
-import { animationValues } from './constants';
+import { animationIcons } from './constants';
 
 const StyledAnimatedView = styled(AnimatedView);
 
@@ -64,20 +64,24 @@ const Stagger = ({ h = '95vh', ...props }) => {
       }}
     >
       <VStack minHeight="$80" position="relative" minWidth="$12">
-        <VStack gap="$4" flexGrow={1}>
-          {animationValues.map((item, key) => (
+        <VStack gap="$4">
+          {animationIcons.map((icon, key) => (
             <AnimatePresence key={key}>
               {isVisible && (
                 <AnimatedCircle
                   key={key}
-                  exit={item.exit}
+                  exit={{ opacity: 0, y: 10 }}
                   sx={{
-                    ':initial': item.initial,
-                    ':animate': item.animate,
-                    ':transition': item.transition,
+                    ':initial': { opacity: 0, y: 10 },
+                    ':animate': { opacity: 1, y: 0 },
+                    ':transition': {
+                      duration: 300,
+                      delay: (animationIcons.length - key) * 100,
+                      type: 'timing',
+                    },
                   }}
                 >
-                  {<Icon as={item.icon} size="md" color="$white" />}
+                  {<Icon as={icon} size="md" color="$white" />}
                 </AnimatedCircle>
               )}
             </AnimatePresence>
