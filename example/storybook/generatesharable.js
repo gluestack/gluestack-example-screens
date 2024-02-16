@@ -27,6 +27,10 @@ const directoryPaths = [
     directory: './src/example-screens/login',
     targetFile: './src/example-screens/login/shareableCode.tsx',
   },
+  {
+    directory: './src/example-screens/feed',
+    targetFile: './src/example-screens/feed/shareableCode.tsx',
+  },
 ];
 
 const fileRegex =
@@ -89,7 +93,7 @@ function mergeImports(importStatements) {
     const [named, namedGroup, namespace, defaultImport, source] =
       importMetaData;
     // Skip imports from the same directory
-    if (source.startsWith('./') && !source.startsWith('../')) {
+    if (source.startsWith('./') || source.startsWith('../')) {
       return;
     }
     if (named) {
