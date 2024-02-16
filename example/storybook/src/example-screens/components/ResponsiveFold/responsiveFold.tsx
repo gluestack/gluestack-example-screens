@@ -7,7 +7,6 @@ import {
   HStack,
   Pressable,
 } from '@gluestack-ui/themed';
-import Cards from '../../cards/cards';
 
 const screenSizes = [
   {
@@ -64,7 +63,7 @@ const ResponsiveFold = () => {
             display={activeTab === size.value ? 'flex' : 'none'}
           >
             {/* responsive example screen */}
-            <Cards />
+            {/* <Cards /> */}
           </Box>
         ))}
       </Box>
