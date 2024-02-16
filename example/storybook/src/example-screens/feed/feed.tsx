@@ -497,18 +497,17 @@ const StoryModal = ({
         p: '$0',
       }}
     >
-      <Icon
+      <Pressable
         sx={{
           position: 'absolute',
           right: 0,
           zIndex: 1000,
         }}
-        as={CloseIcon}
-        w="$6"
-        h="$6"
-        p="$2"
-        color="white"
-      />
+        onPress={() => setShowStory(false)}
+      >
+        <Icon as={CloseIcon} w="$6" h="$6" p="$2" color="white" />
+      </Pressable>
+
       <Box
         //@ts-ignore
         h="95vh"
@@ -619,8 +618,6 @@ const Feed = () => {
                 }}
               >
                 <Avatar
-                  borderWidth="$2"
-                  borderColor="$blue600"
                   key={index}
                   size="lg"
                   bgColor="$amber600"
