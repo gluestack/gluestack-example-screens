@@ -4,11 +4,9 @@ import {
   AvatarImage,
   Box,
   HStack,
-  ScrollView,
   Text,
   Image,
   Icon,
-  AvatarGroup,
   VStack,
   InputField,
   Pressable,
@@ -31,30 +29,33 @@ import {
   BadgeText,
   Badge,
   Heading,
+  ModalHeader,
+  ModalFooter,
+  ModalCloseButton,
 } from '@gluestack-ui-new/themed';
-import { useController } from 'react-hook-form';
-import Sidebar from '../components/Sidebar';
 import {
   flyoutItems,
   footerTags,
   menuItems,
   postType,
-  posts,
+  postItems,
 } from './constants';
-import { UploadCloud } from 'lucide-react-native';
 import {
-  Bookmark,
-  Heart,
-  Send,
   MessageCircle,
-  Smile,
   Menu as MenuIcon,
   PlusSquare,
   User,
   Home,
-  MoreHorizontal,
   X as CloseIcon,
+  MoreVertical,
+  UploadCloud,
+  ChevronRight,
+  ChevronLeft,
 } from 'lucide-react-native';
+import { useController } from 'react-hook-form';
+import { ChatView, SettingsView, Sidebar, HomeView } from './components';
+
+type ViewType = 'settings' | 'home' | 'messages' | 'create' | 'notifications';
 
 const UserCard = ({ children, direction = 'row', ...props }: any) => {
   return direction === 'row' ? (
@@ -190,13 +191,11 @@ const CustomModal = ({
   setShowModal,
   ref,
   children,
-  modalProps,
 }: {
   showModal: boolean;
   setShowModal: React.Dispatch<React.SetStateAction<boolean>>;
   ref: any;
   children: React.ReactNode;
-  modalProps?: any;
 }) => {
   return (
     <Modal
@@ -207,100 +206,18 @@ const CustomModal = ({
       finalFocusRef={ref}
     >
       <ModalBackdrop />
-      <ModalContent>
-        <ModalBody {...modalProps}>{children}</ModalBody>
-      </ModalContent>
+      <ModalContent>{children}</ModalContent>
     </Modal>
   );
 };
 
-const PostCard = ({ data }: { data: postType }) => {
-  return (
-    <Box mb="$4" pb="$2" borderBottomWidth="$1" borderColor="$border200">
-      <UserCard space="md" alignItems="center" pb="$3">
-        <UserCardAvatar
-          name={data.name}
-          src={data.profileImage}
-          h="$8"
-          w="$8"
-        />
-        <UserCardStack>
-          <Text fontSize="$sm" fontWeight="$bold" color="$text900">
-            {data.name}
-          </Text>
-        </UserCardStack>
-        <Pressable>
-          <Icon as={MoreHorizontal} w="$6" h="$6" />
-        </Pressable>
-      </UserCard>
-      <Box borderRadius="$xs" overflow="hidden">
-        <Image source={data.image} w="auto" h="$96" />
-      </Box>
-      <VStack w="$full" space="sm">
-        <HStack justifyContent="space-between">
-          <HStack>
-            <Pressable>
-              <Icon as={Heart} w="$6" h="$6" p="$1.5" />
-            </Pressable>
-            <Pressable>
-              <Icon as={MessageCircle} w="$6" h="$6" p="$1.5" />
-            </Pressable>
-            <Pressable>
-              <Icon as={Send} w="$6" h="$6" p="$1.5" />
-            </Pressable>
-          </HStack>
-          <Pressable>
-            <Icon as={Bookmark} w="$6" h="$6" p="$1.5" />
-          </Pressable>
-        </HStack>
-        <HStack space="sm" px="$4" alignItems="center">
-          <AvatarGroup>
-            <Avatar h="$6" w="$6">
-              <AvatarImage source={require('../assets/music5.png')} />
-            </Avatar>
-            <Avatar h="$6" w="$6">
-              <AvatarImage source={require('../assets/music4.png')} />
-            </Avatar>
-          </AvatarGroup>
-          <Text fontSize="$sm" fontWeight="$semibold" color="$text900">
-            Liked by {data.likedBy} and others
-          </Text>
-        </HStack>
-        <HStack alignItems="center" space="xs">
-          <Text fontSize="$sm" fontWeight="$semibold" color="$text900">
-            {data.name}
-          </Text>
-          <Text fontSize="$sm" color="$text900">
-            {data.caption}
-          </Text>
-        </HStack>
-        <CustomInput
-          inputProps={{
-            variant: 'underlined',
-            borderBottomWidth: '$0',
-          }}
-        >
-          <HStack width="$full" alignItems="center">
-            <InputField
-              type="text"
-              fontSize="$sm"
-              placeholder="Add a comment"
-              sx={{
-                ':focus': {
-                  borderBottomWidth: '$0',
-                  bg: '$background0',
-                },
-              }}
-            />
-            <Icon as={Smile} color="$text900" />
-          </HStack>
-        </CustomInput>
-      </VStack>
-    </Box>
-  );
-};
-
-const SuggestionsSection = ({ data }: { data: postType }) => {
+const SuggestionsSection = ({
+  data,
+  onFollow,
+}: {
+  data: postType;
+  onFollow: () => void;
+}) => {
   return (
     <UserCard space="md" alignItems="center" py="$2">
       <UserCardAvatar name={data.name} src={data.profileImage} h="$9" w="$9" />
@@ -312,8 +229,14 @@ const SuggestionsSection = ({ data }: { data: postType }) => {
           {data.bio}
         </Text>
       </UserCardStack>
-      <Button size="sm" action="primary" borderRadius="$full" variant="outline">
-        <ButtonText>Follow</ButtonText>
+      <Button
+        size="sm"
+        action="primary"
+        borderRadius="$full"
+        variant="outline"
+        onPress={onFollow}
+      >
+        <ButtonText>{data.followStatus ? 'Unfollow' : 'Follow'}</ButtonText>
       </Button>
     </UserCard>
   );
@@ -336,7 +259,7 @@ const GetPremiumCard = () => {
   );
 };
 
-const FlyoutMenu = ({ menuItems }: any) => {
+const FlyoutMenu = ({ menuItems, onSignOut }: any) => {
   return (
     <Menu
       placement="top"
@@ -351,6 +274,7 @@ const FlyoutMenu = ({ menuItems }: any) => {
           backgroundColor="$background0"
           key={item.key}
           textValue={item.key}
+          onPress={() => (item.key === 'signOut' ? onSignOut() : null)}
         >
           <Icon as={item.icon} size="sm" mr="$2" />
           <MenuItemLabel size="sm">{item.value}</MenuItemLabel>
@@ -360,7 +284,13 @@ const FlyoutMenu = ({ menuItems }: any) => {
   );
 };
 
-const TopNavigation = () => {
+const TopNavigation = ({
+  onSignOut,
+  openMessages,
+}: {
+  onSignOut: () => void;
+  openMessages: () => void;
+}) => {
   return (
     <HStack
       $md-display="none"
@@ -378,8 +308,8 @@ const TopNavigation = () => {
         },
       }}
     >
-      <FlyoutMenu menuItems={flyoutItems} />
-      <Pressable>
+      <FlyoutMenu menuItems={flyoutItems} onSignOut={onSignOut} />
+      <Pressable onPress={openMessages}>
         <Icon as={MessageCircle} w="$6" h="$6" />
       </Pressable>
     </HStack>
@@ -400,78 +330,85 @@ const CreatePostModal = ({
       showModal={showCreatePost}
       setShowModal={setShowCreatePost}
       ref={ref}
-      modalProps={{
-        borderRadius: '$xl',
-        p: '$6',
-      }}
     >
-      <Box h="$80">
-        <VStack
-          flex={1}
-          py="$6"
-          alignItems="center"
-          borderRadius="$xl"
-          borderStyle="dashed"
-          borderWidth="$1"
-          borderColor="$border300"
-          justifyContent="center"
-          backgroundColor="$background0"
-        >
-          <Pressable>
-            <Box alignItems="center">
-              <Icon as={UploadCloud} h="$16" w="$16" />
-              <Text mt="$1.5" fontSize="$sm" lineHeight="$md" color="$text700">
-                Drag & drop your file here
-              </Text>
-            </Box>
-          </Pressable>
-          <Text mt="$1.5">or</Text>
-          <Pressable>
-            <Badge
-              size="md"
-              variant="solid"
-              borderRadius="$xs"
-              action="muted"
-              px="$3"
-              py="$0.5"
-              mt="$1.5"
+      <ModalBody borderRadius="$xl" p="$6">
+        <Box h="$80">
+          <VStack
+            flex={1}
+            py="$6"
+            alignItems="center"
+            borderRadius="$xl"
+            borderStyle="dashed"
+            borderWidth="$1"
+            borderColor="$border300"
+            justifyContent="center"
+            backgroundColor="$background0"
+          >
+            <Pressable>
+              <Box alignItems="center">
+                <Icon as={UploadCloud} h="$16" w="$16" />
+                <Text
+                  mt="$1.5"
+                  fontSize="$sm"
+                  lineHeight="$md"
+                  color="$text700"
+                >
+                  Drag & drop your file here
+                </Text>
+              </Box>
+            </Pressable>
+            <Text mt="$1.5">or</Text>
+            <Pressable>
+              <Badge
+                size="md"
+                variant="solid"
+                borderRadius="$xs"
+                action="muted"
+                px="$3"
+                py="$0.5"
+                mt="$1.5"
+              >
+                <BadgeText>Browse Files</BadgeText>
+              </Badge>
+            </Pressable>
+          </VStack>
+          <CustomInput
+            inputProps={{
+              backgroundColor: '$background0',
+              mt: '$4',
+            }}
+          >
+            <InputField
+              fontSize="$sm"
+              type="text"
+              placeholder="Add a caption"
+            />
+          </CustomInput>
+          <VStack
+            $md-flexDirection="row"
+            w="$full"
+            space="sm"
+            mt="$4"
+            justifyContent="flex-end"
+          >
+            <Button
+              size="sm"
+              action="positive"
+              onPress={() => setShowCreatePost(false)}
             >
-              <BadgeText>Browse Files</BadgeText>
-            </Badge>
-          </Pressable>
-        </VStack>
-        <CustomInput
-          inputProps={{
-            backgroundColor: '$background0',
-            mt: '$4',
-          }}
-        >
-          <InputField fontSize="$sm" type="text" placeholder="Add a caption" />
-        </CustomInput>
-        <VStack
-          $md-flexDirection="row"
-          w="$full"
-          space="sm"
-          mt="$4"
-          justifyContent="flex-end"
-        >
-          <Button
-            size="sm"
-            action="positive"
-            onPress={() => setShowCreatePost(false)}
-          >
-            <ButtonText>Create Post</ButtonText>
-          </Button>
-          <Button
-            size="sm"
-            variant="outline"
-            action="secondary"
-            onPress={() => setShowCreatePost(false)}
-          >
-            <ButtonText>Cancel</ButtonText>
-          </Button>
-        </VStack>
-      </Box>
+              <ButtonText>Create Post</ButtonText>
+            </Button>
+            <Button
+              size="sm"
+              variant="outline"
+              action="secondary"
+              onPress={() => setShowCreatePost(false)}
+            >
+              <ButtonText>Cancel</ButtonText>
+            </Button>
+          </VStack>
+        </Box>
+      </ModalBody>
     </CustomModal>
   );
 };
@@ -481,40 +418,218 @@ const StoryModal = ({
   setShowStory,
   ref,
   storyMedia,
+  setStoryMedia,
 }: {
   showStory: boolean;
   setShowStory: React.Dispatch<React.SetStateAction<boolean>>;
   ref: any;
-  storyMedia: string;
+  storyMedia: postType;
+  setStoryMedia: React.Dispatch<React.SetStateAction<any>>;
+}) => {
+  const swipeLeft = () => {
+    if (storyMedia?.key > 0) {
+      setStoryMedia(postItems[storyMedia?.key - 1]);
+    }
+  };
+  const swipeRight = () => {
+    if (storyMedia.key < postItems.length - 1) {
+      setStoryMedia(postItems[storyMedia?.key + 1]);
+    }
+  };
+  return (
+    <CustomModal showModal={showStory} setShowModal={setShowStory} ref={ref}>
+      <ModalBody borderRadius="$none" p="$0">
+        <Pressable
+          sx={{
+            position: 'absolute',
+            right: 0,
+            zIndex: 1000,
+          }}
+          onPress={() => setShowStory(false)}
+        >
+          <Icon as={CloseIcon} w="$6" h="$6" p="$2" color="white" />
+        </Pressable>
+
+        <Pressable
+          position="absolute"
+          zIndex={1000}
+          left={0}
+          bottom="$1/2"
+          onPress={swipeLeft}
+          display={storyMedia?.key === 0 ? 'none' : 'flex'}
+        >
+          <Icon as={ChevronLeft} w="$8" h="$8" p="$2" color="white" />
+        </Pressable>
+
+        <Pressable
+          position="absolute"
+          zIndex={1000}
+          right={0}
+          bottom="$1/2"
+          onPress={swipeRight}
+          display={storyMedia?.key === postItems.length - 1 ? 'none' : 'flex'}
+        >
+          <Icon as={ChevronRight} w="$8" h="$8" p="$2" color="white" />
+        </Pressable>
+        <Box
+          //@ts-ignore
+          h="95vh"
+          position="relative"
+        >
+          <Image source={storyMedia?.image} w="auto" h="$full" />
+        </Box>
+      </ModalBody>
+    </CustomModal>
+  );
+};
+
+const SharePostModal = ({
+  showModal,
+  setShowModal,
+  ref,
+}: {
+  showModal: boolean;
+  setShowModal: React.Dispatch<React.SetStateAction<boolean>>;
+  ref: any;
 }) => {
   return (
-    <CustomModal
-      showModal={showStory}
-      setShowModal={setShowStory}
-      ref={ref}
-      modalProps={{
-        borderRadius: '$none',
-        p: '$0',
-      }}
-    >
-      <Pressable
-        sx={{
-          position: 'absolute',
-          right: 0,
-          zIndex: 1000,
-        }}
-        onPress={() => setShowStory(false)}
+    <CustomModal showModal={showModal} setShowModal={setShowModal} ref={ref}>
+      <ModalHeader>
+        <Heading flex={1} textAlign="center" size="md" mb="$2">
+          Share
+        </Heading>
+        <ModalCloseButton position="absolute" right={0} top={8}>
+          <Icon as={CloseIcon} />
+        </ModalCloseButton>
+      </ModalHeader>
+      <ModalBody
+        borderTopWidth="$1"
+        borderBottomWidth="$1"
+        borderColor="$border200"
+        p="$0"
       >
-        <Icon as={CloseIcon} w="$6" h="$6" p="$2" color="white" />
-      </Pressable>
+        <CustomInput
+          inputProps={{
+            w: '$full',
+            borderWidth: 0,
+            sx: {
+              _web: {
+                boxShadow: 'none',
+                borderBottomWidth: '$1',
+                borderColor: '$border200',
+                px: '$4',
+              },
+            },
+          }}
+        >
+          <HStack alignItems="center" w="$full">
+            <Text fontWeight="$semibold" color="$text900">
+              To:
+            </Text>
+            <InputField type="text" placeholder="Search..." />
+          </HStack>
+        </CustomInput>
+        {postItems.map((post: postType, index: number) => {
+          if (index < 3)
+            return (
+              <UserCard space="md" alignItems="center" py="$2" px="$4">
+                <UserCardAvatar
+                  name={post.name}
+                  src={post.profileImage}
+                  h="$9"
+                  w="$9"
+                />
+                <UserCardStack>
+                  <Text fontSize="$sm" fontWeight="$bold" color="$text900">
+                    {post.name}
+                  </Text>
+                  <Text fontSize="$xs" color="$text700">
+                    {post.bio}
+                  </Text>
+                </UserCardStack>
+              </UserCard>
+            );
+        })}
+      </ModalBody>
+      <ModalFooter>
+        <Button w="$full" size="sm" action="primary">
+          <ButtonText>send</ButtonText>
+        </Button>
+      </ModalFooter>
+    </CustomModal>
+  );
+};
 
-      <Box
-        //@ts-ignore
-        h="95vh"
-        position="relative"
+const NotificationsModal = ({
+  showModal,
+  setShowModal,
+  ref,
+}: {
+  showModal: boolean;
+  setShowModal: React.Dispatch<React.SetStateAction<boolean>>;
+  ref: any;
+}) => {
+  return (
+    <CustomModal showModal={showModal} setShowModal={setShowModal} ref={ref}>
+      <ModalHeader>
+        <Heading
+          flex={1}
+          fontWeight="$semibold"
+          textAlign="center"
+          size="md"
+          mb="$2"
+        >
+          Notifications
+        </Heading>
+        <ModalCloseButton position="absolute" right={0} top={8}>
+          <Icon as={CloseIcon} />
+        </ModalCloseButton>
+      </ModalHeader>
+      <ModalBody
+        borderTopWidth="$1"
+        borderBottomWidth="$1"
+        borderColor="$border200"
+        p="$0"
       >
-        <Image source={storyMedia} w="auto" h="$full" />
-      </Box>
+        <VStack w="$full">
+          {postItems.map((post: postType, index: number) => {
+            if (index < 5)
+              return (
+                <UserCard
+                  space="md"
+                  alignItems="center"
+                  py="$2"
+                  px="$4"
+                  w="$full"
+                >
+                  <UserCardAvatar
+                    name={post.name}
+                    src={post.profileImage}
+                    h="$9"
+                    w="$9"
+                  />
+                  <UserCardStack>
+                    <Text fontSize="$sm" color="$text900">
+                      {post.name} Liked your post
+                    </Text>
+                  </UserCardStack>
+                  <Pressable>
+                    <Icon as={MoreVertical} w="$6" h="$6" />
+                  </Pressable>
+                </UserCard>
+              );
+          })}
+          <Pressable
+            borderTopWidth="$1"
+            borderBottomWidth="$1"
+            borderColor="$border200"
+          >
+            <Text textAlign="center" color="$text900" py="$2">
+              see more
+            </Text>
+          </Pressable>
+        </VStack>
+      </ModalBody>
     </CustomModal>
   );
 };
@@ -536,33 +651,224 @@ const FooterFold = () => {
   );
 };
 
+const SignOutModal = ({
+  showModal,
+  setShowModal,
+  ref,
+}: {
+  showModal: boolean;
+  setShowModal: React.Dispatch<React.SetStateAction<boolean>>;
+  ref: any;
+}) => {
+  return (
+    <CustomModal showModal={showModal} setShowModal={setShowModal} ref={ref}>
+      <ModalHeader>
+        <Heading
+          flex={1}
+          fontWeight="$semibold"
+          textAlign="center"
+          size="md"
+          mb="$2"
+        >
+          Confirm Signout
+        </Heading>
+        <ModalCloseButton position="absolute" right={0} top={8}>
+          <Icon as={CloseIcon} />
+        </ModalCloseButton>
+      </ModalHeader>
+      <ModalBody borderTopWidth="$1" borderColor="$border200" p="$0">
+        <HStack>
+          <VStack w="$full">
+            <Text fontSize="$sm" color="$text900" py="$2" px="$4">
+              Are you sure you want to sign out?
+            </Text>
+          </VStack>
+          <HStack></HStack>
+        </HStack>
+      </ModalBody>
+      <ModalFooter>
+        <Button size="sm" action="primary" onPress={() => setShowModal(false)}>
+          <ButtonText>Sign Out</ButtonText>
+        </Button>
+        <Button
+          ml="$2"
+          size="sm"
+          variant="outline"
+          action="secondary"
+          onPress={() => setShowModal(false)}
+        >
+          <ButtonText>Cancel</ButtonText>
+        </Button>
+      </ModalFooter>
+    </CustomModal>
+  );
+};
+
 const Feed = () => {
-  const [view, setView] = React.useState<any>('profile');
+  const [view, setView] = React.useState<ViewType>('home');
   const [showStory, setShowStory] = React.useState(false);
   const [showCreatePost, setShowCreatePost] = React.useState(false);
+  const [showSharePost, setShowSharePost] = React.useState(false);
+  const [showNotifications, setShowNotifications] = React.useState(false);
+  const [showSignoutModal, setShowSignoutModal] = React.useState(false);
   const [storyMedia, setStoryMedia] = React.useState<any>(null);
+  const [posts, setPosts] = React.useState<postType[]>(postItems);
   const ref = React.useRef(null);
-  const onSelected = (item: typeof view) => {
+
+  const viewRenderer = (viewInput: ViewType) => {
+    switch (viewInput) {
+      case 'messages':
+        return <ChatView />;
+      case 'settings':
+        return <SettingsView />;
+      case 'home':
+        return (
+          <HomeView
+            posts={posts}
+            setStoryMedia={setStoryMedia}
+            setShowStory={setShowStory}
+            setShowSharePost={setShowSharePost}
+            onLike={(username: string) => onLike(username)}
+            onPostSave={(username: string) => onPostSave(username)}
+          />
+        );
+      default:
+        return (
+          <HomeView
+            posts={posts}
+            setStoryMedia={setStoryMedia}
+            setShowStory={setShowStory}
+            setShowSharePost={setShowSharePost}
+            onLike={(username: string) => onLike(username)}
+            onPostSave={(username: string) => onPostSave(username)}
+          />
+        );
+    }
+  };
+
+  const onSelected = (item: any) => {
     if (item.key === 'create') {
       setShowCreatePost(true);
     }
-    setView(item.key);
+    if (item.key === 'notifications') {
+      setShowNotifications(true);
+    }
+    if (item.key === 'signOut') {
+      setShowSignoutModal(true);
+    }
+    if (item.key === 'messages') {
+      setView('messages');
+    }
+    if (item.key === 'settings') {
+      setView('settings');
+    }
+    if (item.key === 'home') {
+      setView('home');
+    }
   };
+
+  const onSignOut = () => {
+    setShowSignoutModal(true);
+  };
+
+  const onFollow = (username: string) => {
+    const result = posts.map((post) => {
+      if (post.name === username) {
+        const newFollowStatus = !post.followStatus;
+        return { ...post, followStatus: newFollowStatus };
+      }
+      return post;
+    });
+    setPosts(result);
+  };
+  const onLike = (username: string) => {
+    const result = posts.map((post) => {
+      if (post.name === username) {
+        const newLikedBy = !post.postLiked;
+        return { ...post, postLiked: newLikedBy };
+      }
+      return post;
+    });
+    setPosts(result);
+  };
+  const onPostSave = (username: string) => {
+    const result = posts.map((post) => {
+      if (post.name === username) {
+        const newLikedBy = !post.postSaved;
+        return { ...post, postSaved: newLikedBy };
+      }
+      return post;
+    });
+    setPosts(result);
+  };
+
+  const openMessages = () => {
+    setView('messages');
+  };
+
   return (
     <Box w="$full" bg="$background0">
-      <TopNavigation />
+      <TopNavigation onSignOut={onSignOut} openMessages={openMessages} />
       <StoryModal
         showStory={showStory}
         setShowStory={setShowStory}
         ref={ref}
         storyMedia={storyMedia}
+        setStoryMedia={setStoryMedia}
       />
       <CreatePostModal
         showCreatePost={showCreatePost}
         setShowCreatePost={setShowCreatePost}
         ref={ref}
       />
+      <SharePostModal
+        showModal={showSharePost}
+        setShowModal={setShowSharePost}
+        ref={ref}
+      />
+      <NotificationsModal
+        showModal={showNotifications}
+        setShowModal={setShowNotifications}
+        ref={ref}
+      />
+      <SignOutModal
+        showModal={showSignoutModal}
+        setShowModal={setShowSignoutModal}
+        ref={ref}
+      />
+
+      {/* bottom navigation */}
+      <HStack
+        py="$1.5"
+        sx={{
+          _web: {
+            position: 'fixed',
+          },
+        }}
+        bottom={0}
+        $md-display="none"
+        backgroundColor="$background0"
+        w="$full"
+        borderTopWidth="$1"
+        borderColor="$border200"
+        justifyContent="space-around"
+        zIndex={1000}
+      >
+        <Pressable>
+          <Icon as={Home} w="$6" h="$6" p="$1.5" />
+        </Pressable>
+        <Pressable>
+          <Icon as={SearchIcon} w="$6" h="$6" p="$2" />
+        </Pressable>
+        <Pressable onPress={() => setShowCreatePost(true)}>
+          <Icon as={PlusSquare} w="$6" h="$6" p="$2" />
+        </Pressable>
+        <Pressable>
+          <Icon as={User} w="$6" h="$6" p="$2" />
+        </Pressable>
+      </HStack>
       {/* main content */}
+
       <HStack
         space="xl"
         $xl-maxWidth="$5/6"
@@ -587,7 +893,9 @@ const Feed = () => {
           }}
         >
           <Box h="$16" mb="$4" alignItems="center" justifyContent="center">
-            <Heading size="2xl">Gluegram</Heading>
+            <Pressable onPress={() => setView('home')}>
+              <Heading size="2xl">Gluegram</Heading>
+            </Pressable>
           </Box>
           <Sidebar
             // @ts-ignore
@@ -599,120 +907,65 @@ const Feed = () => {
             }}
           />
         </Box>
-        <ScrollView
-          // @ts-ignore
-          h="100vh"
-          $base-px="$4"
-          $xl-px="$9"
-          $md-pt="$4"
-        >
-          {/* stories */}
-          <HStack space="xs" py="$4" mb="$2" overflow="scroll">
-            {posts.map((_, index) => (
-              <Pressable
-                key={index}
-                pl="$2"
-                onPress={() => {
-                  setStoryMedia(_.image);
-                  setShowStory(true);
-                }}
-              >
-                <Avatar
-                  key={index}
-                  size="lg"
-                  bgColor="$amber600"
-                  borderRadius="$full"
-                >
-                  <AvatarImage source={_.profileImage} />
-                </Avatar>
-              </Pressable>
-            ))}
-          </HStack>
-          {/* feed cards */}
-          <VStack
-            $base-width="$full"
-            $md-width="$3/4"
-            $lg-width="$full"
-            mx="auto"
-          >
-            {posts.map((post: postType, index: number) => (
-              <PostCard key={index} data={post} />
-            ))}
-          </VStack>
-        </ScrollView>
-        <Box
-          $base-display="none"
-          $lg-display="flex"
-          $sm-w="$1/2"
-          $md-w="$2/6"
-          p="$4"
-          borderLeftWidth="$1"
-          borderColor="$border200"
-        >
-          <CustomInput
-            inputProps={{
-              borderRadius: '$full',
-              hardShadow: '0',
-              my: '$4',
-              borderWidth: '$px',
-              sx: {
-                _web: {
-                  boxShadow: 'none',
-                },
-              },
-            }}
-            icon={<Icon m="$2.5" as={SearchIcon} />}
-          >
-            <InputField type="text" placeholder="Search" />
-          </CustomInput>
+
+        {viewRenderer(view)}
+
+        {view === 'home' && (
           <Box
-            borderRadius="$xl"
-            borderWidth="$1"
+            $base-display="none"
+            $lg-display="flex"
+            $sm-w="$1/2"
+            $md-w="$2/6"
+            p="$4"
+            borderLeftWidth="$1"
             borderColor="$border200"
-            $base-p="$4"
-            $lg-p="$6"
           >
-            <Text mb="$2.5" fontSize="$lg" color="$text900" fontWeight="$bold">
-              You might know
-            </Text>
-            {posts.map((post: postType, index: number) => {
-              if (index < 3) {
-                return <SuggestionsSection data={post} key={index} />;
-              }
-            })}
+            <CustomInput
+              inputProps={{
+                hardShadow: '0',
+                my: '$4',
+                borderWidth: '$px',
+                sx: {
+                  _web: {
+                    boxShadow: 'none',
+                  },
+                },
+              }}
+              icon={<Icon m="$2.5" as={SearchIcon} />}
+            >
+              <InputField type="text" placeholder="Search" />
+            </CustomInput>
+            <Box
+              borderRadius="$xl"
+              borderWidth="$1"
+              borderColor="$border200"
+              $base-p="$4"
+              $lg-p="$6"
+            >
+              <Text
+                mb="$2.5"
+                fontSize="$lg"
+                color="$text900"
+                fontWeight="$bold"
+              >
+                You might know
+              </Text>
+              {posts.map((post: postType, index: number) => {
+                if (index < 3) {
+                  return (
+                    <SuggestionsSection
+                      key={index}
+                      data={post}
+                      onFollow={() => onFollow(post.name)}
+                    />
+                  );
+                }
+              })}
+            </Box>
+            <GetPremiumCard />
+            <FooterFold />
           </Box>
-          <GetPremiumCard />
-          <FooterFold />
-        </Box>
-      </HStack>
-      {/* bottom navigation */}
-      <HStack
-        py="$1.5"
-        sx={{
-          _web: {
-            position: 'fixed',
-          },
-        }}
-        bottom={0}
-        $md-display="none"
-        backgroundColor="$background0"
-        w="$full"
-        borderTopWidth="$1"
-        borderColor="$border200"
-        justifyContent="space-around"
-      >
-        <Pressable>
-          <Icon as={Home} w="$6" h="$6" p="$1.5" />
-        </Pressable>
-        <Pressable>
-          <Icon as={SearchIcon} w="$6" h="$6" p="$2" />
-        </Pressable>
-        <Pressable onPress={() => setShowCreatePost(true)}>
-          <Icon as={PlusSquare} w="$6" h="$6" p="$2" />
-        </Pressable>
-        <Pressable>
-          <Icon as={User} w="$6" h="$6" p="$2" />
-        </Pressable>
+        )}
       </HStack>
     </Box>
   );

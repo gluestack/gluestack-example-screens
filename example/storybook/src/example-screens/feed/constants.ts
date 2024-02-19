@@ -15,6 +15,10 @@ export type postType = {
   caption: string;
   likedBy: string;
   image: string;
+  key: number;
+  postLiked?: boolean;
+  followStatus?: boolean;
+  postSaved?: boolean;
 };
 
 export const menuItems = [
@@ -74,62 +78,70 @@ export const flyoutItems = [
     icon: LogOut,
   },
 ];
-export const posts = [
+
+export const postItems = [
   {
+    key: 0,
     name: 'John Doe',
-    bio: 'Software Engineer',
+    bio: '@johndoe',
     profileImage: require('../assets/music8.png'),
     caption: 'Hello World',
     likedBy: 'Michele',
     image: require('../assets/music2.png'),
   },
   {
+    key: 1,
     name: 'Jared Dunn',
-    bio: 'Ranchi',
+    bio: '@jareddunn',
     profileImage: require('../assets/music6.png'),
     caption: 'Nature',
     likedBy: 'Donald',
     image: require('../assets/music1.png'),
   },
   {
+    key: 2,
     name: 'Mila Dann',
-    bio: 'Hyderabad',
+    bio: '@miladann',
     profileImage: require('../assets/music3.png'),
     caption: '',
     likedBy: 'John',
     image: require('../assets/music3.png'),
   },
   {
+    key: 3,
+    name: 'Mike',
+    bio: '@mike',
+    profileImage: require('../assets/music3.png'),
+    caption: 'Hello World',
+    likedBy: '',
+    image: require('../assets/music7.png'),
+  },
+  {
+    key: 4,
     name: 'Richard Loyd',
-    bio: 'Bangalore',
+    bio: '@richardloyd',
     profileImage: require('../assets/music1.png'),
     caption: 'Hello World',
     likedBy: 'Ben',
     image: require('../assets/music4.png'),
   },
   {
+    key: 5,
     name: 'Ben',
-    bio: 'Mumbai',
+    bio: '@ben',
     profileImage: require('../assets/music8.png'),
     caption: 'Hello World',
     likedBy: 'Mike',
     image: require('../assets/music5.png'),
   },
   {
+    key: 6,
     name: 'Michele',
-    bio: 'Delhi',
+    bio: '@michele',
     profileImage: require('../assets/music2.png'),
     caption: 'Hello World',
     likedBy: 'John',
     image: require('../assets/music6.png'),
-  },
-  {
-    name: 'Mike',
-    bio: 'Chennai',
-    profileImage: require('../assets/music3.png'),
-    caption: 'Hello World',
-    likedBy: '',
-    image: require('../assets/music7.png'),
   },
 ];
 
@@ -144,4 +156,120 @@ export const footerTags = [
   'Locations',
   'More',
 ];
+
 export const suggestions = [];
+
+export const sidebarItems = [
+  {
+    key: 'profile',
+    value: 'Profile',
+  },
+  {
+    key: 'account',
+    value: 'Account',
+  },
+  {
+    key: 'appearance',
+    value: 'Appearance',
+  },
+  {
+    key: 'notifications',
+    value: 'Notifications',
+  },
+  {
+    key: 'display',
+    value: 'Display',
+  },
+];
+export const fonts = [
+  {
+    label: 'Inter',
+    value: 'inter',
+  },
+  {
+    label: 'Monospace',
+    value: 'monospace',
+  },
+  {
+    label: 'System',
+    value: 'system',
+  },
+];
+export const languages = [
+  {
+    label: 'English',
+    value: 'english',
+  },
+  {
+    label: 'Chinese',
+    value: 'chinese',
+  },
+  {
+    label: 'Russian',
+    value: 'russian',
+  },
+];
+export const emails = [
+  {
+    label: 'm@example.com',
+    value: 'm@example.com',
+  },
+  {
+    label: 'm@google.com',
+    value: 'm@google.com',
+  },
+  {
+    label: 'm@support.com',
+    value: 'm@support.com',
+  },
+];
+export const emailNotifications = [
+  {
+    title: 'Communication emails',
+    subTitle: 'Receive emails about your account activity.',
+  },
+  {
+    title: 'Marketing emails',
+    subTitle: 'Receive emails about new products, features, and more.',
+  },
+  {
+    title: 'Social emails',
+    subTitle: 'Receive emails for friend requests, follows, and more.',
+  },
+  {
+    title: 'Security emails',
+    subTitle: 'Receive emails about your account activity and security.',
+  },
+];
+export const notifications = [
+  'All new messages',
+  'Direct messages and mentions',
+  'Nothing',
+];
+export const displaySidebarItems = [
+  'Recents',
+  'Home',
+  'Applications',
+  'Desktop',
+  'Downloads',
+  'Documents',
+];
+export const dummyUsernames = [
+  'test',
+  'test1',
+  'test2',
+  'test3',
+  'gluestack',
+  'gluestack1',
+  'gluestack2',
+  'gluestack3',
+  'user3',
+  'user2',
+  'user1',
+  'user',
+  'username',
+  'username1',
+  'username2',
+  'username3',
+  'developer',
+];
