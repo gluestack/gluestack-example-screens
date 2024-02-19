@@ -14,7 +14,7 @@ import {
   AnimatedPressable,
   AnimatePresence,
 } from '@gluestack-style/animation-resolver';
-import { PhoneIncoming } from 'lucide-react-native';
+import { cardGoals } from './constants';
 
 const StyledAnimatedPressable = styled(AnimatedPressable);
 
@@ -40,6 +40,7 @@ const AnimatedPressableComp = ({ children, ...props }) => {
   return (
     <StyledAnimatedPressable
       $md-minWidth="$96"
+      $xs-minWidth="$64"
       $base-minWidth="$56"
       $md-minHeight="$40"
       $base-minHeight="$24"
@@ -53,7 +54,21 @@ const AnimatedPressableComp = ({ children, ...props }) => {
     </StyledAnimatedPressable>
   );
 };
-const AnimatedCard = ({ top }: { top: number }) => {
+const AnimatedCard = ({
+  top,
+  icon,
+  totalValue,
+  savedValue,
+  progressValue,
+  title,
+}: {
+  top: number;
+  icon: any;
+  totalValue: string;
+  savedValue: string;
+  progressValue: number;
+  title: string;
+}) => {
   const [isVisible, setIsVisible] = React.useState<boolean>(false);
   return (
     <AnimatePresence>
@@ -102,7 +117,7 @@ const AnimatedCard = ({ top }: { top: number }) => {
                 fontWeight="$bold"
                 color="$text200"
               >
-                $3245
+                ${savedValue}
               </Text>
               <Text
                 fontFamily="$heading"
@@ -124,9 +139,14 @@ const AnimatedCard = ({ top }: { top: number }) => {
                 fontWeight="$bold"
                 color="$pink500"
               >
-                46%
+                {progressValue}%
               </Text>
-              <Progress value={46} w="$full" $md-size="sm" $base-size="xs">
+              <Progress
+                value={progressValue}
+                w="$full"
+                $md-size="sm"
+                $base-size="xs"
+              >
                 <ProgressFilledTrack bg="$pink500" />
               </Progress>
             </VStack>
@@ -139,7 +159,7 @@ const AnimatedCard = ({ top }: { top: number }) => {
                 fontWeight="$bold"
                 color="$text200"
               >
-                $5137
+                ${totalValue}
               </Text>
               <Text
                 fontFamily="$heading"
@@ -149,7 +169,7 @@ const AnimatedCard = ({ top }: { top: number }) => {
                 fontWeight="$normal"
                 color="$text400"
               >
-                saved
+                Goal
               </Text>
             </VStack>
           </HStack>
@@ -190,12 +210,7 @@ const AnimatedCard = ({ top }: { top: number }) => {
             justifyContent="space-between"
             px="$2"
           >
-            <Icon
-              as={PhoneIncoming}
-              $md-size="md"
-              $base-size="sm"
-              color="$black"
-            />
+            <Icon as={icon} $md-size="md" $base-size="sm" color="$black" />
             <Text
               fontFamily="$heading"
               $md-fontSize="$md"
@@ -203,7 +218,7 @@ const AnimatedCard = ({ top }: { top: number }) => {
               textAlign="center"
               fontWeight="$bold"
             >
-              Buy a phone
+              {title}
             </Text>
             <VStack>
               <Text
@@ -213,7 +228,7 @@ const AnimatedCard = ({ top }: { top: number }) => {
                 textAlign="center"
                 fontWeight="$bold"
               >
-                $3245
+                ${savedValue}
               </Text>
               <Text
                 fontFamily="$heading"
@@ -234,7 +249,6 @@ const AnimatedCard = ({ top }: { top: number }) => {
 };
 const FlipCard = ({ h = '95vh', ...props }) => {
   const [isSmallScreen] = useMediaQuery({ maxWidth: 444 });
-
   return (
     <AnimationLayout
       {...props}
@@ -260,8 +274,16 @@ const FlipCard = ({ h = '95vh', ...props }) => {
         overflow="scroll"
         alignItems="center"
       >
-        {[...Array(4).keys()].map((_, i) => (
-          <AnimatedCard key={i} top={isSmallScreen ? i * 110 : i * 180} />
+        {cardGoals.map((item, i) => (
+          <AnimatedCard
+            key={i}
+            top={isSmallScreen ? i * 110 : i * 180}
+            icon={item.icon}
+            progressValue={item.progressValue}
+            savedValue={item.savedValue}
+            title={item.title}
+            totalValue={item.totalValue}
+          />
         ))}
       </VStack>
     </AnimationLayout>

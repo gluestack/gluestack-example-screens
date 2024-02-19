@@ -47,7 +47,7 @@ const AnimatedTextComp = ({ children, ...props }) => {
       $md-minWidth="$16"
       textAlign="center"
       position="absolute"
-      left={-0}
+      left={0}
       {...props}
     >
       {children}
