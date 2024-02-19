@@ -5,9 +5,13 @@ import {
   Center,
   Pressable,
   HStack,
+  useMediaQuery,
 } from '@gluestack-ui/themed';
 import React from 'react';
-import { AnimatedText } from '@gluestack-style/animation-resolver';
+import {
+  AnimatedText,
+  AnimatePresence,
+} from '@gluestack-style/animation-resolver';
 import { MinusIcon, PlusIcon } from 'lucide-react-native';
 
 const StyledAnimatedText = styled(AnimatedText);
@@ -42,7 +46,8 @@ const AnimatedTextComp = ({ children, ...props }) => {
       $base-minWidth="$6"
       $md-minWidth="$16"
       textAlign="center"
-      $md-lineHeight="$7xl"
+      position="absolute"
+      left={0}
       {...props}
     >
       {children}
@@ -51,11 +56,10 @@ const AnimatedTextComp = ({ children, ...props }) => {
 };
 
 const Ticker = ({ h = '95vh', ...props }) => {
-  const [animationState, setAnimationState] = React.useState({
-    count: 100,
-    operation: '',
-  });
-  const loopArray = animationState.count.toString().split('');
+  const [count, setCount] = React.useState(100);
+  const countRef = React.useRef(count);
+  const [isSmallScreen] = useMediaQuery({ maxWidth: 765 });
+  const countArray = count.toString().split('');
 
   return (
     <AnimationLayout
@@ -66,103 +70,39 @@ const Ticker = ({ h = '95vh', ...props }) => {
         },
       }}
     >
-      <HStack
-        justifyContent="space-between"
-        $md-minWidth="$72"
-        $base-minWidth="$48"
-        alignItems="center"
-      >
-        <HStack overflow="hidden" justifyContent="flex-start" flexGrow={1}>
-          {loopArray.map((item, key) => {
-            // To add one more layer of uniqueness to animation key
-            let iteratorKey = `${item}-${key}`;
-            // To get the previous value and further use for exit animation
-            let prevValue = 0;
-
-            if (animationState.operation === '-') {
-              prevValue = parseInt(loopArray[loopArray.length - 1]) + 1;
-            } else {
-              prevValue =
-                parseInt(loopArray[loopArray.length - 1]) > 0
-                  ? parseInt(loopArray[loopArray.length - 1]) - 1
-                  : 0;
-            }
-            return (
-              <VStack position="relative">
-                {parseInt(loopArray[loopArray.length - 1]) === 9 ? (
-                  <AnimatedTextComp
-                    key={iteratorKey + 'previous-component'}
-                    position="absolute"
-                    sx={{
-                      ':initial': { opacity: 1, y: 0 },
-                      ':animate': {
-                        opacity: 1,
-                        y: animationState.operation === '-' ? 100 : -100,
-                      },
-                      ':transition': {
-                        duration: 300,
-                        delay: 0,
-                        type: 'timing',
-                      },
-                      // To handle mis touch & text highlighting in web apps
-                      '_web': {
-                        WebkitTouchCallout: 'none',
-                        WebkitUserSelect: 'none',
-                        KhtmlUserSelect: 'none',
-                        MozUserSelect: 'none',
-                        msUserSelect: 'none',
-                        userSelect: 'none',
-                      },
-                    }}
-                  >
-                    {animationState.operation === '-'
-                      ? key === 0
-                        ? animationState.count + 1
-                        : ''
-                      : key === loopArray.length - 1
-                      ? prevValue
-                      : ''}
-                  </AnimatedTextComp>
-                ) : loopArray.length - 1 === key ? (
-                  <AnimatedTextComp
-                    key={iteratorKey + 'previous-component'}
-                    position="absolute"
-                    sx={{
-                      ':initial': { opacity: 1, y: 0 },
-                      ':animate': {
-                        opacity: 1,
-                        y: animationState.operation === '-' ? 100 : -100,
-                      },
-                      ':transition': {
-                        duration: 300,
-                        delay: 0,
-                        type: 'timing',
-                      },
-                      // To handle mis touch & text highlighting in web apps
-                      '_web': {
-                        WebkitTouchCallout: 'none',
-                        WebkitUserSelect: 'none',
-                        KhtmlUserSelect: 'none',
-                        MozUserSelect: 'none',
-                        msUserSelect: 'none',
-                        userSelect: 'none',
-                      },
-                    }}
-                  >
-                    {prevValue}
-                  </AnimatedTextComp>
-                ) : null}
+      <HStack $md-minWidth="$72" $base-minWidth="$40" space="lg">
+        <HStack
+          w="$full"
+          justifyContent="center"
+          overflow="hidden"
+          $md-minHeight="$32"
+          $base-minHeight="$24"
+          alignItems="center"
+          position="relative"
+        >
+          <AnimatePresence>
+            {countArray.map((item, key) => {
+              return (
                 <AnimatedTextComp
-                  key={iteratorKey}
+                  key={item + key}
+                  exit={{
+                    opacity: 0,
+                    y: countRef.current < count ? 100 : -100,
+                  }}
                   sx={{
                     ':initial': {
                       opacity: 0,
-                      y: animationState.operation === '-' ? -50 : 50,
+                      y: countRef.current < count ? -100 : 100,
+                      x: isSmallScreen ? key * 50 : key * 100,
                     },
-                    ':animate': { opacity: 1, y: 0 },
+                    ':animate': {
+                      opacity: 1,
+                      y: 0,
+                      x: isSmallScreen ? key * 50 : key * 100,
+                    },
                     ':transition': {
                       duration: 300,
-                      delay: 400,
+                      delay: 100,
                       type: 'timing',
                     },
                     // To handle mis touch & text highlighting in web apps
@@ -178,11 +118,11 @@ const Ticker = ({ h = '95vh', ...props }) => {
                 >
                   {item}
                 </AnimatedTextComp>
-              </VStack>
-            );
-          })}
+              );
+            })}
+          </AnimatePresence>
         </HStack>
-        <VStack space="md">
+        <VStack justifyContent="space-between" $base-py="$4" $md-py="$0">
           <Pressable
             bg="$white"
             $md-w="$12"
@@ -195,11 +135,9 @@ const Ticker = ({ h = '95vh', ...props }) => {
             justifyContent="center"
             alignItems="center"
             onPress={() =>
-              setAnimationState((prev) => {
-                return {
-                  count: prev.count + 1,
-                  operation: '+',
-                };
+              setCount((prev) => {
+                countRef.current = prev;
+                return prev + 1;
               })
             }
           >
@@ -217,11 +155,9 @@ const Ticker = ({ h = '95vh', ...props }) => {
             justifyContent="center"
             alignItems="center"
             onPress={() =>
-              setAnimationState((prev) => {
-                return {
-                  count: prev.count <= 0 ? 0 : prev.count - 1,
-                  operation: '-',
-                };
+              setCount((prev) => {
+                countRef.current = prev;
+                return prev - 1;
               })
             }
           >
