@@ -11,6 +11,14 @@ import {
   TooltipContent,
   TooltipText,
   InputIcon,
+  Avatar,
+  AvatarFallbackText,
+  AvatarImage,
+  FormControl,
+  FormControlLabel,
+  FormControlLabelText,
+  InputSlot,
+  Input,
 } from '@gluestack-ui-new/themed';
 import React from 'react';
 import { comments } from './constants';
@@ -41,12 +49,132 @@ import {
   SettingsIcon,
   UserIcon,
 } from 'lucide-react-native';
-import Card from '../components/Card';
-import UserCard from '../components/UserCard';
-import UserCardAvatar from '../components/UserCardAvatar';
-import UserCardStack from '../components/UserCardStack';
-import CustomInput from '../components/CustomInput';
+import { useController } from 'react-hook-form';
 
+const CustomInput = ({
+  label,
+  icon,
+  children,
+  formControlProps,
+  inputProps,
+  validatorProps,
+}: {
+  label?: string;
+  icon?: any;
+  children: any;
+  formControlProps?: any;
+  inputProps?: any;
+  validatorProps?: any;
+}) => {
+  let childrenWithProps;
+  if (validatorProps) {
+    /* eslint-disable */
+    const {
+      field: { onChange, onBlur, value },
+      fieldState: { error, isTouched },
+    } = useController({
+      ...validatorProps,
+    });
+    childrenWithProps = React.cloneElement(children, {
+      onBlur: onBlur,
+      value: value,
+      onChangeText: (text: string) => {
+        onChange(text);
+        if (isTouched && validatorProps?.trigger) {
+          validatorProps.trigger(validatorProps?.name);
+        }
+      },
+    });
+    return (
+      <FormControl size="sm" {...formControlProps}>
+        {label && (
+          <FormControlLabel mb="$2">
+            <FormControlLabelText fontSize="$sm">{label}</FormControlLabelText>
+          </FormControlLabel>
+        )}
+        {icon ? (
+          <Input borderRadius="$lg" hardShadow="5" {...inputProps}>
+            <InputSlot pl="$3">{icon}</InputSlot>
+            {validatorProps ? childrenWithProps : children}
+          </Input>
+        ) : (
+          <Input {...inputProps}>
+            {validatorProps ? childrenWithProps : children}
+          </Input>
+        )}
+        {validatorProps?.trigger && (
+          <Text
+            color={error ? '$error600' : 'transparent'}
+            fontSize="$sm"
+            fontFamily="$body"
+            mt="$1"
+          >
+            {error ? error.message : ''}
+          </Text>
+        )}
+      </FormControl>
+    );
+  }
+  return (
+    <FormControl size="sm" {...formControlProps}>
+      {label && (
+        <FormControlLabel mb="$2">
+          <FormControlLabelText fontSize="$sm">{label}</FormControlLabelText>
+        </FormControlLabel>
+      )}
+      {icon ? (
+        <Input borderRadius="$lg" hardShadow="5" {...inputProps}>
+          <InputSlot pl="$3">{icon}</InputSlot>
+          {children}
+        </Input>
+      ) : (
+        <Input {...inputProps}>{children}</Input>
+      )}
+    </FormControl>
+  );
+};
+const Card = ({ children, ...props }: any) => {
+  return (
+    <VStack
+      $base-p="$4"
+      $xs-p="$6"
+      borderRadius="$xl"
+      borderWidth="$1"
+      borderColor="$border200"
+      hardShadow="5"
+      backgroundColor="$background0"
+      {...props}
+    >
+      {children}
+    </VStack>
+  );
+};
+const UserCardStack = ({ children, ...props }: any) => {
+  return (
+    <VStack flex={1} {...props}>
+      {children}
+    </VStack>
+  );
+};
+const UserCardAvatar = ({ name, src, ...props }: any) => {
+  return (
+    <Avatar {...props}>
+      <AvatarFallbackText>{name}</AvatarFallbackText>
+      <AvatarImage source={src} />
+    </Avatar>
+  );
+};
+const UserCard = ({ children, direction = 'row', ...props }: any) => {
+  return direction === 'row' ? (
+    <HStack w="$full" alignItems="center" space="md" {...props}>
+      {children}
+    </HStack>
+  ) : (
+    <VStack w="$full" alignItems="center" {...props}>
+      {children}
+    </VStack>
+  );
+};
 const viewRenderer = (view: string) => {
   switch (view) {
     case 'home':

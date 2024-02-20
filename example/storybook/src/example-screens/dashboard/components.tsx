@@ -15,6 +15,9 @@ import {
   Center,
   Fab,
   FabIcon,
+  Avatar,
+  AvatarFallbackText,
+  AvatarImage,
 } from '@gluestack-ui-new/themed';
 import React from 'react';
 import {
@@ -64,9 +67,6 @@ ChartJS.register(
   Tooler
 );
 import { analytics } from './constants';
-import UserCard from '../components/UserCard';
-import Card from '../components/Card';
-import UserCardAvatar from '../components/UserCardAvatar';
 
 interface CommentCardProps {
   userName: string;
@@ -78,7 +78,41 @@ interface SidebarItemProps {
   icon: React.JSX.Element;
   itemProps: any;
 }
-
+const Card = ({ children, ...props }: any) => {
+  return (
+    <VStack
+      $base-p="$4"
+      $xs-p="$6"
+      borderRadius="$xl"
+      borderWidth="$1"
+      borderColor="$border200"
+      hardShadow="5"
+      backgroundColor="$background0"
+      {...props}
+    >
+      {children}
+    </VStack>
+  );
+};
+const UserCard = ({ children, direction = 'row', ...props }: any) => {
+  return direction === 'row' ? (
+    <HStack w="$full" alignItems="center" space="md" {...props}>
+      {children}
+    </HStack>
+  ) : (
+    <VStack w="$full" alignItems="center" {...props}>
+      {children}
+    </VStack>
+  );
+};
+const UserCardAvatar = ({ name, src, ...props }: any) => {
+  return (
+    <Avatar {...props}>
+      <AvatarFallbackText>{name}</AvatarFallbackText>
+      <AvatarImage source={src} />
+    </Avatar>
+  );
+};
 export type ViewType =
   | 'home'
   | 'notifications'
@@ -260,7 +294,8 @@ export const ChartOptionsMenu = ({ menuData }: { menuData: Array<string> }) => {
       closeOnSelect={true}
       isOpen={isOpen}
       onOpen={() => setIsOpen(true)}
-      onSelectionChange={(keys) => {
+      /*TYPE ERROR FIX LATER*/
+      onSelectionChange={(keys: any) => {
         setSelected(keys);
         setIsOpen(false);
       }}
@@ -446,18 +481,14 @@ const AreaChart = () => {
     maintainAspectRatio: false,
     spanGaps: false,
     scales: {
-      xAxes: [
-        {
-          ticks: {
-            autoSkip: false,
-          },
-        },
-      ],
       y: {
         display: false,
       },
       x: {
         display: false,
+        ticks: {
+          autoSkip: false,
+        },
       },
     },
     plugins: {

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import {
   VStack,
   Icon,
@@ -126,18 +126,19 @@ const Chats = () => {
       message: 'I can’t wait to hear about...',
     },
   ];
-  const [selectedChat, setSelectedChat] = useState({
+  const [selectedChat, setSelectedChat] = React.useState({
     name: 'Richard Lyod',
     message: '',
     avatarSource: require('../assets/Avatar3.png'),
   });
-  const [showChatList, setShowChatList] = useState(false);
-  const [showProfile, setShowProfile] = useState(false);
-  const [showTabButton, setShowTabButton] = useState(true);
+  const [showChatList, setShowChatList] = React.useState(false);
+  const [showProfile, setShowProfile] = React.useState(false);
+  const [showTabButton, setShowTabButton] = React.useState(true);
   const [isSmallScreen] = useMediaQuery({ maxWidth: 480 }); // Define your breakpoint for small screens
   const placeholderText = isSmallScreen
     ? 'Type here...'
     : 'Type a message here...';
+
   const handleChatSelect = ({
     name,
     message,
@@ -763,7 +764,7 @@ const Chats = () => {
     ];
 
     const defaultActiveIcon = 'Messages';
-    const [activeIcon, _setActiveIcon] = useState(defaultActiveIcon);
+    const [activeIcon, _setActiveIcon] = React.useState(defaultActiveIcon);
     const messagesBadgeCount = 3;
 
     return (
