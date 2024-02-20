@@ -24,6 +24,7 @@
     "update-snapshot": "jest -u"
   },
   "dependencies": {
+    "@babel/preset-react": "^7.23.3",
     "@expo/html-elements": "^0.4.2",
     "@expo/webpack-config": "^0.17.2",
     "@geometricpanda/storybook-addon-iframe": "^0.2.2",
