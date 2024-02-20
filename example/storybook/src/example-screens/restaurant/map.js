@@ -1,7 +1,5 @@
 import React from 'react';
 import { GoogleMap, useJsApiLoader, Marker } from '@react-google-maps/api';
-import { LocateFixed } from 'lucide-react-native';
-import { Icon } from '@gluestack-ui-new/themed';
 
 const containerStyle = {
   width: '100%',
@@ -100,17 +98,16 @@ function Map() {
   // }, [isLoaded, map]);
 
   return isLoaded ? (
-    <GoogleMap
-      mapContainerStyle={containerStyle}
-      center={indiaLocation}
-      zoom={4}
-      onLoad={onLoad}
-      onUnmount={onUnmount}
-      options={mapOptions}
-    >
-      {map && <Marker position={indiaLocation} visible={true} />}
-      <Icon as={LocateFixed} />
-    </GoogleMap>
+      <GoogleMap
+        mapContainerStyle={containerStyle}
+        center={indiaLocation}
+        zoom={4}
+        onLoad={onLoad}
+        onUnmount={onUnmount}
+        options={mapOptions}
+      >
+        {map && <Marker position={indiaLocation} visible={true} />}
+      </GoogleMap>
   ) : (
     <div>Loading...</div>
   );
