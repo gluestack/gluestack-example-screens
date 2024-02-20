@@ -19,6 +19,27 @@ export type postType = {
   postLiked?: boolean;
   followStatus?: boolean;
   postSaved?: boolean;
+  comments?: Array<commentType>;
+  following?: number;
+  followers?: number;
+};
+
+export type commentType = {
+  id: number;
+  name: string;
+  comment: string;
+};
+
+export const currentUser: postType = {
+  name: 'Milina Doe',
+  bio: '@milinadoe',
+  profileImage: require('../assets/music5.png'),
+  caption: 'Hello World',
+  likedBy: 'Michele',
+  image: require('../assets/music2.png'),
+  key: 0,
+  followers: 100,
+  following: 200,
 };
 
 export const menuItems = [
@@ -26,7 +47,7 @@ export const menuItems = [
     heading: '',
     subItems: [
       {
-        key: 'account',
+        key: 'profile',
         value: 'Account',
         icon: User,
       },
@@ -156,8 +177,6 @@ export const footerTags = [
   'Locations',
   'More',
 ];
-
-export const suggestions = [];
 
 export const sidebarItems = [
   {

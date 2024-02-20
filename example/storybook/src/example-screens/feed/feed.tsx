@@ -53,9 +53,21 @@ import {
   ChevronLeft,
 } from 'lucide-react-native';
 import { useController } from 'react-hook-form';
-import { ChatView, SettingsView, Sidebar, HomeView } from './components';
+import {
+  ChatView,
+  SettingsView,
+  Sidebar,
+  HomeView,
+  ProfileView,
+} from './components';
 
-type ViewType = 'settings' | 'home' | 'messages' | 'create' | 'notifications';
+type ViewType =
+  | 'settings'
+  | 'home'
+  | 'messages'
+  | 'create'
+  | 'notifications'
+  | 'profile';
 
 const UserCard = ({ children, direction = 'row', ...props }: any) => {
   return direction === 'row' ? (
@@ -259,7 +271,23 @@ const GetPremiumCard = () => {
   );
 };
 
-const FlyoutMenu = ({ menuItems, onSignOut }: any) => {
+const FlyoutMenu = ({
+  menuItems,
+  onSignOut,
+  setView,
+}: {
+  menuItems: any;
+  onSignOut: () => void;
+  setView: React.Dispatch<React.SetStateAction<ViewType>>;
+}) => {
+  const onClickHandler = (item: any) => {
+    if (item.key === 'signOut') {
+      onSignOut();
+    }
+    if (item.key === 'settings') {
+      setView('settings');
+    }
+  };
   return (
     <Menu
       placement="top"
@@ -274,7 +302,7 @@ const FlyoutMenu = ({ menuItems, onSignOut }: any) => {
           backgroundColor="$background0"
           key={item.key}
           textValue={item.key}
-          onPress={() => (item.key === 'signOut' ? onSignOut() : null)}
+          onPress={() => onClickHandler(item)}
         >
           <Icon as={item.icon} size="sm" mr="$2" />
           <MenuItemLabel size="sm">{item.value}</MenuItemLabel>
@@ -287,9 +315,11 @@ const FlyoutMenu = ({ menuItems, onSignOut }: any) => {
 const TopNavigation = ({
   onSignOut,
   openMessages,
+  setView,
 }: {
   onSignOut: () => void;
   openMessages: () => void;
+  setView: React.Dispatch<React.SetStateAction<ViewType>>;
 }) => {
   return (
     <HStack
@@ -308,7 +338,11 @@ const TopNavigation = ({
         },
       }}
     >
-      <FlyoutMenu menuItems={flyoutItems} onSignOut={onSignOut} />
+      <FlyoutMenu
+        menuItems={flyoutItems}
+        onSignOut={onSignOut}
+        setView={setView}
+      />
       <Pressable onPress={openMessages}>
         <Icon as={MessageCircle} w="$6" h="$6" />
       </Pressable>
@@ -391,11 +425,7 @@ const CreatePostModal = ({
             mt="$4"
             justifyContent="flex-end"
           >
-            <Button
-              size="sm"
-              action="positive"
-              onPress={() => setShowCreatePost(false)}
-            >
+            <Button size="sm" onPress={() => setShowCreatePost(false)}>
               <ButtonText>Create Post</ButtonText>
             </Button>
             <Button
@@ -721,6 +751,8 @@ const Feed = () => {
         return <ChatView />;
       case 'settings':
         return <SettingsView />;
+      case 'profile':
+        return <ProfileView />;
       case 'home':
         return (
           <HomeView
@@ -730,6 +762,7 @@ const Feed = () => {
             setShowSharePost={setShowSharePost}
             onLike={(username: string) => onLike(username)}
             onPostSave={(username: string) => onPostSave(username)}
+            setPosts={setPosts}
           />
         );
       default:
@@ -741,6 +774,7 @@ const Feed = () => {
             setShowSharePost={setShowSharePost}
             onLike={(username: string) => onLike(username)}
             onPostSave={(username: string) => onPostSave(username)}
+            setPosts={setPosts}
           />
         );
     }
@@ -764,6 +798,9 @@ const Feed = () => {
     }
     if (item.key === 'home') {
       setView('home');
+    }
+    if (item.key === 'profile') {
+      setView('profile');
     }
   };
 
@@ -808,7 +845,11 @@ const Feed = () => {
 
   return (
     <Box w="$full" bg="$background0">
-      <TopNavigation onSignOut={onSignOut} openMessages={openMessages} />
+      <TopNavigation
+        onSignOut={onSignOut}
+        openMessages={openMessages}
+        setView={setView}
+      />
       <StoryModal
         showStory={showStory}
         setShowStory={setShowStory}
@@ -837,46 +878,8 @@ const Feed = () => {
         ref={ref}
       />
 
-      {/* bottom navigation */}
-      <HStack
-        py="$1.5"
-        sx={{
-          _web: {
-            position: 'fixed',
-          },
-        }}
-        bottom={0}
-        $md-display="none"
-        backgroundColor="$background0"
-        w="$full"
-        borderTopWidth="$1"
-        borderColor="$border200"
-        justifyContent="space-around"
-        zIndex={1000}
-      >
-        <Pressable>
-          <Icon as={Home} w="$6" h="$6" p="$1.5" />
-        </Pressable>
-        <Pressable>
-          <Icon as={SearchIcon} w="$6" h="$6" p="$2" />
-        </Pressable>
-        <Pressable onPress={() => setShowCreatePost(true)}>
-          <Icon as={PlusSquare} w="$6" h="$6" p="$2" />
-        </Pressable>
-        <Pressable>
-          <Icon as={User} w="$6" h="$6" p="$2" />
-        </Pressable>
-      </HStack>
       {/* main content */}
-
-      <HStack
-        space="xl"
-        $xl-maxWidth="$5/6"
-        w="$full"
-        $lg-px="$4"
-        $xl-px="$0"
-        mx="auto"
-      >
+      <HStack $xl-maxWidth="$5/6" w="$full" $lg-px="$4" $xl-px="$0" mx="auto">
         <Box
           $base-display="none"
           $md-display="flex"
@@ -904,6 +907,7 @@ const Feed = () => {
             isNested
             itemProps={{
               p: '$2.5',
+              bg: '$background0',
             }}
           />
         </Box>
@@ -966,6 +970,36 @@ const Feed = () => {
             <FooterFold />
           </Box>
         )}
+      </HStack>
+      {/* bottom navigation */}
+      <HStack
+        py="$1.5"
+        sx={{
+          _web: {
+            position: 'fixed',
+          },
+        }}
+        bottom={0}
+        $md-display="none"
+        backgroundColor="$background0"
+        w="$full"
+        borderTopWidth="$1"
+        borderColor="$border200"
+        justifyContent="space-around"
+        zIndex={1000}
+      >
+        <Pressable onPress={() => setView('home')}>
+          <Icon as={Home} w="$6" h="$6" p="$1.5" />
+        </Pressable>
+        <Pressable>
+          <Icon as={SearchIcon} w="$6" h="$6" p="$2" />
+        </Pressable>
+        <Pressable onPress={() => setShowCreatePost(true)}>
+          <Icon as={PlusSquare} w="$6" h="$6" p="$2" />
+        </Pressable>
+        <Pressable onPress={() => setView('profile')}>
+          <Icon as={User} w="$6" h="$6" p="$2" />
+        </Pressable>
       </HStack>
     </Box>
   );

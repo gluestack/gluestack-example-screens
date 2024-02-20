@@ -44,11 +44,18 @@ import {
   MenuIcon,
   AvatarImage,
   AvatarGroup,
+  ButtonText,
+  ButtonIcon,
+  styled,
 } from '@gluestack-ui-new/themed';
-import { emails, postType } from './constants';
+
+import { AnimatedView } from '@gluestack-style/animation-resolver';
+import { currentUser, emails, postItems, postType } from './constants';
 import { useController, useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import {
+  commentValidationSchema,
+  commentValidationType,
   profileViewValidationSchema,
   profileViewValidationType,
 } from './validations';
@@ -74,8 +81,11 @@ import {
   Heart,
   Send,
   MoreHorizontal,
-  Smile,
   MessageCircle,
+  Settings as SettingsIcon,
+  Link as LinkIcon,
+  Bell,
+  XCircle,
 } from 'lucide-react-native';
 import { DotIcon } from './icons';
 import UserCard from '../components/UserCard';
@@ -1275,13 +1285,12 @@ const ChatsContent = ({
             </>
           ) : (
             <>
-              {/* <ScrollView> */}
+              <SearchBar />
               <Inbox
                 chatData={chatData}
                 onSelect={handleChatSelect}
                 selectedChat={selectedChat}
               />
-              {/* </ScrollView> */}
             </>
           )}
         </>
@@ -1408,12 +1417,97 @@ const PostCard = ({
   onLike,
   onPostSave,
   onShare,
+  setPosts,
 }: {
   data: postType;
   onLike: () => void;
   onPostSave: () => void;
   onShare: () => void;
+  setPosts: React.Dispatch<React.SetStateAction<postType[]>>;
 }) => {
+  const { control, trigger, handleSubmit } = useForm<commentValidationType>({
+    mode: 'onSubmit',
+    defaultValues: {
+      comment: '',
+    },
+    resolver: zodResolver(commentValidationSchema),
+  });
+
+  const AnimatedHeart = styled(AnimatedView, {
+    ':initial': {
+      opacity: 0.5,
+    },
+    ':animate': {
+      opacity: 1,
+    },
+    ':exit': {
+      opacity: 0.5,
+    },
+  });
+
+  const AnimatedBookmark = styled(AnimatedView, {
+    ':initial': {
+      opacity: 0.5,
+    },
+    ':animate': {
+      opacity: 1,
+    },
+    ':exit': {
+      opacity: 0.5,
+    },
+  });
+  /* eslint-disable */
+  const onSubmit = (formData: commentValidationType) => {
+    setPosts((prev) => {
+      return prev.map((post) => {
+        if (post.key === data.key) {
+          return {
+            ...post,
+            comments: [
+              ...(post?.comments || []),
+              {
+                id: Math.random(),
+                name: 'You',
+                comment: formData.comment,
+              },
+            ],
+          };
+        }
+        return post;
+      });
+    });
+  };
+  const onError = (error: any) => {
+    // console.log(error, 'form submission errors');
+  };
+
+  const postCardMenu = [
+    {
+      key: 'Report',
+      value: 'Report',
+      icon: AlertCircle,
+    },
+    {
+      key: 'CopyLink',
+      value: 'Copy Link',
+      icon: LinkIcon,
+    },
+    {
+      key: 'TurnOnPostNotifications',
+      value: 'Turn On Post Notifications',
+      icon: Bell,
+    },
+    {
+      key: 'Mute',
+      value: 'Mute',
+      icon: BellOff,
+    },
+    {
+      key: 'Unfollow',
+      value: 'Unfollow',
+      icon: XCircle,
+    },
+  ];
   return (
     <Box mb="$4" pb="$2" borderBottomWidth="$1" borderColor="$border200">
       <UserCard space="md" alignItems="center" pb="$3">
@@ -1428,9 +1522,25 @@ const PostCard = ({
             {data.name}
           </Text>
         </UserCardStack>
-        <Pressable>
-          <Icon as={MoreHorizontal} w="$6" h="$6" />
-        </Pressable>
+        <Menu
+          placement="top"
+          trigger={({ ...triggerProps }) => (
+            <Pressable {...triggerProps}>
+              <Icon as={MoreHorizontal} w="$6" h="$6" />
+            </Pressable>
+          )}
+        >
+          {postCardMenu.map((item: any) => (
+            <MenuItem
+              backgroundColor="$background0"
+              key={item.key}
+              textValue={item.key}
+            >
+              <Icon as={item.icon} size="sm" mr="$2" />
+              <MenuItemLabel size="sm">{item.value}</MenuItemLabel>
+            </MenuItem>
+          ))}
+        </Menu>
       </UserCard>
       <Box borderRadius="$xs" overflow="hidden">
         <Image source={data.image} w="auto" h="$96" />
@@ -1439,14 +1549,16 @@ const PostCard = ({
         <HStack justifyContent="space-between">
           <HStack>
             <Pressable onPress={onLike}>
-              <Icon
-                as={Heart}
-                color={data.postLiked ? '$red600' : ''}
-                fill={data.postLiked ? '$red600' : 'transparent'}
-                w="$6"
-                h="$6"
-                p="$2"
-              />
+              <AnimatedHeart key="heart">
+                <Icon
+                  as={Heart}
+                  color={data.postLiked ? '$red600' : ''}
+                  fill={data.postLiked ? '$red600' : 'transparent'}
+                  w="$6"
+                  h="$6"
+                  p="$2"
+                />
+              </AnimatedHeart>
             </Pressable>
             <Pressable>
               <Icon as={MessageCircle} w="$6" h="$6" p="$2" />
@@ -1455,15 +1567,17 @@ const PostCard = ({
               <Icon as={Send} w="$6" h="$6" p="$2" />
             </Pressable>
           </HStack>
-          <Pressable onPress={onPostSave}>
-            <Icon
-              as={Bookmark}
-              w="$6"
-              h="$6"
-              p="$2"
-              fill={data.postSaved ? 'currentColor' : 'transparent'}
-            />
-          </Pressable>
+          <AnimatedBookmark key="bookmark">
+            <Pressable onPress={onPostSave}>
+              <Icon
+                as={Bookmark}
+                w="$6"
+                h="$6"
+                p="$2"
+                fill={data.postSaved ? 'currentColor' : 'transparent'}
+              />
+            </Pressable>
+          </AnimatedBookmark>
         </HStack>
         <HStack space="sm" px="$4" alignItems="center">
           <AvatarGroup>
@@ -1491,22 +1605,39 @@ const PostCard = ({
             variant: 'underlined',
             borderBottomWidth: '$0',
           }}
+          validatorProps={{
+            control: control,
+            trigger: trigger,
+            name: 'comment',
+          }}
         >
-          <HStack width="$full" alignItems="center">
-            <InputField
-              type="text"
-              fontSize="$sm"
-              placeholder="Add a comment"
-              sx={{
-                ':focus': {
-                  borderBottomWidth: '$0',
-                  bg: '$background0',
-                },
-              }}
-            />
-            <Icon as={Smile} color="$text900" />
-          </HStack>
+          <InputField
+            type="text"
+            fontSize="$sm"
+            placeholder="Add a comment"
+            sx={{
+              ':focus': {
+                borderBottomWidth: '$0',
+                bg: '$background0',
+              },
+            }}
+            onKeyPress={(event) => {
+              if (event.key === 'Enter') handleSubmit(onSubmit, onError)();
+            }}
+          />
         </CustomInput>
+        <VStack w="$full" space="sm">
+          {data?.comments?.map((comment, index) => (
+            <HStack key={index}>
+              <Text fontSize="$sm" color="$text900" fontWeight="$semibold">
+                {comment?.name ? comment.name + ' ' : ''}
+              </Text>
+              <Text fontSize="$sm" color="$text700">
+                {comment?.comment ? comment.comment : ''}
+              </Text>
+            </HStack>
+          ))}
+        </VStack>
       </VStack>
     </Box>
   );
@@ -1554,7 +1685,7 @@ export const ChatView = () => {
     >
       <Box
         //@ts-ignore
-        h="96vh"
+        h="98vh"
         w="$full"
       >
         <HStack
@@ -1604,7 +1735,6 @@ export const ChatView = () => {
               },
             }}
           >
-            {/* <ScrollView> */}
             <ChatsContent
               showChatList={showChatList}
               showProfile={showProfile}
@@ -1614,7 +1744,6 @@ export const ChatView = () => {
               handleShowProfile={handleShowProfile}
               handleBackToChatList={handleBackToChatList}
             />
-            {/* </ScrollView> */}
           </VStack>
 
           <Divider
@@ -1682,6 +1811,8 @@ export const SettingsView = () => {
       // @ts-ignore
       h="100vh"
       $md-pt="$4"
+      px="$2"
+      pb="$12"
     >
       <VStack flex={1} alignItems="flex-start" py="$8">
         <Box w="$full" $base-maxWidth="$6/6" $lg-maxWidth="$4/6" px="$4">
@@ -1911,6 +2042,7 @@ export const HomeView = ({
   setShowSharePost,
   onLike,
   onPostSave,
+  setPosts,
 }: {
   posts: postType[];
   setStoryMedia: React.Dispatch<React.SetStateAction<any>>;
@@ -1918,6 +2050,7 @@ export const HomeView = ({
   setShowSharePost: React.Dispatch<React.SetStateAction<boolean>>;
   onLike: (username: string) => void;
   onPostSave: (username: string) => void;
+  setPosts: React.Dispatch<React.SetStateAction<postType[]>>;
 }) => {
   return (
     <ScrollView
@@ -1928,22 +2061,23 @@ export const HomeView = ({
       $md-pt="$4"
     >
       {/* stories */}
-      <HStack space="xs" py="$4" mb="$2" overflow="scroll">
+      <HStack space="sm" py="$4" mb="$2" overflow="scroll">
         {posts.map((_, index) => (
           <Pressable
             key={index}
-            pl="$2"
             onPress={() => {
               setStoryMedia(_);
               setShowStory(true);
             }}
+            p="$0.5"
+            borderRadius="$full"
+            borderWidth="$2"
+            borderColor="$teal500"
+            style={{
+              borderColor: 'linear-gradient(to right, red, purple)',
+            }}
           >
-            <Avatar
-              key={index}
-              size="lg"
-              bgColor="$amber600"
-              borderRadius="$full"
-            >
+            <Avatar key={index} size="lg">
               <AvatarImage source={_.profileImage} />
             </Avatar>
           </Pressable>
@@ -1958,9 +2092,136 @@ export const HomeView = ({
             onLike={() => onLike(post.name)}
             onPostSave={() => onPostSave(post.name)}
             onShare={() => setShowSharePost(true)}
+            setPosts={setPosts}
           />
         ))}
       </VStack>
+    </ScrollView>
+  );
+};
+
+export const ProfileView = () => {
+  const [activeTab, setActiveTab] = React.useState('Posts');
+  const profileTabs = ['Posts', 'Saved', 'Tagged'];
+  return (
+    <ScrollView
+      //@ts-ignore
+      h="100vh"
+    >
+      <Box
+        flex={1}
+        mt="$8"
+        $base-px="$4"
+        $lg-px="$0"
+        $lg-maxWidth="$5/6"
+        w="$full"
+        mx="auto"
+      >
+        <UserCard alignItems="flex-start" $md-px="$8" space="xl">
+          <UserCardAvatar
+            name={currentUser.name}
+            src={currentUser.profileImage}
+            size="2xl"
+          />
+          <UserCardStack mt="$4">
+            <Text fontSize="$xl" fontWeight="$bold" color="$text900">
+              {currentUser.name}
+            </Text>
+            <Text fontSize="$lg" fontWeight="$normal">
+              {currentUser.bio}
+            </Text>
+            <HStack space="md" mt="$2">
+              <Text fontSize="$sm" color="$text700">
+                {currentUser?.followers} followers
+              </Text>
+              <Text fontSize="$sm" color="$text700">
+                {currentUser?.following} following
+              </Text>
+            </HStack>
+          </UserCardStack>
+
+          <Button
+            size="sm"
+            borderRadius="$full"
+            variant="outline"
+            mt="$4"
+            action="primary"
+            $base-display="none"
+            $md-display="flex"
+          >
+            <ButtonIcon as={SettingsIcon} />
+            <ButtonText ml="$2">Edit Profile</ButtonText>
+          </Button>
+        </UserCard>
+        <Box borderBottomWidth="$1" borderColor="$border200">
+          {/* tabs section */}
+          <HStack
+            mt="$8"
+            space="4xl"
+            w="$full"
+            alignItems="center"
+            justifyContent="center"
+          >
+            {profileTabs.map((tab, index) => (
+              <VStack key={index}>
+                <Pressable
+                  key={tab}
+                  onPress={() => {
+                    setActiveTab(tab);
+                  }}
+                  disabled={tab !== 'Posts' ? true : false}
+                >
+                  <Text mb="$1.5">{tab}</Text>
+                </Pressable>
+                <Divider
+                  backgroundColor={
+                    activeTab === tab ? '$border600' : 'transparent'
+                  }
+                  h="$0.5"
+                />
+              </VStack>
+            ))}
+          </HStack>
+        </Box>
+        <Box>
+          {profileTabs.map((tab, index) => (
+            <HStack
+              key={index}
+              my="$6"
+              w="$full"
+              display={activeTab === tab ? 'flex' : 'none'}
+              flexWrap="wrap"
+              space="xs"
+            >
+              {postItems.map((_, index) => (
+                <Pressable
+                  key={index}
+                  $base-w="$full"
+                  $md-w="48%"
+                  $lg-w="32%"
+                  h="$64"
+                >
+                  {(props: any) => (
+                    <Box w="$full" h="$full" overflow="hidden">
+                      <Image
+                        source={_.image}
+                        w="$full"
+                        h="$full"
+                        alt=""
+                        style={{
+                          transform: [{ scale: props.hovered ? 1.05 : 1 }],
+                          // @ts-ignore
+                          transition: 'transform 0.3s ease-in-out',
+                        }}
+                      />
+                    </Box>
+                  )}
+                </Pressable>
+              ))}
+            </HStack>
+          ))}
+        </Box>
+      </Box>
     </ScrollView>
   );
 };

@@ -9,6 +9,7 @@ export type accountViewValidationType = z.infer<
 export type appearanceViewValidationType = z.infer<
   typeof appearanceViewValidationSchema
 >;
+export type commentValidationType = z.infer<typeof commentValidationSchema>;
 export const profileViewValidationSchema = z.object({
   username: z
     .string({ required_error: 'Username is required' })
@@ -44,5 +45,11 @@ export const accountViewValidationSchema = z.object({
 export const appearanceViewValidationSchema = z.object({
   font: z.string({ required_error: 'Font is required' }).min(1, {
     message: 'Font is required',
+  }),
+});
+
+export const commentValidationSchema = z.object({
+  comment: z.string({ required_error: 'Empty cannot be uploaded' }).min(1, {
+    message: 'Empty cannot be uploaded',
   }),
 });
