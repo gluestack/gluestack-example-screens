@@ -60,7 +60,6 @@ import {
 } from 'lucide-react-native';
 import Map from './map';
 
-
 const restaurantList = [
   {
     restaurantName:
@@ -643,19 +642,9 @@ const RestaurantView = () => {
       borderRadius="$lg"
       bg="$background0"
       justifyContent="space-between"
-      position="relative" // Set position relative for z-index to work
+      position="relative"
     >
-      {/* Background Image */}
       <Map />
-      {/* <Image
-        w="$full"
-        flex={1}
-        h="100%"
-        resizeMode="cover"
-        source={require('../assets/GoogleMap.png')}
-        style={{ position: 'absolute', zIndex: -1 }} // Make the background image stay behind other content
-        sx={{ '@md': { display: 'flex' }, '@base': { display: 'none' } }}
-      /> */}
 
       <HStack>
         {/* sidebar */}
