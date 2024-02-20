@@ -49,7 +49,10 @@ import {
   styled,
 } from '@gluestack-ui-new/themed';
 
-import { AnimatedView } from '@gluestack-style/animation-resolver';
+import {
+  AnimatePresence,
+  AnimatedPressable,
+} from '@gluestack-style/animation-resolver';
 import { currentUser, emails, postItems, postType } from './constants';
 import { useController, useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -1433,29 +1436,8 @@ const PostCard = ({
     resolver: zodResolver(commentValidationSchema),
   });
 
-  const AnimatedHeart = styled(AnimatedView, {
-    ':initial': {
-      opacity: 0.5,
-    },
-    ':animate': {
-      opacity: 1,
-    },
-    ':exit': {
-      opacity: 0.5,
-    },
-  });
+  const AnimatedIcon = styled(AnimatedPressable);
 
-  const AnimatedBookmark = styled(AnimatedView, {
-    ':initial': {
-      opacity: 0.5,
-    },
-    ':animate': {
-      opacity: 1,
-    },
-    ':exit': {
-      opacity: 0.5,
-    },
-  });
   /* eslint-disable */
   const onSubmit = (formData: commentValidationType) => {
     setPosts((prev) => {
@@ -1546,10 +1528,29 @@ const PostCard = ({
         <Image source={data.image} w="auto" h="$96" />
       </Box>
       <VStack w="$full" space="sm">
-        <HStack justifyContent="space-between">
-          <HStack>
-            <Pressable onPress={onLike}>
-              <AnimatedHeart key="heart">
+        <AnimatePresence>
+          <HStack justifyContent="space-between">
+            <HStack>
+              <AnimatedIcon
+                exit={{
+                  scale: 1,
+                }}
+                sx={{
+                  ':initial': {
+                    scale: data.postLiked ? 1.4 : 1,
+                  },
+                  ':animate': {
+                    scale: 1,
+                  },
+                  ':transition': {
+                    // @ts-ignore
+                    duration: 300,
+                    type: 'spring',
+                    ease: 'ease-out',
+                  },
+                }}
+                onPress={onLike}
+              >
                 <Icon
                   as={Heart}
                   color={data.postLiked ? '$red600' : ''}
@@ -1558,17 +1559,35 @@ const PostCard = ({
                   h="$6"
                   p="$2"
                 />
-              </AnimatedHeart>
-            </Pressable>
-            <Pressable>
-              <Icon as={MessageCircle} w="$6" h="$6" p="$2" />
-            </Pressable>
-            <Pressable onPress={onShare}>
-              <Icon as={Send} w="$6" h="$6" p="$2" />
-            </Pressable>
-          </HStack>
-          <AnimatedBookmark key="bookmark">
-            <Pressable onPress={onPostSave}>
+              </AnimatedIcon>
+
+              <Pressable>
+                <Icon as={MessageCircle} w="$6" h="$6" p="$2" />
+              </Pressable>
+              <Pressable onPress={onShare}>
+                <Icon as={Send} w="$6" h="$6" p="$2" />
+              </Pressable>
+            </HStack>
+            <AnimatedIcon
+              exit={{
+                scale: 1,
+              }}
+              sx={{
+                ':initial': {
+                  scale: data.postSaved ? 1.2 : 1,
+                },
+                ':animate': {
+                  scale: 1,
+                },
+                ':transition': {
+                  // @ts-ignore
+                  duration: 400,
+                  type: 'spring',
+                  ease: 'ease-out',
+                },
+              }}
+              onPress={onPostSave}
+            >
               <Icon
                 as={Bookmark}
                 w="$6"
@@ -1576,9 +1595,10 @@ const PostCard = ({
                 p="$2"
                 fill={data.postSaved ? 'currentColor' : 'transparent'}
               />
-            </Pressable>
-          </AnimatedBookmark>
-        </HStack>
+            </AnimatedIcon>
+          </HStack>
+        </AnimatePresence>
+
         <HStack space="sm" px="$4" alignItems="center">
           <AvatarGroup>
             <Avatar h="$6" w="$6">
