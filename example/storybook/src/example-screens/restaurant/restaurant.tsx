@@ -56,7 +56,10 @@ import {
   Tag,
   LocateFixed,
   Pen,
+  Camera,
 } from 'lucide-react-native';
+import Map from './map';
+
 
 const restaurantList = [
   {
@@ -248,7 +251,7 @@ const RestaurantCard = ({ restaurant }) => {
             <Text fontSize="$md">{deliveryContact}</Text>
           </HStack>
           <Button borderRadius="$full" bg="$primary500" mt="$2">
-            <ButtonText color="$white">RESERVE A TABLE</ButtonText>
+            <ButtonText>RESERVE A TABLE</ButtonText>
           </Button>
         </VStack>
       </VStack>
@@ -262,7 +265,7 @@ const RestaurantCard = ({ restaurant }) => {
         }}
       >
         <ModalBackdrop />
-        <ModalContent>
+        <ModalContent h="$4/5">
           <ModalHeader>
             <HStack w="$full" position="relative">
               <ModalCloseButton
@@ -281,7 +284,7 @@ const RestaurantCard = ({ restaurant }) => {
             </HStack>
           </ModalHeader>
 
-          <ScrollView>
+          <ScrollView bounces={false}>
             <ModalBody h="100vh">
               <Image
                 w="$full"
@@ -441,6 +444,187 @@ const RestaurantCard = ({ restaurant }) => {
                 <ButtonIcon as={Pen} />
                 <ButtonText>Suggest an edit</ButtonText>
               </Button>
+
+              <Text paddingVertical="$4" fontWeight="$medium" fontSize="$md">
+                Updates from customers
+              </Text>
+              <Pressable>
+                <HStack
+                  sx={{
+                    ':hover': {
+                      shadowColor: '$trueGray800',
+                      shadowOffset: { width: 0, height: -2 },
+                      shadowOpacity: 0.1,
+                      shadowRadius: 10,
+                    },
+                  }}
+                  borderWidth={1}
+                  borderRadius="$md"
+                  alignItems="center"
+                >
+                  <VStack gap="$2" flex={1} p="$4">
+                    <Text textAlign="left">
+                      Amazing food, at an even amazing price! Must go if you’re
+                      looking for a delightful experience.
+                    </Text>
+                    <Text fontSize="$sm">10 months ago</Text>
+                  </VStack>
+                  <Image
+                    w="$1/2"
+                    h="$full"
+                    overflow="hidden"
+                    source={require('../assets/updateImage.jpg')}
+                  />
+                </HStack>
+              </Pressable>
+
+              <Text paddingVertical="$4" fontWeight="$medium" fontSize="$md">
+                Photos & videos
+              </Text>
+              <ScrollView horizontal={true}>
+                <HStack mt="$1" gap="$3">
+                  <Image
+                    h={149}
+                    width={112}
+                    borderRadius="$lg"
+                    source={require('../assets/restaurant1.jpg')}
+                  />
+                  <Image
+                    h={149}
+                    width={112}
+                    borderRadius="$lg"
+                    source={require('../assets/photo1.jpg')}
+                  />
+                  <Image
+                    h={149}
+                    width={112}
+                    borderRadius="$lg"
+                    source={require('../assets/photo2.jpg')}
+                  />
+                  <Image
+                    h={149}
+                    width={112}
+                    borderRadius="$lg"
+                    source={require('../assets/photo3.jpg')}
+                  />
+                  <Image
+                    h={149}
+                    width={112}
+                    borderRadius="$lg"
+                    source={require('../assets/photo4.jpg')}
+                  />
+                  <Image
+                    h={149}
+                    width={112}
+                    borderRadius="$lg"
+                    source={require('../assets/photo5.jpg')}
+                  />
+
+                  <Image
+                    h={149}
+                    width={112}
+                    borderRadius="$lg"
+                    source={require('../assets/photo6.jpg')}
+                  />
+                  <Image
+                    h={149}
+                    width={112}
+                    borderRadius="$lg"
+                    source={require('../assets/photo7.jpg')}
+                  />
+                  <Image
+                    h={149}
+                    width={112}
+                    borderRadius="$lg"
+                    source={require('../assets/photo8.jpg')}
+                  />
+                  <Image
+                    h={149}
+                    width={112}
+                    borderRadius="$lg"
+                    source={require('../assets/photo9.jpg')}
+                  />
+                  <Image
+                    h={149}
+                    width={112}
+                    borderRadius="$lg"
+                    source={require('../assets/photo10.jpg')}
+                  />
+                  <Image
+                    h={149}
+                    width={112}
+                    borderRadius="$lg"
+                    source={require('../assets/photo11.jpg')}
+                  />
+                  <Image
+                    h={149}
+                    width={112}
+                    borderRadius="$lg"
+                    source={require('../assets/photo12.jpg')}
+                  />
+
+                  <Image
+                    h={149}
+                    width={112}
+                    borderRadius="$lg"
+                    source={require('../assets/photo13.jpg')}
+                  />
+                  <Image
+                    h={149}
+                    width={112}
+                    borderRadius="$lg"
+                    source={require('../assets/photo14.jpg')}
+                  />
+
+                  <Image
+                    h={149}
+                    width={112}
+                    borderRadius="$lg"
+                    source={require('../assets/photo15.jpeg')}
+                  />
+                </HStack>
+              </ScrollView>
+              <Button marginVertical="$3" gap="$1.5">
+                <ButtonIcon as={Camera} />
+                <ButtonText>Add media</ButtonText>
+              </Button>
+              <Text paddingVertical="$4" fontWeight="$medium" fontSize="$md">
+                Questions and answers
+              </Text>
+              <VStack>
+                <HStack justifyContent="space-between">
+                  <Text>Is 24 hour service available?</Text>
+                  <Image
+                    h="$6"
+                    w="$6"
+                    source={require('../assets/QAImage.png')}
+                  />
+                </HStack>
+                <HStack justifyContent="space-between">
+                  <Text>Answer this question</Text>
+                  <Text fontWeight="$normal" fontSize="$xs">
+                    2 months ago
+                  </Text>
+                </HStack>
+              </VStack>
+              <HStack>
+                <Image
+                  h="$8"
+                  w="$8"
+                  source={require('../assets/community.png')}
+                />
+
+                <Input
+                  h="$9"
+                  w="$full"
+                  variant="outline"
+                  isDisabled={false}
+                  isInvalid={false}
+                  isReadOnly={false}
+                >
+                  <InputField w="$full" placeholder="Ask the community" />
+                </Input>
+              </HStack>
             </ModalBody>
           </ScrollView>
         </ModalContent>
@@ -462,7 +646,8 @@ const RestaurantView = () => {
       position="relative" // Set position relative for z-index to work
     >
       {/* Background Image */}
-      <Image
+      <Map />
+      {/* <Image
         w="$full"
         flex={1}
         h="100%"
@@ -470,7 +655,7 @@ const RestaurantView = () => {
         source={require('../assets/GoogleMap.png')}
         style={{ position: 'absolute', zIndex: -1 }} // Make the background image stay behind other content
         sx={{ '@md': { display: 'flex' }, '@base': { display: 'none' } }}
-      />
+      /> */}
 
       <HStack>
         {/* sidebar */}
@@ -487,7 +672,7 @@ const RestaurantView = () => {
             shadowOpacity: 0.1,
             shadowRadius: 10,
             elevation: 5,
-            zIndex: 2,
+            // zIndex: 2,
           }}
           bg="$background0"
         >
@@ -513,7 +698,7 @@ const RestaurantView = () => {
             shadowOpacity: 0.1,
             shadowRadius: 10,
             elevation: 5,
-            zIndex: 1,
+            // zIndex: 1,
           }}
           borderRightWidth={1}
           borderColor="$border200"
@@ -550,8 +735,10 @@ const RestaurantView = () => {
       {/* buttons */}
       <HStack
         sx={{ '@lg': { display: 'flex' }, '@base': { display: 'none' } }}
-        p="$4"
+        mt="$4"
         space="sm"
+        h="$0"
+        bg="red"
       >
         <Button>
           <ButtonIcon as={StarIcon} />
@@ -575,7 +762,9 @@ const RestaurantView = () => {
       <HStack
         sx={{ '@md': { display: 'flex' }, '@base': { display: 'none' } }}
         gap="$4"
-        p="$4"
+        mt="$4"
+        mr="$4"
+        h="$0"
       >
         <Icon color="$white" as={Grip} />
         <Icon color="$white" as={User} />
