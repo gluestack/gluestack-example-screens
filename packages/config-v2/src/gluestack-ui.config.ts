@@ -575,7 +575,7 @@ export const gluestackUIConfig = createConfig({
     },
   } as const,
   themes: {
-    dark_theme: {
+    dark: {
       colors: {
         primary0: '#828282',
         primary50: '#949494',
@@ -714,7 +714,7 @@ export const gluestackUIConfig = createConfig({
         backgroundInfo: '#1A282E',
       },
     },
-    light_theme: {
+    light: {
       colors: {
         // Brand Colors
         primary0: '#B3B3B3',
