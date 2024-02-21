@@ -70,7 +70,49 @@ const Ticker = ({ h = '95vh', ...props }) => {
         },
       }}
     >
-      <HStack $md-minWidth="$72" $base-minWidth="$40" space="lg">
+      <HStack $md-minWidth="$72" $base-minWidth="$40" space="3xl">
+        <VStack justifyContent="space-between" $base-py="$4" $md-py="$0">
+          <Pressable
+            bg="$white"
+            $md-w="$12"
+            $base-w="$6"
+            $base-h="$6"
+            $md-h="$12"
+            borderRadius="$full"
+            hardShadow="5"
+            display="flex"
+            justifyContent="center"
+            alignItems="center"
+            onPress={() =>
+              setCount((prev) => {
+                countRef.current = prev;
+                return prev + 1;
+              })
+            }
+          >
+            <Icon as={PlusIcon} $md-size="md" $base-size="sm" color="$black" />
+          </Pressable>
+          <Pressable
+            bg="$white"
+            $md-w="$12"
+            $base-w="$6"
+            $base-h="$6"
+            $md-h="$12"
+            borderRadius="$full"
+            hardShadow="5"
+            display="flex"
+            justifyContent="center"
+            alignItems="center"
+            onPress={() =>
+              setCount((prev) => {
+                countRef.current = prev;
+                return prev - 1;
+              })
+            }
+          >
+            <Icon as={MinusIcon} $md-size="md" $base-size="sm" color="$black" />
+          </Pressable>
+        </VStack>
         <HStack
           w="$full"
           justifyContent="center"
@@ -122,48 +164,6 @@ const Ticker = ({ h = '95vh', ...props }) => {
             })}
           </AnimatePresence>
         </HStack>
-        <VStack justifyContent="space-between" $base-py="$4" $md-py="$0">
-          <Pressable
-            bg="$white"
-            $md-w="$12"
-            $base-w="$6"
-            $base-h="$6"
-            $md-h="$12"
-            borderRadius="$full"
-            hardShadow="5"
-            display="flex"
-            justifyContent="center"
-            alignItems="center"
-            onPress={() =>
-              setCount((prev) => {
-                countRef.current = prev;
-                return prev + 1;
-              })
-            }
-          >
-            <Icon as={PlusIcon} $md-size="md" $base-size="sm" color="$black" />
-          </Pressable>
-          <Pressable
-            bg="$white"
-            $md-w="$12"
-            $base-w="$6"
-            $base-h="$6"
-            $md-h="$12"
-            borderRadius="$full"
-            hardShadow="5"
-            display="flex"
-            justifyContent="center"
-            alignItems="center"
-            onPress={() =>
-              setCount((prev) => {
-                countRef.current = prev;
-                return prev - 1;
-              })
-            }
-          >
-            <Icon as={MinusIcon} $md-size="md" $base-size="sm" color="$black" />
-          </Pressable>
-        </VStack>
       </HStack>
     </AnimationLayout>
   );

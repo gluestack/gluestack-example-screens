@@ -1,6 +1,5 @@
 import React from 'react';
 import { styled } from '@gluestack-ui-new/themed';
-import PropTypes from 'prop-types';
 import { AnimatedView } from '@gluestack-style/animation-resolver';
 
 const AnimatedBox = styled(AnimatedView, {
@@ -15,7 +14,7 @@ const AnimatedBox = styled(AnimatedView, {
   },
 });
 
-export const SkeletonCircle = ({ size, ...props }) => {
+export const SkeletonCircle = ({ size, ...props }: ISkeletonCircle) => {
   return (
     <AnimatedBox
       borderRadius="$full"
@@ -27,7 +26,7 @@ export const SkeletonCircle = ({ size, ...props }) => {
   );
 };
 
-export const SkeletonBox = ({ width, height, ...props }) => {
+export const SkeletonBox = ({ width, height, ...props }: ISkeletonBox) => {
   return (
     <AnimatedBox
       bg="$background100"
@@ -39,11 +38,15 @@ export const SkeletonBox = ({ width, height, ...props }) => {
   );
 };
 
-SkeletonCircle.propTypes = {
-  size: PropTypes.string.isRequired,
+type ISkeletonCircle = {
+  size: React.ComponentProps<typeof AnimatedBox>['w'];
+} & {
+  [key: string]: any;
 };
 
-SkeletonBox.propTypes = {
-  width: PropTypes.string.isRequired,
-  height: PropTypes.string.isRequired,
+type ISkeletonBox = {
+  width: React.ComponentProps<typeof AnimatedBox>['w'];
+  height: React.ComponentProps<typeof AnimatedBox>['h'];
+} & {
+  [key: string]: any;
 };
