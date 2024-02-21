@@ -839,7 +839,11 @@ const RestaurantView = () => {
           }}
           borderRightWidth={1}
           borderColor="$border200"
-          sx={{ '@md': { w: '$102' }, '@base': { w: '$96' } }}
+          sx={{
+            '@md': { w: '$102' },
+            '@xs': { w: '$96' },
+            '@base': { w: '$72' },
+          }}
           bg="$background0"
         >
           <Input
