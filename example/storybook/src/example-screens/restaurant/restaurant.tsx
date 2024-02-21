@@ -1,6 +1,10 @@
 import React from 'react';
 import {
   AlertCircleIcon,
+  Avatar,
+  AvatarBadge,
+  AvatarFallbackText,
+  AvatarImage,
   Button,
   ButtonIcon,
   ButtonText,
@@ -16,6 +20,7 @@ import {
   InputField,
   InputIcon,
   InputSlot,
+  MessageCircleIcon,
   Modal,
   ModalBackdrop,
   ModalBody,
@@ -23,6 +28,8 @@ import {
   ModalContent,
   ModalHeader,
   Pressable,
+  Progress,
+  ProgressFilledTrack,
   ScrollView,
   SearchIcon,
   StarIcon,
@@ -57,6 +64,8 @@ import {
   LocateFixed,
   Pen,
   Camera,
+  Search,
+  MoreVertical,
 } from 'lucide-react-native';
 import Map from './map';
 
@@ -65,7 +74,7 @@ const restaurantList = [
     restaurantName:
       'VYANA - World Cuisine | Mocktails | Al Fresco Rooftop Dining',
     rating: 4.3,
-    numberOfPeople: '(7290)',
+    numberOfPeople: '7290',
     restaurantType: 'Restaurant',
     address: 'No.121/17-2/1, Sai Bhavana, 4th Floor, 9th Cross Rd',
     restaurantOpen: true,
@@ -77,7 +86,7 @@ const restaurantList = [
   {
     restaurantName: 'Swad Royal Family Restaurant',
     rating: 3.9,
-    numberOfPeople: '(1235)',
+    numberOfPeople: '1235',
     restaurantType: 'North Indian',
     address: '1st floor, opposite Mantri Apartment',
     restaurantOpen: false,
@@ -90,7 +99,7 @@ const restaurantList = [
     restaurantName:
       'VYANA - World Cuisine | Mocktails | Al Fresco Rooftop Dining',
     rating: 4.3,
-    numberOfPeople: '(7290)',
+    numberOfPeople: '7290',
     restaurantType: 'Restaurant',
     address: 'No.121/17-2/1, Sai Bhavana, 4th Floor, 9th Cross Rd',
     restaurantOpen: true,
@@ -102,7 +111,7 @@ const restaurantList = [
   {
     restaurantName: 'Swad Royal Family Restaurant',
     rating: 3.9,
-    numberOfPeople: '(1235)',
+    numberOfPeople: '1235',
     restaurantType: 'North Indian',
     address: '1st floor, opposite Mantri Apartment',
     restaurantOpen: false,
@@ -115,7 +124,7 @@ const restaurantList = [
     restaurantName:
       'VYANA - World Cuisine | Mocktails | Al Fresco Rooftop Dining',
     rating: 4.3,
-    numberOfPeople: '(7290)',
+    numberOfPeople: '7290',
     restaurantType: 'Restaurant',
     address: 'No.121/17-2/1, Sai Bhavana, 4th Floor, 9th Cross Rd',
     restaurantOpen: true,
@@ -127,7 +136,7 @@ const restaurantList = [
   {
     restaurantName: 'Swad Royal Family Restaurant',
     rating: 3.9,
-    numberOfPeople: '(1235)',
+    numberOfPeople: '1235',
     restaurantType: 'North Indian',
     address: '1st floor, opposite Mantri Apartment',
     restaurantOpen: false,
@@ -220,7 +229,7 @@ const RestaurantCard = ({ restaurant }) => {
               </Text>
               <Text>{renderRatingStars()}</Text>
               <Text fontSize="$md" color="$text500">
-                {numberOfPeople}
+                ({numberOfPeople})
               </Text>
             </HStack>
             <Text fontSize="$md">
@@ -265,7 +274,7 @@ const RestaurantCard = ({ restaurant }) => {
       >
         <ModalBackdrop />
         <ModalContent h="$4/5">
-          <ModalHeader>
+          <ModalHeader zIndex={999}>
             <HStack w="$full" position="relative">
               <ModalCloseButton
                 bg="$background0"
@@ -276,14 +285,13 @@ const RestaurantCard = ({ restaurant }) => {
                 mt="$2"
                 mr="$2"
                 onPress={handleClose}
-                zIndex={999}
               >
                 <Icon as={CloseIcon} />
               </ModalCloseButton>
             </HStack>
           </ModalHeader>
 
-          <ScrollView bounces={false}>
+          <ScrollView showsVerticalScrollIndicator={false} bounces={false}>
             <ModalBody h="100vh">
               <Image
                 w="$full"
@@ -292,7 +300,7 @@ const RestaurantCard = ({ restaurant }) => {
                 source={restaurantImage}
                 resizeMode="cover"
               />
-              <Heading fontWeight="$normal" fontSize="$2xl" mt="$2" mb="$3">
+              <Heading fontWeight="$normal" fontSize="$2xl" mt="$3" mb="$3">
                 {restaurantName}
               </Heading>
               <HStack space="xs">
@@ -301,7 +309,7 @@ const RestaurantCard = ({ restaurant }) => {
                 </Text>
                 <Text>{renderRatingStars()}</Text>
                 <Text fontSize="$md" color="$text500">
-                  {numberOfPeople}
+                  ({numberOfPeople})
                 </Text>
               </HStack>
               <Text fontSize="$md" color="$text500">
@@ -333,7 +341,7 @@ const RestaurantCard = ({ restaurant }) => {
                   <Text>Share</Text>
                 </VStack>
               </HStack>
-              <Button borderRadius="$full" bg="$primary500" mt="$2">
+              <Button borderRadius="$full" bg="$primary500" mt="$3">
                 <ButtonText color="$white">RESERVE A TABLE</ButtonText>
               </Button>
               <HStack
@@ -439,6 +447,7 @@ const RestaurantCard = ({ restaurant }) => {
                 isDisabled={false}
                 isFocusVisible={false}
                 gap="$1.5"
+                borderRadius="$full"
               >
                 <ButtonIcon as={Pen} />
                 <ButtonText>Suggest an edit</ButtonText>
@@ -461,7 +470,7 @@ const RestaurantCard = ({ restaurant }) => {
                   borderRadius="$md"
                   alignItems="center"
                 >
-                  <VStack gap="$2" flex={1} p="$4">
+                  <VStack gap="$2" flex={1} p="$3">
                     <Text textAlign="left">
                       Amazing food, at an even amazing price! Must go if you’re
                       looking for a delightful experience.
@@ -480,7 +489,10 @@ const RestaurantCard = ({ restaurant }) => {
               <Text paddingVertical="$4" fontWeight="$medium" fontSize="$md">
                 Photos & videos
               </Text>
-              <ScrollView horizontal={true}>
+              <ScrollView
+                showsHorizontalScrollIndicator={false}
+                horizontal={true}
+              >
                 <HStack mt="$1" gap="$3">
                   <Image
                     h={149}
@@ -583,14 +595,14 @@ const RestaurantCard = ({ restaurant }) => {
                   />
                 </HStack>
               </ScrollView>
-              <Button marginVertical="$3" gap="$1.5">
+              <Button borderRadius="$full" marginVertical="$3" gap="$1.5">
                 <ButtonIcon as={Camera} />
                 <ButtonText>Add media</ButtonText>
               </Button>
-              <Text paddingVertical="$4" fontWeight="$medium" fontSize="$md">
+              <Text paddingVertical="$3" fontWeight="$medium" fontSize="$md">
                 Questions and answers
               </Text>
-              <VStack>
+              <VStack gap="$3">
                 <HStack justifyContent="space-between">
                   <Text>Is 24 hour service available?</Text>
                   <Image
@@ -599,14 +611,14 @@ const RestaurantCard = ({ restaurant }) => {
                     source={require('../assets/QAImage.png')}
                   />
                 </HStack>
-                <HStack justifyContent="space-between">
+                <HStack alignItems="center" justifyContent="space-between">
                   <Text>Answer this question</Text>
                   <Text fontWeight="$normal" fontSize="$xs">
                     2 months ago
                   </Text>
                 </HStack>
               </VStack>
-              <HStack>
+              <HStack paddingVertical="$3" gap="$3">
                 <Image
                   h="$8"
                   w="$8"
@@ -614,15 +626,151 @@ const RestaurantCard = ({ restaurant }) => {
                 />
 
                 <Input
+                  flex={1}
                   h="$9"
-                  w="$full"
                   variant="outline"
                   isDisabled={false}
                   isInvalid={false}
                   isReadOnly={false}
                 >
-                  <InputField w="$full" placeholder="Ask the community" />
+                  <InputField placeholder="Ask the community" />
                 </Input>
+              </HStack>
+
+              <Text paddingVertical="$3" fontWeight="$medium" fontSize="$md">
+                Review summary
+              </Text>
+              <HStack alignItems="center" justifyContent="space-between">
+                <VStack alignItems="center">
+                  <HStack gap="$3">
+                    <Text fontSize="$sm">5</Text>
+                    <Progress value={100} w={300}>
+                      <ProgressFilledTrack />
+                    </Progress>
+                  </HStack>
+                  <HStack gap="$3">
+                    <Text fontSize="$sm">4</Text>
+                    <Progress value={30} w={300}>
+                      <ProgressFilledTrack />
+                    </Progress>
+                  </HStack>
+                  <HStack gap="$3">
+                    <Text fontSize="$sm">3</Text>
+                    <Progress value={15} w={300}>
+                      <ProgressFilledTrack />
+                    </Progress>
+                  </HStack>
+                  <HStack gap="$3">
+                    <Text fontSize="$sm">2</Text>
+                    <Progress value={7} w={300}>
+                      <ProgressFilledTrack />
+                    </Progress>
+                  </HStack>
+                  <HStack gap="$3">
+                    <Text fontSize="$sm">1</Text>
+                    <Progress value={10} w={300}>
+                      <ProgressFilledTrack />
+                    </Progress>
+                  </HStack>
+                </VStack>
+                <VStack>
+                  <Text fontSize="$5xl">{rating}</Text>
+                  <Text>{renderRatingStars()}</Text>
+                  <Text>{numberOfPeople} reviews</Text>
+                </VStack>
+              </HStack>
+
+              <VStack paddingVertical="$3" space="2xl">
+                <HStack alignItems="center" space="md">
+                  <Avatar>
+                    <AvatarFallbackText>SS</AvatarFallbackText>
+                    <AvatarImage source={require('../assets/review1.png')} />
+                  </Avatar>
+                  <VStack flex={1}>
+                    <Text size="sm">
+                      "Place you can get homely cooked food and the service was
+                      amazing...."
+                    </Text>
+                  </VStack>
+                </HStack>
+                <HStack alignItems="center" space="md">
+                  <Avatar>
+                    <AvatarFallbackText>SS</AvatarFallbackText>
+                    <AvatarImage source={require('../assets/review2.png')} />
+                  </Avatar>
+                  <VStack flex={1}>
+                    <Text size="sm">
+                      "Their Chinese dishes tastes better than regular Chinese
+                      Restaurants."
+                    </Text>
+                  </VStack>
+                </HStack>
+                <HStack alignItems="center" space="md">
+                  <Avatar>
+                    <AvatarFallbackText>SS</AvatarFallbackText>
+                    <AvatarImage source={require('../assets/review3.png')} />
+                  </Avatar>
+                  <VStack flex={1}>
+                    <Text size="sm">
+                      "Didn't like the food quality, ambiance, locality, staff."
+                    </Text>
+                  </VStack>
+                </HStack>
+              </VStack>
+              <Button borderRadius="$full" marginVertical="$3" gap="$1.5">
+                <ButtonIcon as={MessageCircleIcon} />
+                <ButtonText>Write a review</ButtonText>
+              </Button>
+              <HStack paddingVertical="$3" justifyContent="space-between">
+                <Text fontWeight="$medium" fontSize="$md">
+                  Reviews
+                </Text>
+                <HStack>
+                  <Icon as={Search} />
+                  <HStack>
+                    <Icon />
+                    <Text>Sort</Text>
+                  </HStack>
+                </HStack>
+              </HStack>
+
+              <HStack
+                paddingVertical="$3"
+                justifyContent="space-between"
+                alignItems="center"
+              >
+                <HStack alignItems="center" space="md">
+                  <Avatar bgColor="$indigo600">
+                    <AvatarFallbackText>KshemaHegde</AvatarFallbackText>
+                    <AvatarBadge $dark-borderColor="$black" />
+                  </Avatar>
+                  <VStack>
+                    <Heading size="sm">Kshema Hegde</Heading>
+                    <Text size="sm">Local Guide · 8 reviews · 15 photos</Text>
+                  </VStack>
+                </HStack>
+                <Icon as={MoreVertical} />
+              </HStack>
+              <VStack gap="$3">
+                <Text>
+                  Everything was perfect, it was truly great. Had an extremely
+                  pleasant experience and the staff Maaz gave excellent
+                  recommendations and beautiful service. He was extremely
+                  helpful and kind . Will definitely visit again. The desserts
+                  were a highlight of the night today! ✨ It’s also a pet
+                  friendly cafe and they even gave my puppy a water bowl without
+                  us asking. Big props to Maaz & the Dessert Chef💚
+                </Text>
+                <Image
+                  h="$72"
+                  w="$full"
+                  // flex={1}
+                  source={require('../assets/review4.jpg')}
+                />
+              </VStack>
+              <HStack paddingVertical="$3" gap="$3">
+                <Icon as={Share2} />
+                <Text>Share</Text>
               </HStack>
             </ModalBody>
           </ScrollView>
@@ -691,7 +839,11 @@ const RestaurantView = () => {
           }}
           borderRightWidth={1}
           borderColor="$border200"
-          sx={{ '@md': { w: '$102' }, '@base': { w: '$96' } }}
+          sx={{
+            '@md': { w: '$102' },
+            '@xs': { w: '$96' },
+            '@base': { w: '$72' },
+          }}
           bg="$background0"
         >
           <Input
