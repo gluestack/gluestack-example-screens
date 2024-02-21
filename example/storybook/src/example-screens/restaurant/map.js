@@ -1,6 +1,12 @@
-import React from 'react';
-import { GoogleMap, useJsApiLoader, Marker } from '@react-google-maps/api';
-
+import React, { useState, useCallback, useEffect } from 'react';
+import {
+  GoogleMap,
+  useJsApiLoader,
+  Marker,
+  InfoWindow,
+} from '@react-google-maps/api';
+import { ButtonIcon, Button } from '@gluestack-ui-new/themed';
+import { LocateFixed } from 'lucide-react-native';
 const containerStyle = {
   width: '100%',
   height: '100vh',
@@ -62,42 +68,55 @@ function Map() {
     googleMapsApiKey: 'AIzaSyBJE6tT6E_3Gq92EbSsRWhXZv7l0qynSMM',
   });
 
-  const [map, setMap] = React.useState(null);
+  const [map, setMap] = useState(null);
+  const [userLocation, setUserLocation] = useState(null);
+  const [infoWindow, setInfoWindow] = useState(null);
 
-  const onLoad = React.useCallback(function callback(map) {
+  const onLoad = useCallback(function callback(map) {
     const bounds = new window.google.maps.LatLngBounds(indiaLocation);
     map.fitBounds(bounds);
-
     setMap(map);
   }, []);
 
-  const onUnmount = React.useCallback(function callback(map) {
+  const onUnmount = useCallback(function callback(map) {
     setMap(null);
   }, []);
 
-  // React.useEffect(() => {
-  //   if (isLoaded) {
-  //     if (navigator.geolocation) {
-  //       navigator.geolocation.getCurrentPosition(
-  //         (position) => {
-  //           const userLatLng = {
-  //             lat: position.coords.latitude,
-  //             lng: position.coords.longitude,
-  //           };
-  //           setUserLocation(userLatLng);
-  //           map && map.setCenter(userLatLng);
-  //         },
-  //         (error) => {
-  //           console.error('Error getting user location:', error);
-  //         }
-  //       );
-  //     } else {
-  //       console.error('Geolocation is not supported by this browser.');
-  //     }
-  //   }
-  // }, [isLoaded, map]);
+  useEffect(() => {
+    if (isLoaded && userLocation) {
+      if (map) {
+        map.setCenter(userLocation);
+      }
+    }
+  }, [isLoaded, map, userLocation]);
+
+  const showUserLocation = () => {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          const userLatLng = {
+            lat: position.coords.latitude,
+            lng: position.coords.longitude,
+          };
+          setUserLocation(userLatLng);
+        },
+        (error) => {
+          console.error('Error getting user location:', error);
+        }
+      );
+    } else {
+      console.error('Geolocation is not supported by this browser.');
+    }
+  };
+
+  const handleMarkerClick = () => {
+    if (userLocation) {
+      setInfoWindow(userLocation);
+    }
+  };
 
   return isLoaded ? (
+    <>
       <GoogleMap
         mapContainerStyle={containerStyle}
         center={indiaLocation}
@@ -106,8 +125,29 @@ function Map() {
         onUnmount={onUnmount}
         options={mapOptions}
       >
-        {map && <Marker position={indiaLocation} visible={true} />}
+        {map && userLocation && (
+          <Marker position={userLocation} onClick={handleMarkerClick} />
+        )}
+        {infoWindow && (
+          <InfoWindow
+            position={infoWindow}
+            onCloseClick={() => setInfoWindow(null)}
+          >
+            <div>Your current location</div>
+          </InfoWindow>
+        )}
       </GoogleMap>
+
+      <Button
+        position="absolute"
+        bottom="$1/4"
+        right="$2"
+        alignItems="center"
+        onPress={showUserLocation}
+      >
+        <ButtonIcon as={LocateFixed} />
+      </Button>
+    </>
   ) : (
     <div>Loading...</div>
   );
