@@ -6,6 +6,8 @@ import { Center, GluestackUIProvider } from '@gluestack-ui-new/themed';
 import gstheme from './gstheme';
 import { themes } from '@storybook/theming';
 import { Theme } from '@gluestack-style/react';
+import { GluestackUIProvider as GluestackUIProviderNativeWind } from '../components/GluestackUIProvider';
+import '../global.css';
 
 export const parameters = {
   actions: { argTypesRegex: '^on[A-Z].*' },
@@ -33,6 +35,7 @@ export const parameters = {
           'Shadows',
         ],
         'components',
+        'nativewind-example-screens',
         'example-screens',
         [('PRIMITIVES', 'COMPOSITES', 'CUSTOM')],
       ],
@@ -44,13 +47,15 @@ export const decorators = [
   (Story) => {
     const theme = useDarkMode() ? 'dark' : 'light';
     return (
-      <GluestackUIProvider config={config}>
-        <Theme name={`${theme}_theme`}>
-          <Center>
-            <Story />
-          </Center>
-        </Theme>
-      </GluestackUIProvider>
+      <GluestackUIProviderNativeWind mode={theme}>
+        <GluestackUIProvider config={config}>
+          <Theme name={`${theme}_theme`}>
+            <Center>
+              <Story />
+            </Center>
+          </Theme>
+        </GluestackUIProvider>
+      </GluestackUIProviderNativeWind>
     );
   },
 ];

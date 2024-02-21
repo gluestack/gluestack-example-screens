@@ -7,7 +7,8 @@
       "@gluestack-ui/config-v2": [
         "../../packages/config-v2/src/gluestack-ui.config"
       ],
-      "react-native": ["./node_modules/react-native-web"]
+      "react-native": ["./node_modules/react-native-web"],
+      "@/components/nativewind": ["components/ui/index"]
     },
     "emitDeclarationOnly": true,
     "noEmit": false,
@@ -32,5 +33,5 @@
     "target": "esnext"
   },
   "exclude": ["lib", "node_modules", "storybookDocsComponents", "__tests__"],
-  "include": ["src"]
+  "include": ["src", "nativewind-env.d.ts"]
 }

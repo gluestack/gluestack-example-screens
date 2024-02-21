@@ -16,6 +16,17 @@ module.exports = {
     '@storybook/addon-react-native-web',
     '@storybook/addon-docs',
     '@geometricpanda/storybook-addon-iframe',
+    {
+      name: '@storybook/addon-postcss',
+      options: {
+        cssLoaderOptions: {
+          importLoaders: 1,
+        },
+        postcssLoaderOptions: {
+          implementation: require('postcss'),
+        },
+      },
+    },
   ],
   staticDirs: ['../public'],
   framework: '@storybook/react',
@@ -59,10 +70,15 @@ module.exports = {
         '../../../packages/config-v2/src/gluestack-ui.config'
       ),
     };
+
     config.module.rules.push({
       test: /\.mjs$/,
       include: /node_modules/,
       type: 'javascript/auto',
+      loader: 'babel-loader',
+      options: {
+        presets: ['@babel/preset-env'],
+      },
     });
 
     // Return the altered config
