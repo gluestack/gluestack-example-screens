@@ -1251,41 +1251,26 @@ const ChatsContent = ({
   return (
     <>
       {showProfile ? (
-        <>
-          <ScrollView>
-            <Profile
-              handleBackToChatList={handleBackToChatList}
-              selectedChat={selectedChat}
-            />
-          </ScrollView>
-        </>
+        <ScrollView>
+          <Profile
+            handleBackToChatList={handleBackToChatList}
+            selectedChat={selectedChat}
+          />
+        </ScrollView>
       ) : (
         <>
           {showChatList ? (
-            <>
-              <VStack
-                //@ts-ignore
-                sx={{
-                  '@base': {
-                    height: '84vh',
-                  },
-                  '@md': {
-                    height: '98vh',
-                  },
-                }}
-                justifyContent="space-between"
-              >
-                <ChatTopBar
-                  handleBackToInbox={handleBackToInbox}
-                  handleShowProfile={handleShowProfile}
-                  selectedChat={selectedChat}
-                />
-                <ScrollView>
-                  <ChatList selectedChat={selectedChat} />
-                </ScrollView>
-                <TypeMessage />
-              </VStack>
-            </>
+            <VStack h="$full" justifyContent="space-between">
+              <ChatTopBar
+                handleBackToInbox={handleBackToInbox}
+                handleShowProfile={handleShowProfile}
+                selectedChat={selectedChat}
+              />
+              <ScrollView>
+                <ChatList selectedChat={selectedChat} />
+              </ScrollView>
+              <TypeMessage />
+            </VStack>
           ) : (
             <>
               <SearchBar />
@@ -1435,8 +1420,14 @@ const PostCard = ({
     },
     resolver: zodResolver(commentValidationSchema),
   });
-
   const AnimatedIcon = styled(AnimatedPressable);
+  const textInputRef = React.useRef(null);
+
+  const focusTextInput = () => {
+    if (textInputRef.current) {
+      textInputRef.current.focus();
+    }
+  };
 
   /* eslint-disable */
   const onSubmit = (formData: commentValidationType) => {
@@ -1561,7 +1552,7 @@ const PostCard = ({
                 />
               </AnimatedIcon>
 
-              <Pressable>
+              <Pressable onPress={focusTextInput}>
                 <Icon as={MessageCircle} w="$6" h="$6" p="$2" />
               </Pressable>
               <Pressable onPress={onShare}>
@@ -1632,6 +1623,7 @@ const PostCard = ({
           }}
         >
           <InputField
+            ref={textInputRef}
             type="text"
             fontSize="$sm"
             placeholder="Add a comment"
@@ -1699,102 +1691,103 @@ export const ChatView = () => {
     setShowProfile(true);
   };
   return (
-    <ScrollView
-      // @ts-ignore
-      h="100vh"
+    <Box
+      //@ts-ignore
+      h="98vh"
+      w="$full"
     >
-      <Box
-        //@ts-ignore
-        h="98vh"
+      <HStack
+        bg="$background0"
         w="$full"
+        flex={1}
+        borderColor="$border200"
+        alignSelf="center"
       >
-        <HStack
-          bg="$background0"
+        <Divider
+          sx={{ '@base': { display: 'none' }, '@lg': { display: 'flex' } }}
+          orientation="horizontal"
+          bg="$background200"
           w="$full"
+          transform="translateY(-50%)"
+          top="$18"
+          position="absolute"
+        />
+        <VStack
+          sx={{
+            '@lg': {
+              w: '$1/4',
+              flex: 'none',
+              display: 'flex',
+            },
+          }}
           flex={1}
-          borderColor="$border200"
-          alignSelf="center"
+          display="none"
         >
-          <Divider
-            sx={{ '@base': { display: 'none' }, '@lg': { display: 'flex' } }}
-            orientation="horizontal"
-            bg="$background200"
-            w="$full"
-            transform="translateY(-50%)"
-            top="$18"
-            position="absolute"
-          />
-          <VStack
-            sx={{
-              '@lg': {
-                w: '$1/4',
-                flex: 'none',
-                display: 'flex',
-              },
-            }}
-            flex={1}
-            display="none"
-          >
-            <SearchBar />
-            <ScrollView>
-              <Inbox
-                chatData={chatData}
-                onSelect={handleChatSelect}
-                selectedChat={selectedChat}
-              />
-            </ScrollView>
-          </VStack>
-          <VStack
-            sx={{
-              '@lg': {
-                display: 'none',
-              },
-              '@base': {
-                flex: 1,
-                display: 'flex',
-              },
-            }}
-          >
-            <ChatsContent
-              showChatList={showChatList}
-              showProfile={showProfile}
-              handleChatSelect={handleChatSelect}
+          <SearchBar />
+          <ScrollView>
+            <Inbox
+              chatData={chatData}
+              onSelect={handleChatSelect}
               selectedChat={selectedChat}
-              handleBackToInbox={handleBackToInbox}
-              handleShowProfile={handleShowProfile}
-              handleBackToChatList={handleBackToChatList}
             />
-          </VStack>
+          </ScrollView>
+        </VStack>
+        <VStack
+          //@ts-ignore
 
-          <Divider
-            sx={{ '@base': { display: 'none' }, '@lg': { display: 'flex' } }}
-            orientation="vertical"
-            bg="$background200"
-            h="auto"
+          sx={{
+            '@base': {
+              flex: 1,
+              display: 'flex',
+              height: '84vh',
+            },
+            '@lg': {
+              display: 'none',
+            },
+            '@md': {
+              height: '98vh',
+            },
+          }}
+        >
+          <ChatsContent
+            showChatList={showChatList}
+            showProfile={showProfile}
+            handleChatSelect={handleChatSelect}
+            selectedChat={selectedChat}
+            handleBackToInbox={handleBackToInbox}
+            handleShowProfile={handleShowProfile}
+            handleBackToChatList={handleBackToChatList}
           />
-          <VStack
-            sx={{
-              '@lg': {
-                display: 'flex',
-                flex: 1,
-              },
-            }}
-            display="none"
-            w="$2/5"
-          >
-            <ChatTopBar
-              handleBackToInbox={handleBackToInbox}
-              handleShowProfile={handleShowProfile}
-              selectedChat={selectedChat}
-            />
-            <ScrollView>
-              <ChatList selectedChat={selectedChat} />
-            </ScrollView>
-            <TypeMessage />
-          </VStack>
-        </HStack>
-      </Box>
-    </ScrollView>
+        </VStack>
+
+        <Divider
+          sx={{ '@base': { display: 'none' }, '@lg': { display: 'flex' } }}
+          orientation="vertical"
+          bg="$background200"
+          h="auto"
+        />
+        <VStack
+          sx={{
+            '@lg': {
+              display: 'flex',
+              flex: 1,
+            },
+          }}
+          display="none"
+          w="$2/5"
+        >
+          <ChatTopBar
+            handleBackToInbox={handleBackToInbox}
+            handleShowProfile={handleShowProfile}
+            selectedChat={selectedChat}
+          />
+          <ScrollView>
+            <ChatList selectedChat={selectedChat} />
+          </ScrollView>
+          <TypeMessage />
+        </VStack>
+      </HStack>
+    </Box>
   );
 };
 
@@ -2092,7 +2085,7 @@ export const HomeView = ({
             p="$0.5"
             borderRadius="$full"
             borderWidth="$2"
-            borderColor="$teal500"
+            borderColor="$violet400"
             style={{
               borderColor: 'linear-gradient(to right, red, purple)',
             }}
