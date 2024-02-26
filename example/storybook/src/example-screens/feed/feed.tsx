@@ -32,6 +32,8 @@ import {
   ModalHeader,
   ModalFooter,
   ModalCloseButton,
+  ButtonSpinner,
+  styled,
 } from '@gluestack-ui-new/themed';
 import {
   flyoutItems,
@@ -53,6 +55,7 @@ import {
   ChevronLeft,
 } from 'lucide-react-native';
 import { useController } from 'react-hook-form';
+import { AnimatedPressable } from '@gluestack-style/animation-resolver';
 import {
   ChatView,
   SettingsView,
@@ -226,9 +229,14 @@ const CustomModal = ({
 const SuggestionsSection = ({
   data,
   onFollow,
+  followLoading,
 }: {
   data: postType;
   onFollow: () => void;
+  followLoading: {
+    loading: boolean;
+    key: string | null;
+  };
 }) => {
   return (
     <UserCard space="md" alignItems="center" py="$2">
@@ -247,14 +255,28 @@ const SuggestionsSection = ({
         borderRadius="$full"
         variant="outline"
         onPress={onFollow}
+        width="$24"
+        disabled={followLoading.key === data.name && followLoading.loading}
       >
-        <ButtonText>{data.followStatus ? 'Unfollow' : 'Follow'}</ButtonText>
+        {followLoading.key === data.name && followLoading.loading ? (
+          <ButtonSpinner mr="$1" />
+        ) : (
+          <ButtonText>{data.followStatus ? 'Unfollow' : 'Follow'}</ButtonText>
+        )}
       </Button>
     </UserCard>
   );
 };
+const AnimatedComponent = styled(AnimatedPressable);
 
 const GetPremiumCard = () => {
+  const [clicked, setClicked] = React.useState(false);
+  const onClickHandler = () => {
+    setClicked(true);
+    setTimeout(() => {
+      setClicked(false);
+    }, 50);
+  };
   return (
     <Card $xs-p="$4" $lg-p="$6" mt="$4" hardShadow="0" space="md">
       <Text fontSize="$lg" color="$text900" fontWeight="$bold">
@@ -264,9 +286,33 @@ const GetPremiumCard = () => {
         Subscribe to unlock new features and if eligible, receive a share of ads
         revenue.
       </Text>
-      <Button borderRadius="$xl" size="sm" flexGrow={0}>
-        <ButtonText>Subscribe</ButtonText>
-      </Button>
+      <AnimatedComponent
+        px="$3"
+        py="$2"
+        bg="$primary950"
+        alignItems="center"
+        borderRadius="$lg"
+        flexGrow={0}
+        exit={{ scale: 1 }}
+        sx={{
+          ':initial': {
+            scale: 1,
+          },
+          ':animate': {
+            scale: clicked ? 0.95 : 1,
+            transform: 'scale(0.95)',
+          },
+          ':transition': {
+            // @ts-ignore
+            type: 'spring',
+            stiffness: 500,
+            damping: 30,
+          },
+        }}
+        onPress={onClickHandler}
+      >
+        <Text color="white">Subscribe</Text>
+      </AnimatedComponent>
     </Card>
   );
 };
@@ -743,6 +789,10 @@ const Feed = () => {
   const [showSignoutModal, setShowSignoutModal] = React.useState(false);
   const [storyMedia, setStoryMedia] = React.useState<any>(null);
   const [posts, setPosts] = React.useState<postType[]>(postItems);
+  const [followLoading, setFollowLoading] = React.useState({
+    loading: false,
+    key: null as string | null,
+  });
   const ref = React.useRef(null);
 
   const viewRenderer = (viewInput: ViewType) => {
@@ -817,6 +867,17 @@ const Feed = () => {
       return post;
     });
     setPosts(result);
+    setFollowLoading({
+      loading: true,
+      key: username,
+    });
+    setTimeout(() => {
+      setFollowLoading({
+        loading: false,
+        key: null,
+      });
+      console.log('Loading state set to false');
+    }, 400);
   };
   const onLike = (username: string) => {
     const result = posts.map((post) => {
@@ -961,6 +1022,7 @@ const Feed = () => {
                       key={index}
                       data={post}
                       onFollow={() => onFollow(post.name)}
+                      followLoading={followLoading}
                     />
                   );
                 }
