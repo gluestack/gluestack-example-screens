@@ -8,8 +8,12 @@ const Skeleton = ({ ...props }) => {
       borderRadius="$md"
       gap="$4"
       p="$4"
-      h="$1/3"
-      w="$1/3"
+      h="$full"
+      sx={{
+        '@lg': { w: '$1/3' },
+        '@md': { w: '$1/2' },
+        '@base': { w: '$full' },
+      }}
       bg="$background100"
       {...props}
     >
