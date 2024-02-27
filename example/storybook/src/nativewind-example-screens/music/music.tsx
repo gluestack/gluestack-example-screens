@@ -4,12 +4,15 @@ import {
   Button,
   ButtonIcon,
   ButtonText,
+  Divider,
   HStack,
+  Heading,
+  Image,
   Pressable,
   Text,
   VStack,
 } from '@/components/nativewind';
-
+import { useMediaQuery } from '@gluestack-ui-new/themed';
 import {
   PlusCircle,
   // Command,
@@ -17,6 +20,7 @@ import {
   // Mic2,
   // Globe,
 } from 'lucide-react-native';
+import { sidebarItems } from '../../example-screens/music/constants';
 
 // const navTabs = [
 //   {
@@ -132,6 +136,208 @@ import {
 //     ],
 //   },
 // ];
+interface SidebarItemProps {
+  key: string;
+  value: string;
+}
+interface NestedSidebarItemProps extends SidebarItemProps {
+  key: string;
+  value: string;
+  icon: any;
+}
+interface SidebarProps {
+  sidebarItems: Array<SidebarItemProps>;
+  itemProps?: any;
+  onSelected: (item: SidebarItemProps) => void;
+  isNested?: boolean;
+  FabSidebarProps?: any;
+}
+
+// const FabSidebar = ({
+//   onViewChange,
+//   sidebarData,
+//   isNested,
+//   ...props
+// }: {
+//   sidebarData: any;
+//   onViewChange: (view: SidebarItemProps) => void;
+//   isNested: boolean;
+// }) => {
+//   const [selected, setSelected] = React.useState(new Set([]));
+//   const [isOpen, setIsOpen] = React.useState<boolean>(false);
+//   return (
+//     <Menu
+//       placement="top left"
+//       selectionMode="single"
+//       borderWidth={1}
+//       selectedKeys={selected}
+//       closeOnSelect={true}
+//       isOpen={isOpen}
+//       onPointerLeave={() => setIsOpen(false)}
+//       onOpen={() => setIsOpen(true)}
+//       onSelectionChange={(keys: any) => {
+//         setSelected(keys);
+//         onViewChange(keys?.currentKey);
+//         setIsOpen(false);
+//       }}
+//       maxHeight="$64"
+//       overflow="scroll"
+//       trigger={({ ...triggerProps }) => {
+//         return (
+//           <Fab
+//             size="md"
+//             placement="bottom right"
+//             isHovered={false}
+//             isDisabled={false}
+//             isPressed={false}
+//             renderInPortal={true}
+//             position="fixed"
+//             zIndex={999}
+//             minWidth="$10"
+//             minHeight="$10"
+//             {...triggerProps}
+//             {...props}
+//           >
+//             <FabIcon as={MenuIcon} />
+//           </Fab>
+//         );
+//       }}
+//     >
+//       {!isNested
+//         ? sidebarData.map((item: SidebarItemProps) => (
+//             <MenuItem key={item.key} textValue={item.value}>
+//               <MenuItemLabel size="sm" ml="$2">
+//                 {item.value}
+//               </MenuItemLabel>
+//             </MenuItem>
+//           ))
+//         : sidebarData.map((sidebarItem: any) => {
+//             return sidebarItem.subItems.map((item: NestedSidebarItemProps) => (
+//               <MenuItem key={item.key} textValue={item.value}>
+//                 {item?.icon && <Icon as={item.icon} />}
+//                 <MenuItemLabel size="sm" ml="$2">
+//                   {item.value}
+//                 </MenuItemLabel>
+//               </MenuItem>
+//             ));
+//           })}
+//     </Menu>
+//   );
+// };
+
+const Sidebar = ({
+  sidebarItems,
+  itemProps,
+  onSelected,
+  isNested = false,
+}: // FabSidebarProps,
+SidebarProps) => {
+  const [selected, setSelected] = React.useState<SidebarItemProps>(
+    sidebarItems[0]
+  );
+  const handlePress = (itemInput: SidebarItemProps) => {
+    setSelected(itemInput);
+    onSelected(itemInput);
+  };
+  // const handleViewChange = (selected: any) => {
+  //   const itemInput = {
+  //     key: selected,
+  //     value: selected,
+  //   };
+  //   onSelected(itemInput);
+  // };
+  const [isMobileScreen] = useMediaQuery({ maxWidth: 760 });
+  if (isMobileScreen) {
+    return (
+      <></>
+      // <FabSidebar
+      //   onViewChange={handleViewChange}
+      //   sidebarData={sidebarItems}
+      //   isNested={isNested}
+      //   {...FabSidebarProps}
+      // />
+    );
+  }
+  return (
+    // <ScrollView w="$full" h="$full">
+    <VStack
+      className="w-full h-full"
+      space={isNested ? '3xl' : 'sm'}
+      flexGrow={1}
+    >
+      {!isNested ? (
+        <>
+          {sidebarItems.map((item) => (
+            <Pressable
+              className="w-full p-2 rounded-md"
+              $active-bg="$background100"
+              $hover-bg="$background100"
+              key={item.key}
+              onPress={() => handlePress(item)}
+              bg={item.key === selected.key ? '$background100' : ''}
+              {...itemProps}
+            >
+              <HStack>
+                <Text
+                  className="text-primary-950 text-md px-4"
+                  fontFamily="$body"
+                >
+                  {item.value}
+                </Text>
+              </HStack>
+            </Pressable>
+          ))}
+        </>
+      ) : (
+        <>
+          {sidebarItems.map((item: any) => (
+            <VStack>
+              <Text
+                className="text-primary-950 font-bold mx-4"
+                $lg-fontSize="$lg"
+                $md-fontSize="$md"
+                fontFamily="$heading"
+              >
+                {item?.heading}
+              </Text>
+              <VStack
+                className="w-full mt-2"
+                flexGrow={1}
+                space="sm"
+                key={item?.heading}
+              >
+                {item?.subItems?.map((item: NestedSidebarItemProps) => (
+                  <Pressable
+                    className="w-full p-2 rounded-md"
+                    $active-bg="$background100"
+                    $hover-bg="$background100"
+                    key={item.key}
+                    onPress={() => handlePress(item)}
+                    bg={item.key === selected.key ? '$background100' : ''}
+                    {...itemProps}
+                  >
+                    <HStack className="items-center ml-1.5" space="sm">
+                      {/* {item?.icon && <Icon as={item.icon} />} */}
+                      <Text
+                        className="text-primary-950"
+                        $lg-fontSize="$md"
+                        $md-fontSize="$sm"
+                        fontFamily="$body"
+                      >
+                        {item.value}
+                      </Text>
+                    </HStack>
+                  </Pressable>
+                ))}
+              </VStack>
+            </VStack>
+          ))}
+        </>
+      )}
+    </VStack>
+    // </ScrollView>
+  );
+};
 const tabs = [
   { label: 'Music', key: 'music' },
   { label: 'Podcasts', key: 'podcasts' },
@@ -154,10 +360,139 @@ const Tab = ({ label, isActive, onPress, disabled }) => (
   </Pressable>
 );
 
+const images = [
+  require('../../example-screens/assets/music1.png'),
+  require('../../example-screens/assets/music2.png'),
+  require('../../example-screens/assets/music3.png'),
+  require('../../example-screens/assets/music4.png'),
+];
+
+const personalPlaylists = [
+  require('../../example-screens/assets/music5.png'),
+  require('../../example-screens/assets/music6.png'),
+  require('../../example-screens/assets/music1.png'),
+  require('../../example-screens/assets/music8.png'),
+  require('../../example-screens/assets/music2.png'),
+  require('../../example-screens/assets/music4.png'),
+];
+const personalTitles = [
+  'Thinking Components',
+  'Functional Fury',
+  'React Rendezvous',
+  'Stateful Symphony',
+  'Async Awakenings',
+  'The Art of Reusability',
+];
+const personalArtists = [
+  'Lena Logic',
+  'Beth Binary',
+  'Ethan Byte',
+  'Beth Binary',
+  'Nina Netcode',
+  'Lena Logic',
+];
+const titles = [
+  'React Rendezvous',
+  'Async Awakenings',
+  'The Art of Reusability',
+  'Stateful Symphony',
+];
+const artists = ['Ethan Byte', 'Nina Netcode', 'Lena Logic', 'Beth Binary'];
 const Music = () => {
   const [activeTab, setActiveTab] = React.useState('music');
   const handleTabPress = (tab: React.SetStateAction<string>) => {
     setActiveTab(tab);
+  };
+
+  const renderListenNow = () => {
+    if (activeTab === 'music') {
+      return (
+        <>
+          <VStack className="gap-3">
+            <Heading>Listen Now</Heading>
+            <Text>Top picks for you. Updated daily.</Text>
+            <Divider />
+            {/* <ScrollView horizontal={true}> */}
+            <HStack className="mb-4 gap-4">
+              {images.map((image, index) => (
+                <Pressable key={index}>
+                  {(props: any) => (
+                    <VStack className="gap-2">
+                      <Box className="w-64 h-80 rounded-md" overflow="hidden">
+                        <Image
+                          className="w-full h-full"
+                          source={image}
+                          style={{
+                            transform: [{ scale: props.hovered ? 1.05 : 1 }],
+                            transition: 'transform 0.3s ease-in-out',
+                          }}
+                        />
+                      </Box>
+                      <Text className="text-md">{titles[index]}</Text>
+                      <Text className="text-sm">{artists[index]}</Text>
+                    </VStack>
+                  )}
+                </Pressable>
+              ))}
+            </HStack>
+            {/* </ScrollView> */}
+          </VStack>
+          <VStack className="gap-3">
+            <Heading>Made for You</Heading>
+            <Text>Your personal playlists. Updated daily.</Text>
+            <Divider />
+            {/* <ScrollView horizontal={true}> */}
+            <HStack className="mb-4 gap-4">
+              {personalPlaylists.map((image, index) => (
+                <Pressable key={index}>
+                  {(props: any) => (
+                    <VStack className="gap-2">
+                      <Box className="w-40 h-40 rounded-md" overflow="hidden">
+                        <Image
+                          className="w-full h-full rounded-md"
+                          source={image}
+                          style={{
+                            transform: [{ scale: props.hovered ? 1.05 : 1 }],
+                            transition: 'transform 0.3s ease-in-out',
+                          }}
+                          alt="Explore"
+                        />
+                      </Box>
+                      <Text fontSize="$md">{personalTitles[index]}</Text>
+                      <Text fontSize="$sm">{personalArtists[index]}</Text>
+                    </VStack>
+                  )}
+                </Pressable>
+              ))}
+            </HStack>
+            {/* </ScrollView> */}
+          </VStack>
+        </>
+      );
+    } else if (activeTab === 'podcasts') {
+      return (
+        <VStack className="gap-3">
+          <Heading>Recommended Podcasts</Heading>
+          <Text>Your favorite podcasts. Updated daily.</Text>
+          <Divider />
+          <VStack className="border outline-dashed rounded-md justify-center items-center gap-4 h-96 border-border-200 p-4">
+            <Image
+              className="w-10 h-10"
+              source={require('../../example-screens/assets/podcasts.svg')}
+            />
+            <Text className="text-center font-semibold">No episodes added</Text>
+            <Text className="text-center text-text-800">
+              You have not added any podcasts. Add one below.
+            </Text>
+            <Button>
+              <ButtonText className="text-center font-medium text-sm">
+                Add Podcast
+              </ButtonText>
+            </Button>
+          </VStack>
+        </VStack>
+      );
+    }
   };
   return (
     <Box className="w-full h-lvh overflow-hidden">
@@ -223,14 +558,14 @@ const Music = () => {
         </HStack>
         <HStack className="flex-1 w-full">
           <Box className="md:mt-6 md:mb-6 md:mx-2 md:my-2 md:w-1/5">
-            {/* <Sidebar
+            <Sidebar
               sidebarItems={sidebarItems}
               isNested
               FabSidebarProps={{
                 w: '$12',
                 h: '$12',
               }}
-            /> */}
+            />
           </Box>
 
           <VStack
@@ -270,7 +605,9 @@ const Music = () => {
                 </ButtonText>
               </Button>
             </HStack>
-            {/* <ScrollView>{renderListenNow()}</ScrollView> */}
+            {/* <ScrollView> */}
+            {renderListenNow()}
+            {/* </ScrollView>  */}
           </VStack>
         </HStack>
       </VStack>

@@ -948,12 +948,12 @@ const Chats = () => {
 
   return (
     <Box className="w-full h-lvh">
-      <HStack className="bg-background-0 h-full w-full dark:border-border-200 md:border md:rounded-lg sm:border-0 flex-1 border-border-200 overflow-hidden self-center">
+      <HStack className="bg-background-0 h-full w-full md:border md:rounded-lg sm:border-0 flex-1 border-border-200 overflow-hidden self-center">
         <VStack
           className="sm:hidden md:flex"
           sx={{ '@base': { display: 'none' }, '@md': { display: 'flex' } }}
         >
-          <Box className="w-11 h-11 m-4 dark:border-white dark:bg-white border-border-200 bg-white rounded-lg border items-center justify-center">
+          <Box className="w-11 h-11 m-4 bg-white rounded-lg border items-center justify-center border-border-200">
             {/* <Icon className="w-5 h-5" as={GluestackIcon}  /> */}
           </Box>
           <Sidebar />
@@ -975,27 +975,16 @@ const Chats = () => {
           <Inbox chatData={chatData} onSelect={handleChatSelect} />
           {/* </ScrollView> */}
         </VStack>
-        <VStack
-          className="h-lvh md:hidden sm:flex sm:flex-1"
-          sx={{
-            '@md': {
-              display: 'none',
-            },
-            '@base': {
-              flex: 1,
-              display: 'flex',
-            },
-          }}
-        >
+        <VStack className="h-lvh md:hidden sm:flex sm:flex-1">
           {showTabButton && (
             <>
               <HStack className="bg-background-100 p-4 justify-between">
                 <Pressable>
-                  {/* <Icon as={GluestackIcon} w="$5" h="$5" /> */}
+                  {/* <Icon as={GluestackIcon} class="w-5 h-5" /> */}
                 </Pressable>
-                <HStack className="gap-4" gap="$4">
+                <HStack className="gap-4">
                   <Pressable>
-                    {/* <Icon as={SearchIcon} w="$5" h="$5" /> */}
+                    {/* <Icon as={SearchIcon} class="w-5 h-5" /> */}
                   </Pressable>
                   {/* <Menu
                     borderWidth={1}
@@ -1043,10 +1032,10 @@ const Chats = () => {
           {/* </ScrollView> */}
         </VStack>
         <Divider
-          className="bg-background200 h-auto md:flex sm:hidden"
-          sx={{ '@base': { display: 'none' }, '@md': { display: 'flex' } }}
+          className="bg-background-200 h-auto md:flex sm:hidden"
           orientation="vertical"
         />
+
         <VStack className="lg:hidden md:flex md:flex-1 sm:hidden w-2/5">
           {showProfile ? (
             <>

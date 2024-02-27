@@ -193,44 +193,31 @@ const Dashboard: any = ({ w = '100%', ...props }: any) => {
           /> */}
         </VStack>
       </VStack>
-      <Box
-        display="flex"
-        $base-flexDirection="column"
-        $lg-flexDirection="row"
-        flex={1}
-      >
+      <Box className="flex lg-flex-row flex-1" $base-flexDirection="column">
         <Box
+          className="border-l-0 border-border-200"
           $xl-width="$4/6"
           $lg-width="$3/5"
           $base-width="$full"
-          borderLeftWidth="$0"
           $md-borderRightWidth="$1"
           $base-borderRightWidth="$0"
-          borderColor="$border200"
         >
           <VStack>
-            <HStack
-              px="$4"
-              pt="$4"
-              justifyContent="space-between"
-              alignItems="flex-start"
-            >
+            <HStack className="justify-between items-start px-4 pt-4">
               <VStack space="xs">
                 <Text
+                  className="text-text-900 font-bold"
                   $xl-fontSize="$3xl"
                   $md-fontSize="$xl"
                   $base-fontSize="$lg"
-                  color="$text900"
-                  fontWeight="$bold"
                   fontFamily="$heading"
                 >
                   Good morning, John
                 </Text>
                 <Text
+                  className="text-text-700 font-normal"
                   $md-fontSize="$sm"
                   $base-fontSize="$xs"
-                  color="$text700"
-                  fontWeight="$normal"
                   fontFamily="$body"
                   numberOfLines={2}
                   $lg-maxWidth="$64"
@@ -309,9 +296,8 @@ const Dashboard: any = ({ w = '100%', ...props }: any) => {
         <Box $xl-width="$2/6" $lg-width="$2/5" $base-width="$full">
           <VStack flexGrow={1}>
             <Card
-              bg="$background50"
+              className="bg-background-50 border-0"
               hardShadow="0"
-              borderWidth="$0"
               $base-flexGrow={1}
               $lg-flexGrow={0}
               $xs-py="$4.5"
@@ -327,36 +313,25 @@ const Dashboard: any = ({ w = '100%', ...props }: any) => {
                 <UserCardAvatar
                   name="John Smith"
                   src={require('../../../assets/avatar-icon.png')}
-                  bgColor="$black"
+                  className="bg-black"
                   size="lg"
                 />
-                <UserCardStack mt="$3" alignItems="center" width="$full">
+                <UserCardStack className="mt-3 items-center w-full">
                   <Text
+                    className="text-lg text-text-900 font-bold"
                     fontFamily="$heading"
-                    fontSize="$lg"
-                    color="$text900"
-                    fontWeight="$bold"
                   >
                     John Smith
                   </Text>
                   <Text
+                    className="text-sm text-text-700 font-normal mt-0.5"
                     fontFamily="$body"
-                    fontSize="$sm"
-                    color="$text700"
-                    fontWeight="$normal"
-                    mt="$0.5"
                   >
                     john@example.com
                   </Text>
                   <Text
+                    className="text-sm text-text-700  font-normal align-center w-full mt-2.5 max-w-72"
                     fontFamily="$body"
-                    fontSize="$sm"
-                    color="$text700"
-                    fontWeight="$normal"
-                    textAlign="center"
-                    width="$full"
-                    mt="$2.5"
-                    maxWidth="$72"
                     numberOfLines={2}
                     lineHeight="$sm"
                   >
@@ -365,28 +340,20 @@ const Dashboard: any = ({ w = '100%', ...props }: any) => {
                   </Text>
                 </UserCardStack>
                 <HStack
+                  className="items-center mt-8 mb-2 w-full justify-center"
                   $base-space="xs"
                   $sm-space="md"
-                  alignItems="center"
-                  mt="$8"
-                  mb="$2"
-                  width="$full"
-                  justifyContent="center"
                 >
-                  <VStack alignItems="center" space="sm" $sm-w="$20">
+                  <VStack className="items-center" space="sm" $sm-w="$20">
                     <Text
+                      className="text-sm text-text-900 font-bold"
                       fontFamily="$heading"
-                      fontSize="$sm"
-                      color="$text900"
-                      fontWeight="$bold"
                     >
                       232
                     </Text>
                     <Text
+                      className="text-sm text-text-900 font-normal"
                       fontFamily="$body"
-                      fontSize="$sm"
-                      color="$text900"
-                      fontWeight="$normal"
                     >
                       posts
                     </Text>
