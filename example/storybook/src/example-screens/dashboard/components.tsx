@@ -39,34 +39,16 @@ import {
   SettingsIcon,
 } from 'lucide-react-native';
 import {
-  Chart as ChartJS,
-  CategoryScale,
-  LinearScale,
-  BarElement,
-  Title,
-  Legend,
-  PointElement,
-  LineElement,
-  Filler,
-  ArcElement,
-  Tooltip as Tooler,
-} from 'chart.js';
-import { Bar, Doughnut, Line } from 'react-chartjs-2';
-
-ChartJS.register(
-  CategoryScale,
-  LinearScale,
-  BarElement,
-  Title,
-  PointElement,
-  LineElement,
-  Title,
-  Filler,
-  Legend,
-  ArcElement,
-  Tooler
-);
+  VictoryBar,
+  VictoryChart,
+  VictoryTheme,
+  VictoryAxis,
+  VictoryTooltip,
+  VictoryArea,
+  VictoryPie,
+} from 'victory';
 import { analytics } from './constants';
+import { Svg, Defs, LinearGradient, Stop } from 'react-native-svg';
 
 interface CommentCardProps {
   userName: string;
@@ -416,123 +398,105 @@ const BarChart = () => {
   const color = useToken('colors', 'primary400');
   const textColor = useToken('colors', 'text400');
   const borderColor = useToken('colors', 'border200');
-  const options = {
-    responsive: true,
-    plugins: {
-      legend: {
-        display: false,
-        position: 'top' as const,
-      },
-      title: {
-        display: false,
-        text: 'Chart.js Bar Chart',
-      },
-    },
-    scales: {
-      y: {
-        display: true,
-        position: 'right' as const,
-        grid: {
-          drawBorder: true,
-          color: borderColor,
-        },
-        ticks: {
-          beginAtZero: true,
-          color: textColor,
-          fontSize: 10,
-        },
-      },
-      x: {
-        grid: {
-          drawBorder: true,
-          color: borderColor,
-        },
-        ticks: {
-          beginAtZero: true,
-          color: textColor,
-          fontSize: 10,
-        },
-      },
-    },
-  };
-  const labels = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
+  const tooltipBg = useToken('colors', 'black');
 
-  const data = {
-    labels,
-    datasets: [
-      {
-        label: 'Dataset 1',
-        data: [770, 99, 880, 222, 3334, 771, 11],
-        backgroundColor: color,
-      },
-    ],
-  };
-  return <Bar options={options} data={data} />;
+  const data = [
+    {
+      day: 'Mon',
+      plotValue: 770,
+      label: `Mon: 770`,
+    },
+    {
+      day: 'Tue',
+      plotValue: 99,
+      label: `Tue: 99`,
+    },
+    {
+      day: 'Wed',
+      plotValue: 880,
+      label: `Wed: 880`,
+    },
+    {
+      day: 'Thu',
+      plotValue: 222,
+      label: `Thu: 222`,
+    },
+    {
+      day: 'Fri',
+      plotValue: 333,
+      label: `Fri: 333`,
+    },
+    {
+      day: 'Sat',
+      plotValue: 771,
+      label: `Sat: 771`,
+    },
+    {
+      day: 'Sun',
+      plotValue: 11,
+      label: `Sun: 11`,
+    },
+  ];
+
+  return (
+    <VictoryChart theme={VictoryTheme.material}>
+      <VictoryAxis dependentAxis offsetX={33} orientation="right" />
+      <VictoryAxis crossAxis />
+      <VictoryBar
+        labelComponent={
+          <VictoryTooltip cornerRadius={0} flyoutStyle={{ fill: tooltipBg }} />
+        }
+        style={{
+          data: {
+            fill: color,
+            width: 30,
+            textEmphasisColor: textColor,
+            borderColor: borderColor,
+          },
+          labels: {
+            fill: textColor,
+          },
+        }}
+        data={data}
+        x="day"
+        y="plotValue"
+      />
+    </VictoryChart>
+  );
 };
 
 const AreaChart = () => {
-  const borderColor = useToken('colors', 'black');
-  const backgroundColor = useToken('colors', 'black');
-  const aboveFillColor = useToken('colors', 'background300');
-  const belowFillColor = useToken('colors', 'white');
+  const borderColor = useToken('colors', 'primary950');
+  const backgroundColor = useToken('colors', 'primary950');
+  const data = [998, 905, 600, 500, 880, 222, 334];
 
-  const options = {
-    responsive: true,
-    maintainAspectRatio: false,
-    spanGaps: false,
-    scales: {
-      y: {
-        display: false,
-      },
-      x: {
-        display: false,
-        ticks: {
-          autoSkip: false,
+  return (
+    <VictoryArea
+      padding={{
+        bottom: 0,
+        top: 0,
+        left: 0,
+        right: 0,
+      }}
+      data={data}
+      height={400}
+      interpolation="natural"
+      style={{
+        data: {
+          fill: 'url(#paint0_linear_2570_39616)',
+          fillOpacity: 0.7,
+          stroke: borderColor,
+          strokeWidth: 3,
         },
-      },
-    },
-    plugins: {
-      legend: {
-        display: false,
-        position: 'top' as const,
-      },
-      title: {
-        display: false,
-        text: 'Chart.js Bar Chart',
-      },
-      customCanvasBackgroundColor: {
-        color: backgroundColor,
-      },
-      filler: {
-        propagate: false,
-      },
-    },
-  };
-  const labels = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
-
-  const data = {
-    labels,
-    datasets: [
-      {
-        label: 'Dataset 1',
-        data: [998, 995, 600, 500, 880, 222, 334],
-        borderColor: borderColor,
-        backgroundColor: backgroundColor,
-        fill: {
-          target: true,
-          boundary: 'start',
-          above: aboveFillColor,
-          below: belowFillColor,
-        },
-        elements: {
-          line: {
-            tension: 0.300306,
-          },
-        },
-      },
-    ],
-  };
-  return <Line options={options} data={data} />;
+      }}
+      labelComponent={
+        <VictoryTooltip
+          cornerRadius={0}
+          flyoutStyle={{ fill: backgroundColor }}
+        />
+      }
+    />
+  );
 };
 const PieChart = () => {
   const color1 = useToken('colors', 'primary400');
@@ -540,27 +504,27 @@ const PieChart = () => {
   const color3 = useToken('colors', 'primary50');
   const color4 = useToken('colors', 'primary0');
 
-  const data = {
-    responsive: true,
-    labels: [],
-    datasets: [
-      {
-        label: '# of Audience',
-        data: [12, 19, 3, 5],
-        backgroundColor: [color1, color2, color3, color4],
-        borderColor: [color1, color2, color3, color4],
-        borderWidth: 0,
-      },
-    ],
-  };
+  const colorScale = [color1, color2, color3, color4];
+  const data = [
+    { x: 12, y: 12, label: `# of Audience : 12` },
+    { x: 19, y: 19, label: `# of Audience : 19` },
+    { x: 3, y: 3, label: `# of Audience : 3` },
+    { x: 5, y: 5, label: `# of Audience : 5` },
+  ];
 
   return (
-    <Doughnut
+    <VictoryPie
       data={data}
-      options={{
-        responsive: true,
-        maintainAspectRatio: false,
-      }}
+      colorScale={colorScale}
+      labels={() => ``}
+      labelComponent={
+        <VictoryTooltip
+          cornerRadius={0}
+          style={{
+            fontSize: 28,
+          }}
+        />
+      }
     />
   );
 };
@@ -738,8 +702,6 @@ export const HomeView = () => {
               $xs-maxWidth="$72"
               $sm-maxWidth="$full"
               mx="auto"
-              mt="$6"
-              minHeight="$32"
             >
               <BarChart />
             </Box>
@@ -751,6 +713,7 @@ export const HomeView = () => {
             $md-flexGrow={1}
             $base-minWidth="$full"
             $md-minWidth="$1/3"
+            justifyContent="space-between"
           >
             <Text
               color="$text900"
@@ -762,20 +725,33 @@ export const HomeView = () => {
               Engaged Users
             </Text>
             <Box
-              $md-minWidth="$80"
               $base-minWidth="$40"
               $base-maxWidth="$56"
               $xs-maxWidth="$72"
               $sm-maxWidth="$full"
+              $md-maxWidth="$80"
               mx="auto"
-              mt="$6"
-              display="flex"
-              flexDirection="row"
-              justifyContent="center"
+              $base-mt="$6"
+              $md-mt="$0"
             >
+              <Svg width="204" height="0" viewBox="0 0 204 0" fill="none">
+                <Defs>
+                  <LinearGradient
+                    id="paint0_linear_2570_39616"
+                    x1="206.783"
+                    y1="-20.1667"
+                    x2="206.783"
+                    y2="99"
+                    gradientUnits="userSpaceOnUse"
+                  >
+                    <Stop stop-color="#B3B3B3" />
+                    <Stop offset="1" stop-color="white" stop-opacity="0" />
+                  </LinearGradient>
+                </Defs>
+              </Svg>
               <AreaChart />
             </Box>
-            <VStack alignItems="center" w="$full" mt="$3.5">
+            <VStack alignItems="center" w="$full">
               <Text
                 color="$text900"
                 fontWeight="$medium"
@@ -819,6 +795,7 @@ export const HomeView = () => {
             $md-flexGrow={1}
             $base-minWidth="$full"
             $md-minWidth="$1/3"
+            $xl-maxWidth="$1/2"
           >
             <HStack justifyContent="space-between" w="$full">
               <VStack space="sm">
@@ -839,7 +816,7 @@ export const HomeView = () => {
                   fontFamily="$body"
                   numberOfLines={2}
                   $base-maxWidth="$48"
-                  $sm-maxWidth="$80"
+                  $md-maxWidth="$64"
                 >
                   Quick insights into the demographic composition.
                 </Text>
@@ -855,8 +832,8 @@ export const HomeView = () => {
             </HStack>
             <HStack alignItems="center" alignSelf="center" space="md" mt="$4">
               <Box
-                h="$56"
                 $base-maxWidth="$24"
+                $xs-maxWidth="$40"
                 $sm-maxWidth="$40"
                 $xl-maxWidth="$48"
               >
@@ -958,6 +935,7 @@ export const HomeView = () => {
             $md-flexGrow={1}
             $base-minWidth="$full"
             $md-minWidth="$1/3"
+            $xl-maxWidth="$1/2"
           >
             <Card space="md">
               <VStack space="sm" alignSelf="flex-start">
