@@ -36,6 +36,7 @@ const AnimatedTextComp = ({ children, ...props }) => {
       fontFamily="$body"
       fontWeight="$bold"
       selectionColor="$background0"
+      color="$background950"
       selectable={false}
       {...props}
     >

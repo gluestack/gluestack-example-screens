@@ -741,7 +741,7 @@ export const HomeView = () => {
                     x1="206.783"
                     y1="-20.1667"
                     x2="206.783"
-                    y2="99"
+                    y2="299"
                     gradientUnits="userSpaceOnUse"
                   >
                     <Stop stop-color="#B3B3B3" />
