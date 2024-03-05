@@ -17,3 +17,4 @@ export * from './Icon';
 export * from './Tooltip';
 export * from './Input';
 export * from './FormControl';
+export * from './TextArea';
