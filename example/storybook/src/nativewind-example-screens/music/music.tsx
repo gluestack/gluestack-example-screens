@@ -458,8 +458,8 @@ const Music = () => {
                           alt="Explore"
                         />
                       </Box>
-                      <Text fontSize="$md">{personalTitles[index]}</Text>
-                      <Text fontSize="$sm">{personalArtists[index]}</Text>
+                      <Text className="text-md">{personalTitles[index]}</Text>
+                      <Text className="text-sm">{personalArtists[index]}</Text>
                     </VStack>
                   )}
                 </Pressable>

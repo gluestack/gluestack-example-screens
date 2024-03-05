@@ -12,17 +12,205 @@ import UserCardAvatar from '../chats/components/UserCardAvatar';
 import UserCardStack from '../chats/components/UserCardStack';
 import Card from '../cards/components/Card';
 
+import { useToken } from '@gluestack-ui-new/themed';
+
+import {
+  // CalendarView,
+  CommentCard,
+  // CurrencyView,
+  // ExitView,
+  // HelpView,
+  // HomeView,
+  // NotificationsView,
+  // ProfileView,
+  // SettingsView,
+  // SidebarItem,
+  // ViewType,
+} from './components';
+import { comments } from './constants';
+
+import {
+  ArrowRight,
+  // BadgeHelpIcon,
+  BellIcon,
+  // CalendarDaysIcon,
+  // CircleDollarSignIcon,
+  // LayoutDashboardIcon,
+  // LogOutIcon,
+  // MegaphoneIcon,
+  Search,
+  // SettingsIcon,
+  // UserIcon,
+} from 'lucide-react-native';
+
+// export const MiniNavbarMenu = ({
+//   onViewChange,
+// }: {
+//   onViewChange: (view: ViewType) => void;
+// }) => {
+//   const [selected, setSelected] = React.useState(new Set([]));
+//   const [isOpen, setIsOpen] = React.useState<boolean>(false);
+//   const iconSize = useToken('space', '6');
+//   const iconColor = useToken('colors', 'trueGray400');
+
+//   return (
+//     <Menu
+//       placement="top left"
+//       selectionMode="single"
+//       borderWidth={1}
+//       selectedKeys={selected}
+//       closeOnSelect={true}
+//       isOpen={isOpen}
+//       onPointerLeave={() => setIsOpen(false)}
+//       onOpen={() => setIsOpen(true)}
+//       /*TYPE ERROR FIX LATER*/
+//       onSelectionChange={(keys: any) => {
+//         setSelected(keys);
+//         if (keys?.currentKey === 'Dashboard') {
+//           onViewChange('home');
+//         } else if (keys?.currentKey === 'Announcements') {
+//           onViewChange('notifications');
+//         } else if (keys?.currentKey === 'Calendar') {
+//           onViewChange('calendar');
+//         } else if (keys?.currentKey === 'Revenue') {
+//           onViewChange('currency');
+//         } else if (keys?.currentKey === 'Profile') {
+//           onViewChange('profile');
+//         } else if (keys?.currentKey === 'Help') {
+//           onViewChange('help');
+//         } else if (keys?.currentKey === 'Settings') {
+//           onViewChange('settings');
+//         } else if (keys?.currentKey === 'Logout') {
+//           onViewChange('exit');
+//         }
+//         setIsOpen(false);
+//       }}
+//       trigger={({ ...triggerProps }) => {
+//         return (
+//           <Fab
+//             size="md"
+//             placement="bottom right"
+//             isHovered={false}
+//             isDisabled={false}
+//             isPressed={false}
+//             $base-display="flex"
+//             $md-display="none"
+//             renderInPortal={true}
+//             position="fixed"
+//             {...triggerProps}
+//           >
+//             <FabIcon as={MenuIcon} />
+//           </Fab>
+//         );
+//       }}
+//     >
+//       <MenuItem key="Dashboard" textValue="Dashboard">
+//         <LayoutDashboardIcon
+//           color={iconColor}
+//           width={iconSize}
+//           height={iconSize}
+//         />
+//         <MenuItemLabel size="sm" ml="$2">
+//           Dashboard
+//         </MenuItemLabel>
+//       </MenuItem>
+//       <MenuItem key="Announcements" textValue="Announcements">
+//         <MegaphoneIcon color={iconColor} width={iconSize} height={iconSize} />
+//         <MenuItemLabel size="sm" ml="$2">
+//           Announcements
+//         </MenuItemLabel>
+//       </MenuItem>
+//       <MenuItem key="Calendar" textValue="Calendar">
+//         <CalendarDaysIcon
+//           color={iconColor}
+//           width={iconSize}
+//           height={iconSize}
+//         />
+//         <MenuItemLabel size="sm" ml="$2">
+//           Calendar
+//         </MenuItemLabel>
+//       </MenuItem>
+//       <MenuItem key="Revenue" textValue="Revenue">
+//         <CircleDollarSignIcon
+//           color={iconColor}
+//           width={iconSize}
+//           height={iconSize}
+//         />
+//         <MenuItemLabel size="sm" ml="$2">
+//           Revenue
+//         </MenuItemLabel>
+//       </MenuItem>
+//       <MenuItem key="Profile" textValue="Profile">
+//         <UserIcon color={iconColor} width={iconSize} height={iconSize} />
+//         <MenuItemLabel size="sm" ml="$2">
+//           Profile
+//         </MenuItemLabel>
+//       </MenuItem>
+//       <MenuItem key="Settings" textValue="Settings">
+//         <SettingsIcon color={iconColor} width={iconSize} height={iconSize} />
+//         <MenuItemLabel size="sm" ml="$2">
+//           Settings
+//         </MenuItemLabel>
+//       </MenuItem>
+//       <MenuItem key="Help" textValue="Help">
+//         <BadgeHelpIcon color={iconColor} width={iconSize} height={iconSize} />
+//         <MenuItemLabel size="sm" ml="$2">
+//           Help
+//         </MenuItemLabel>
+//       </MenuItem>
+//       <MenuItem key="Logout" textValue="Logout">
+//         <LogOutIcon color={iconColor} width={iconSize} height={iconSize} />
+//         <MenuItemLabel size="sm" ml="$2">
+//           Logout
+//         </MenuItemLabel>
+//       </MenuItem>
+//     </Menu>
+//   );
+// };
+
+// const viewRenderer = (view: string) => {
+//   switch (view) {
+//     case 'home':
+//       return <HomeView />;
+//     case 'notifications':
+//       return <NotificationsView />;
+//     case 'calendar':
+//       return <CalendarView />;
+//     case 'currency':
+//       return <CurrencyView />;
+//     case 'profile':
+//       return <ProfileView />;
+//     case 'settings':
+//       return <SettingsView />;
+//     case 'help':
+//       return <HelpView />;
+//     case 'exit':
+//       return <ExitView />;
+//     default:
+//       return <HomeView />;
+//   }
+// };
+
 const Dashboard: any = ({ w = '100%', ...props }: any) => {
+  const arrowIconColor = useToken('colors', 'background800');
+  const arrowIconSize = useToken('space', '3');
+  // const [view, setView] = React.useState<ViewType>('home');
+  const miniNavbarIconColor = useToken('colors', 'trueGray200');
+  const iconSize = useToken('space', '5');
+  // const iconColor = useToken('colors', 'trueGray200');
+  // const handleViewChange = (viewInput: typeof view) => {
+  //   if (viewInput !== 'home') {
+  //     setView('home');
+  //   }
+  // };
   return (
     <Box
-      className="border border-border-200 rounded-lg w-full"
+      className="border border-border-200 rounded-lg w-full bg-background-0 relative"
       {...props}
       w={w}
       display="flex"
       $base-flexDirection="column"
       $md-flexDirection="row"
-      bg="$background0"
-      position="relative"
     >
       <HStack
         className="bg-trueGray-800 justify-end items-center p-4 mb-2"
@@ -37,28 +225,28 @@ const Dashboard: any = ({ w = '100%', ...props }: any) => {
         }}
       >
         <HStack space="md">
-          <Pressable className="p-2" p="$2">
-            {/* <Search
+          <Pressable className="p-2">
+            <Search
               color={miniNavbarIconColor}
               width={iconSize}
               height={iconSize}
-            /> */}
+            />
           </Pressable>
           <Pressable
             className="rounded-lg p-2"
             $base-display="flex"
             $xs-display="none"
           >
-            {/* <BellIcon
+            <BellIcon
               color={miniNavbarIconColor}
               width={iconSize}
               height={iconSize}
-            /> */}
+            />
           </Pressable>
         </HStack>
       </HStack>
       <VStack
-        className="items-center mb-10 ml-6 justify-between h-full"
+        className="items-center mb-10 ml-6 justify-between h-full top-[45]"
         $base-display="none"
         $md-display="flex"
         top={45}
@@ -226,14 +414,14 @@ const Dashboard: any = ({ w = '100%', ...props }: any) => {
                   Let’s take a look at your social presence
                 </Text>
               </VStack>
-              {/* <HStack
-                alignItems="center"
+              <HStack
+                className="items-center"
                 space="sm"
                 $xl-minWidth="$1/3"
                 $xl-justifyContent="flex-end"
                 $base-justifyContent="center"
               >
-                <CustomInput
+                {/* <CustomInput
                   inputProps={{
                     'sx': {
                       _web: {
@@ -287,14 +475,14 @@ const Dashboard: any = ({ w = '100%', ...props }: any) => {
                   <TooltipContent>
                     <TooltipText>Notifications</TooltipText>
                   </TooltipContent>
-                </Tooltip>
-              </HStack> */}
+                </Tooltip> */}
+              </HStack>
             </HStack>
-            {/* <Box mt="$10">{viewRenderer(view)}</Box> */}
+            <Box className="mt-10">{/* {viewRenderer(view)} */}</Box>
           </VStack>
         </Box>
         <Box $xl-width="$2/6" $lg-width="$2/5" $base-width="$full">
-          <VStack flexGrow={1}>
+          <VStack className="grow">
             <Card
               className="bg-background-50 border-0"
               hardShadow="0"
@@ -365,45 +553,34 @@ const Dashboard: any = ({ w = '100%', ...props }: any) => {
                     w="$0.5"
                     orientation="vertical"
                   />
-                  <VStack alignItems="center" space="sm" $sm-w="$20">
+                  <VStack className="items-center" space="sm" $sm-w="$20">
                     <Text
+                      className="text-sm text-text-900 font-bold"
                       fontFamily="$heading"
-                      fontSize="$sm"
-                      color="$text900"
-                      fontWeight="$bold"
                     >
                       108.3k
                     </Text>
                     <Text
+                      className="text-sm text-text-900 font-normal"
                       fontFamily="$body"
-                      fontSize="$sm"
-                      color="$text900"
-                      fontWeight="$normal"
                     >
                       followers
                     </Text>
                   </VStack>
                   <Divider
-                    mx="$2.5"
-                    h="$10"
-                    bg="$background400"
-                    w="$0.5"
+                    className="mx-2.5 h-10 bg-background-400 w-0.5"
                     orientation="vertical"
                   />
-                  <VStack alignItems="center" space="sm" $sm-w="$20">
+                  <VStack className="items-center" space="sm" $sm-w="$20">
                     <Text
+                      className="text-sm text-text-900 font-bold"
                       fontFamily="$heading"
-                      fontSize="$sm"
-                      color="$text900"
-                      fontWeight="$bold"
                     >
                       40
                     </Text>
                     <Text
+                      className="text-sm text-text-900 font-normal"
                       fontFamily="$body"
-                      fontSize="$sm"
-                      color="$text900"
-                      fontWeight="$normal"
                     >
                       following
                     </Text>
@@ -411,48 +588,35 @@ const Dashboard: any = ({ w = '100%', ...props }: any) => {
                 </HStack>
               </UserCard>
             </Card>
-            <Box
-              display="flex"
-              flexDirection="column"
-              mt="$2"
-              $md-p="$6"
-              $base-p="$4"
-            >
-              {/* <VStack $sm-minWidth="$72" $base-minWidth="$56" space="xl">
+            <Box className="flex flex-col mt-2 " $md-p="$6" $base-p="$4">
+              <VStack $sm-minWidth="$72" $base-minWidth="$56" space="xl">
                 {comments.map((comment) => (
-                  <VStack justifyContent="center" space="lg" px="$5">
+                  <VStack className="justify-center px-5" space="lg">
                     <CommentCard
                       comment={comment.comment}
                       userName={comment.userName}
                       key={comment.userName}
                     />
                     <Divider
+                      className="bg-background-200 h-0.5"
                       orientation="horizontal"
-                      bg="$background200"
-                      h="$0.5"
                     />
                   </VStack>
                 ))}
-              </VStack> */}
-              <Pressable mt="$20" px="$5">
-                <HStack
-                  space="sm"
-                  justifyContent="flex-start"
-                  alignItems="center"
-                >
+              </VStack>
+              <Pressable className="mt-20 px-5">
+                <HStack className="justify-start items-center" space="sm">
                   <Text
-                    fontWeight="$semibold"
-                    fontSize="$xs"
-                    color="$secondary600"
+                    className="font-semibold text-xs text-secondary-600"
                     fontFamily="$body"
                   >
                     See All Activity
                   </Text>
-                  {/* <ArrowRight
+                  <ArrowRight
                     color={arrowIconColor}
                     width={arrowIconSize}
                     height={arrowIconSize}
-                  /> */}
+                  />
                 </HStack>
               </Pressable>
             </Box>

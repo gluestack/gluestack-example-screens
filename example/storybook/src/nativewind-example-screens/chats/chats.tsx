@@ -16,31 +16,36 @@ import {
   // AvatarImage,
   Switch,
   Heading,
+  Icon,
+  Tooltip,
+  TooltipText,
+  TooltipContent,
 } from '@/components/nativewind';
-import // AlertCircle,
-// ArrowLeft,
-// BadgeHelp,
-// Ban,
-// BellOff,
-// CalendarDays,
-// Camera,
-// CheckCheck,
-// ChevronDown,
-// CircleDollarSign,
-// ImagePlus,
-// LogOut,
-// MessageCircle,
-// Mic,
-// MoreVertical,
-// Paperclip,
-// Phone,
-// Settings,
-// SmilePlus,
-// Star,
-// User,
-// UserCircle,
-// Video,
-'lucide-react-native';
+import {
+  // AlertCircle,
+  ArrowLeft,
+  BadgeHelp,
+  // Ban,
+  BellOff,
+  CalendarDays,
+  // Camera,
+  // CheckCheck,
+  ChevronDown,
+  CircleDollarSign,
+  ImagePlus,
+  LogOut,
+  MessageCircle,
+  // Mic,
+  // MoreVertical,
+  // Paperclip,
+  Phone,
+  Settings,
+  // SmilePlus,
+  Star,
+  User,
+  // UserCircle,
+  Video,
+} from 'lucide-react-native';
 // import { Lock } from 'lucide-react-native';
 
 import UserCard from './components/UserCard';
@@ -147,23 +152,23 @@ const Chats = () => {
   };
 
   const Sidebar = () => {
-    // const icons = [
-    //   { icon: MessageCircle, label: 'Messages', tooltip: 'Messages' },
-    //   { icon: CircleDollarSign, label: 'Dollar', tooltip: 'Payments' },
-    //   { icon: CalendarDays, label: 'Calendar', tooltip: 'Calendar' },
-    //   { icon: User, label: 'User', tooltip: 'Profile' },
-    //   { icon: Settings, label: 'Settings', tooltip: 'Settings' },
-    //   { icon: BadgeHelp, label: 'Help', tooltip: 'Help' },
-    //   { icon: LogOut, label: 'Logout', tooltip: 'Logout' },
-    // ];
+    const icons = [
+      { icon: MessageCircle, label: 'Messages', tooltip: 'Messages' },
+      { icon: CircleDollarSign, label: 'Dollar', tooltip: 'Payments' },
+      { icon: CalendarDays, label: 'Calendar', tooltip: 'Calendar' },
+      { icon: User, label: 'User', tooltip: 'Profile' },
+      { icon: Settings, label: 'Settings', tooltip: 'Settings' },
+      { icon: BadgeHelp, label: 'Help', tooltip: 'Help' },
+      { icon: LogOut, label: 'Logout', tooltip: 'Logout' },
+    ];
 
-    // const defaultActiveIcon = 'Messages';
-    // const [activeIcon, _setActiveIcon] = React.useState(defaultActiveIcon);
-    // const messagesBadgeCount = 3;
+    const defaultActiveIcon = 'Messages';
+    const [activeIcon, _setActiveIcon] = React.useState(defaultActiveIcon);
+    const messagesBadgeCount = 3;
 
     return (
       <VStack className="py-6 px-4 items-start gap-6">
-        {/* {icons.map(({ icon: IconComponent, label, tooltip }) => (
+        {icons.map(({ icon: IconComponent, label, tooltip }) => (
           <Tooltip
             key={label}
             placement="right"
@@ -201,10 +206,51 @@ const Chats = () => {
               <TooltipText>{tooltip}</TooltipText>
             </TooltipContent>
           </Tooltip>
-        ))} */}
+        ))}
       </VStack>
     );
   };
+
+  const IconWithTooltip = ({
+    icon: IconComponent,
+    label,
+    tooltip,
+  }: {
+    icon: React.ComponentType<any>;
+    label: string | undefined;
+    tooltip: string;
+  }) => (
+    <Tooltip
+      key={label}
+      placement="bottom"
+      trigger={(triggerProps) => (
+        <Pressable {...triggerProps}>
+          <VStack gap="$2.5" alignItems="center">
+            <Icon
+              as={IconComponent}
+              sx={{ '.dark_theme': { color: '$background800' } }}
+              color="$background800"
+              w="$4.5"
+              h="$4.5"
+            />
+            <TooltipText
+              sx={{ '.dark_theme': { color: '$text700' } }}
+              color="$text700"
+              fontSize="$xs"
+              fontWeight="$normal"
+            >
+              {label}
+            </TooltipText>
+          </VStack>
+        </Pressable>
+      )}
+    >
+      <TooltipContent>
+        <TooltipText>{tooltip}</TooltipText>
+      </TooltipContent>
+    </Tooltip>
+  );
+
   const Profile = () => {
     return (
       <>
@@ -218,7 +264,7 @@ const Chats = () => {
               }}
             >
               <Pressable onPress={handleBackToChatList}>
-                {/* <Icon as={ArrowLeft} /> */}
+                <Icon as={ArrowLeft} />
               </Pressable>
             </Box>
             <UserCardAvatar
@@ -243,7 +289,7 @@ const Chats = () => {
             </UserCardStack>
           </UserCard>
           <Stats className="mt-4 gap-11">
-            {/* <IconWithTooltip
+            <IconWithTooltip
               icon={Phone}
               label="Voice call"
               tooltip="Voice Call"
@@ -253,7 +299,7 @@ const Chats = () => {
               label="Video call"
               tooltip="Video Call"
             />
-            <IconWithTooltip
+            {/* <IconWithTooltip
               icon={SearchIcon}
               label="Search"
               tooltip="Search"
@@ -302,14 +348,14 @@ const Chats = () => {
           <VStack className="self-stretch gap-6">
             <HStack className="justify-between">
               <HStack className="gap-3">
-                {/* <Icon className="w-4 h-4" as={Star} /> */}
+                <Icon className="w-4 h-4" as={Star} />
                 <Text className="text-sm font-normal">Starred Messages</Text>
               </HStack>
               <Text className="text-text-400 text-2xs font-medium">123</Text>
             </HStack>
             <HStack className="justify-between">
               <HStack className="gap-3">
-                {/* <Icon className="w-4 h-4" as={BellOff} /> */}
+                <Icon className="w-4 h-4" as={BellOff} />
                 <Text className="text-sm font-normal">Mute Notifications</Text>
               </HStack>
 
@@ -317,7 +363,7 @@ const Chats = () => {
             </HStack>
             <HStack className="justify-between">
               <HStack className="gap-3">
-                {/* <Icon className="w-4 h-4" as={Lock} /> */}
+                <Icon className="w-4 h-4" as={Lock} />
                 <Text className="text-sm font-normal">Chat lock</Text>
               </HStack>
 
@@ -329,7 +375,7 @@ const Chats = () => {
             </HStack>
             <HStack className="justify-between">
               <HStack className="gap-3">
-                {/* <Icon className="w-4 h-4" as={ImagePlus} /> */}
+                <Icon className="w-4 h-4" as={ImagePlus} />
                 <Text className="text-sm font-normal">Media Visibility</Text>
               </HStack>
 
@@ -387,7 +433,7 @@ const Chats = () => {
               <Text className="text-secondary-600 text-xs font-semibold">
                 5 more
               </Text>
-              {/* <Icon w="$3" h="$3" as={ChevronDown} /> */}
+              <Icon w="$3" h="$3" as={ChevronDown} />
             </HStack>
           </Pressable>
         </VStack>
@@ -407,7 +453,7 @@ const Chats = () => {
           <HStack className="items-center gap-4">
             <Box className="sm:flex md:hidden">
               <Pressable onPress={handleBackToInbox}>
-                {/* <Icon as={ArrowLeft} /> */}
+                <Icon as={ArrowLeft} />
               </Pressable>
             </Box>
             <VStack className="gap-1">
@@ -420,20 +466,20 @@ const Chats = () => {
               </HStack>
             </VStack>
           </HStack>
-          {/* <HStack alignSelf="center" gap="$6">
+          <HStack className="self-center" gap="$6">
             <IconWithTooltip
               icon={Phone}
               tooltip="Voice Call"
               label={undefined}
             />
-  
+
             <IconWithTooltip
               icon={Video}
               tooltip="Video Call"
               label={undefined}
             />
-  
-            <Menu
+
+            {/* <Menu
               borderWidth={1}
               placement="bottom right"
               disabledKeys={['Theme']}
@@ -461,8 +507,8 @@ const Chats = () => {
                 <Icon as={AlertCircle} size="sm" mr="$2" />
                 <MenuItemLabel size="sm">Report</MenuItemLabel>
               </MenuItem>
-            </Menu>
-          </HStack> */}
+            </Menu> */}
+          </HStack>
         </HStack>
       </Pressable>
     );
@@ -479,13 +525,7 @@ const Chats = () => {
           elevation: 5,
         }}
       >
-        <HStack
-          className="h-12 gap-2 items-center flex-1"
-          h="$12"
-          gap="$2"
-          alignItems="center"
-          flex={1}
-        >
+        <HStack className="h-12 gap-2 items-center flex-1">
           <Pressable>
             {/* <Tooltip
               placement="top"

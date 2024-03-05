@@ -13,3 +13,5 @@ export * from './Switch';
 export * from './Image';
 export * from './Avatar';
 export * from './Fab';
+export * from './Icon';
+export * from './Tooltip';

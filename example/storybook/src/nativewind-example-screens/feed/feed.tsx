@@ -1118,6 +1118,29 @@ const Feed = () => {
           </Box>
         )}
       </HStack>
+      {/* bottom navigation */}
+      <HStack
+        className="py-1.5 bottom-0 bg-background-0 w-full border-border-200 justify-around border-t z-1000"
+        sx={{
+          _web: {
+            position: 'fixed',
+          },
+        }}
+        $md-display="none"
+      >
+        <Pressable onPress={() => setView('home')}>
+          {/* <Icon as={Home} className="w-6 h-6 p-1.5" /> */}
+        </Pressable>
+        <Pressable>
+          {/* <Icon as={SearchIcon} className="w-6 h-6 p-2" /> */}
+        </Pressable>
+        <Pressable onPress={() => setShowCreatePost(true)}>
+          {/* <Icon as={PlusSquare} className="w-6 h-6 p-2" /> */}
+        </Pressable>
+        <Pressable onPress={() => setView('profile')}>
+          {/* <Icon as={User} className="w-6 h-6 p-2" /> */}
+        </Pressable>
+      </HStack>
     </Box>
   );
 };
