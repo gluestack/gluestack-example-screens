@@ -15,3 +15,4 @@ export * from './Avatar';
 export * from './Fab';
 export * from './Icon';
 export * from './Tooltip';
+export * from './Input';

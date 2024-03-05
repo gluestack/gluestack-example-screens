@@ -20,6 +20,7 @@ import {
   Tooltip,
   TooltipText,
   TooltipContent,
+  // InputField,
 } from '@/components/nativewind';
 import {
   // AlertCircle,
@@ -29,7 +30,7 @@ import {
   BellOff,
   CalendarDays,
   // Camera,
-  // CheckCheck,
+  CheckCheck,
   ChevronDown,
   CircleDollarSign,
   ImagePlus,
@@ -47,11 +48,12 @@ import {
   Video,
 } from 'lucide-react-native';
 // import { Lock } from 'lucide-react-native';
-
+// import { useMediaQuery } from '@gluestack-ui-new/themed';
 import UserCard from './components/UserCard';
 import UserCardAvatar from './components/UserCardAvatar';
 import UserCardStack from './components/UserCardStack';
 import Stats from './components/Stats';
+// import CustomInput from '../cards/components/CustomInput';
 
 const Chats = () => {
   const chatData = [
@@ -109,6 +111,10 @@ const Chats = () => {
   const [showChatList, setShowChatList] = React.useState(false);
   const [showProfile, setShowProfile] = React.useState(false);
   const [showTabButton, setShowTabButton] = React.useState(true);
+  // const [isSmallScreen] = useMediaQuery({ maxWidth: 480 }); // Define your breakpoint for small screens
+  // const placeholderText = isSmallScreen
+  //   ? 'Type here...'
+  //   : 'Type a message here...';
 
   const handleBackToChatList = () => {
     setShowChatList(true);
@@ -704,14 +710,14 @@ const Chats = () => {
           <Text className="text-2xs font-normal text-text-300 self-end items-center">
             {time}
           </Text>
-          {/* <Icon
+          <Icon
             paddingHorizontal="$2"
             as={CheckCheck}
             color="$background300"
             sx={{ '.dark_theme': { color: '$background300' } }}
             w="$3"
             h="$3"
-          /> */}
+          />
         </HStack>
       )}
       {!isRight && (
