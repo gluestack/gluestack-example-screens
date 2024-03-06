@@ -6,7 +6,7 @@ import {
   InputSlot,
   Input,
   Text,
-} from '@gluestack-ui/themed';
+} from '@/components/nativewind';
 import { useController } from 'react-hook-form';
 
 const CustomInput = ({
@@ -46,13 +46,13 @@ const CustomInput = ({
     return (
       <FormControl size="sm" {...formControlProps}>
         {label && (
-          <FormControlLabel mb="$2">
+          <FormControlLabel className="mb-2">
             <FormControlLabelText fontSize="$sm">{label}</FormControlLabelText>
           </FormControlLabel>
         )}
         {icon ? (
-          <Input borderRadius="$lg" hardShadow="5" {...inputProps}>
-            <InputSlot pl="$3">{icon}</InputSlot>
+          <Input className="rounded-lg" hardShadow="5" {...inputProps}>
+            <InputSlot className="pl-3">{icon}</InputSlot>
             {validatorProps ? childrenWithProps : children}
           </Input>
         ) : (
@@ -62,10 +62,9 @@ const CustomInput = ({
         )}
         {validatorProps?.trigger && (
           <Text
+            className="text-sm mt-1"
             color={error ? '$error600' : 'transparent'}
-            fontSize="$sm"
             fontFamily="$body"
-            mt="$1"
           >
             {error ? error.message : ''}
           </Text>
@@ -76,13 +75,15 @@ const CustomInput = ({
   return (
     <FormControl size="sm" {...formControlProps}>
       {label && (
-        <FormControlLabel mb="$2">
-          <FormControlLabelText fontSize="$sm">{label}</FormControlLabelText>
+        <FormControlLabel className="mb-2">
+          <FormControlLabelText className="text-sm">
+            {label}
+          </FormControlLabelText>
         </FormControlLabel>
       )}
       {icon ? (
-        <Input borderRadius="$lg" hardShadow="5" {...inputProps}>
-          <InputSlot pl="$3">{icon}</InputSlot>
+        <Input className="rounded-lg" hardShadow="5" {...inputProps}>
+          <InputSlot className="pl-3">{icon}</InputSlot>
           {children}
         </Input>
       ) : (

@@ -13,3 +13,8 @@ export * from './Switch';
 export * from './Image';
 export * from './Avatar';
 export * from './Fab';
+export * from './Icon';
+export * from './Tooltip';
+export * from './Input';
+export * from './FormControl';
+export * from './TextArea';

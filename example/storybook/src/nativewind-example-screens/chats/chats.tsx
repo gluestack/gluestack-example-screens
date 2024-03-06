@@ -10,43 +10,48 @@ import {
   Text,
   Image,
   Avatar,
-  // AvatarBadge,
   AvatarFallbackText,
-  // AvatarGroup,
-  // AvatarImage,
   Switch,
   Heading,
+  Icon,
+  Tooltip,
+  TooltipText,
+  TooltipContent,
+  // InputField,
+  // InputIcon,
 } from '@/components/nativewind';
-import // AlertCircle,
-// ArrowLeft,
-// BadgeHelp,
-// Ban,
-// BellOff,
-// CalendarDays,
-// Camera,
-// CheckCheck,
-// ChevronDown,
-// CircleDollarSign,
-// ImagePlus,
-// LogOut,
-// MessageCircle,
-// Mic,
-// MoreVertical,
-// Paperclip,
-// Phone,
-// Settings,
-// SmilePlus,
-// Star,
-// User,
-// UserCircle,
-// Video,
-'lucide-react-native';
+import {
+  // AlertCircle,
+  ArrowLeft,
+  BadgeHelp,
+  // Ban,
+  BellOff,
+  CalendarDays,
+  // Camera,
+  CheckCheck,
+  ChevronDown,
+  CircleDollarSign,
+  ImagePlus,
+  LogOut,
+  MessageCircle,
+  // Mic,
+  // MoreVertical,
+  // Paperclip,
+  Phone,
+  Settings,
+  // SmilePlus,
+  Star,
+  User,
+  // UserCircle,
+  Video,
+} from 'lucide-react-native';
 // import { Lock } from 'lucide-react-native';
-
+// import { useMediaQuery } from '@gluestack-ui-new/themed';
 import UserCard from './components/UserCard';
 import UserCardAvatar from './components/UserCardAvatar';
 import UserCardStack from './components/UserCardStack';
 import Stats from './components/Stats';
+// import CustomInput from '../cards/components/CustomInput';
 
 const Chats = () => {
   const chatData = [
@@ -104,6 +109,10 @@ const Chats = () => {
   const [showChatList, setShowChatList] = React.useState(false);
   const [showProfile, setShowProfile] = React.useState(false);
   const [showTabButton, setShowTabButton] = React.useState(true);
+  // const [isSmallScreen] = useMediaQuery({ maxWidth: 480 }); // Define your breakpoint for small screens
+  // const placeholderText = isSmallScreen
+  //   ? 'Type here...'
+  //   : 'Type a message here...';
 
   const handleBackToChatList = () => {
     setShowChatList(true);
@@ -147,23 +156,23 @@ const Chats = () => {
   };
 
   const Sidebar = () => {
-    // const icons = [
-    //   { icon: MessageCircle, label: 'Messages', tooltip: 'Messages' },
-    //   { icon: CircleDollarSign, label: 'Dollar', tooltip: 'Payments' },
-    //   { icon: CalendarDays, label: 'Calendar', tooltip: 'Calendar' },
-    //   { icon: User, label: 'User', tooltip: 'Profile' },
-    //   { icon: Settings, label: 'Settings', tooltip: 'Settings' },
-    //   { icon: BadgeHelp, label: 'Help', tooltip: 'Help' },
-    //   { icon: LogOut, label: 'Logout', tooltip: 'Logout' },
-    // ];
+    const icons = [
+      { icon: MessageCircle, label: 'Messages', tooltip: 'Messages' },
+      { icon: CircleDollarSign, label: 'Dollar', tooltip: 'Payments' },
+      { icon: CalendarDays, label: 'Calendar', tooltip: 'Calendar' },
+      { icon: User, label: 'User', tooltip: 'Profile' },
+      { icon: Settings, label: 'Settings', tooltip: 'Settings' },
+      { icon: BadgeHelp, label: 'Help', tooltip: 'Help' },
+      { icon: LogOut, label: 'Logout', tooltip: 'Logout' },
+    ];
 
-    // const defaultActiveIcon = 'Messages';
-    // const [activeIcon, _setActiveIcon] = React.useState(defaultActiveIcon);
-    // const messagesBadgeCount = 3;
+    const defaultActiveIcon = 'Messages';
+    const [activeIcon, _setActiveIcon] = React.useState(defaultActiveIcon);
+    const messagesBadgeCount = 3;
 
     return (
       <VStack className="py-6 px-4 items-start gap-6">
-        {/* {icons.map(({ icon: IconComponent, label, tooltip }) => (
+        {icons.map(({ icon: IconComponent, label, tooltip }) => (
           <Tooltip
             key={label}
             placement="right"
@@ -201,10 +210,51 @@ const Chats = () => {
               <TooltipText>{tooltip}</TooltipText>
             </TooltipContent>
           </Tooltip>
-        ))} */}
+        ))}
       </VStack>
     );
   };
+
+  const IconWithTooltip = ({
+    icon: IconComponent,
+    label,
+    tooltip,
+  }: {
+    icon: React.ComponentType<any>;
+    label: string | undefined;
+    tooltip: string;
+  }) => (
+    <Tooltip
+      key={label}
+      placement="bottom"
+      trigger={(triggerProps) => (
+        <Pressable {...triggerProps}>
+          <VStack gap="$2.5" alignItems="center">
+            <Icon
+              as={IconComponent}
+              sx={{ '.dark_theme': { color: '$background800' } }}
+              color="$background800"
+              w="$4.5"
+              h="$4.5"
+            />
+            <TooltipText
+              sx={{ '.dark_theme': { color: '$text700' } }}
+              color="$text700"
+              fontSize="$xs"
+              fontWeight="$normal"
+            >
+              {label}
+            </TooltipText>
+          </VStack>
+        </Pressable>
+      )}
+    >
+      <TooltipContent>
+        <TooltipText>{tooltip}</TooltipText>
+      </TooltipContent>
+    </Tooltip>
+  );
+
   const Profile = () => {
     return (
       <>
@@ -218,7 +268,7 @@ const Chats = () => {
               }}
             >
               <Pressable onPress={handleBackToChatList}>
-                {/* <Icon as={ArrowLeft} /> */}
+                <Icon as={ArrowLeft} />
               </Pressable>
             </Box>
             <UserCardAvatar
@@ -243,7 +293,7 @@ const Chats = () => {
             </UserCardStack>
           </UserCard>
           <Stats className="mt-4 gap-11">
-            {/* <IconWithTooltip
+            <IconWithTooltip
               icon={Phone}
               label="Voice call"
               tooltip="Voice Call"
@@ -253,7 +303,7 @@ const Chats = () => {
               label="Video call"
               tooltip="Video Call"
             />
-            <IconWithTooltip
+            {/* <IconWithTooltip
               icon={SearchIcon}
               label="Search"
               tooltip="Search"
@@ -302,14 +352,14 @@ const Chats = () => {
           <VStack className="self-stretch gap-6">
             <HStack className="justify-between">
               <HStack className="gap-3">
-                {/* <Icon className="w-4 h-4" as={Star} /> */}
+                <Icon className="w-4 h-4" as={Star} />
                 <Text className="text-sm font-normal">Starred Messages</Text>
               </HStack>
               <Text className="text-text-400 text-2xs font-medium">123</Text>
             </HStack>
             <HStack className="justify-between">
               <HStack className="gap-3">
-                {/* <Icon className="w-4 h-4" as={BellOff} /> */}
+                <Icon className="w-4 h-4" as={BellOff} />
                 <Text className="text-sm font-normal">Mute Notifications</Text>
               </HStack>
 
@@ -317,7 +367,7 @@ const Chats = () => {
             </HStack>
             <HStack className="justify-between">
               <HStack className="gap-3">
-                {/* <Icon className="w-4 h-4" as={Lock} /> */}
+                <Icon className="w-4 h-4" as={Lock} />
                 <Text className="text-sm font-normal">Chat lock</Text>
               </HStack>
 
@@ -329,7 +379,7 @@ const Chats = () => {
             </HStack>
             <HStack className="justify-between">
               <HStack className="gap-3">
-                {/* <Icon className="w-4 h-4" as={ImagePlus} /> */}
+                <Icon className="w-4 h-4" as={ImagePlus} />
                 <Text className="text-sm font-normal">Media Visibility</Text>
               </HStack>
 
@@ -387,7 +437,7 @@ const Chats = () => {
               <Text className="text-secondary-600 text-xs font-semibold">
                 5 more
               </Text>
-              {/* <Icon w="$3" h="$3" as={ChevronDown} /> */}
+              <Icon w="$3" h="$3" as={ChevronDown} />
             </HStack>
           </Pressable>
         </VStack>
@@ -407,7 +457,7 @@ const Chats = () => {
           <HStack className="items-center gap-4">
             <Box className="sm:flex md:hidden">
               <Pressable onPress={handleBackToInbox}>
-                {/* <Icon as={ArrowLeft} /> */}
+                <Icon as={ArrowLeft} />
               </Pressable>
             </Box>
             <VStack className="gap-1">
@@ -420,20 +470,20 @@ const Chats = () => {
               </HStack>
             </VStack>
           </HStack>
-          {/* <HStack alignSelf="center" gap="$6">
+          <HStack className="self-center" gap="$6">
             <IconWithTooltip
               icon={Phone}
               tooltip="Voice Call"
               label={undefined}
             />
-  
+
             <IconWithTooltip
               icon={Video}
               tooltip="Video Call"
               label={undefined}
             />
-  
-            <Menu
+
+            {/* <Menu
               borderWidth={1}
               placement="bottom right"
               disabledKeys={['Theme']}
@@ -461,8 +511,8 @@ const Chats = () => {
                 <Icon as={AlertCircle} size="sm" mr="$2" />
                 <MenuItemLabel size="sm">Report</MenuItemLabel>
               </MenuItem>
-            </Menu>
-          </HStack> */}
+            </Menu> */}
+          </HStack>
         </HStack>
       </Pressable>
     );
@@ -479,13 +529,7 @@ const Chats = () => {
           elevation: 5,
         }}
       >
-        <HStack
-          className="h-12 gap-2 items-center flex-1"
-          h="$12"
-          gap="$2"
-          alignItems="center"
-          flex={1}
-        >
+        <HStack className="h-12 gap-2 items-center flex-1">
           <Pressable>
             {/* <Tooltip
               placement="top"
@@ -664,14 +708,14 @@ const Chats = () => {
           <Text className="text-2xs font-normal text-text-300 self-end items-center">
             {time}
           </Text>
-          {/* <Icon
+          <Icon
             paddingHorizontal="$2"
             as={CheckCheck}
             color="$background300"
             sx={{ '.dark_theme': { color: '$background300' } }}
             w="$3"
             h="$3"
-          /> */}
+          />
         </HStack>
       )}
       {!isRight && (
@@ -948,12 +992,12 @@ const Chats = () => {
 
   return (
     <Box className="w-full h-lvh">
-      <HStack className="bg-background-0 h-full w-full dark:border-border-200 md:border md:rounded-lg sm:border-0 flex-1 border-border-200 overflow-hidden self-center">
+      <HStack className="bg-background-0 h-full w-full md:border md:rounded-lg sm:border-0 flex-1 border-border-200 overflow-hidden self-center">
         <VStack
           className="sm:hidden md:flex"
           sx={{ '@base': { display: 'none' }, '@md': { display: 'flex' } }}
         >
-          <Box className="w-11 h-11 m-4 dark:border-white dark:bg-white border-border-200 bg-white rounded-lg border items-center justify-center">
+          <Box className="w-11 h-11 m-4 bg-white rounded-lg border items-center justify-center border-border-200">
             {/* <Icon className="w-5 h-5" as={GluestackIcon}  /> */}
           </Box>
           <Sidebar />
@@ -975,27 +1019,16 @@ const Chats = () => {
           <Inbox chatData={chatData} onSelect={handleChatSelect} />
           {/* </ScrollView> */}
         </VStack>
-        <VStack
-          className="h-lvh md:hidden sm:flex sm:flex-1"
-          sx={{
-            '@md': {
-              display: 'none',
-            },
-            '@base': {
-              flex: 1,
-              display: 'flex',
-            },
-          }}
-        >
+        <VStack className="h-lvh md:hidden sm:flex sm:flex-1">
           {showTabButton && (
             <>
               <HStack className="bg-background-100 p-4 justify-between">
                 <Pressable>
-                  {/* <Icon as={GluestackIcon} w="$5" h="$5" /> */}
+                  {/* <Icon as={GluestackIcon} class="w-5 h-5" /> */}
                 </Pressable>
-                <HStack className="gap-4" gap="$4">
+                <HStack className="gap-4">
                   <Pressable>
-                    {/* <Icon as={SearchIcon} w="$5" h="$5" /> */}
+                    {/* <Icon as={SearchIcon} class="w-5 h-5" /> */}
                   </Pressable>
                   {/* <Menu
                     borderWidth={1}
@@ -1043,10 +1076,10 @@ const Chats = () => {
           {/* </ScrollView> */}
         </VStack>
         <Divider
-          className="bg-background200 h-auto md:flex sm:hidden"
-          sx={{ '@base': { display: 'none' }, '@md': { display: 'flex' } }}
+          className="bg-background-200 h-auto md:flex sm:hidden"
           orientation="vertical"
         />
+
         <VStack className="lg:hidden md:flex md:flex-1 sm:hidden w-2/5">
           {showProfile ? (
             <>
