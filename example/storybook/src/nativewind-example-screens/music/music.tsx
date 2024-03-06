@@ -260,18 +260,12 @@ SidebarProps) => {
   }
   return (
     // <ScrollView w="$full" h="$full">
-    <VStack
-      className="w-full h-full"
-      space={isNested ? '3xl' : 'sm'}
-      flexGrow={1}
-    >
+    <VStack className="w-full h-full grow" space={isNested ? '3xl' : 'sm'}>
       {!isNested ? (
         <>
           {sidebarItems.map((item) => (
             <Pressable
-              className="w-full p-2 rounded-md"
-              $active-bg="$background100"
-              $hover-bg="$background100"
+              className="w-full p-2 rounded-md active:bg-background-100 hover:bg-background-100"
               key={item.key}
               onPress={() => handlePress(item)}
               bg={item.key === selected.key ? '$background100' : ''}
@@ -293,24 +287,19 @@ SidebarProps) => {
           {sidebarItems.map((item: any) => (
             <VStack>
               <Text
-                className="text-primary-950 font-bold mx-4"
-                $lg-fontSize="$lg"
-                $md-fontSize="$md"
+                className="text-primary-950 font-bold mx-4 lg:text-lg md:text-md"
                 fontFamily="$heading"
               >
                 {item?.heading}
               </Text>
               <VStack
-                className="w-full mt-2"
-                flexGrow={1}
+                className="w-full mt-2 grow"
                 space="sm"
                 key={item?.heading}
               >
                 {item?.subItems?.map((item: NestedSidebarItemProps) => (
                   <Pressable
-                    className="w-full p-2 rounded-md"
-                    $active-bg="$background100"
-                    $hover-bg="$background100"
+                    className="w-full p-2 rounded-md active:bg-background-100 hover:bg-background-100"
                     key={item.key}
                     onPress={() => handlePress(item)}
                     bg={item.key === selected.key ? '$background100' : ''}
@@ -319,9 +308,7 @@ SidebarProps) => {
                     <HStack className="items-center ml-1.5" space="sm">
                       {/* {item?.icon && <Icon as={item.icon} />} */}
                       <Text
-                        className="text-primary-950"
-                        $lg-fontSize="$md"
-                        $md-fontSize="$sm"
+                        className="text-primary-950 lg:text-md md:text-sm"
                         fontFamily="$body"
                       >
                         {item.value}
@@ -351,8 +338,7 @@ const Tab = ({ label, isActive, onPress, disabled }) => (
     opacity={disabled ? 0.5 : 1}
   >
     <Text
-      className="p-2"
-      sx={{ '@base': { fontSize: '$sm' }, '@md': { fontSize: '$md' } }}
+      className="p-2 md:text-md text-sm"
       style={{ fontWeight: label === 'Music' ? 'bold' : 'normal' }}
     >
       {label}
@@ -418,7 +404,7 @@ const Music = () => {
                 <Pressable key={index}>
                   {(props: any) => (
                     <VStack className="gap-2">
-                      <Box className="w-64 h-80 rounded-md" overflow="hidden">
+                      <Box className="w-64 h-80 rounded-md overflow-hidden">
                         <Image
                           className="w-full h-full"
                           source={image}
@@ -447,7 +433,7 @@ const Music = () => {
                 <Pressable key={index}>
                   {(props: any) => (
                     <VStack className="gap-2">
-                      <Box className="w-40 h-40 rounded-md" overflow="hidden">
+                      <Box className="w-40 h-40 rounded-md overflow-hidden">
                         <Image
                           className="w-full h-full rounded-md"
                           source={image}
@@ -496,17 +482,8 @@ const Music = () => {
   };
   return (
     <Box className="w-full h-lvh overflow-hidden">
-      <VStack
-        className="bg-background-0  md:border md:rounded-lg border-border-200 self-start h-full w-full flex-col"
-        bg="$background0"
-        sx={{
-          '@sm': { borderWidth: 0 },
-        }}
-      >
-        <HStack
-          className="w-full border-b border-border-200"
-          sx={{ '@md': { display: 'flex' }, '@base': { display: 'none' } }}
-        >
+      <VStack className="bg-background-0  md:border md:rounded-lg border-border-200 self-start h-full w-full flex-col sm:border-0">
+        <HStack className="w-full border-b border-border-200 md:flex hidden">
           {/* {navTabs.map(({ label, key, menuItems }) => (
             <Menu
               disabledKeys={menuItems
@@ -568,15 +545,9 @@ const Music = () => {
             />
           </Box>
 
-          <VStack
-            className="gap-6 flex-1 -z-99 p-6 border-border-200"
-            sx={{
-              '@base': { p: '$4', borderLeftWidth: 0 },
-              '@md': { p: '$6', borderLeftWidth: 1 },
-            }}
-          >
+          <VStack className="gap-6 flex-1 -z-99 p-6 border-border-200 md:p-6 md:border-l p-4 border-l-0">
             <HStack className="md:justify-between sm:justify:center">
-              <HStack className="bg:background-100 rounded-md">
+              <HStack className="bg-background-100 rounded-md">
                 {tabs.map(({ label, key, disabled }) => (
                   <Tab
                     key={key}
@@ -588,16 +559,12 @@ const Music = () => {
                 ))}
               </HStack>
               <Button
-                className="gap-1 md-flex sm-hidden"
+                className="gap-1 md-flex sm-hidden md:flex hidden"
                 size="md"
                 variant="solid"
                 action="primary"
                 isDisabled={false}
                 isFocusVisible={false}
-                sx={{
-                  '@md': { display: 'flex' },
-                  '@base': { display: 'none' },
-                }}
               >
                 <ButtonIcon as={PlusCircle} />
                 <ButtonText className="font-medium text-sm">
