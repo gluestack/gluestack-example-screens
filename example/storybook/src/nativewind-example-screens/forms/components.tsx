@@ -13,18 +13,7 @@ import {
   CheckboxIcon,
   CheckboxLabel,
   CheckIcon,
-  Switch,
   Pressable,
-  // Fab,
-  // FabIcon,
-  // FormControl,
-  // FormControlLabel,
-  // FormControlLabelText,
-  // InputSlot,
-  // Input,
-  Tooltip,
-  TooltipContent,
-  TooltipText,
 } from '@/components/nativewind';
 import React from 'react';
 import {
@@ -195,7 +184,7 @@ const CustomCheck = ({
   value: string;
 }) => {
   return (
-    <HStack alignItems="center">
+    <HStack className="items-center">
       {variant === 'radio' ? (
         <></>
       ) : (
@@ -235,25 +224,21 @@ const SwitchRow = ({
     <HStack className="items-center justify-between p-4 w-full border bprder-outline-200 rounded-md">
       <VStack className="items-start max-w-4/6" space="xs">
         <Text
-          className="text-primary-950 font-normal"
-          $md-fontSize="$md"
-          $base-fontSize="$xs"
+          className="text-primary-950 font-normal md:text-md text-xs"
           fontFamily="$heading"
           numberOfLines={2}
         >
           {title}
         </Text>
         <Text
-          className="text-primary-200 font-normal"
-          $md-fontSize="$xs"
-          $base-fontSize="$2xs"
+          className="text-primary-200 font-normal md:text-xs text-2xs"
           fontFamily="$body"
           numberOfLines={3}
         >
           {subTitle}
         </Text>
       </VStack>
-      <Tooltip
+      {/* <Tooltip
         placement="top"
         trigger={(triggerProps) => {
           return <Switch $md-size="md" $base-size="sm" {...triggerProps} />;
@@ -264,7 +249,7 @@ const SwitchRow = ({
             Toggle to {subTitle}
           </TooltipText>
         </TooltipContent>
-      </Tooltip>
+      </Tooltip> */}
     </HStack>
   );
 };
@@ -295,10 +280,8 @@ const CustomSelect = ({
   return (
     <VStack className="w-full">
       <Text
-        className="text-primary-950 font-normal mb-3"
+        className="text-primary-950 font-normal mb-3 md:text-sm text-xs"
         fontFamily="$heading"
-        $base-fontSize="$xs"
-        $md-fontSize="$sm"
       >
         {label}
       </Text>
@@ -381,17 +364,13 @@ export const ProfileView = () => {
       <Box className="w-full px-4" $base-maxWidth="$6/6" $lg-maxWidth="$4/6">
         <VStack className="w-full items-start" space="sm">
           <Text
-            className="text-primary-950 font-bold"
-            $base-fontSize="$md"
-            $md-fontSize="$lg"
+            className="text-primary-950 font-bold md:text-lg text-md"
             fontFamily="$heading"
           >
             Profile
           </Text>
           <Text
-            className="text-primary-200 font-normal"
-            $base-fontSize="$xs"
-            $md-fontSize="$sm"
+            className="text-primary-200 font-normal md:text-sm text-xs"
             fontFamily="$body"
           >
             This is how other will see you on site
@@ -419,11 +398,9 @@ export const ProfileView = () => {
               />
             </CustomInput> */}
             <Text
-              $base-fontSize="$2xs"
-              $md-fontSize="$xs"
               fontFamily="$body"
               numberOfLines={2}
-              className="mt-2 font-normal text-primary-200"
+              className="mt-2 font-normal text-primary-200 md:text-xs text-2xs"
             >
               This is your public display name. It can be your real name or a
               pseudonym. You can only change this once every 30 days.
@@ -441,9 +418,7 @@ export const ProfileView = () => {
               }}
             />
             <Text
-              className="mt-2 font-normal text-primary-200"
-              $base-fontSize="$2xs"
-              $md-fontSize="$xs"
+              className="mt-2 font-normal text-primary-200 md:text-xs text-2xs"
               fontFamily="$body"
               numberOfLines={2}
             >
@@ -452,9 +427,7 @@ export const ProfileView = () => {
           </VStack>
           <VStack className="mt-5 w-full">
             <Text
-              className="text-primary-700 font-normal"
-              $base-fontSize="$xs"
-              $md-fontSize="$sm"
+              className="text-primary-700 font-normal md:text-sm text-xs"
               fontFamily="$heading"
             >
               Bio
@@ -474,9 +447,7 @@ export const ProfileView = () => {
               />
             </Textarea> */}
             <Text
-              className="w-full text-right font-normal mt-1"
-              $base-fontSize="$3xs"
-              $md-fontSize="$2xs"
+              className="w-full text-right font-normal mt-1 md:text-2xs text-2xs"
               fontFamily="$body"
               color={
                 bioValue?.replace(/<(.*?)>/g, '').length === 256
@@ -487,9 +458,7 @@ export const ProfileView = () => {
               {bioValue?.replace(/<(.*?)>/g, '').length || '0'}/256
             </Text>
             <Text
-              className="text-primary-200 font-normal mt-2"
-              $base-fontSize="$2xs"
-              $md-fontSize="$xs"
+              className="text-primary-200 font-normal mt-2 md:text-xs text-2xs"
               fontFamily="$body"
               numberOfLines={2}
             >
@@ -498,17 +467,13 @@ export const ProfileView = () => {
           </VStack>
           <VStack className="mt-5 w-full">
             <Text
-              className="text-primary-700 font-normal"
-              $base-fontSize="$xs"
-              $md-fontSize="$sm"
+              className="text-primary-700 font-normal md:text-sm text-xs"
               fontFamily="$heading"
             >
               URLs
             </Text>
             <Text
-              className="text-primary-200 font-normal mt-2"
-              $base-fontSize="$2xs"
-              $md-fontSize="$xs"
+              className="text-primary-200 font-normal mt-2 md:text-xs text-2xs"
               fontFamily="$body"
               numberOfLines={2}
             >
@@ -534,17 +499,13 @@ export const ProfileView = () => {
               ))} */}
             </VStack>
             <Button
-              className="mt-2 w-18 border-outline-200"
+              className="mt-2 w-18 border-outline-200 md:p-2 p-1"
               variant="outline"
               size="sm"
-              $md-p="$2"
-              $base-p="$1"
               onPress={handleAddUrl}
             >
               <Text
-                className="text-primary-700 font-semibold"
-                $base-fontSize="$2xs"
-                $md-fontSize="$xs"
+                className="text-primary-700 font-semibold md:text-xs text-2xs"
                 fontFamily="$heading"
               >
                 Add Url
@@ -560,10 +521,8 @@ export const ProfileView = () => {
             }}
           >
             <Text
-              $base-fontSize="$xs"
-              $md-fontSize="$sm"
               fontFamily="$heading"
-              className="font-normal text-background-0"
+              className="font-normal text-background-0 md:text-sm text-xs"
             >
               Update Profile
             </Text>
@@ -593,20 +552,16 @@ export const AccountView = () => {
   };
   return (
     <VStack className="flex-1 items-start">
-      <Box className="w-full px-4" $base-maxWidth="$6/6" $lg-maxWidth="$4/6">
+      <Box className="w-full px-4 lg:max-w-4/6 max-w-6/6">
         <VStack className="w-full items-start" space="sm">
           <Text
-            className="text-primary-950 font-bold"
-            $base-fontSize="$md"
-            $md-fontSize="$lg"
+            className="text-primary-950 font-bold md:text-lg text-md"
             fontFamily="$heading"
           >
             Account
           </Text>
           <Text
-            className="text-primary-200 font-normal"
-            $base-fontSize="$xs"
-            $md-fontSize="$sm"
+            className="text-primary-200 font-normal md:text-sm text-xs"
             fontFamily="$body"
           >
             Update your account settings. Set your preferred language and
@@ -631,9 +586,7 @@ export const AccountView = () => {
               <InputField type="text" placeholder="Your name" size="sm" />
             </CustomInput> */}
             <Text
-              className="text-primary-200 font-normal mt-2"
-              $base-fontSize="$2xs"
-              $md-fontSize="$xs"
+              className="text-primary-200 font-normal mt-2 md:text-xs text-2xs"
               fontFamily="$body"
               numberOfLines={2}
             >
@@ -654,9 +607,7 @@ export const AccountView = () => {
               defaultValue={languages[0].label}
             />
             <Text
-              className="text-primary-200 font-normal mt-2"
-              $base-fontSize="$2xs"
-              $md-fontSize="$xs"
+              className="text-primary-200 font-normal mt-2 md:text-xs text-2xs"
               fontFamily="$body"
               numberOfLines={2}
             >
@@ -672,9 +623,7 @@ export const AccountView = () => {
             }}
           >
             <Text
-              className="text-background-0 font-normal"
-              $base-fontSize="$xs"
-              $md-fontSize="$sm"
+              className="text-background-0 font-normal md:text-sm text-xs"
               fontFamily="$heading"
             >
               Update account
@@ -704,20 +653,16 @@ export const AppearanceView = () => {
   const [theme, setTheme] = React.useState<'light' | 'dark'>('light');
   return (
     <VStack className="flex-1 items-start">
-      <Box className="w-full px-4" $base-maxWidth="$6/6" $lg-maxWidth="$4/6">
+      <Box className="w-full px-4 lg:max-w-4/6 max-w-6/6">
         <VStack className="w-full items-start" space="sm">
           <Text
-            className="text-primary-950 font-bold"
-            $base-fontSize="$md"
-            $md-fontSize="$lg"
+            className="text-primary-950 font-bold md:text-lg text-md"
             fontFamily="$heading"
           >
             Appearance
           </Text>
           <Text
-            className="text-primary-200 font-normal"
-            $base-fontSize="$xs"
-            $md-fontSize="$sm"
+            className="text-primary-200 font-normal md:text-sm text-xs"
             fontFamily="$body"
           >
             Customize the appearance of the app. Automatically switch between
@@ -737,9 +682,7 @@ export const AppearanceView = () => {
               defaultValue={fonts[0].label}
             />
             <Text
-              className="text-primary-200 font-normal mt-2"
-              $base-fontSize="$2xs"
-              $md-fontSize="$xs"
+              className="text-primary-200 font-normal mt-2 md:text-xs text-2xs"
               fontFamily="$body"
               numberOfLines={2}
             >
@@ -748,50 +691,30 @@ export const AppearanceView = () => {
           </VStack>
           <VStack className="w-full items-start mt-7" space="sm">
             <Text
-              className="text-primary-950 font-normal"
-              $base-fontSize="$xs"
-              $md-fontSize="$sm"
+              className="text-primary-950 font-normal md:text-sm text-xs"
               fontFamily="$heading"
             >
               Theme
             </Text>
             <Text
-              $base-fontSize="$2xs"
-              $md-fontSize="$xs"
               fontFamily="$body"
-              className="text-primary-200 font-normal"
+              className="text-primary-200 font-norma md:text-xs text-2xs"
             >
               Select the theme for the dashboard.
             </Text>
             <HStack
-              className="items-center justify-start-mt-3"
-              $md-width="$4/5"
-              $lg-width="$3/5"
-              $base-width="$full"
+              className="items-center justify-start-mt-3 md:w-4/5 lg:w-3/5 w-full"
               space="lg"
             >
               <VStack className="grow" space="sm">
                 <Pressable
-                  className="grow bg-background-0 p-1 rounded-md border-2"
+                  className="grow bg-background-0 p-1 rounded-md border-2 flex"
                   onPress={() => setTheme('light')}
-                  display="flex"
                   flexDirection="column"
                   borderColor={theme === 'light' ? '$primary950' : '$primary0'}
                 >
-                  <VStack
-                    className="rounded-md w-full bg-background-100"
-                    $base-gap="$1"
-                    $md-gap="$2"
-                    $md-p="$2"
-                    $base-p="$1"
-                  >
-                    <VStack
-                      className="bg-white rounded-md"
-                      $md-p="$2"
-                      $base-p="$1"
-                      $base-gap="$1"
-                      $md-gap="$2"
-                    >
+                  <VStack className="rounded-md w-full bg-background-100 md:gap-2 md:p-2 gap-1 p-1">
+                    <VStack className="bg-white rounded-md md:p-2 md:gap-2 p-1 gap-1">
                       <SkeletonBox
                         width="$3/5"
                         height="$3"
@@ -805,13 +728,7 @@ export const AppearanceView = () => {
                         $base-height="$2"
                       />
                     </VStack>
-                    <HStack
-                      className="bg-white rounded-md items-center"
-                      $md-p="$2"
-                      $base-p="$1"
-                      $base-gap="$1"
-                      $md-gap="$2"
-                    >
+                    <HStack className="bg-white rounded-md items-center md:p-2 md:gap-2 gap-1 p-1">
                       <SkeletonCircle
                         size="$6"
                         $md-w="$6"
@@ -826,13 +743,7 @@ export const AppearanceView = () => {
                         $md-h="$3"
                       />
                     </HStack>
-                    <HStack
-                      className="bg-white rounded-md items-center"
-                      $md-p="$2"
-                      $base-p="$1"
-                      $base-gap="$1"
-                      $md-gap="$2"
-                    >
+                    <HStack className="bg-white rounded-md items-center md:p-2 md:gap-2 p-1 gap-1">
                       <SkeletonCircle
                         size="$6"
                         $md-w="$6"
@@ -850,9 +761,7 @@ export const AppearanceView = () => {
                   </VStack>
                 </Pressable>
                 <Text
-                  className="text-primary-950 font-normal text-center"
-                  $base-fontSize="$xs"
-                  $md-fontSize="$sm"
+                  className="text-primary-950 font-normal text-center text-xs md:text-sm"
                   fontFamily="$heading"
                 >
                   Light
@@ -864,22 +773,8 @@ export const AppearanceView = () => {
                   onPress={() => setTheme('dark')}
                   borderColor={theme === 'dark' ? '$primary950' : '$primary0'}
                 >
-                  <VStack
-                    className="rounded-md w-full bg-trueGray-800"
-                    borderRadius="$md"
-                    $base-gap="$1"
-                    $md-gap="$2"
-                    $md-p="$2"
-                    $base-p="$1"
-                    w="$full"
-                  >
-                    <VStack
-                      className="bg-trueGray-700 rounded-md"
-                      $md-p="$2"
-                      $base-p="$1"
-                      $base-gap="$1"
-                      $md-gap="$2"
-                    >
+                  <VStack className="rounded-md w-full bg-trueGray-800 gap-1 p-1 md:gap-2 md:p-2">
+                    <VStack className="bg-trueGray-700 rounded-md md:p-2 md:gap-2 p-1 gap-1">
                       <SkeletonBox
                         width="$3/5"
                         height="$3"
@@ -895,13 +790,7 @@ export const AppearanceView = () => {
                         bg="$trueGray500"
                       />
                     </VStack>
-                    <HStack
-                      className="bg-trueGray-700 rounded-md items-center"
-                      $md-p="$2"
-                      $base-p="$1"
-                      $base-gap="$1"
-                      $md-gap="$2"
-                    >
+                    <HStack className="bg-trueGray-700 rounded-md items-center md:p-2 md:gap-2 p-1 gap-1">
                       <SkeletonCircle
                         size="$6"
                         $md-w="$6"
@@ -918,13 +807,7 @@ export const AppearanceView = () => {
                         bg="$trueGray500"
                       />
                     </HStack>
-                    <HStack
-                      className="bg-trueGray-700 rounded-md items-center"
-                      $md-p="$2"
-                      $base-p="$1"
-                      $base-gap="$1"
-                      $md-gap="$2"
-                    >
+                    <HStack className="bg-trueGray-700 rounded-md items-center md:p-2 md:gap-2 p-1 gap-1">
                       <SkeletonCircle
                         size="$6"
                         $md-w="$6"
@@ -944,9 +827,7 @@ export const AppearanceView = () => {
                   </VStack>
                 </Pressable>
                 <Text
-                  className="text-primary-950 font-normal text-center"
-                  $base-fontSize="$xs"
-                  $md-fontSize="$sm"
+                  className="text-primary-950 font-normal text-center md:text-sm text-xs"
                   fontFamily="$heading"
                 >
                   Dark
@@ -963,9 +844,7 @@ export const AppearanceView = () => {
             }}
           >
             <Text
-              className="text-background-0 font-normal"
-              $base-fontSize="$xs"
-              $md-fontSize="$sm"
+              className="text-background-0 font-normal md:text-sm text-xs"
               fontFamily="$heading"
             >
               Update preferences
@@ -994,29 +873,23 @@ export const NotificationsView = () => {
   };
   return (
     <VStack className="flex-1 items-start">
-      <Box className="w-full px-4" $base-maxWidth="$6/6" $lg-maxWidth="$4/6">
+      <Box className="w-full px-4 lg:max-w-4/6 max-w-6/6">
         <VStack className="w-full items-start" space="sm">
           <Text
-            className="text-primary-950 font-bold"
-            $base-fontSize="$md"
-            $md-fontSize="$lg"
+            className="text-primary-950 font-bold md:text-lg text-md"
             fontFamily="$heading"
           >
             Notifications
           </Text>
           <Text
-            className="text-primary-200 font-normal"
-            $base-fontSize="$xs"
-            $md-fontSize="$sm"
+            className="text-primary-200 font-normal md:text-sm text-xs"
             fontFamily="$body"
           >
             Configure how you receive notifications.
           </Text>
           <Divider className="w-full mt-5 bg-background-200 h-px" />
           <Text
-            className="text-primary-950 font-normal mt-5"
-            $base-fontSize="$xs"
-            $md-fontSize="$sm"
+            className="text-primary-950 font-normal mt-5 md:text-sm text-xs"
             fontFamily="$body"
           >
             Notify me about...
@@ -1038,18 +911,15 @@ export const NotificationsView = () => {
               </VStack>
             </RadioGroup> */}
             <Text
-              className="mt-1"
+              className="mt-1 text-sm"
               color={errorMsg?.length ? '$error600' : 'transparent'}
-              fontSize="$sm"
               fontFamily="$body"
             >
               {errorMsg?.length ? errorMsg : ''}
             </Text>
           </VStack>
           <Text
-            className="mt-5 font-bold text-primary-950"
-            $base-fontSize="$md"
-            $md-fontSize="$lg"
+            className="mt-5 font-bold text-primary-950 md:text-lg text-md"
             fontFamily="$heading"
           >
             Email Notifications
@@ -1067,17 +937,13 @@ export const NotificationsView = () => {
             <CustomCheck variant="checkbox" value={'mobile-settings'} />
             <VStack className="items-start max-w-5/6" space="xs">
               <Text
-                className="text-primary-950 font-normal"
-                $base-fontSize="$xs"
-                $md-fontSize="$sm"
+                className="text-primary-950 font-normal md:text-sm text-xs"
                 fontFamily="$body"
               >
                 Use different settings for my mobile devices
               </Text>
               <Text
-                className="text-primary-200 font-normal"
-                $base-fontSize="$2xs"
-                $md-fontSize="$xs"
+                className="text-primary-200 font-normal md:text-xs text-2xs"
                 fontFamily="$body"
                 numberOfLines={3}
               >
@@ -1093,9 +959,7 @@ export const NotificationsView = () => {
             onPress={onSubmit}
           >
             <Text
-              className="text-background-0 font-normal"
-              $base-fontSize="$xs"
-              $md-fontSize="$sm"
+              className="text-background-0 font-normal md:text-sm text-xs"
               fontFamily="$heading"
             >
               Update notifications
@@ -1109,20 +973,16 @@ export const NotificationsView = () => {
 export const DisplayView = () => {
   return (
     <VStack className="flex-1 items-start">
-      <Box className="w-full px-4" $base-maxWidth="$6/6" $lg-maxWidth="$4/6">
+      <Box className="w-full px-4 lg:max-w-4/6 max-w-6/6">
         <VStack className="w-full items-start" space="sm">
           <Text
-            className="text-primary-950 font-bold"
-            $base-fontSize="$md"
-            $md-fontSize="$lg"
+            className="text-primary-950 font-bold md:text-lg text-md"
             fontFamily="$heading"
           >
             Display
           </Text>
           <Text
-            className="text-primary-200 font-normal"
-            $base-fontSize="$xs"
-            $md-fontSize="$sm"
+            className="text-primary-200 font-normal md:text-sm text-xs"
             fontFamily="$body"
           >
             Turn items on or off to control what's displayed in the app.
@@ -1130,17 +990,13 @@ export const DisplayView = () => {
           <Divider className="w-full mt-5 bg-background-200 h-px" />
           <VStack className="mt-5" space="sm">
             <Text
-              className="text-primary-950 font-bold"
-              $base-fontSize="$md"
-              $md-fontSize="$lg"
+              className="text-primary-950 font-bold md:text-lg text-md"
               fontFamily="$heading"
             >
               Sidebar
             </Text>
             <Text
-              className="text-primary-200 font-normal"
-              $base-fontSize="$xs"
-              $md-fontSize="$sm"
+              className="text-primary-200 font-normal md:text-sm text-xs"
               fontFamily="$body"
             >
               Select the items you want to display in the sidebar.
@@ -1158,9 +1014,7 @@ export const DisplayView = () => {
           </VStack>
           <Button className="mt-4 rounded-md p-3" variant="solid" size="lg">
             <Text
-              className="text-background-0 font-normal"
-              $base-fontSize="$xs"
-              $md-fontSize="$sm"
+              className="text-background-0 font-normal md:text-sm text-xs"
               fontFamily="$heading"
             >
               Update display
@@ -1227,8 +1081,7 @@ export const Sidebar = ({
         <>
           {sidebarItems.map((item) => (
             <Pressable
-              className="p-2 w-full rounded-md"
-              $active-bg="$background100"
+              className="p-2 w-full rounded-md active:bg-background-100"
               key={item.key}
               onPress={() => handlePress(item)}
               bg={item.key === selected.key ? '$background100' : ''}
@@ -1236,8 +1089,7 @@ export const Sidebar = ({
             >
               {({ hovered }) => (
                 <Text
-                  className="text-primary-950 px-4"
-                  fontSize="$md"
+                  className="text-primary-950 px-4 text-md"
                   fontFamily="$body"
                   underline={hovered}
                 >
@@ -1252,10 +1104,7 @@ export const Sidebar = ({
           {sidebarItems.map((item: any) => (
             <VStack>
               <Text
-                className="text-primary-950 mx-4"
-                $lg-fontSize="$lg"
-                $md-fontSize="$md"
-                fontWeight="$bold"
+                className="text-primary-950 mx-4 lg:text-lg md:text-md font-bold"
                 fontFamily="$heading"
               >
                 {item?.heading}
@@ -1267,9 +1116,7 @@ export const Sidebar = ({
               >
                 {item?.subItems?.map((item: NestedSidebarItemProps) => (
                   <Pressable
-                    className="w-full p-2 rounded-md"
-                    $active-bg="$background100"
-                    $hover-bg="$background100"
+                    className="w-full p-2 rounded-md active:bg-background-100 hover-bg:background-100"
                     key={item.key}
                     onPress={() => handlePress(item)}
                     bg={item.key === selected.key ? '$background100' : ''}
@@ -1278,9 +1125,7 @@ export const Sidebar = ({
                     <HStack className="items-center ml-1.5" space="sm">
                       {item?.icon && <Icon as={item.icon} />}
                       <Text
-                        className="text-primary-950"
-                        $lg-fontSize="$md"
-                        $md-fontSize="$sm"
+                        className="text-primary-950 lg:text-md md:text-sm"
                         fontFamily="$body"
                       >
                         {item.value}

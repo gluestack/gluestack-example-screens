@@ -36,24 +36,15 @@ const Forms: any = ({ ...props }: any) => {
   return (
     <Box {...props} className="w-full h-96 relative">
       <Box className="border border-outline-200 rounded-lg bg-background-0 p-4 min-h-5/6 grow">
-        <VStack
-          className="w-full items-start mt-5"
-          $base-px="$4"
-          $md-px="$6"
-          space="sm"
-        >
+        <VStack className="w-full items-start mt-5 md:px-6 px-4" space="sm">
           <Text
-            className="text-primary-950 font-bold"
-            $base-fontSize="$lg"
-            $md-fontSize="$2xl"
+            className="text-primary-950 font-bold md:text-2xl text-lg"
             fontFamily="$heading"
           >
             Settings
           </Text>
           <Text
-            className="text-primary-200 font-normal"
-            $base-fontSize="$sm"
-            $md-fontSize="$md"
+            className="text-primary-200 font-normal md:text-md text-sm"
             fontFamily="$body"
           >
             Manage your account settings and set e-mail preferences
@@ -61,7 +52,7 @@ const Forms: any = ({ ...props }: any) => {
           <Divider className="w-full mt-5 bg-background-200 h-px" />
         </VStack>
         <HStack className="w-full mt-7" space="md">
-          <Box className="h-full" $md-minWidth="$1/6">
+          <Box className="h-full md:min-w-1/6">
             <Sidebar sidebarItems={sidebarItems} onSelected={onSelected} />
           </Box>
           {/* <ScrollView
