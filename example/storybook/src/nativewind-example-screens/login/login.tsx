@@ -39,7 +39,7 @@ const login = () => {
           {({ hovered }) => {
             return (
               <Text
-                className="p-3 text-sm text-text-900 rounded-md hover:bg-background-100"
+                className="p-3 text-sm text-typography-900 rounded-md hover:bg-background-100"
                 flexBasis={1}
                 backgroundColor={hovered ? '$background100' : 'none'}
               >
@@ -51,12 +51,12 @@ const login = () => {
         <Box className="sm:p-8 p-6">
           <VStack className="mx-auto md:max-w-1/2 lg:max-w-3/4 xl:max-w-3/5 max-w-full">
             <Heading
-              className="text-text-900 font-semibold text-center"
+              className="text-typography-900 font-semibold text-center"
               size="xl"
             >
               Create an account
             </Heading>
-            <Text className="mt-2 text-text-700 text-sm text-center">
+            <Text className="mt-2 text-typography-700 text-sm text-center">
               Enter your email below to create your account
             </Text>
             <VStack className="mt-6 w-full" space="3xl">
@@ -91,7 +91,7 @@ const login = () => {
                   className="h-px flex-1 bg-border-200"
                   orientation="horizontal"
                 ></Divider>
-                <Text className="text-xs font-light text-text-600 px-2">
+                <Text className="text-xs font-light text-typography-600 px-2">
                   OR CONTINUE WITH
                 </Text>
                 <Divider
@@ -109,7 +109,7 @@ const login = () => {
                 <ButtonText>GitHub</ButtonText>
               </Button>
             </VStack>
-            <Text className="mt-6 text-xs text-text-700 font-light text-center sm:px-8">
+            <Text className="mt-6 text-xs text-typography-700 font-light text-center sm:px-8">
               By clicking continue, you agree to our Terms of Service and
               Privacy Policy
             </Text>

@@ -277,11 +277,11 @@ const Chats = () => {
               src={selectedChat.avatarSource}
             />
             <UserCardStack className="mt-4 gap-0.5 items-center">
-              <Text className="text-text-900 text-lg text-center font-bold">
+              <Text className="text-typography-900 text-lg text-center font-bold">
                 {selectedChat.name}
               </Text>
               <Text
-                className="text-text-700 text-sm text-center font-normal"
+                className="text-typography-700 text-sm text-center font-normal"
                 sx={{ '.dark_theme': { color: '$text700' } }}
                 color="$text700"
                 fontSize="$sm"
@@ -312,7 +312,7 @@ const Chats = () => {
         </VStack>
 
         <VStack className="items-start mt-6 ps-4.5 gap-3">
-          <Text className="text-text-900 text-md font-medium">
+          <Text className="text-typography-900 text-md font-medium">
             Media, links, docs
           </Text>
           {/* <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}> */}
@@ -346,7 +346,7 @@ const Chats = () => {
         </VStack>
 
         <VStack className="mt-5 gap-5 p-6">
-          <Text className="text-md text-text-900 font-medium">
+          <Text className="text-md text-typography-900 font-medium">
             Notification Settings
           </Text>
           <VStack className="self-stretch gap-6">
@@ -355,7 +355,9 @@ const Chats = () => {
                 <Icon className="w-4 h-4" as={Star} />
                 <Text className="text-sm font-normal">Starred Messages</Text>
               </HStack>
-              <Text className="text-text-400 text-2xs font-medium">123</Text>
+              <Text className="text-typography-400 text-2xs font-medium">
+                123
+              </Text>
             </HStack>
             <HStack className="justify-between">
               <HStack className="gap-3">
@@ -393,23 +395,23 @@ const Chats = () => {
         </VStack>
 
         <VStack className="p-6 gap-3">
-          <Text className="text-md text-text-900 font-medium">
+          <Text className="text-md text-typography-900 font-medium">
             7 groups in common
           </Text>
 
           <VStack>
             <HStack className="items-center gap-3 py-2.5">
               <Avatar className="w-9 h-9 bg-primary-500 rounded-full">
-                <AvatarFallbackText className="text-text-0">
+                <AvatarFallbackText className="text-typography-0">
                   B A
                 </AvatarFallbackText>
               </Avatar>
 
               <VStack className="gap-0.5">
-                <Text className="text-text-900 font-bold text-sm">
+                <Text className="text-typography-900 font-bold text-sm">
                   Batch 2024
                 </Text>
-                <Text className="font-normal text-xs text-text-500">
+                <Text className="font-normal text-xs text-typography-500">
                   John, Mike, Jared + 42 others
                 </Text>
               </VStack>
@@ -417,16 +419,16 @@ const Chats = () => {
 
             <HStack className="items-center gap-3 py-2.5">
               <Avatar className="w-9 h-9 bg-primary-500 rounded-full">
-                <AvatarFallbackText className="text-text-0">
+                <AvatarFallbackText className="text-typography-0">
                   T P
                 </AvatarFallbackText>
               </Avatar>
 
               <VStack className="gap-0.5">
-                <Text className="text-text-900 font-bold text-sm">
+                <Text className="text-typography-900 font-bold text-sm">
                   Trip Planning
                 </Text>
-                <Text className="font-normal text-xs text-text-500">
+                <Text className="font-normal text-xs text-typography-500">
                   Michele, Mike
                 </Text>
               </VStack>
@@ -461,7 +463,7 @@ const Chats = () => {
               </Pressable>
             </Box>
             <VStack className="gap-1">
-              <Heading className="text-text-900 text-lg font-bold">
+              <Heading className="text-typography-900 text-lg font-bold">
                 {selectedChat ? selectedChat.name : ''}
               </Heading>
               <HStack className="items-center" space="xs">
@@ -705,7 +707,7 @@ const Chats = () => {
       </Text>
       {isRight && (
         <HStack className="items-center self-end">
-          <Text className="text-2xs font-normal text-text-300 self-end items-center">
+          <Text className="text-2xs font-normal text-typography-300 self-end items-center">
             {time}
           </Text>
           <Icon
@@ -719,7 +721,7 @@ const Chats = () => {
         </HStack>
       )}
       {!isRight && (
-        <Text className="text-2xs font-normal text-text-500 px-2 self-end">
+        <Text className="text-2xs font-normal text-typography-500 px-2 self-end">
           {time}
         </Text>
       )}
@@ -866,7 +868,7 @@ const Chats = () => {
     numberOfLines: number;
   }) => (
     <Text
-      className="text-text-500 text-sm"
+      className="text-typography-500 text-sm"
       numberOfLines={numberOfLines}
       ellipsizeMode="tail"
     >
@@ -908,19 +910,22 @@ const Chats = () => {
         <UserCard className="py-2.5 px-4 flex-row">
           <UserCardAvatar className="h-9 w-9" name={name} src={avatarSource} />
           <UserCardStack>
-            <Text className="text-text-900 text-sm font-bold" numberOfLines={1}>
+            <Text
+              className="text-typography-900 text-sm font-bold"
+              numberOfLines={1}
+            >
               {name}
             </Text>
             <TruncatedText numberOfLines={1}>{message}</TruncatedText>
           </UserCardStack>
           <UserCardStack className="max-w-6 items-end">
-            <Text className="text-text-500 text-xs font-normal">12m</Text>
+            <Text className="text-typography-500 text-xs font-normal">12m</Text>
             {index < 3 && (
               <Badge
                 className="h-4 w-4 bg-background-950 rounded-full items-center justify-center"
                 variant="solid"
               >
-                <BadgeText className="tetx-xs text-text-0">
+                <BadgeText className="tetx-xs text-typography-0">
                   {badgeCount}
                 </BadgeText>
               </Badge>

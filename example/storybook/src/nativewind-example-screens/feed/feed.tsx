@@ -541,10 +541,10 @@ const Card = ({ children, ...props }: any) => {
 const GetPremiumCard = () => {
   return (
     <Card className="mt-4" $xs-p="$4" $lg-p="$6" hardShadow="0" space="md">
-      <Text className="text-lg text-text-900 font-bold">
+      <Text className="text-lg text-typography-900 font-bold">
         Subscribe to Premium
       </Text>
-      <Text className="text-sm text-text-700">
+      <Text className="text-sm text-typography-700">
         Subscribe to unlock new features and if eligible, receive a share of ads
         revenue.
       </Text>
@@ -776,8 +776,10 @@ const SuggestionsSection = ({
         className="h-9 w-9"
       />
       <UserCardStack>
-        <Text className="text-sm font-bold text-text-900">{data.name}</Text>
-        <Text className="text-xs text-text-700">{data.bio}</Text>
+        <Text className="text-sm font-bold text-typography-900">
+          {data.name}
+        </Text>
+        <Text className="text-xs text-typography-700">{data.bio}</Text>
       </UserCardStack>
       <Button
         className="w-24 rounded-full"
@@ -813,12 +815,16 @@ const FooterFold = () => {
     <VStack className="mt-4 px-2" space="md">
       <HStack space="sm" flexWrap="wrap">
         {footerTags.map((tag, index) => (
-          <Text className="text-xs text-text-400" key={index}>
+          <Text className="text-xs text-typography-400" key={index}>
             {tag}
           </Text>
         ))}
       </HStack>
-      <Text fontSize="$xs" color="$text400">
+      <Text
+        className="text-xs text-typography-400"
+        fontSize="$xs"
+        color="$text400"
+      >
         2024 GLUEGRAM FROM GEEKYANTS
       </Text>
     </VStack>
@@ -1094,7 +1100,7 @@ const Feed = () => {
               $base-p="$4"
               $lg-p="$6"
             >
-              <Text className="mb-2.5 text-lg text-text-900 font-bold">
+              <Text className="mb-2.5 text-lg text-typography-900 font-bold">
                 You might know
               </Text>
               {posts.map((post: postType, index: number) => {

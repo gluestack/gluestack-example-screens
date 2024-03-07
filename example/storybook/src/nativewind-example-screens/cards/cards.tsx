@@ -44,13 +44,13 @@ const BlogCard = () => {
     <Card className="mb-4 lg:mb-6 ">
       <Box className="h-64 w-auto bg-background-50 rounded-lg"></Box>
       <VStack className="mt-4 w-full">
-        <Heading size="xs" className="font-normal text-text-700">
+        <Heading size="xs" className="font-normal text-typography-700">
           May 15, 2023
         </Heading>
-        <Heading size="sm" className="mt-2 font-bold text-text-900">
+        <Heading size="sm" className="mt-2 font-bold text-typography-900">
           The Power of Positive Thinking
         </Heading>
-        <Text lineHeight="$md" className="text-sm mt-2.5 text-text-700">
+        <Text lineHeight="$md" className="text-sm mt-2.5 text-typography-700">
           Discover how the power of positive thinking can transform your life,
           boost your confidence, and help you overcome challenges. Explore
           practical tips and techniques to cultivate a positive mindset for
@@ -94,12 +94,16 @@ const FormInputcard = () => {
   return (
     <Card space="2xl">
       <VStack>
-        <Heading size="md" className="font-bold text-text-900" lineHeight="$md">
+        <Heading
+          size="md"
+          className="font-bold text-typography-900"
+          lineHeight="$md"
+        >
           Share gluestack UI with friends
         </Heading>
         <Heading
           size="xs"
-          className="mt-2.5 font-normal text-text-700"
+          className="mt-2.5 font-normal text-typography-700"
           lineHeight="$sm"
         >
           Email friends who have never tried glueStack UI
@@ -161,20 +165,23 @@ const LoginCard = () => {
     >
       <VStack space="xs">
         <Heading
-          className="text-xl font-bold text-text-900"
+          className="text-xl font-bold text-typography-900"
           fontFamily="$heading"
         >
           Login to your account
         </Heading>
         <HStack className="items-center">
           <Heading
-            className="text-xs font-light text-text-700"
+            className="text-xs font-light text-typography-700"
             lineHeight="$md"
           >
             Don’t have an account?
           </Heading>
           <Pressable>
-            <Heading size="xs" className="text-text-700 font-medium ml-1.5">
+            <Heading
+              size="xs"
+              className="text-typography-700 font-medium ml-1.5"
+            >
               {''}Sign up
             </Heading>
           </Pressable>
@@ -213,7 +220,7 @@ const LoginCard = () => {
             trigger={(triggerProps) => {
               return (
                 <Pressable {...triggerProps}>
-                  <Text className="text-xs font-medium text-text-700">
+                  <Text className="text-xs font-medium text-typography-700">
                     Forgot Password?
                   </Text>
                 </Pressable>
@@ -243,7 +250,7 @@ const LoginCard = () => {
           className="h-px flex-1 bg-outline-200"
           orientation="horizontal"
         ></Divider>
-        <Text className="text-xs font-light text-text-600">
+        <Text className="text-xs font-light text-typography-600">
           OR CONTINUE WITH
         </Text>
         <Divider
@@ -290,14 +297,16 @@ const ProfileCard = () => {
           size="lg"
         />
         <UserCardStack className="mt-3 items-center">
-          <Text className="text-lg text-text-900 font-bold">John Smith</Text>
-          <Text className="mt-0.5 text-sm text-text-700 font-normal">
+          <Text className="text-lg text-typography-900 font-bold">
+            John Smith
+          </Text>
+          <Text className="mt-0.5 text-sm text-typography-700 font-normal">
             john@example.com
           </Text>
         </UserCardStack>
       </UserCard>
       <Text
-        className="text-sm mt-4 text-text-700 text-center max-w-5/6"
+        className="text-sm mt-4 text-typography-700 text-center max-w-5/6"
         lineHeight="$sm"
       >
         Pushing the boundaries of reality with XR design wizardry ✨🚀
@@ -305,9 +314,9 @@ const ProfileCard = () => {
       </Text>
       <Stats className="mt-7">
         <StatsItems>
-          <Text className="text-sm text-text-900 font-bold">32</Text>
+          <Text className="text-sm text-typography-900 font-bold">32</Text>
           <Text
-            className="text-xs text-text-900 font-normal"
+            className="text-xs text-typography-900 font-normal"
             fontFamily="$body"
           >
             posts
@@ -315,13 +324,17 @@ const ProfileCard = () => {
         </StatsItems>
         <StatsDivider className="h-10" />
         <StatsItems>
-          <Text className="text-sm text-text-900 font-bold">8,396</Text>
-          <Text className="text-xs text-text-900 font-normal">followers</Text>
+          <Text className="text-sm text-typography-900 font-bold">8,396</Text>
+          <Text className="text-xs text-typography-900 font-normal">
+            followers
+          </Text>
         </StatsItems>
         <StatsDivider className="h-10" />
         <StatsItems>
-          <Text className="text-sm text-text-900 font-bold">720</Text>
-          <Text className="text-xs text-text-900 font-normal">following</Text>
+          <Text className="text-sm text-typography-900 font-bold">720</Text>
+          <Text className="text-xs text-typography-900 font-normal">
+            following
+          </Text>
         </StatsItems>
       </Stats>
     </Card>
@@ -330,10 +343,10 @@ const ProfileCard = () => {
 const SettingsCard = () => {
   return (
     <Card className="md:mb-4 lg:mb-6 mb-4">
-      <Heading size="md" className="font-bold text-text-900">
+      <Heading size="md" className="font-bold text-typography-900">
         Notification Settings
       </Heading>
-      <Heading className="mt-1.5 text-xs font-normal text-text-700">
+      <Heading className="mt-1.5 text-xs font-normal text-typography-700">
         Receive notifications about Gluestack UI updates.
       </Heading>
       <VStack className="mt-6" space="xl">
@@ -350,12 +363,12 @@ const SettingsCard = () => {
             >
               <VStack className="max-w-5/6">
                 <Text
-                  className="text-sm font-bold text-text-900"
+                  className="text-sm font-bold text-typography-900"
                   lineHeight="$md"
                 >
                   {option.title}
                 </Text>
-                <Text className="text-sm font-light text-text-700 pb-1.5">
+                <Text className="text-sm font-light text-typography-700 pb-1.5">
                   {option.description}
                 </Text>
               </VStack>
@@ -389,10 +402,10 @@ const FileUploadCard = () => {
   return (
     <Card className="flex-1">
       <VStack>
-        <Heading className="font-bold text-text-900" size="md">
+        <Heading className="font-bold text-typography-900" size="md">
           Upload Your Files
         </Heading>
-        <Heading className="mt-1.5 font-normal text-text-700">
+        <Heading className="mt-1.5 font-normal text-typography-700">
           JPG, PNG, PDF, MP4, GIFs supported
         </Heading>
       </VStack>
@@ -400,7 +413,10 @@ const FileUploadCard = () => {
         <Pressable>
           <Box className="items-center">
             {/* <Icon as={UploadCloud} h="$16" w="$16" /> */}
-            <Text className="mt-1.5 text-sm text-text-700" lineHeight="$md">
+            <Text
+              className="mt-1.5 text-sm text-typography-700"
+              lineHeight="$md"
+            >
               Drag & drop your file here
             </Text>
           </Box>
@@ -419,7 +435,7 @@ const FileUploadCard = () => {
         </Pressable>
       </VStack>
       <VStack className="mt-6 md:mt-5 lg:mt-6 lg:mb-0">
-        <Heading className="font-bold text-text-900" size="xs">
+        <Heading className="font-bold text-typography-900" size="xs">
           Uploading 1 file
         </Heading>
         <HStack className="mt-3 justify-between items-center">
@@ -429,14 +445,14 @@ const FileUploadCard = () => {
           <VStack className="w-4/5">
             <HStack className="justify-between">
               <HStack>
-                <Text className="text-text-900 text-xs xs:text-sm">
+                <Text className="text-typography-900 text-xs xs:text-sm">
                   Document_1.gif
                 </Text>
-                <Text className="text-text-500 text-xs xs:text-sm">
+                <Text className="text-typography-500 text-xs xs:text-sm">
                   {''} (200mb)
                 </Text>
               </HStack>
-              <Text className="text-text-500 self-center text-xs">
+              <Text className="text-typography-500 self-center text-xs">
                 25s left
               </Text>
             </HStack>
@@ -485,10 +501,13 @@ const Cards: any = ({ ...props }: any) => {
           </VStack>
           <Card className="mt-4 lg:mt-6 w-full justify-between items-center mt-4 flex-col sm:flex-row">
             <Box>
-              <Heading size="md" className="text-text-900 font-bold">
+              <Heading size="md" className="text-typography-900 font-bold">
                 Updates Available
               </Heading>
-              <Heading size="xs" className="mt-1.5 text-text-700 font-normal">
+              <Heading
+                size="xs"
+                className="mt-1.5 text-typography-700 font-normal"
+              >
                 A new version is available. Please upgrade for the best
                 experience.
               </Heading>

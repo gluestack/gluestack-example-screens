@@ -11,7 +11,6 @@ import React from 'react';
 import { ChefHat, Clock4, SlidersHorizontal, Star } from 'lucide-react-native';
 import Map from './map';
 
-
 // const restaurantList = [
 //   {
 //     restaurantName:
@@ -166,12 +165,12 @@ import Map from './map';
 //                 {rating}
 //               </Text>
 //               {/* <Text>{renderRatingStars()}</Text> */}
-//               <Text className="text-md text-text-500">
+//               <Text className="text-md text-typography-500">
 //                 ({numberOfPeople})
 //               </Text>
 //             </HStack>
 //             <Text className="text-md" >
-//               {restaurantType} 
+//               {restaurantType}
 //               {/* <Icon as={Dot} />  */}
 //               {address}
 //             </Text>
@@ -183,7 +182,7 @@ import Map from './map';
 //                 {restaurantOpen ? 'Open' : 'Closed'}
 //               </Text>
 //               {/* <Icon as={Dot} /> */}
-//               <Text className="text-md text-text-500" >
+//               <Text className="text-md text-typography-500" >
 //                 {restaurantOpen ? 'Closes' : 'Opens'} {restaurantTiming}
 //               </Text>
 //             </HStack>
@@ -245,11 +244,11 @@ import Map from './map';
 //                   {rating}
 //                 </Text>
 //                 <Text>{renderRatingStars()}</Text>
-//                 <Text className="text-md text-text-500" >
+//                 <Text className="text-md text-typography-500" >
 //                   ({numberOfPeople})
 //                 </Text>
 //               </HStack>
-//               <Text className="text-md text-text-500">
+//               <Text className="text-md text-typography-500">
 //                 {restaurantType}
 //               </Text>
 //               <HStack className="px-3 justify-between items-center"
@@ -713,11 +712,11 @@ const Restaurant = () => {
           />
           <VStack className="gap-2 items-center">
             {/* <Icon w="$4" h="$4" color="$background500" as={Bookmark} /> */}
-            <Text className="text-2xs text-text-500">Saved</Text>
+            <Text className="text-2xs text-typography-500">Saved</Text>
           </VStack>
           <VStack className="gap-2 items-center">
             {/* <Icon w="$4" h="$4" color="$background400" as={History} /> */}
-            <Text className="text-2xs text-text-500">Recents</Text>
+            <Text className="text-2xs text-typography-500">Recents</Text>
           </VStack>
         </VStack>
         {/* restaurant list */}

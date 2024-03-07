@@ -332,11 +332,15 @@ export const CommentCard = ({ userName, comment }: CommentCardProps) => {
           className="h-9 w-9"
         />
         <VStack>
-          <Text className="text-sm font-bold text-text-900">{userName}</Text>
-          <Text className="text-sm font-normal text-text-700">Follower</Text>
+          <Text className="text-sm font-bold text-typography-900">
+            {userName}
+          </Text>
+          <Text className="text-sm font-normal text-typography-700">
+            Follower
+          </Text>
         </VStack>
       </UserCard>
-      <Text className="text-sm font-normal text-text-700">{comment}</Text>
+      <Text className="text-sm font-normal text-typography-700">{comment}</Text>
     </VStack>
   );
 };
@@ -357,19 +361,19 @@ const AnalyticsCard = ({
       <HStack className="items-start justify-between">
         <VStack className="mr-8" space="xs">
           <Text
-            className="text-sm font-medium text-text-900"
+            className="text-sm font-medium text-typography-900"
             fontFamily="$heading"
           >
             Weekly {title}
           </Text>
           <Text
-            className="text-2xl font-bold text-text-900"
+            className="text-2xl font-bold text-typography-900"
             fontFamily="$heading"
           >
             {totalValue}
           </Text>
           <Text
-            className="text-xs font-normal text-text-700"
+            className="text-xs font-normal text-typography-700"
             fontFamily="$body"
           >
             {subtitleValue} from last week
@@ -674,7 +678,7 @@ export const HomeView = () => {
           >
             <HStack className="justify-between w-full">
               <Text
-                className="text-text-900 font-bold"
+                className="text-typography-900 font-bold"
                 $md-fontSize="$lg"
                 $base-fontSize="$md"
                 fontFamily="$heading"
@@ -686,7 +690,7 @@ export const HomeView = () => {
               />
             </HStack>
             <Text
-              className="text-text-700 font-normal"
+              className="text-typography-700 font-normal"
               $md-fontSize="$sm"
               $base-fontSize="$xs"
               fontFamily="$body"
@@ -716,7 +720,7 @@ export const HomeView = () => {
             $md-minWidth="$1/3"
           >
             <Text
-              className="text-text-900 font-bold"
+              className="text-typography-900 font-bold"
               $md-fontSize="$lg"
               $base-fontSize="$md"
               fontFamily="$heading"
@@ -735,13 +739,13 @@ export const HomeView = () => {
             </Box>
             <VStack className="items-center w-full mt-3.5">
               <Text
-                className="text-text-900 font-medium text-2xl"
+                className="text-typography-900 font-medium text-2xl"
                 fontFamily="$heading"
               >
                 {analytics[tab].engagedUsers.users}
               </Text>
               <Text
-                className="text-text-700 font-normal text-xs"
+                className="text-typography-700 font-normal text-xs"
                 fontFamily="$body"
               >
                 {analytics[tab].engagedUsers.loss
@@ -776,7 +780,7 @@ export const HomeView = () => {
             <HStack className="justify-between w-full">
               <VStack space="sm">
                 <Text
-                  className="text-text-900 font-bold"
+                  className="text-typography-900 font-bold"
                   $md-fontSize="$lg"
                   $base-fontSize="$md"
                   fontFamily="$heading"
@@ -784,7 +788,7 @@ export const HomeView = () => {
                   Audience Age Split
                 </Text>
                 <Text
-                  className="text-text-700 font-normal"
+                  className="text-typography-700 font-normal"
                   $md-fontSize="$sm"
                   $base-fontSize="$xs"
                   fontFamily="$body"
@@ -827,7 +831,7 @@ export const HomeView = () => {
                     $base-h="$3"
                   />
                   <Text
-                    className="text-text-900 font-normal"
+                    className="text-typography-900 font-normal"
                     $sm-fontSize="$sm"
                     $base-fontSize="$xs"
                     fontFamily="$body"
@@ -844,7 +848,7 @@ export const HomeView = () => {
                     $base-h="$3"
                   />
                   <Text
-                    className="text-text-900"
+                    className="text-typography-900"
                     $sm-fontSize="$sm"
                     $base-fontSize="$xs"
                     fontWeight="$normal"
@@ -862,7 +866,7 @@ export const HomeView = () => {
                     $base-h="$3"
                   />
                   <Text
-                    className="text-text-900 font-normal"
+                    className="text-typography-900 font-normal"
                     $sm-fontSize="$sm"
                     $base-fontSize="$xs"
                     fontFamily="$body"
@@ -879,7 +883,7 @@ export const HomeView = () => {
                     $base-h="$3"
                   />
                   <Text
-                    className="text-text-900 font-normal"
+                    className="text-typography-900 font-normal"
                     $sm-fontSize="$sm"
                     $base-fontSize="$xs"
                     fontFamily="$body"
@@ -903,7 +907,7 @@ export const HomeView = () => {
             <Card space="md">
               <VStack className="self-start" space="sm">
                 <Text
-                  className="text-text-900 font-bold"
+                  className="text-typography-900 font-bold"
                   $base-fontSize="$md"
                   $md-fontSize="$lg"
                   fontFamily="$heading"
@@ -911,7 +915,7 @@ export const HomeView = () => {
                   Top Locations
                 </Text>
                 <Text
-                  className="text-text-700 font-normal"
+                  className="text-typography-700 font-normal"
                   $base-fontSize="$xs"
                   $md-fontSize="$sm"
                   fontFamily="$body"
@@ -933,7 +937,7 @@ export const HomeView = () => {
                     return (
                       <VStack className="items-center" space="xs" key={index}>
                         <Text
-                          className="text-text-900 font-bold"
+                          className="text-typography-900 font-bold"
                           $base-fontSize="$sm"
                           $md-fontSize="$lg"
                           fontFamily="$heading"
@@ -944,7 +948,7 @@ export const HomeView = () => {
                           }
                         </Text>
                         <Text
-                          className="text-text-700 font-normal text-xs"
+                          className="text-typography-700 font-normal text-xs"
                           fontFamily="$body"
                         >
                           {`+${
@@ -968,7 +972,7 @@ export const HomeView = () => {
             <Card space="md">
               <VStack className="self-start" space="sm">
                 <Text
-                  className="text-text-900 font-bold"
+                  className="text-typography-900 font-bold"
                   $base-fontSize="$md"
                   $md-fontSize="$lg"
                   fontFamily="$heading"
@@ -976,7 +980,7 @@ export const HomeView = () => {
                   View Engagements
                 </Text>
                 <Text
-                  className="text-text-700 font-normal"
+                  className="text-typography-700 font-normal"
                   $base-fontSize="$xs"
                   $md-fontSize="$sm"
                   fontFamily="$body"
@@ -998,7 +1002,7 @@ export const HomeView = () => {
                     return (
                       <VStack className="items-center" space="xs" key={index}>
                         <Text
-                          className="text-text-900 font-bold"
+                          className="text-typography-900 font-bold"
                           $base-fontSize="$sm"
                           $md-fontSize="$lg"
                           fontFamily="$heading"
@@ -1010,7 +1014,7 @@ export const HomeView = () => {
                           }
                         </Text>
                         <Text
-                          className="text-text-700 font-normal text-xs"
+                          className="text-typography-700 font-normal text-xs"
                           fontFamily="$body"
                           numberOfLines={2}
                         >

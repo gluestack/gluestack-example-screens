@@ -467,7 +467,7 @@ const Music = () => {
               source={require('../../example-screens/assets/podcasts.svg')}
             />
             <Text className="text-center font-semibold">No episodes added</Text>
-            <Text className="text-center text-text-800">
+            <Text className="text-center text-typography-800">
               You have not added any podcasts. Add one below.
             </Text>
             <Button>

@@ -394,7 +394,7 @@ const Dashboard: any = ({ w = '100%', ...props }: any) => {
             <HStack className="justify-between items-start px-4 pt-4">
               <VStack space="xs">
                 <Text
-                  className="text-text-900 font-bold"
+                  className="text-typography-900 font-bold"
                   $xl-fontSize="$3xl"
                   $md-fontSize="$xl"
                   $base-fontSize="$lg"
@@ -403,7 +403,7 @@ const Dashboard: any = ({ w = '100%', ...props }: any) => {
                   Good morning, John
                 </Text>
                 <Text
-                  className="text-text-700 font-normal"
+                  className="text-typography-700 font-normal"
                   $md-fontSize="$sm"
                   $base-fontSize="$xs"
                   fontFamily="$body"
@@ -506,19 +506,19 @@ const Dashboard: any = ({ w = '100%', ...props }: any) => {
                 />
                 <UserCardStack className="mt-3 items-center w-full">
                   <Text
-                    className="text-lg text-text-900 font-bold"
+                    className="text-lg text-typography-900 font-bold"
                     fontFamily="$heading"
                   >
                     John Smith
                   </Text>
                   <Text
-                    className="text-sm text-text-700 font-normal mt-0.5"
+                    className="text-sm text-typography-700 font-normal mt-0.5"
                     fontFamily="$body"
                   >
                     john@example.com
                   </Text>
                   <Text
-                    className="text-sm text-text-700  font-normal align-center w-full mt-2.5 max-w-72"
+                    className="text-sm text-typography-700  font-normal align-center w-full mt-2.5 max-w-72"
                     fontFamily="$body"
                     numberOfLines={2}
                     lineHeight="$sm"
@@ -534,13 +534,13 @@ const Dashboard: any = ({ w = '100%', ...props }: any) => {
                 >
                   <VStack className="items-center" space="sm" $sm-w="$20">
                     <Text
-                      className="text-sm text-text-900 font-bold"
+                      className="text-sm text-typography-900 font-bold"
                       fontFamily="$heading"
                     >
                       232
                     </Text>
                     <Text
-                      className="text-sm text-text-900 font-normal"
+                      className="text-sm text-typography-900 font-normal"
                       fontFamily="$body"
                     >
                       posts
@@ -555,13 +555,13 @@ const Dashboard: any = ({ w = '100%', ...props }: any) => {
                   />
                   <VStack className="items-center" space="sm" $sm-w="$20">
                     <Text
-                      className="text-sm text-text-900 font-bold"
+                      className="text-sm text-typography-900 font-bold"
                       fontFamily="$heading"
                     >
                       108.3k
                     </Text>
                     <Text
-                      className="text-sm text-text-900 font-normal"
+                      className="text-sm text-typography-900 font-normal"
                       fontFamily="$body"
                     >
                       followers
@@ -573,13 +573,13 @@ const Dashboard: any = ({ w = '100%', ...props }: any) => {
                   />
                   <VStack className="items-center" space="sm" $sm-w="$20">
                     <Text
-                      className="text-sm text-text-900 font-bold"
+                      className="text-sm text-typography-900 font-bold"
                       fontFamily="$heading"
                     >
                       40
                     </Text>
                     <Text
-                      className="text-sm text-text-900 font-normal"
+                      className="text-sm text-typography-900 font-normal"
                       fontFamily="$body"
                     >
                       following
