@@ -19,9 +19,6 @@ import {
   ProgressFilledTrack,
   Switch,
 } from '@/components/nativewind';
-import UserCard from '../../example-screens/components/UserCard';
-import UserCardAvatar from '../../example-screens/components/UserCardAvatar';
-import UserCardStack from '../../example-screens/components/UserCardStack';
 import Card from './components/Card';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -42,41 +39,45 @@ import {
 import Stats from '../../example-screens/components/Stats';
 import StatsItems from '../../example-screens/components/StatsItems';
 import StatsDivider from '../../example-screens/components/StatsDivider';
-import { settingOptions } from '../../example-screens/cards/constants';
-import { GithubIcon, Twittericon } from '../../example-screens/cards/Icons';
 
-// const BlogCard = () => {
-//   return (
-//     <Card className="sm:mb-4 lg:mb-6 ">
-//       <Box className="h-64 w-auto bg-background-50 rounded-lg"></Box>
-//       <VStack className="mt-4 w-full">
-//         <Heading className="text-xs font-normal text-text-700">
-//           May 15, 2023
-//         </Heading>
-//         <Heading className="text-sm mt-2 font-bold text-text-900">
-//           The Power of Positive Thinking
-//         </Heading>
-//         <Text className="mt-2.5 text-sm text-text-700">
-//           Discover how the power of positive thinking can transform your life,
-//           boost your confidence, and help you overcome challenges. Explore
-//           practical tips and techniques to cultivate a positive mindset for
-//           greater happiness and success.
-//         </Text>
-//         <UserCard className="mt-6" space="md" alignItems="center">
-//           <UserCardAvatar
-//             name="John Smith"
-//             src={require('../../../assets/avatar-icon.png')}
-//             size="md"
-//           />
-//           <UserCardStack>
-//             <Text className="font-bold text-text900">John Smith</Text>
-//             <Text className="text-sm text-text700">Motivational Speaker</Text>
-//           </UserCardStack>
-//         </UserCard>
-//       </VStack>
-//     </Card>
-//   );
-// };
+import { GithubIcon, Twittericon } from '../../example-screens/cards/Icons';
+import { settingOptions } from './constants';
+import UserCard from '../components/UserCard';
+import UserCardAvatar from '../components/UserCardAvatar';
+import UserCardStack from '../components/UserCardStack';
+
+const BlogCard = () => {
+  return (
+    <Card className="mb-4 lg:mb-6 ">
+      <Box className="h-64 w-auto bg-background-50 rounded-lg"></Box>
+      <VStack className="mt-4 w-full">
+        <Heading size="xs" className="font-normal text-text-700">
+          May 15, 2023
+        </Heading>
+        <Heading size="sm" className="mt-2 font-bold text-text-900">
+          The Power of Positive Thinking
+        </Heading>
+        <Text lineHeight="$md" className="text-sm mt-2.5 text-text-700">
+          Discover how the power of positive thinking can transform your life,
+          boost your confidence, and help you overcome challenges. Explore
+          practical tips and techniques to cultivate a positive mindset for
+          greater happiness and success.
+        </Text>
+        <UserCard className="mt-6 items-center" space="md">
+          <UserCardAvatar
+            name="John Smith"
+            src={require('../../../assets/avatar-icon.png')}
+            size="md"
+          />
+          <UserCardStack>
+            <Text className="font-bold text-text900">John Smith</Text>
+            <Text className="text-sm text-text700">Motivational Speaker</Text>
+          </UserCardStack>
+        </UserCard>
+      </VStack>
+    </Card>
+  );
+};
 const FormInputcard = () => {
   const {
     // control,
@@ -100,22 +101,18 @@ const FormInputcard = () => {
   return (
     <Card space="2xl">
       <VStack>
-        <Heading className="text-md font-bold text-text-900" lineHeight="$md">
+        <Heading size="md" className="font-bold text-text-900" lineHeight="$md">
           Share gluestack UI with friends
         </Heading>
         <Heading
-          className="mt-2.5 text-xs font-normal text-text-700"
+          size="xs"
+          className="mt-2.5 font-normal text-text-700"
           lineHeight="$sm"
         >
           Email friends who have never tried glueStack UI
         </Heading>
       </VStack>
-      <HStack
-        className="justify-between"
-        space="xs"
-        $base-flexDirection="column"
-        $lg-flexDirection="row"
-      >
+      <HStack className="justify-between flex-col lg:flex-row" space="xs">
         {/* <CustomInput
           label={'Send an invite'}
           formControlProps={{
@@ -131,7 +128,7 @@ const FormInputcard = () => {
         </CustomInput> */}
         <Button
           size="md"
-          $lg-my="$6"
+          className="lg:my-6"
           isDisabled={Object.keys(errors).length ? true : false}
           onPress={() => {
             handleSubmit(onSubmit, onError)();
@@ -166,9 +163,8 @@ const LoginCard = () => {
   };
   return (
     <Card
-      className="md:w-1/2 xl:w-full md:mr-4 lg:mr-6 xl-mr-0"
+      className="md:w-1/2 xl:w-full md:mr-4 lg:mr-6 xl-mr-0 mb-4"
       space="4xl"
-      $base-mb="$4"
     >
       <VStack space="xs">
         <Heading
@@ -185,7 +181,7 @@ const LoginCard = () => {
             Don’t have an account?
           </Heading>
           <Pressable>
-            <Heading className="text-xs text-text-700 font-medium ml-1.5">
+            <Heading size="xs" className="text-text-700 font-medium ml-1.5">
               {''}Sign up
             </Heading>
           </Pressable>
@@ -241,7 +237,7 @@ const LoginCard = () => {
       </VStack>
       <Button
         size="sm"
-        borderRadius="$md"
+        className="rounded-md"
         isDisabled={Object.keys(errors).length ? true : false}
         onPress={() => {
           handleSubmit(onSubmit, onError)();
@@ -251,14 +247,14 @@ const LoginCard = () => {
       </Button>
       <HStack className="items-center justify-center self-stretch" space="sm">
         <Divider
-          className="h-px flex-1 bg-red-200"
+          className="h-px flex-1 bg-outline-200"
           orientation="horizontal"
         ></Divider>
         <Text className="text-xs font-light text-text-600">
           OR CONTINUE WITH
         </Text>
         <Divider
-          className="flex-1 bg-border-200 h-px"
+          className="flex-1 bg-outline-200 h-px"
           orientation="horizontal"
         ></Divider>
       </HStack>
@@ -293,12 +289,7 @@ const LoginCard = () => {
 };
 const ProfileCard = () => {
   return (
-    <Card
-      className="flex-1 items-center justify-center"
-      $xl-width="$full"
-      $base-height="$80"
-      $xl-height="$full"
-    >
+    <Card className="flex-1 items-center justify-center xl:w-full h-80 xl:h-full">
       <UserCard direction="column">
         <UserCardAvatar
           name="John Smith"
@@ -313,9 +304,8 @@ const ProfileCard = () => {
         </UserCardStack>
       </UserCard>
       <Text
-        className="text-sm mt-4 text-text-700 text-center"
+        className="text-sm mt-4 text-text-700 text-center max-w-5/6"
         lineHeight="$sm"
-        $base-maxWidth="$5/6"
       >
         Pushing the boundaries of reality with XR design wizardry ✨🚀
         #XRDesigner
@@ -346,8 +336,8 @@ const ProfileCard = () => {
 };
 const SettingsCard = () => {
   return (
-    <Card className="md:mb-4 lg:mb-6" $base-mb="$4">
-      <Heading className="text-md font-bold text-text-900">
+    <Card className="md:mb-4 lg:mb-6 mb-4">
+      <Heading size="md" className="font-bold text-text-900">
         Notification Settings
       </Heading>
       <Heading className="mt-1.5 text-xs font-normal text-text-700">
@@ -356,11 +346,7 @@ const SettingsCard = () => {
       <VStack className="mt-6" space="xl">
         {settingOptions.map((option: any, index: number) => (
           <HStack space="xl" key={index}>
-            <Box
-              className="rounded-xl bg-background-50 p-3 self-center"
-              $base-display="none"
-              $sm-display="flex"
-            >
+            <Box className="rounded-xl bg-background-50 p-3 self-center sm:flex hidden">
               {option.Icon && <Icon as={option.Icon} size="xl" />}
             </Box>
             <HStack
@@ -417,14 +403,7 @@ const FileUploadCard = () => {
           JPG, PNG, PDF, MP4, GIFs supported
         </Heading>
       </VStack>
-      <VStack
-        className="py-6 items-center rounded-xl border-dashed border border-outline-300 justify-center"
-        $base-mt="$5"
-        $md-mt="$12"
-        $lg-mt="$5"
-        $md-py="$20"
-        $lg-py="$11"
-      >
+      <VStack className="py-6 items-center rounded-xl border-dashed border border-outline-300 justify-center mt-5 md:mt-12 lg:mt-5 md:py-20 lg:py-11">
         <Pressable>
           <Box className="items-center">
             {/* <Icon as={UploadCloud} h="$16" w="$16" /> */}
@@ -446,29 +425,21 @@ const FileUploadCard = () => {
           </Badge>
         </Pressable>
       </VStack>
-      <VStack $base-mt="$6" $md-mt="$5" $lg-mt="$6" $lg-mb="$0">
+      <VStack className="mt-6 md:mt-5 lg:mt-6 lg:mb-0">
         <Heading className="font-bold text-text-900" size="xs">
           Uploading 1 file
         </Heading>
         <HStack className="mt-3 justify-between items-center">
-          <Box $base-padding="$1" $xs-padding="$3">
+          <Box className="p-1 xs:p-3">
             {/* <Icon as={FileIcon} size="xl" /> */}
           </Box>
           <VStack className="w-4/5">
             <HStack className="justify-between">
               <HStack>
-                <Text
-                  className="text-text-900"
-                  $base-fontSize="$xs"
-                  $xs-fontSize="$sm"
-                >
+                <Text className="text-text-900 text-xs xs:text-sm">
                   Document_1.gif
                 </Text>
-                <Text
-                  className="text-text-500"
-                  $base-fontSize="$xs"
-                  $xs-fontSize="$sm"
-                >
+                <Text className="text-text-500 text-xs xs:text-sm">
                   {''} (200mb)
                 </Text>
               </HStack>
@@ -505,41 +476,33 @@ const Cards: any = ({ ...props }: any) => {
   return (
     <Box
       {...props}
-      className="bg-background-0 sm:p-4 md:p-5 lg:p-6 w-full h-screen "
+      className="bg-background-0 p-4 md:p-5 lg:p-6 w-full h-screen "
     >
-      <VStack class="flex-1 flex xl:flex-row...">
-        <VStack className="sm:w-full xl:w-2/3 lg:mr-6 sm:mb-4 lg:mb-6 xl:mb-0">
+      <VStack class="flex-1 flex xl:flex-row">
+        <VStack className="w-full xl:w-2/3 lg:mr-6 mb-4 lg:mb-6 xl:mb-0">
           <VStack className="md:flex-row">
-            <VStack className="sm:w-full md:w-2/5 md:mr-4 lg:mr-6 sm:mb-4 md:mb-0">
-              {/* <BlogCard /> */}
+            <VStack className="w-full md:w-2/5 md:mr-4 lg:mr-6 mb-4 md:mb-0">
+              <BlogCard />
               <FormInputcard />
             </VStack>
-            <VStack className="flex-1" $base-width="$full" $md-width="$3/5">
+            <VStack className="flex-1 md:w-3/5 w-full">
               <SettingsCard />
               <FileUploadCard />
             </VStack>
           </VStack>
-          <Card
-            className="sm:mt-4 lg:mt-6 w-full justify-between items-center"
-            $base-mt="$4"
-            $base-flexDirection="column"
-            $sm-flexDirection="row"
-          >
+          <Card className="mt-4 lg:mt-6 w-full justify-between items-center mt-4 flex-col sm:flex-row">
             <Box>
-              <Heading className="text-md text-text-900 font-bold">
+              <Heading size="md" className="text-text-900 font-bold">
                 Updates Available
               </Heading>
-              <Heading className="text-xs mt-1.5 text-text-700 font-normal">
+              <Heading size="xs" className="mt-1.5 text-text-700 font-normal">
                 A new version is available. Please upgrade for the best
                 experience.
               </Heading>
             </Box>
             <HStack
-              className="ml-3 justify-end md:mt-0"
+              className="ml-3 justify-end md:mt-0 sm:w-auto w-full mt-6"
               space="md"
-              $base-width="$full"
-              $base-mt="$6"
-              $sm-width="auto"
             >
               <Button
                 className="rounded-md"
@@ -555,14 +518,9 @@ const Cards: any = ({ ...props }: any) => {
             </HStack>
           </Card>
         </VStack>
-        <VStack
-          className="flex-1 md:flex-row"
-          $base-width="$full"
-          $md-flexDirection="row"
-          $xl-flexDirection="column"
-        >
+        <VStack className="flex-1 md:flex-row w-full md:flex-row xl:flex-col">
           <LoginCard />
-          {/* <ProfileCard /> */}
+          <ProfileCard />
         </VStack>
       </VStack>
     </Box>

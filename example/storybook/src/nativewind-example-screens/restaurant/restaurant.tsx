@@ -9,7 +9,8 @@ import {
 } from '@/components/nativewind';
 import React from 'react';
 import { ChefHat, Clock4, SlidersHorizontal, Star } from 'lucide-react-native';
-import Map from '../../example-screens/restaurant/map';
+import Map from './map';
+
 
 // const restaurantList = [
 //   {
@@ -92,7 +93,7 @@ import Map from '../../example-screens/restaurant/map';
 // const RestaurantList = ({ restaurants }) => {
 //   return (
 //     <VStack className="m-4">
-//       {restaurants.map((restaurant, index) => (
+//       {restaurants.map((restaurant: any, index: React.Key | null | undefined) => (
 //         <RestaurantCard key={index} restaurant={restaurant} />
 //       ))}
 //     </VStack>
@@ -110,32 +111,32 @@ import Map from '../../example-screens/restaurant/map';
 //     setIsOpen(false);
 //   };
 
-//   const renderRatingStars = () => {
-//     const filledStars = Math.floor(rating);
-//     const halfStars = Math.ceil(rating - filledStars);
-//     const emptyStars = 5 - filledStars - halfStars;
+//   // const renderRatingStars = () => {
+//   //   const filledStars = Math.floor(rating);
+//   //   const halfStars = Math.ceil(rating - filledStars);
+//   //   const emptyStars = 5 - filledStars - halfStars;
 
-//     const stars = [];
+//   //   const stars = [];
 
-//     // Filled stars
-//     for (let i = 0; i < filledStars; i++) {
-//       stars.push(
-//         <Icon color="$amber500" sx={{ fill: '$amber500' }} as={Star} />
-//       );
-//     }
+//   //   // Filled stars
+//   //   for (let i = 0; i < filledStars; i++) {
+//   //     stars.push(
+//   //       <Icon color="$amber500" sx={{ fill: '$amber500' }} as={Star} />
+//   //     );
+//   //   }
 
-//     // Half stars
-//     for (let i = 0; i < halfStars; i++) {
-//       stars.push(<Icon color="$amber500" as={Star} />);
-//     }
+//   //   // Half stars
+//   //   for (let i = 0; i < halfStars; i++) {
+//   //     stars.push(<Icon color="$amber500" as={Star} />);
+//   //   }
 
-//     // Empty stars
-//     for (let i = 0; i < emptyStars; i++) {
-//       stars.push(<Icon color="$amber500" as={Star} />);
-//     }
+//   //   // Empty stars
+//   //   for (let i = 0; i < emptyStars; i++) {
+//   //     stars.push(<Icon color="$amber500" as={Star} />);
+//   //   }
 
-//     return stars;
-//   };
+//   //   return stars;
+//   // };
 
 //   const {
 //     restaurantName,
@@ -164,13 +165,15 @@ import Map from '../../example-screens/restaurant/map';
 //               <Text className="text-md font-medium">
 //                 {rating}
 //               </Text>
-//               <Text>{renderRatingStars()}</Text>
+//               {/* <Text>{renderRatingStars()}</Text> */}
 //               <Text className="text-md text-text-500">
 //                 ({numberOfPeople})
 //               </Text>
 //             </HStack>
 //             <Text className="text-md" >
-//               {restaurantType} <Icon as={Dot} /> {address}
+//               {restaurantType} 
+//               {/* <Icon as={Dot} />  */}
+//               {address}
 //             </Text>
 //             <HStack>
 //               <Text
@@ -179,7 +182,7 @@ import Map from '../../example-screens/restaurant/map';
 //               >
 //                 {restaurantOpen ? 'Open' : 'Closed'}
 //               </Text>
-//               <Icon as={Dot} />
+//               {/* <Icon as={Dot} /> */}
 //               <Text className="text-md text-text-500" >
 //                 {restaurantOpen ? 'Closes' : 'Opens'} {restaurantTiming}
 //               </Text>
@@ -190,9 +193,9 @@ import Map from '../../example-screens/restaurant/map';
 //         <VStack className="mt-3">
 //           <HStack>
 //             <Text className="text-md" >Dine in</Text>
-//             <Icon as={Dot} />
+//             {/* <Icon as={Dot} /> */}
 //             <Text className="text-md">{delivery}</Text>
-//             <Icon as={Dot} />
+//             {/* <Icon as={Dot} /> */}
 //             <Text className="text-md">{deliveryContact}</Text>
 //           </HStack>
 //           <Button className="rounded-full bg-primary-500 mt-2">
@@ -201,7 +204,7 @@ import Map from '../../example-screens/restaurant/map';
 //         </VStack>
 //       </VStack>
 
-//       <Modal
+//       {/* <Modal
 //         isOpen={isOpen}
 //         onClose={handleClose}
 //         // placement="right"
@@ -683,7 +686,7 @@ import Map from '../../example-screens/restaurant/map';
 //             </ModalBody>
 //           </ScrollView>
 //         </ModalContent>
-//       </Modal>
+//       </Modal> */}
 //     </Pressable>
 //   );
 // };
@@ -695,8 +698,7 @@ const Restaurant = () => {
       <HStack>
         {/* sidebar */}
         <VStack
-          className="p-4 border-r border-border-200 items-center gap-6 bg-background-0 shadow-trueGray-800 rounded-l-lg"
-          sx={{ '@base': { display: 'none' }, '@lg': { display: 'flex' } }}
+          className="p-4 border-r border-border-200 items-center gap-6 bg-background-0 shadow-trueGray-800 rounded-l-lg lg:flex hidden"
           style={{
             shadowOffset: { width: 0, height: -2 },
             shadowOpacity: 0.1,
@@ -720,7 +722,7 @@ const Restaurant = () => {
         </VStack>
         {/* restaurant list */}
         <VStack
-          className="shadow-trueGray-800 border-r border-border-200 bg-background-0"
+          className="shadow-trueGray-800 border-r border-border-200 bg-background-0 md:w-102 sm :w-96 w-72"
           style={{
             shadowOffset: { width: 0, height: -2 },
             shadowOpacity: 0.1,
@@ -761,11 +763,7 @@ const Restaurant = () => {
       </HStack>
 
       {/* buttons */}
-      <HStack
-        className="mt-4 h-0"
-        sx={{ '@lg': { display: 'flex' }, '@base': { display: 'none' } }}
-        space="sm"
-      >
+      <HStack className="mt-4 h-0 lg:flex hidden" space="sm">
         <Button>
           <ButtonIcon as={Star} />
           <ButtonText>Rating</ButtonText>
@@ -785,10 +783,7 @@ const Restaurant = () => {
       </HStack>
 
       {/* profile */}
-      <HStack
-        className="gap-4 mt-4 mr-4 h-0"
-        sx={{ '@md': { display: 'flex' }, '@base': { display: 'none' } }}
-      >
+      <HStack className="gap-4 mt-4 mr-4 h-0 md:flex hidden">
         {/* <Icon color="$white" as={Grip} /> */}
         {/* <Icon color="$white" as={User} /> */}
       </HStack>

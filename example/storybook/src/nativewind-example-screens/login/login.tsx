@@ -17,18 +17,10 @@ import { GithubIcon } from '../../example-screens/login/Icons';
 const login = () => {
   return (
     <Box
-      className="w-full h-lvh bg-background-0 rounded-xl border border-border-200 flex-row"
+      className="w-full h-lvh bg-background-0 rounded-xl border border-border-200 flex-row lg:rounded-lg overflow-hidden p-0"
       //@ts-ignore
-      $lg-borderRadius="$lg"
-      overflow="hidden"
-      $base-p="$0"
-      $xs-p="$0"
     >
-      <Box
-        className="w-1/2 h-full bg-background-950"
-        $base-display="none"
-        $lg-display="flex"
-      >
+      <Box className="w-1/2 h-full bg-background-950 lg:flex hidden">
         <Image
           className="w-full h-full"
           source={require('../../example-screens/assets/login_image.png')}
@@ -40,27 +32,24 @@ const login = () => {
         </Text>
       </Box>
 
-      <Box $base-width="$full justify-center lg:w-1/2">
+      <Box className="w-full justify-center lg:w-1/2">
         {/* login button at the top */}
         <Pressable className="absolute right-[30] top-[24]">
           {/* @ts-ignore */}
           {({ hovered }) => {
             return (
               <Text
-                className="p-3 text-sm text-text-900 rounded-md"
-                backgroundColor={hovered ? '$background100' : 'none'}
+                className="p-3 text-sm text-text-900 rounded-md hover:bg-background-100"
                 flexBasis={1}
+                backgroundColor={hovered ? '$background100' : 'none'}
               >
                 Login
               </Text>
             );
           }}
         </Pressable>
-        <Box className="sm:p-8" $base-p="$6">
-          <VStack
-            className="mx-auto md:max-w-1/2 lg:max-w-3/4 xl:max-w-3/5"
-            $base-maxWidth="$full"
-          >
+        <Box className="sm:p-8 p-6">
+          <VStack className="mx-auto md:max-w-1/2 lg:max-w-3/4 xl:max-w-3/5 max-w-full">
             <Heading
               className="text-text-900 font-semibold text-center"
               size="xl"
@@ -120,10 +109,7 @@ const login = () => {
                 <ButtonText>GitHub</ButtonText>
               </Button>
             </VStack>
-            <Text
-              className="mt-6 text-xs text-text-700 font-light text-center"
-              $xs-px="$8"
-            >
+            <Text className="mt-6 text-xs text-text-700 font-light text-center sm:px-8">
               By clicking continue, you agree to our Terms of Service and
               Privacy Policy
             </Text>
