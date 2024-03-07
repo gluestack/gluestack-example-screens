@@ -17,7 +17,6 @@ import {
   BadgeText,
   Progress,
   ProgressFilledTrack,
-  Switch,
 } from '@/components/nativewind';
 import Card from './components/Card';
 import { useForm } from 'react-hook-form';
@@ -28,14 +27,7 @@ import {
   loginValidationSchema,
   loginValidationType,
 } from '../../example-screens/cards/validation';
-// import CustomInput from './components/CustomInput';
-import {
-  Icon,
-  // InputField,
-  Tooltip,
-  TooltipContent,
-  TooltipText,
-} from '@gluestack-ui/themed';
+
 import Stats from '../../example-screens/components/Stats';
 import StatsItems from '../../example-screens/components/StatsItems';
 import StatsDivider from '../../example-screens/components/StatsDivider';
@@ -45,6 +37,7 @@ import { settingOptions } from './constants';
 import UserCard from '../components/UserCard';
 import UserCardAvatar from '../components/UserCardAvatar';
 import UserCardStack from '../components/UserCardStack';
+// import CustomInput from './components/CustomInput';
 
 const BlogCard = () => {
   return (
@@ -215,7 +208,7 @@ const LoginCard = () => {
             </CheckboxIndicator>
             <CheckboxLabel>Remember me</CheckboxLabel>
           </Checkbox>
-          <Tooltip
+          {/* <Tooltip
             placement="bottom"
             trigger={(triggerProps) => {
               return (
@@ -232,7 +225,7 @@ const LoginCard = () => {
                 Trouble logging in? Use this link to reset your password.
               </TooltipText>
             </TooltipContent>
-          </Tooltip>
+          </Tooltip> */}
         </HStack>
       </VStack>
       <Button
@@ -347,7 +340,7 @@ const SettingsCard = () => {
         {settingOptions.map((option: any, index: number) => (
           <HStack space="xl" key={index}>
             <Box className="rounded-xl bg-background-50 p-3 self-center sm:flex hidden">
-              {option.Icon && <Icon as={option.Icon} size="xl" />}
+              {/* {option.Icon && <Icon as={option.Icon} size="xl" />} */}
             </Box>
             <HStack
               className="flex-1 justify-between border-border-200 mb-0.5 pb-2"
@@ -366,7 +359,7 @@ const SettingsCard = () => {
                   {option.description}
                 </Text>
               </VStack>
-              <Tooltip
+              {/* <Tooltip
                 placement="bottom"
                 trigger={(triggerProps) => {
                   return (
@@ -383,7 +376,7 @@ const SettingsCard = () => {
                     Click to switch your notification preferences.
                   </TooltipText>
                 </TooltipContent>
-              </Tooltip>
+              </Tooltip> */}
             </HStack>
           </HStack>
         ))}
@@ -451,12 +444,12 @@ const FileUploadCard = () => {
               <ProgressFilledTrack className="h-1" />
             </Progress>
           </VStack>
-          <Tooltip
+          {/* <Tooltip
             placement="bottom"
             trigger={(triggerProps) => {
               return (
                 <Pressable className="ml-1" {...triggerProps}>
-                  {/* <Icon as={CloseIcon} w="$5" h="$5" color="$background600" /> */}
+                  <Icon as={CloseIcon} w="$5" h="$5" color="$background600" />
                 </Pressable>
               );
             }}
@@ -466,7 +459,7 @@ const FileUploadCard = () => {
                 Click to cancel upload
               </TooltipText>
             </TooltipContent>
-          </Tooltip>
+          </Tooltip> */}
         </HStack>
       </VStack>
     </Card>

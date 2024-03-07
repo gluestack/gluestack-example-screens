@@ -3,7 +3,7 @@ import {
   Avatar,
   AvatarFallbackText,
   AvatarImage,
-} from '@/components/nativewind';
+} from '@gluestack-ui-new/themed';
 
 const UserCardAvatar = ({ name, src, ...props }: any) => {
   return (
